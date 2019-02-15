@@ -6,5 +6,12 @@ class MainWindow : public QMainWindow {
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    virtual ~MainWindow() override;
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
+private:
+    void readSettings();
+    void writeSettings();
 };

@@ -2,11 +2,37 @@
 #include "core/Constants.h"
 #include <QApplication>
 #include <QSettings>
+#include <QCloseEvent>
+#include <QDesktopWidget>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    resize(800, 500);
     setWindowTitle(Constants::App::NAME);
+
+    readSettings();
 }
 
 MainWindow::~MainWindow() {
+}
+
+void MainWindow::readSettings() {
+    QSettings settings;
+    const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
+
+    if (geometry.isEmpty()) {
+        const QRect availableGeometry = QApplication::desktop()->availableGeometry(this);
+        resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
+        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+    } else {
+        restoreGeometry(geometry);
+    }
+}
+
+void MainWindow::writeSettings() {
+    QSettings settings;
+    settings.setValue("geometry", saveGeometry());
+}
+
+void MainWindow::closeEvent(QCloseEvent* event) {
+    writeSettings();
+    event->accept();
 }
