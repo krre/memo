@@ -2,6 +2,7 @@
 
 namespace Constants {
     namespace App {
+        const char ORGANIZATIION[] = "Memo";
         const char NAME[] = "Memo";
         const char VERSION[] = "0.1.0";
         const char STATUS[] = "Preview Alpha";
