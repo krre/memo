@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     setWindowTitle(Constants::App::NAME);
     setCentralWidget(splitter);
     createActions();
+    createTrayIcon();
     setupSplitter();
     readSettings();
 }
@@ -67,6 +68,23 @@ void MainWindow::createActions() {
     helpMenu->addAction(tr("About %1...").arg(Constants::App::NAME), this, &MainWindow::about);
 }
 
+void MainWindow::createTrayIcon() {
+    trayIconMenu = new QMenu(this);
+
+    trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
+    trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
+    trayIconMenu->addSeparator();
+
+    QAction* quitAction = new QAction(tr("Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
+    trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->show();
+}
+
 void MainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     event->accept();
@@ -82,4 +100,10 @@ void MainWindow::openFile() {
 
 void MainWindow::about() {
     qDebug() << "about";
+}
+
+void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
+    if (reason == QSystemTrayIcon::Trigger) {
+        setVisible(!isVisible());
+    }
 }

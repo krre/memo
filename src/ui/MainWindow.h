@@ -1,6 +1,8 @@
 #pragma once
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
+class QSystemTrayIcon;
 class QSplitter;
 class QPlainTextEdit;
 class Outliner;
@@ -20,12 +22,18 @@ private slots:
     void openFile();
     void about();
 
+    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
 private:
     void readSettings();
     void writeSettings();
 
     void setupSplitter();
     void createActions();
+    void createTrayIcon();
+
+    QSystemTrayIcon* trayIcon;
+    QMenu* trayIconMenu;
 
     QSplitter* splitter;
     Outliner* outliner;
