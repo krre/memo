@@ -59,6 +59,8 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence::New);
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence::Open);
     fileMenu->addSeparator();
+    fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence::Cancel);
+    fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit, QKeySequence::Quit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
