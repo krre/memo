@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "core/Constants.h"
-#include "Outliner.h"
+#include "outliner/Outliner.h"
 #include <QtCore>
 #include <QtWidgets>
 
