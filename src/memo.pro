@@ -16,3 +16,6 @@ HEADERS += \
     core/Constants.h \
     ui/MainWindow.h \
     ui/Outliner.h
+
+RESOURCES += \
+    resources.qrc

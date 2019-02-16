@@ -11,6 +11,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     createTrayIcon();
     setupSplitter();
     readSettings();
+
+    QIcon icon = QIcon(":/images/icon.png");
+    setWindowIcon(icon);
+    trayIcon->setIcon(icon);
+    trayIcon->show();
 }
 
 MainWindow::~MainWindow() {
@@ -60,7 +65,7 @@ void MainWindow::createActions() {
 
     fileMenu->addSeparator();
 
-    QAction* exitAction = fileMenu->addAction(tr("Exit"), this, &QMainWindow::close);
+    QAction* exitAction = fileMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit);
     exitAction->setShortcut(QKeySequence::Quit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
@@ -74,15 +79,11 @@ void MainWindow::createTrayIcon() {
     trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
     trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
     trayIconMenu->addSeparator();
-
-    QAction* quitAction = new QAction(tr("Quit"), this);
-    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
-    trayIconMenu->addAction(quitAction);
+    trayIconMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit);
 
     trayIcon = new QSystemTrayIcon(this);
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
     trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->show();
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
