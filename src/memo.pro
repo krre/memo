@@ -12,14 +12,16 @@ SOURCES += \
     ui/MainWindow.cpp \
     ui/outliner/Outliner.cpp \
     ui/outliner/TreeModel.cpp \
-    ui/outliner/TreeItem.cpp
+    ui/outliner/TreeItem.cpp \
+    database/Database.cpp
 
 HEADERS += \
     core/Constants.h \
     ui/MainWindow.h \
     ui/outliner/Outliner.h \
     ui/outliner/TreeModel.h \
-    ui/outliner/TreeItem.h
+    ui/outliner/TreeItem.h \
+    database/Database.h
 
 RESOURCES += \
     resources.qrc

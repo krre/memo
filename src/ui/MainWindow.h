@@ -6,6 +6,7 @@ class QSystemTrayIcon;
 class QSplitter;
 class QPlainTextEdit;
 class Outliner;
+class Database;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -39,4 +40,6 @@ private:
     QSplitter* splitter;
     Outliner* outliner;
     QPlainTextEdit* textEdit;
+
+    Database* database;
 };

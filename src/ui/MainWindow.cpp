@@ -1,15 +1,20 @@
 #include "MainWindow.h"
 #include "core/Constants.h"
 #include "outliner/Outliner.h"
+#include "database/Database.h"
 #include <QtCore>
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSplitter) {
     setWindowTitle(Constants::App::NAME);
     setCentralWidget(splitter);
+
+    database = new Database(this);
+
     createActions();
     createTrayIcon();
     setupSplitter();
+
     readSettings();
 
     QIcon icon = QIcon(":/images/icon.png");
