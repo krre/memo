@@ -6,7 +6,7 @@
 class TreeItem {
 
 public:
-    explicit TreeItem(const QVariant& data = QVariant(), TreeItem* parent = nullptr);
+    explicit TreeItem(TreeItem* parent = nullptr);
     ~TreeItem();
 
     TreeItem* child(int number);

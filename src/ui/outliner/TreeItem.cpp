@@ -2,9 +2,7 @@
 #include <QStringList>
 #include <QDebug>
 
-TreeItem::TreeItem(const QVariant& data, TreeItem* parent) {
-    parentItem = parent;
-    itemData = data;
+TreeItem::TreeItem(TreeItem* parent) : parentItem(parent) {
 }
 
 TreeItem::~TreeItem() {
@@ -37,9 +35,7 @@ bool TreeItem::insertChildren(int position, int count) {
     }
 
     for (int row = 0; row < count; ++row) {
-        QVariant data;
-        TreeItem* item = new TreeItem(data, this);
-        childItems.insert(position, item);
+        childItems.insert(position, new TreeItem(this));
     }
 
     return true;
