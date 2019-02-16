@@ -3,7 +3,7 @@
 
 class QSplitter;
 class QPlainTextEdit;
-class QTreeView;
+class Outliner;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -22,6 +22,6 @@ private:
     void setupSplitter();
 
     QSplitter* splitter;
-    QTreeView* treeView;
+    Outliner* outliner;
     QPlainTextEdit* textEdit;
 };

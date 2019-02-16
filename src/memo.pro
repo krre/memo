@@ -9,8 +9,10 @@ CONFIG += c++17
 
 SOURCES += \
         main.cpp \
-    ui/MainWindow.cpp
+    ui/MainWindow.cpp \
+    ui/Outliner.cpp
 
 HEADERS += \
     core/Constants.h \
-    ui/MainWindow.h
+    ui/MainWindow.h \
+    ui/Outliner.h

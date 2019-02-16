@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "core/Constants.h"
+#include "Outliner.h"
 #include <QtCore>
 #include <QtWidgets>
 
@@ -35,10 +36,10 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    treeView = new QTreeView;
+    outliner = new Outliner;
     textEdit = new QPlainTextEdit;
 
-    splitter->addWidget(treeView);
+    splitter->addWidget(outliner);
     splitter->addWidget(textEdit);
 
     splitter->setHandleWidth(1);
