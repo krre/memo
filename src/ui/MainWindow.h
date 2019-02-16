@@ -21,6 +21,7 @@ protected:
 private slots:
     void newFile();
     void openFile();
+    void closeFile();
     void about();
     void quit();
 

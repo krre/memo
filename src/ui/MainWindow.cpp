@@ -63,6 +63,7 @@ void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence::New);
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence::Open);
+    fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence::Close);
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence::Cancel);
     fileMenu->addSeparator();
@@ -95,7 +96,9 @@ void MainWindow::newFile() {
     QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
     if (!fileName.isEmpty()) {
-        qDebug() << fileName;
+        database->close();
+        database->create(fileName);
+        database->open(fileName);
     }
 }
 
@@ -104,8 +107,13 @@ void MainWindow::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
     if (!fileName.isEmpty()) {
-        qDebug() << fileName;
+        database->close();
+        database->open(fileName);
     }
+}
+
+void MainWindow::closeFile() {
+    database->close();
 }
 
 void MainWindow::about() {
