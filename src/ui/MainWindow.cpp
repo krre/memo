@@ -96,9 +96,7 @@ void MainWindow::newFile() {
     QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
     if (!fileName.isEmpty()) {
-        database->close();
         database->create(fileName);
-        database->open(fileName);
     }
 }
 
@@ -107,7 +105,6 @@ void MainWindow::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
     if (!fileName.isEmpty()) {
-        database->close();
         database->open(fileName);
     }
 }
