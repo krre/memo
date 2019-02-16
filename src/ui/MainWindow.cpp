@@ -56,20 +56,12 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-
-    QAction* newAction = fileMenu->addAction(tr("New..."), this, &MainWindow::newFile);
-    newAction->setShortcut(QKeySequence::New);
-
-    QAction* openAction = fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile);
-    openAction->setShortcut(QKeySequence::Open);
-
+    fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence::New);
+    fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence::Open);
     fileMenu->addSeparator();
-
-    QAction* exitAction = fileMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit);
-    exitAction->setShortcut(QKeySequence::Quit);
+    fileMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit, QKeySequence::Quit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-
     helpMenu->addAction(tr("About %1...").arg(Constants::App::NAME), this, &MainWindow::about);
 }
 
