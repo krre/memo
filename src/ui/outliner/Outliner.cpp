@@ -21,11 +21,8 @@ void Outliner::updateActions() {
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {
-    if (indexAt(point).isValid()) {
-        contextMenu->exec(mapToGlobal(point));
-    } else {
-        contextMenu->exec(mapToGlobal(point));
-    }
+    updateContextMenu();
+    contextMenu->exec(mapToGlobal(point));
 }
 
 void Outliner::addNote() {
@@ -51,8 +48,14 @@ void Outliner::renameNote() {
 void Outliner::createContextMenu() {
     contextMenu = new QMenu(this);
     contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
-    contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNote);
-    contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
+    removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNote);
+    renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
+}
+
+void Outliner::updateContextMenu() {
+    bool enabled = currentIndex().isValid();
+    removeAction->setEnabled(enabled);
+    renameAction->setEnabled(enabled);
 }
 
 void Outliner::insertChild(const QString& title) {

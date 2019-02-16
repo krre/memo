@@ -2,6 +2,7 @@
 #include <QTreeView>
 
 class QMenu;
+class QAction;
 class TreeModel;
 
 class Outliner : public QTreeView {
@@ -24,8 +25,11 @@ private slots:
 
 private:
     void createContextMenu();
+    void updateContextMenu();
     void insertChild(const QString& title);
 
     QMenu* contextMenu;
+    QAction* removeAction;
+    QAction* renameAction;
     TreeModel* model;
 };
