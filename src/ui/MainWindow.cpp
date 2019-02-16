@@ -61,7 +61,7 @@ void MainWindow::createActions() {
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence::Cancel);
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit, QKeySequence::Quit);
+    fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence::Quit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("About %1...").arg(Constants::App::NAME), this, &MainWindow::about);
@@ -73,7 +73,7 @@ void MainWindow::createTrayIcon() {
     trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
     trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
     trayIconMenu->addSeparator();
-    trayIconMenu->addAction(tr("Exit"), qApp, &QCoreApplication::quit);
+    trayIconMenu->addAction(tr("Exit"), this, &MainWindow::quit);
 
     trayIcon = new QSystemTrayIcon(this);
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
@@ -95,6 +95,11 @@ void MainWindow::openFile() {
 
 void MainWindow::about() {
     qDebug() << "about";
+}
+
+void MainWindow::quit() {
+    writeSettings();
+    QCoreApplication::quit();
 }
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {

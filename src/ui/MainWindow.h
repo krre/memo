@@ -21,6 +21,7 @@ private slots:
     void newFile();
     void openFile();
     void about();
+    void quit();
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
