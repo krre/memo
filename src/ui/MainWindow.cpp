@@ -1,9 +1,7 @@
 #include "MainWindow.h"
 #include "core/Constants.h"
-#include <QApplication>
-#include <QSettings>
-#include <QCloseEvent>
-#include <QDesktopWidget>
+#include <QtCore>
+#include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Constants::App::NAME);
