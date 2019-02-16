@@ -44,12 +44,6 @@ void Outliner::createContextMenu() {
 void Outliner::insertChild(const QString& title) {
     QModelIndex index = selectionModel()->currentIndex();
 
-    if (model->columnCount(index) == 0) {
-        if (!model->insertColumn(0, index)) {
-            return;
-        }
-    }
-
     if (!model->insertRow(0, index)) {
         return;
     }
