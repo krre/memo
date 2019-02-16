@@ -13,6 +13,9 @@ public:
 public slots:
     void updateActions();
 
+protected:
+    void mousePressEvent(QMouseEvent* event) override;
+
 private slots:
     void onCustomContextMenu(const QPoint& point);
     void addNote();

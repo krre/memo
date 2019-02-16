@@ -68,3 +68,14 @@ void Outliner::insertChild(const QString& title) {
     selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
     updateActions();
 }
+
+
+void Outliner::mousePressEvent(QMouseEvent* event) {
+    if (event->button() == Qt::LeftButton && !indexAt(event->localPos().toPoint()).isValid()) {
+        selectionModel()->clearSelection();
+        setCurrentIndex(QModelIndex());
+        event->accept();
+    } else {
+        QTreeView::mousePressEvent(event);
+    }
+}
