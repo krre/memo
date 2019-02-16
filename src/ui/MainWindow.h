@@ -1,6 +1,10 @@
 #pragma once
 #include <QMainWindow>
 
+class QSplitter;
+class QPlainTextEdit;
+class QTreeView;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -14,4 +18,10 @@ protected:
 private:
     void readSettings();
     void writeSettings();
+
+    void setupSplitter();
+
+    QSplitter* splitter;
+    QTreeView* treeView;
+    QPlainTextEdit* textEdit;
 };
