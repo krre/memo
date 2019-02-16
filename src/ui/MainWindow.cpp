@@ -86,11 +86,21 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::newFile() {
-    qDebug() << "new";
+    QString selectedFilter;
+    QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
+                                tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
+    if (!fileName.isEmpty()) {
+        qDebug() << fileName;
+    }
 }
 
 void MainWindow::openFile() {
-    qDebug() << "open";
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
+                                tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
+    if (!fileName.isEmpty()) {
+        qDebug() << fileName;
+    }
 }
 
 void MainWindow::about() {
