@@ -36,9 +36,23 @@ void Outliner::addNote() {
     }
 }
 
+void Outliner::removeNote() {
+    QModelIndex index = selectionModel()->currentIndex();
+    int result = QMessageBox::question(this, tr("Remove Note"), tr("Remove %1?").arg(model->data(index).toString()));
+    if (result == QMessageBox::Yes) {
+        model->removeRow(index.row(), index.parent());
+    }
+}
+
+void Outliner::renameNote() {
+    edit(selectionModel()->currentIndex());
+}
+
 void Outliner::createContextMenu() {
     contextMenu = new QMenu(this);
     contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
+    contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNote);
+    contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
 }
 
 void Outliner::insertChild(const QString& title) {

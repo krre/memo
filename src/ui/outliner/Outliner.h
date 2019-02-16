@@ -16,6 +16,8 @@ public slots:
 private slots:
     void onCustomContextMenu(const QPoint& point);
     void addNote();
+    void removeNote();
+    void renameNote();
 
 private:
     void createContextMenu();
