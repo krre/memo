@@ -7,6 +7,7 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSplitter) {
     setWindowTitle(Constants::App::NAME);
     setCentralWidget(splitter);
+    createActions();
     setupSplitter();
     readSettings();
 }
@@ -47,7 +48,38 @@ void MainWindow::setupSplitter() {
     splitter->setSizes(QList<int>() << 120 << 500);
 }
 
+void MainWindow::createActions() {
+    QMenu* fileMenu = menuBar()->addMenu(tr("File"));
+
+    QAction* newAction = fileMenu->addAction(tr("New..."), this, &MainWindow::newFile);
+    newAction->setShortcut(QKeySequence::New);
+
+    QAction* openAction = fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile);
+    openAction->setShortcut(QKeySequence::Open);
+
+    fileMenu->addSeparator();
+
+    QAction* exitAction = fileMenu->addAction(tr("Exit"), this, &QMainWindow::close);
+    exitAction->setShortcut(QKeySequence::Quit);
+
+    QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
+
+    helpMenu->addAction(tr("About %1...").arg(Constants::App::NAME), this, &MainWindow::about);
+}
+
 void MainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     event->accept();
+}
+
+void MainWindow::newFile() {
+    qDebug() << "new";
+}
+
+void MainWindow::openFile() {
+    qDebug() << "open";
+}
+
+void MainWindow::about() {
+    qDebug() << "about";
 }

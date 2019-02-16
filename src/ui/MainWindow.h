@@ -15,11 +15,17 @@ public:
 protected:
     void closeEvent(QCloseEvent* event) override;
 
+private slots:
+    void newFile();
+    void openFile();
+    void about();
+
 private:
     void readSettings();
     void writeSettings();
 
     void setupSplitter();
+    void createActions();
 
     QSplitter* splitter;
     Outliner* outliner;
