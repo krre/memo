@@ -104,7 +104,17 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::about() {
-    qDebug() << "about";
+    QMessageBox::about(this, tr("About %1").arg(Constants::App::NAME),
+        tr("<h3>%1 %2 %3</h3>\
+           Outliner for quick notes<br><br> \
+           Based on Qt %4<br> \
+           Build on %5<br><br> \
+           <a href=%6>%6</a><br><br>%7")
+            .arg(Constants::App::NAME)
+            .arg(Constants::App::VERSION).arg(Constants::App::STATUS)
+            .arg(QT_VERSION_STR)
+            .arg(__DATE__)
+            .arg(Constants::App::URL).arg(Constants::App::COPYRIGHT));
 }
 
 void MainWindow::quit() {
