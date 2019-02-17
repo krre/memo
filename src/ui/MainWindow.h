@@ -38,6 +38,7 @@ private:
     void createTrayIcon();
 
     void loadFile(const QString filePath);
+    void setCurrentFile(const QString& filePath = QString());
 
     void showErrorDialog(const QString& message);
     void showDatabaseErrorDialog();

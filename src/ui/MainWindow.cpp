@@ -95,10 +95,22 @@ void MainWindow::loadFile(const QString filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     if (database->open(filePath)) {
-        currentFile = filePath;
+        setCurrentFile(filePath);
     } else {
         showDatabaseErrorDialog();
     }
+}
+
+void MainWindow::setCurrentFile(const QString& filePath) {
+    QString title = QApplication::applicationName();
+
+    if (!filePath.isEmpty()) {
+        QFileInfo fi(filePath);
+        title = fi.fileName() + " - " + title;
+    }
+
+    setWindowTitle(title);
+    currentFile = filePath;
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
@@ -133,23 +145,25 @@ void MainWindow::newFile() {
         showDatabaseErrorDialog();
     }
 
-    currentFile = fileName;
+    setCurrentFile(fileName);
 }
 
 void MainWindow::openFile() {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
-    if (!fileName.isEmpty() && !database->open(fileName)) {
-        showDatabaseErrorDialog();
+    if (!fileName.isEmpty()) {
+        if (database->open(fileName)) {
+            loadFile(fileName);
+        } else {
+            showDatabaseErrorDialog();
+        }
     }
-
-    currentFile = fileName;
 }
 
 void MainWindow::closeFile() {
     database->close();
-    currentFile = QString();
+    setCurrentFile();
 }
 
 void MainWindow::about() {
