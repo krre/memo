@@ -8,10 +8,13 @@ public:
     explicit Database(QObject* parent = nullptr);
     ~Database() override;
 
-    void create(const QString& filepath);
-    void open(const QString& filepath);
+    bool create(const QString& filepath);
+    bool open(const QString& filepath);
     void close();
 
 private:
+    void databaseError(const QSqlError& error);
+    void queryError(const QSqlQuery& query);
+
     QSqlDatabase db;
 };

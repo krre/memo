@@ -35,6 +35,9 @@ private:
     void createActions();
     void createTrayIcon();
 
+    void showErrorDialog(const QString& message);
+    void showDatabaseErrorDialog();
+
     QSystemTrayIcon* trayIcon;
     QMenu* trayIconMenu;
 

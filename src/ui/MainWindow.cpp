@@ -86,6 +86,14 @@ void MainWindow::createTrayIcon() {
     trayIcon->setContextMenu(trayIconMenu);
 }
 
+void MainWindow::showErrorDialog(const QString& message) {
+    QMessageBox::critical(this, tr("Error"), message, QMessageBox::Ok);
+}
+
+void MainWindow::showDatabaseErrorDialog() {
+    showErrorDialog("Database error");
+}
+
 void MainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     event->accept();
@@ -95,8 +103,8 @@ void MainWindow::newFile() {
     QString selectedFilter;
     QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
-    if (!fileName.isEmpty()) {
-        database->create(fileName);
+    if (!fileName.isEmpty() && !database->create(fileName)) {
+        showDatabaseErrorDialog();
     }
 }
 
@@ -104,8 +112,8 @@ void MainWindow::openFile() {
     QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
-    if (!fileName.isEmpty()) {
-        database->open(fileName);
+    if (!fileName.isEmpty() && !database->open(fileName)) {
+        showDatabaseErrorDialog();
     }
 }
 

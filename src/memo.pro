@@ -4,6 +4,7 @@ TARGET = memo
 TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
+# Use QMessageLogContext in release build
 
 CONFIG += c++17
 
