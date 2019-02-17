@@ -8,8 +8,8 @@
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
 
-    app.setOrganizationName(Constants::App::ORGANIZATIION);
-    app.setApplicationName(Constants::App::NAME);
+    app.setOrganizationName(Constants::App::Organization);
+    app.setApplicationName(Constants::App::Name);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, QObject::tr("Systray"),

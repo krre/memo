@@ -6,7 +6,7 @@
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSplitter) {
-    setWindowTitle(Constants::App::NAME);
+    setWindowTitle(Constants::App::Name);
     setCentralWidget(splitter);
 
     database = new Database(this);
@@ -70,7 +70,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence::Quit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("About %1...").arg(Constants::App::NAME), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
 }
 
 void MainWindow::createTrayIcon() {
@@ -122,17 +122,17 @@ void MainWindow::closeFile() {
 }
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About %1").arg(Constants::App::NAME),
+    QMessageBox::about(this, tr("About %1").arg(Constants::App::Name),
         tr("<h3>%1 %2 %3</h3>\
            Outliner for quick notes<br><br> \
            Based on Qt %4<br> \
            Build on %5<br><br> \
            <a href=%6>%6</a><br><br>%7")
-            .arg(Constants::App::NAME)
-            .arg(Constants::App::VERSION).arg(Constants::App::STATUS)
+            .arg(Constants::App::Name)
+            .arg(Constants::App::Version).arg(Constants::App::Status)
             .arg(QT_VERSION_STR)
             .arg(__DATE__)
-            .arg(Constants::App::URL).arg(Constants::App::COPYRIGHT));
+            .arg(Constants::App::URL).arg(Constants::App::Copyright));
 }
 
 void MainWindow::quit() {
