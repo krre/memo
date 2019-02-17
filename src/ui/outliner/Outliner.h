@@ -14,6 +14,9 @@ public:
 public slots:
     void updateActions();
 
+signals:
+    void noteAdded(int parent, int pos, const QString& title);
+
 protected:
     void mousePressEvent(QMouseEvent* event) override;
 

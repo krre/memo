@@ -25,8 +25,8 @@ bool Database::create(const QString& filepath) {
                     "pos INTEGER,"
                     "title TEXT,"
                     "note TEXT,"
-                    "created_at TIMESTAMP,"
-                    "updated_at TIMESTAMP"
+                    "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
+                    "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                     ")")) {
         queryError(query);
         return false;
@@ -52,6 +52,21 @@ void Database::close() {
         qInfo().noquote() << "Close database:" << db.databaseName();
         db.close();
     }
+}
+
+int Database::insertRecord(int parent, int pos, const QString& title) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO notes (parent, pos, title) VALUES (:parent, :pos, :title)");
+    query.bindValue(":parent", parent + 1);
+    query.bindValue(":pos", pos);
+    query.bindValue(":title", title);
+
+    if (!query.exec()) {
+        queryError(query);
+        return -1;
+    }
+
+    return query.lastInsertId().toInt();
 }
 
 void Database::databaseError(const QSqlError& error) {

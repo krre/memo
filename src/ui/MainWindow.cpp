@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     createTrayIcon();
     setupSplitter();
 
+    connect(outliner, &Outliner::noteAdded, this, &MainWindow::onNoteAdded);
+
     readSettings();
 
     QIcon icon = QIcon(":/images/icon.png");
@@ -149,6 +151,11 @@ void MainWindow::about() {
 void MainWindow::quit() {
     writeSettings();
     QCoreApplication::quit();
+}
+
+void MainWindow::onNoteAdded(int parent, int pos, const QString& title) {
+    int id = database->insertRecord(parent, pos, title);
+    qDebug() << id;
 }
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {

@@ -25,6 +25,8 @@ private slots:
     void about();
     void quit();
 
+    void onNoteAdded(int parent, int pos, const QString& title);
+
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
 private:

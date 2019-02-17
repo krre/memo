@@ -12,6 +12,8 @@ public:
     bool open(const QString& filepath);
     void close();
 
+    int insertRecord(int parent, int pos, const QString& title);
+
 private:
     void databaseError(const QSqlError& error);
     void queryError(const QSqlQuery& query);
