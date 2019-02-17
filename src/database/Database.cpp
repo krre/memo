@@ -19,7 +19,15 @@ bool Database::create(const QString& filepath) {
     }
 
     QSqlQuery query;
-    if (!query.exec("CREATE TABLE notes(id INTEGER)")) {
+    if (!query.exec("CREATE TABLE notes("
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    "parent INTEGER,"
+                    "pos INTEGER,"
+                    "title TEXT,"
+                    "note TEXT,"
+                    "created_at TIMESTAMP,"
+                    "updated_at TIMESTAMP"
+                    ")")) {
         queryError(query);
         return false;
     }
