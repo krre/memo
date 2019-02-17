@@ -41,12 +41,15 @@ void MainWindow::readSettings() {
     }
 
     splitter->restoreState(settings.value("splitter").toByteArray());
+
+    loadFile(settings.value("filePath").toString());
 }
 
 void MainWindow::writeSettings() {
     QSettings settings;
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
+    settings.setValue("filePath", currentFile);
 }
 
 void MainWindow::setupSplitter() {
@@ -88,6 +91,16 @@ void MainWindow::createTrayIcon() {
     trayIcon->setContextMenu(trayIconMenu);
 }
 
+void MainWindow::loadFile(const QString filePath) {
+    if (filePath.isEmpty() || !QFile::exists(filePath)) return;
+
+    if (database->open(filePath)) {
+        currentFile = filePath;
+    } else {
+        showDatabaseErrorDialog();
+    }
+}
+
 void MainWindow::showErrorDialog(const QString& message) {
     QMessageBox::critical(this, tr("Error"), message, QMessageBox::Ok);
 }
@@ -119,6 +132,8 @@ void MainWindow::newFile() {
     if (!database->create(fileName)) {
         showDatabaseErrorDialog();
     }
+
+    currentFile = fileName;
 }
 
 void MainWindow::openFile() {
@@ -128,10 +143,13 @@ void MainWindow::openFile() {
     if (!fileName.isEmpty() && !database->open(fileName)) {
         showDatabaseErrorDialog();
     }
+
+    currentFile = fileName;
 }
 
 void MainWindow::closeFile() {
     database->close();
+    currentFile = QString();
 }
 
 void MainWindow::about() {

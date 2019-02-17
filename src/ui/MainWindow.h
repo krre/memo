@@ -37,6 +37,8 @@ private:
     void createActions();
     void createTrayIcon();
 
+    void loadFile(const QString filePath);
+
     void showErrorDialog(const QString& message);
     void showDatabaseErrorDialog();
 
@@ -48,4 +50,5 @@ private:
     QPlainTextEdit* textEdit;
 
     Database* database;
+    QString currentFile;
 };
