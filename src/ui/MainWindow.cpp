@@ -103,7 +103,18 @@ void MainWindow::newFile() {
     QString selectedFilter;
     QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
-    if (!fileName.isEmpty() && !database->create(fileName)) {
+
+    if (fileName.isEmpty()) return;
+
+    if (QFile::exists(fileName)) {
+        closeFile();
+
+        if (!QFile::remove(fileName)) {
+            showErrorDialog(tr("Error rewriting old file"));
+        }
+    }
+
+    if (!database->create(fileName)) {
         showDatabaseErrorDialog();
     }
 }
