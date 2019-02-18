@@ -20,8 +20,8 @@ void Outliner::updateActions() {
     }
 }
 
-void Outliner::build(const QVector<Database::Note>& notes) {
-    qDebug() << notes.size();
+void Outliner::build(const QVector<Database::Title>& titles) {
+    qDebug() << titles.size();
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {

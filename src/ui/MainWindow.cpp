@@ -95,7 +95,7 @@ void MainWindow::loadFile(const QString filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     if (database->open(filePath)) {
-        outliner->build(database->records());
+        outliner->build(database->titles());
         setCurrentFile(filePath);
     } else {
         showDatabaseErrorDialog();

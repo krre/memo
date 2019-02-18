@@ -14,7 +14,7 @@ public:
 
 public slots:
     void updateActions();
-    void build(const QVector<Database::Note>& notes);
+    void build(const QVector<Database::Title>& titles);
 
 signals:
     void noteAdded(int parent, int pos, const QString& title);
