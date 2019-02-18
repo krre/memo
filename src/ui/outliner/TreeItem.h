@@ -21,5 +21,5 @@ public:
 private:
     QList<TreeItem*> childItems;
     QVariant itemData;
-    TreeItem *parentItem;
+    TreeItem* parentItem;
 };
