@@ -20,6 +20,10 @@ void Outliner::updateActions() {
     }
 }
 
+void Outliner::build(const QVector<Database::Note>& notes) {
+    qDebug() << notes.size();
+}
+
 void Outliner::onCustomContextMenu(const QPoint& point) {
     updateContextMenu();
     contextMenu->exec(mapToGlobal(point));

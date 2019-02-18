@@ -1,4 +1,5 @@
 #pragma once
+#include "../../database/Database.h"
 #include <QTreeView>
 
 class QMenu;
@@ -13,6 +14,7 @@ public:
 
 public slots:
     void updateActions();
+    void build(const QVector<Database::Note>& notes);
 
 signals:
     void noteAdded(int parent, int pos, const QString& title);

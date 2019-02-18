@@ -69,6 +69,24 @@ int Database::insertRecord(int parent, int pos, const QString& title) {
     return query.lastInsertId().toInt();
 }
 
+QVector<Database::Note> Database::records() const {
+    QVector<Note> notes;
+
+    QSqlQuery query("SELECT id, parent, pos, title, note FROM notes");
+    while (query.next()) {
+        Note note;
+        note.id = query.value("id").toInt();
+        note.parent = query.value("parent").toInt();
+        note.pos = query.value("pos").toInt();
+        note.title = query.value("title").toString();
+        note.note = query.value("note").toString();
+
+        notes.append(note);
+    }
+
+    return notes;
+}
+
 void Database::databaseError(const QSqlError& error) {
     qCritical("Database error: %s. %s", qUtf8Printable(error.databaseText()), qUtf8Printable(error.driverText()));
 }
