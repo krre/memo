@@ -60,3 +60,11 @@ bool TreeItem::removeChildren(int position, int count) {
 void TreeItem::setData(const QVariant& value) {
     itemData = value;
 }
+
+int TreeItem::id() const {
+    return noteId;
+}
+
+void TreeItem::setId(int id) {
+    noteId = id;
+}

@@ -18,8 +18,12 @@ public:
     int childNumber() const;
     void setData(const QVariant& value);
 
+    int id() const;
+    void setId(int id);
+
 private:
     QList<TreeItem*> childItems;
     QVariant itemData;
     TreeItem* parentItem;
+    int noteId;
 };
