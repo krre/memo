@@ -1,8 +1,9 @@
 #include "Outliner.h"
 #include "TreeModel.h"
+#include "../../database/Database.h"
 #include <QtWidgets>
 
-Outliner::Outliner() {
+Outliner::Outliner(Database* database) : database(database) {
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QTreeView::customContextMenuRequested, this, &Outliner::onCustomContextMenu);
     createContextMenu();
@@ -20,8 +21,8 @@ void Outliner::updateActions() {
     }
 }
 
-void Outliner::build(const QVector<Database::Title>& titles) {
-    qDebug() << titles.size();
+void Outliner::build() {
+
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {

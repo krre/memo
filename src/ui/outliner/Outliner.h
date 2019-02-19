@@ -1,20 +1,20 @@
 #pragma once
-#include "../../database/Database.h"
 #include <QTreeView>
 
 class QMenu;
 class QAction;
 class TreeModel;
+class Database;
 
 class Outliner : public QTreeView {
     Q_OBJECT
 
 public:
-    Outliner();
+    Outliner(Database* database);
 
 public slots:
     void updateActions();
-    void build(const QVector<Database::Title>& titles);
+    void build();
 
 signals:
     void noteAdded(int parent, int pos, const QString& title);
@@ -37,4 +37,5 @@ private:
     QAction* removeAction;
     QAction* renameAction;
     TreeModel* model;
+    Database* database;
 };

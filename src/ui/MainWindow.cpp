@@ -53,7 +53,7 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    outliner = new Outliner;
+    outliner = new Outliner(database);
     textEdit = new QPlainTextEdit;
 
     splitter->addWidget(outliner);
@@ -95,7 +95,7 @@ void MainWindow::loadFile(const QString filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     if (database->open(filePath)) {
-        outliner->build(database->titles());
+        outliner->build();
         setCurrentFile(filePath);
     } else {
         showDatabaseErrorDialog();
