@@ -21,8 +21,9 @@ bool Database::create(const QString& filepath) {
     QSqlQuery query;
     if (!query.exec("CREATE TABLE notes("
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    "parent INTEGER,"
+                    "parent_id INTEGER,"
                     "pos INTEGER,"
+                    "depth INTEGER,"
                     "title TEXT,"
                     "note TEXT,"
                     "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
@@ -54,11 +55,12 @@ void Database::close() {
     }
 }
 
-int Database::insertRecord(int parent, int pos, const QString& title) {
+int Database::insertRecord(int parentId, int pos, int depth, const QString& title) {
     QSqlQuery query;
-    query.prepare("INSERT INTO notes (parent, pos, title) VALUES (:parent, :pos, :title)");
-    query.bindValue(":parent", parent + 1);
+    query.prepare("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)");
+    query.bindValue(":parent_id", parentId + 1);
     query.bindValue(":pos", pos);
+    query.bindValue(":depth", depth);
     query.bindValue(":title", title);
 
     if (!query.exec()) {
@@ -72,12 +74,13 @@ int Database::insertRecord(int parent, int pos, const QString& title) {
 QVector<Database::Title> Database::titles() {
     QVector<Title> list;
 
-    QSqlQuery query("SELECT id, parent, pos, title FROM notes");
+    QSqlQuery query("SELECT id, parent_id, pos, depth, title FROM notes ORDER BY depth, pos");
     while (query.next()) {
         Title title;
         title.id = query.value("id").toInt();
         title.parent = query.value("parent").toInt();
         title.pos = query.value("pos").toInt();
+        title.depth = query.value("depth").toInt();
         title.title = query.value("title").toString();
 
         list.append(title);

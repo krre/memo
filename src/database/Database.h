@@ -9,6 +9,7 @@ public:
         int id;
         int parent;
         int pos;
+        int depth;
         QString title;
     };
 
@@ -19,7 +20,7 @@ public:
     bool open(const QString& filepath);
     void close();
 
-    int insertRecord(int parent, int pos, const QString& title);
+    int insertRecord(int parentId, int pos, int depth, const QString& title);
     QVector<Title> titles();
 
 private:
