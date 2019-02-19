@@ -17,7 +17,7 @@ public slots:
     void build();
 
 signals:
-    void noteAdded(int parent, int pos, const QString& title);
+    void noteAdded(int id);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;

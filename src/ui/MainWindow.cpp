@@ -186,8 +186,7 @@ void MainWindow::quit() {
     QCoreApplication::quit();
 }
 
-void MainWindow::onNoteAdded(int parent, int pos, const QString& title) {
-    int id = database->insertRecord(parent, pos, 0, title);
+void MainWindow::onNoteAdded(int id) {
     qDebug() << id;
 }
 

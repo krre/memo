@@ -76,7 +76,9 @@ void Outliner::insertChild(const QString& title) {
     selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
     updateActions();
 
-    emit noteAdded(index.row(), 0, title);
+    int id = database->insertRecord(index.row() + 1, 0, 0, title);
+
+    emit noteAdded(id);
 }
 
 

@@ -58,7 +58,7 @@ void Database::close() {
 int Database::insertRecord(int parentId, int pos, int depth, const QString& title) {
     QSqlQuery query;
     query.prepare("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)");
-    query.bindValue(":parent_id", parentId + 1);
+    query.bindValue(":parent_id", parentId);
     query.bindValue(":pos", pos);
     query.bindValue(":depth", depth);
     query.bindValue(":title", title);
