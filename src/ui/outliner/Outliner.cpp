@@ -1,5 +1,6 @@
 #include "Outliner.h"
 #include "TreeModel.h"
+#include "TreeItem.h"
 #include "../../database/Database.h"
 #include <QtWidgets>
 
@@ -66,19 +67,21 @@ void Outliner::updateContextMenu() {
 void Outliner::insertChild(const QString& title) {
     QModelIndex index = selectionModel()->currentIndex();
 
-    if (!model->insertRow(0, index)) {
+    int childIndex = model->item(index)->childCount();
+
+    if (!model->insertRow(childIndex, index)) {
         return;
     }
 
-    QModelIndex child = model->index(0, 0, index);
+    QModelIndex child = model->index(childIndex, 0, index);
     model->setData(child, QVariant(title), Qt::EditRole);
 
-    selectionModel()->setCurrentIndex(model->index(0, 0, index), QItemSelectionModel::ClearAndSelect);
+    selectionModel()->setCurrentIndex(model->index(childIndex, 0, index), QItemSelectionModel::ClearAndSelect);
     updateActions();
 
-    int id = database->insertRecord(index.row() + 1, 0, 0, title);
+//    int id = database->insertRecord(index.row() + 1, 0, 0, title);
 
-    emit noteAdded(id);
+//    emit noteAdded(id);
 }
 
 
