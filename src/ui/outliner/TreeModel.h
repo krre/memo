@@ -21,8 +21,8 @@ public:
     bool insertRows(int position, int rows, const QModelIndex& parent = QModelIndex()) override;
     bool removeRows(int position, int rows, const QModelIndex& parent = QModelIndex()) override;
 
-private:
-    TreeItem* getItem(const QModelIndex& index) const;
+    TreeItem* item(const QModelIndex& index) const;
 
+private:
     TreeItem* rootItem;
 };
