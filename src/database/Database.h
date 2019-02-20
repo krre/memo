@@ -7,7 +7,7 @@ class Database : public QObject {
 public:
     struct Title {
         int id;
-        int parent;
+        int parentId;
         int pos;
         int depth;
         QString title;

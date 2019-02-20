@@ -78,7 +78,7 @@ QVector<Database::Title> Database::titles() {
     while (query.next()) {
         Title title;
         title.id = query.value("id").toInt();
-        title.parent = query.value("parent").toInt();
+        title.parentId = query.value("parent_id").toInt();
         title.pos = query.value("pos").toInt();
         title.depth = query.value("depth").toInt();
         title.title = query.value("title").toString();
