@@ -67,7 +67,9 @@ void Outliner::updateContextMenu() {
 void Outliner::insertChild(const QString& title) {
     QModelIndex index = selectionModel()->currentIndex();
 
+    int currentId = model->item(index)->id();
     int childIndex = model->item(index)->childCount();
+    int childId = database->insertRecord(currentId, childIndex, 0, title);
 
     if (!model->insertRow(childIndex, index)) {
         return;
@@ -75,13 +77,12 @@ void Outliner::insertChild(const QString& title) {
 
     QModelIndex child = model->index(childIndex, 0, index);
     model->setData(child, QVariant(title), Qt::EditRole);
+    model->item(child)->setId(childId);
 
     selectionModel()->setCurrentIndex(model->index(childIndex, 0, index), QItemSelectionModel::ClearAndSelect);
     updateActions();
 
-//    int id = database->insertRecord(index.row() + 1, 0, 0, title);
-
-//    emit noteAdded(id);
+    emit noteAdded(childId);
 }
 
 
