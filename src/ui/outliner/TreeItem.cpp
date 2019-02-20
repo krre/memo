@@ -68,3 +68,15 @@ int TreeItem::id() const {
 void TreeItem::setId(int id) {
     itemId = id;
 }
+
+int TreeItem::depth() {
+    int counter = 0;
+    TreeItem* item = this;
+
+    while (item->id() != 0) {
+        counter++;
+        item = item->parent();
+    }
+
+    return counter;
+}

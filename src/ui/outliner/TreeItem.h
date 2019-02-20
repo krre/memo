@@ -21,6 +21,8 @@ public:
     int id() const;
     void setId(int id);
 
+    int depth();
+
 private:
     QList<TreeItem*> childItems;
     QVariant itemData;
