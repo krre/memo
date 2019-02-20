@@ -24,6 +24,6 @@ public:
 private:
     QList<TreeItem*> childItems;
     QVariant itemData;
-    TreeItem* parentItem;
-    int itemId;
+    TreeItem* parentItem = nullptr;
+    int itemId = 0;
 };
