@@ -25,5 +25,5 @@ private:
     QList<TreeItem*> childItems;
     QVariant itemData;
     TreeItem* parentItem;
-    int noteId;
+    int itemId;
 };

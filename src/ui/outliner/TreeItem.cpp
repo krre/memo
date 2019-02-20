@@ -62,9 +62,9 @@ void TreeItem::setData(const QVariant& value) {
 }
 
 int TreeItem::id() const {
-    return noteId;
+    return itemId;
 }
 
 void TreeItem::setId(int id) {
-    noteId = id;
+    itemId = id;
 }
