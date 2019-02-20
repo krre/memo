@@ -187,7 +187,7 @@ void MainWindow::quit() {
 }
 
 void MainWindow::onNoteAdded(int id) {
-    qDebug() << id;
+
 }
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
