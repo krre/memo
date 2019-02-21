@@ -58,7 +58,7 @@ void Outliner::addNote() {
 
 void Outliner::removeNote() {
     QModelIndex index = selectionModel()->currentIndex();
-    int result = QMessageBox::question(this, tr("Remove Note"), tr("Remove %1?").arg(model->data(index).toString()));
+    int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(model->data(index).toString()));
     if (result == QMessageBox::Yes) {
         model->removeRow(index.row(), index.parent());
     }
