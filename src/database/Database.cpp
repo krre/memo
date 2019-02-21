@@ -71,6 +71,19 @@ int Database::insertRecord(int parentId, int pos, int depth, const QString& titl
     return query.lastInsertId().toInt();
 }
 
+bool Database::removeRecord(int id) {
+    QSqlQuery query;
+    query.prepare("DELETE FROM notes WHERE id = :id");
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        queryError(query);
+        return false;
+    }
+
+    return true;
+}
+
 QVector<Database::Title> Database::titles() {
     QVector<Title> list;
 

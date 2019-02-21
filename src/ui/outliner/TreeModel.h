@@ -26,6 +26,7 @@ public:
     TreeItem* root() const;
     TreeItem* item(const QModelIndex& index) const;
     QModelIndex index(TreeItem* item) const;
+    QVector<int> childIds(TreeItem* item);
 
 private:
     TreeItem* rootItem;

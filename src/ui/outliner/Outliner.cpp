@@ -60,7 +60,13 @@ void Outliner::removeNotes() {
     QModelIndex index = selectionModel()->currentIndex();
     int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(model->data(index).toString()));
     if (result == QMessageBox::Yes) {
+        TreeItem* item = model->item(index);
+        QVector<int> ids = model->childIds(item);
         model->removeRow(index.row(), index.parent());
+
+        for (int id : ids) {
+            database->removeRecord(id);
+        }
     }
 }
 

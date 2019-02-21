@@ -21,6 +21,7 @@ public:
     void close();
 
     int insertRecord(int parentId, int pos, int depth, const QString& title);
+    bool removeRecord(int id);
     QVector<Title> titles();
 
 private:
