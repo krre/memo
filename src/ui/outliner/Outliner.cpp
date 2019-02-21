@@ -56,7 +56,7 @@ void Outliner::addNote() {
     }
 }
 
-void Outliner::removeNote() {
+void Outliner::removeNotes() {
     QModelIndex index = selectionModel()->currentIndex();
     int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(model->data(index).toString()));
     if (result == QMessageBox::Yes) {
@@ -71,7 +71,7 @@ void Outliner::renameNote() {
 void Outliner::createContextMenu() {
     contextMenu = new QMenu(this);
     contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
-    removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNote);
+    removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
     renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
 }
 
