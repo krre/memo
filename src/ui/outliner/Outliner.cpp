@@ -12,6 +12,11 @@ Outliner::Outliner(Database* database) : database(database) {
 
     model = new TreeModel(this);
     setModel(model);
+
+    connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, [=] {
+        TreeItem* item = model->item(selectionModel()->currentIndex());
+        database->updateValue(item->id(), "title", item->data());
+    });
 }
 
 void Outliner::updateActions() {
