@@ -164,6 +164,7 @@ void MainWindow::openFile() {
 
 void MainWindow::closeFile() {
     database->close();
+    outliner->clear();
     setCurrentFile();
 }
 

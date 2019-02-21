@@ -1,5 +1,6 @@
 #include "TreeItem.h"
 #include <QStringList>
+#include <QModelIndex>
 #include <QDebug>
 
 TreeItem::TreeItem(TreeItem* parent) : parentItem(parent) {
@@ -43,6 +44,19 @@ bool TreeItem::insertChildren(int position, int count) {
 
 TreeItem* TreeItem::parent() {
     return parentItem;
+}
+
+TreeItem* TreeItem::find(int id) {
+    if (itemId == id) return this;
+
+    for (TreeItem* child : childItems) {
+        TreeItem* item = child->find(id);
+        if (item != nullptr) {
+            return item;
+        }
+    }
+
+    return nullptr;
 }
 
 bool TreeItem::removeChildren(int position, int count) {

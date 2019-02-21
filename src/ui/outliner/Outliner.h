@@ -15,6 +15,7 @@ public:
 public slots:
     void updateActions();
     void build();
+    void clear();
 
 signals:
     void noteAdded(int id);

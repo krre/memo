@@ -23,7 +23,24 @@ void Outliner::updateActions() {
 }
 
 void Outliner::build() {
+    clear();
+    QVector<Database::Title> titles = database->titles();
 
+    TreeItem* rootItem = model->root();
+
+    for (const Database::Title& title : titles) {
+        TreeItem* parentItem = rootItem->find(title.parentId);
+        QModelIndex parentIndex = model->index(parentItem);
+        model->insertRow(title.pos, parentIndex);
+
+        QModelIndex index = model->index(title.pos, 0, parentIndex);
+        model->setData(index, QVariant(title.title), Qt::EditRole);
+        model->item(index)->setId(title.id);
+    }
+}
+
+void Outliner::clear() {
+    model->clear();
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {
@@ -69,19 +86,19 @@ void Outliner::insertChild(const QString& title) {
     TreeItem* currentItem = model->item(currentIndex);
 
     int currentId = currentItem->id();
-    int childIndex = currentItem->childCount();
+    int childRow = currentItem->childCount();
     int childDepth = currentItem->depth();
-    int childId = database->insertRecord(currentId, childIndex, childDepth, title);
+    int childId = database->insertRecord(currentId, childRow, childDepth, title);
 
-    if (!model->insertRow(childIndex, currentIndex)) {
+    if (!model->insertRow(childRow, currentIndex)) {
         return;
     }
 
-    QModelIndex child = model->index(childIndex, 0, currentIndex);
+    QModelIndex child = model->index(childRow, 0, currentIndex);
     model->setData(child, QVariant(title), Qt::EditRole);
     model->item(child)->setId(childId);
 
-    selectionModel()->setCurrentIndex(model->index(childIndex, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
+    selectionModel()->setCurrentIndex(model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
     updateActions();
 
     emit noteAdded(childId);

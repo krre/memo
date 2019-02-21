@@ -11,10 +11,7 @@ TreeModel::~TreeModel() {
 }
 
 QModelIndex TreeModel::index(int row, int column, const QModelIndex& parent) const {
-    if (parent.isValid() && parent.column() != 0) return QModelIndex();
-
-    TreeItem* parentItem = item(parent);
-    TreeItem* childItem = parentItem->child(row);
+    TreeItem* childItem = item(parent)->child(row);
 
     if (childItem) {
         return createIndex(row, column, childItem);
@@ -28,10 +25,9 @@ QModelIndex TreeModel::parent(const QModelIndex& child) const {
         return QModelIndex();
     }
 
-    TreeItem* childItem = item(child);
-    TreeItem* parentItem = childItem->parent();
+    TreeItem* parentItem = item(child)->parent();
 
-    if (parentItem == rootItem) {
+    if (item(child)->parent() == rootItem) {
         return QModelIndex();
     }
 
@@ -79,6 +75,11 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
     return true;
 }
 
+void TreeModel::clear() {
+    delete rootItem;
+    rootItem = new TreeItem();
+}
+
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
     bool success;
 
@@ -100,6 +101,10 @@ bool TreeModel::removeRows(int position, int rows, const QModelIndex& parent) {
     return success;
 }
 
+TreeItem* TreeModel::root() const {
+    return rootItem;
+}
+
 TreeItem* TreeModel::item(const QModelIndex& index) const {
     if (index.isValid()) {
         TreeItem* item = static_cast<TreeItem*>(index.internalPointer());
@@ -108,4 +113,12 @@ TreeItem* TreeModel::item(const QModelIndex& index) const {
         }
     }
     return rootItem;
+}
+
+QModelIndex TreeModel::index(TreeItem* item) const {
+    if (item) {
+        return createIndex(item->childNumber(), 0, item);
+    } else {
+        return QModelIndex();
+    }
 }

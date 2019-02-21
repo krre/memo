@@ -9,14 +9,18 @@ public:
     explicit TreeItem(TreeItem* parent = nullptr);
     ~TreeItem();
 
+    TreeItem* parent();
+    TreeItem* find(int id);
+
     TreeItem* child(int number);
     int childCount() const;
-    QVariant data() const;
-    bool insertChildren(int position, int count);
-    TreeItem* parent();
-    bool removeChildren(int position, int count);
     int childNumber() const;
+
+    QVariant data() const;
     void setData(const QVariant& value);
+
+    bool insertChildren(int position, int count);
+    bool removeChildren(int position, int count);
 
     int id() const;
     void setId(int id);
