@@ -18,10 +18,13 @@ public slots:
     void clear();
 
 signals:
-    void noteAdded(int id);
+    void noteChanged(int id);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
+
+protected slots:
+    void currentChanged(const QModelIndex& current, const QModelIndex& previous) override;
 
 private slots:
     void onCustomContextMenu(const QPoint& point);

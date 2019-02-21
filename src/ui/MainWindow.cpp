@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "Editor.h"
 #include "core/Constants.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
@@ -15,7 +16,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     createTrayIcon();
     setupSplitter();
 
-    connect(outliner, &Outliner::noteAdded, this, &MainWindow::onNoteAdded);
+    connect(outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
 
     readSettings();
 
@@ -54,10 +55,10 @@ void MainWindow::writeSettings() {
 
 void MainWindow::setupSplitter() {
     outliner = new Outliner(database);
-    textEdit = new QPlainTextEdit;
+    editor = new Editor;
 
     splitter->addWidget(outliner);
-    splitter->addWidget(textEdit);
+    splitter->addWidget(editor);
 
     splitter->setHandleWidth(1);
     splitter->setChildrenCollapsible(false);
@@ -187,8 +188,23 @@ void MainWindow::quit() {
     QCoreApplication::quit();
 }
 
-void MainWindow::onNoteAdded(int id) {
+void MainWindow::onNoteChanged(int id) {
+    int lastId = editor->id();
 
+    if (lastId) {
+        database->updateValue(lastId, "note", editor->document()->toPlainText());
+    }
+
+    editor->setId(id);
+    editor->setEnabled(id > 0);
+
+    if (id) {
+        QString note = database->value(id, "note").toString();
+        editor->setPlainText(note);
+        editor->setFocus();
+    } else {
+        editor->clear();
+    }
 }
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {

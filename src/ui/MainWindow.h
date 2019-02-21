@@ -4,8 +4,8 @@
 
 class QSystemTrayIcon;
 class QSplitter;
-class QPlainTextEdit;
 class Outliner;
+class Editor;
 class Database;
 
 class MainWindow : public QMainWindow {
@@ -25,7 +25,7 @@ private slots:
     void about();
     void quit();
 
-    void onNoteAdded(int id);
+    void onNoteChanged(int id);
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 
@@ -48,7 +48,7 @@ private:
 
     QSplitter* splitter;
     Outliner* outliner;
-    QPlainTextEdit* textEdit;
+    Editor* editor;
 
     Database* database;
     QString currentFile;

@@ -24,6 +24,7 @@ public:
     bool removeRecord(int id);
 
     bool updateValue(int id, const QString& name, const QVariant& value);
+    QVariant value(int id, const QString& name);
 
     QVector<Title> titles();
 

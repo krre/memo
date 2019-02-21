@@ -118,8 +118,6 @@ void Outliner::insertChild(const QString& title) {
 
     selectionModel()->setCurrentIndex(model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
     updateActions();
-
-    emit noteAdded(childId);
 }
 
 
@@ -131,4 +129,10 @@ void Outliner::mousePressEvent(QMouseEvent* event) {
     } else {
         QTreeView::mousePressEvent(event);
     }
+}
+
+
+void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
+    Q_UNUSED(previous)
+    emit noteChanged(model->item(current)->id());
 }

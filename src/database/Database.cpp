@@ -98,6 +98,23 @@ bool Database::updateValue(int id, const QString& name, const QVariant& value) {
     return true;
 }
 
+QVariant Database::value(int id, const QString& name) {
+    QSqlQuery query;
+    query.prepare(QString("SELECT %1 FROM notes WHERE id = :id").arg(name));
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        queryError(query);
+        return QVariant();
+    }
+
+    if (query.first()) {
+        return query.value(name);
+    }
+
+    return QVariant();
+}
+
 
 QVector<Database::Title> Database::titles() {
     QVector<Title> list;
