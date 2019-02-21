@@ -84,6 +84,21 @@ bool Database::removeRecord(int id) {
     return true;
 }
 
+bool Database::updateValue(int id, const QString& name, const QVariant& value) {
+    QSqlQuery query;
+    query.prepare(QString("UPDATE notes SET %1 = :value WHERE id = :id").arg(name));
+    query.bindValue(":id", id);
+    query.bindValue(":value", value);
+
+    if (!query.exec()) {
+        queryError(query);
+        return false;
+    }
+
+    return true;
+}
+
+
 QVector<Database::Title> Database::titles() {
     QVector<Title> list;
 

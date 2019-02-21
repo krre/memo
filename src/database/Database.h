@@ -22,6 +22,9 @@ public:
 
     int insertRecord(int parentId, int pos, int depth, const QString& title);
     bool removeRecord(int id);
+
+    bool updateValue(int id, const QString& name, const QVariant& value);
+
     QVector<Title> titles();
 
 private:

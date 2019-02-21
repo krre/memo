@@ -58,6 +58,8 @@ void Outliner::addNote() {
 
 void Outliner::removeNotes() {
     QModelIndex index = selectionModel()->currentIndex();
+    TreeItem* parentItem = model->item(index.parent());
+
     int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(model->data(index).toString()));
     if (result == QMessageBox::Yes) {
         TreeItem* item = model->item(index);
@@ -66,6 +68,11 @@ void Outliner::removeNotes() {
 
         for (int id : ids) {
             database->removeRecord(id);
+        }
+
+        for (int i = 0; i < parentItem->childCount(); i++) {
+            int id = parentItem->child(i)->id();
+            database->updateValue(id, "pos", i);
         }
     }
 }
