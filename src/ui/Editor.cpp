@@ -2,7 +2,7 @@
 #include <QtWidgets>
 
 Editor::Editor(QWidget* parent) : QPlainTextEdit(parent) {
-
+    setEnabled(false);
 }
 
 void Editor::setId(int id) {
