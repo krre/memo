@@ -53,8 +53,10 @@ void Outliner::clear() {
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {
-    updateContextMenu();
-    contextMenu->exec(mapToGlobal(point));
+    if (database->isOpen()) {
+        updateContextMenu();
+        contextMenu->exec(mapToGlobal(point));
+    }
 }
 
 void Outliner::addNote() {

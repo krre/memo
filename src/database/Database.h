@@ -19,6 +19,7 @@ public:
     bool create(const QString& filepath);
     bool open(const QString& filepath);
     void close();
+    bool isOpen() const;
 
     int insertRecord(int parentId, int pos, int depth, const QString& title);
     bool removeRecord(int id);

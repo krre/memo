@@ -55,6 +55,10 @@ void Database::close() {
     }
 }
 
+bool Database::isOpen() const {
+    return db.isOpen();
+}
+
 int Database::insertRecord(int parentId, int pos, int depth, const QString& title) {
     QSqlQuery query;
     query.prepare("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)");
