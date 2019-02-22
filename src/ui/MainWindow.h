@@ -36,6 +36,7 @@ private:
     void setupSplitter();
     void createActions();
     void createTrayIcon();
+    void updateMenuState();
 
     void loadFile(const QString filePath);
     void setCurrentFile(const QString& filePath = QString());
@@ -45,6 +46,7 @@ private:
 
     QSystemTrayIcon* trayIcon;
     QMenu* trayIconMenu;
+    QAction* closeAction;
 
     QSplitter* splitter;
     Outliner* outliner;

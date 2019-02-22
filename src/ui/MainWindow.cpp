@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     setWindowIcon(icon);
     trayIcon->setIcon(icon);
     trayIcon->show();
+
+    updateMenuState();
 }
 
 MainWindow::~MainWindow() {
@@ -69,7 +71,7 @@ void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence::New);
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence::Open);
-    fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence::Close);
+    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence::Close);
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence::Cancel);
     fileMenu->addSeparator();
@@ -90,6 +92,12 @@ void MainWindow::createTrayIcon() {
     trayIcon = new QSystemTrayIcon(this);
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
     trayIcon->setContextMenu(trayIconMenu);
+}
+
+void MainWindow::updateMenuState() {
+    bool isFileOpen = !currentFile.isEmpty();
+
+    closeAction->setEnabled(isFileOpen);
 }
 
 void MainWindow::loadFile(const QString filePath) {
@@ -113,6 +121,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
     setWindowTitle(title);
     currentFile = filePath;
+    updateMenuState();
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
