@@ -52,6 +52,7 @@ void MainWindow::readSettings() {
     }
     settings.endArray();
 
+    currentId = settings.value("id", 0).toInt();
     loadFile(settings.value("filePath").toString());
 }
 
@@ -60,6 +61,8 @@ void MainWindow::writeSettings() {
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
     settings.setValue("filePath", currentFile);
+    settings.setValue("id", currentId);
+
 
     settings.beginWriteArray("recentFiles");
     for (int i = 0; i < recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
@@ -124,7 +127,7 @@ void MainWindow::loadFile(const QString filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     if (database->open(filePath)) {
-        outliner->build();
+        outliner->build(currentId);
         setCurrentFile(filePath);
     } else {
         showDatabaseErrorDialog();
@@ -266,6 +269,8 @@ void MainWindow::onNoteChanged(int id) {
     } else {
         editor->clear();
     }
+
+    currentId = id;
 }
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {

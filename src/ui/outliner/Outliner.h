@@ -14,7 +14,8 @@ public:
 
 public slots:
     void updateActions();
-    void build();
+    // Build tree and select row by id.
+    void build(int id = 0);
     void clear();
 
 signals:

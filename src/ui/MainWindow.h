@@ -57,4 +57,5 @@ private:
 
     Database* database;
     QString currentFile;
+    int currentId = 0;
 };

@@ -26,7 +26,7 @@ void Outliner::updateActions() {
     }
 }
 
-void Outliner::build() {
+void Outliner::build(int id) {
     clear();
     QVector<Database::Title> titles = database->titles();
 
@@ -42,7 +42,20 @@ void Outliner::build() {
         model->item(index)->setId(title.id);
     }
 
-    setCurrentIndex(QModelIndex());
+    if (id == 0) {
+        setCurrentIndex(QModelIndex());
+    } else {
+        TreeItem* item = model->root()->find(id);
+        QModelIndex index = model->index(item);
+        setCurrentIndex(index);
+
+        TreeItem* parent = item->parent();
+
+        while (parent != rootItem) {
+            setExpanded(model->index(parent), true);
+            parent = parent->parent();
+        }
+    }
 }
 
 void Outliner::clear() {
