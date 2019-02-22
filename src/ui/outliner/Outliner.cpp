@@ -41,6 +41,8 @@ void Outliner::build() {
         model->setData(index, QVariant(title.title), Qt::EditRole);
         model->item(index)->setId(title.id);
     }
+
+    setCurrentIndex(QModelIndex());
 }
 
 void Outliner::clear() {
