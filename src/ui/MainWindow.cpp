@@ -45,6 +45,13 @@ void MainWindow::readSettings() {
 
     splitter->restoreState(settings.value("splitter").toByteArray());
 
+    int size = settings.beginReadArray("recentFiles");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        addRecentFile(settings.value("path").toString());
+    }
+    settings.endArray();
+
     loadFile(settings.value("filePath").toString());
 }
 
@@ -53,6 +60,13 @@ void MainWindow::writeSettings() {
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
     settings.setValue("filePath", currentFile);
+
+    settings.beginWriteArray("recentFiles");
+    for (int i = 0; i < recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentFilesMenu->actions().at(i)->text());
+    }
+    settings.endArray();
 }
 
 void MainWindow::setupSplitter() {
