@@ -75,11 +75,6 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
     return true;
 }
 
-void TreeModel::clear() {
-    delete rootItem;
-    rootItem = new TreeItem();
-}
-
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
     bool success;
 

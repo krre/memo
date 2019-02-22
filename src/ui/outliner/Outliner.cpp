@@ -10,8 +10,7 @@ Outliner::Outliner(Database* database) : database(database) {
     createContextMenu();
     header()->setVisible(false);
 
-    model = new TreeModel(this);
-    setModel(model);
+    clear();
 
     connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, [=] {
         TreeItem* item = model->item(selectionModel()->currentIndex());
@@ -45,7 +44,12 @@ void Outliner::build() {
 }
 
 void Outliner::clear() {
-    model->clear();
+    if (model) {
+        delete model;
+    }
+
+    model = new TreeModel;
+    setModel(model);
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {

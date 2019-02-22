@@ -40,6 +40,6 @@ private:
     QMenu* contextMenu;
     QAction* removeAction;
     QAction* renameAction;
-    TreeModel* model;
-    Database* database;
+    TreeModel* model = nullptr;
+    Database* database = nullptr;
 };

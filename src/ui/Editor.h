@@ -11,5 +11,5 @@ public:
     int id() const;
 
 private:
-    int noteId;
+    int noteId = 0;
 };
