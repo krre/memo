@@ -72,6 +72,12 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence::New);
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence::Open);
     closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence::Close);
+
+    recentFilesMenu = new QMenu(tr("Recent Files"), this);
+    recentFilesMenu->addSeparator();
+    recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentFiles);
+    fileMenu->addAction(recentFilesMenu->menuAction());
+
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence::Cancel);
     fileMenu->addSeparator();
@@ -109,6 +115,8 @@ void MainWindow::loadFile(const QString filePath) {
     } else {
         showDatabaseErrorDialog();
     }
+
+    addRecentFile(filePath);
 }
 
 void MainWindow::setCurrentFile(const QString& filePath) {
@@ -121,6 +129,27 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
     setWindowTitle(title);
     currentFile = filePath;
+    updateMenuState();
+}
+
+void MainWindow::addRecentFile(const QString filePath) {
+    for (QAction* action : recentFilesMenu->actions()) {
+        if (action->text() == filePath) {
+            recentFilesMenu->removeAction(action);
+        }
+    }
+
+    QAction* fileAction = new QAction(filePath);
+    connect(fileAction, &QAction::triggered, [=] {
+        loadFile(filePath);
+    });
+
+    recentFilesMenu->insertAction(recentFilesMenu->actions().first(), fileAction);
+
+    if (recentFilesMenu->actions().size() > Constants::Window::MaxRecentFiles + Constants::Window::SystemRecentFilesActions) {
+        recentFilesMenu->removeAction(recentFilesMenu->actions().at(recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1));
+    }
+
     updateMenuState();
 }
 
@@ -177,6 +206,14 @@ void MainWindow::closeFile() {
     editor->setId(0);
     outliner->clear();
     setCurrentFile();
+}
+
+void MainWindow::clearMenuRecentFiles() {
+    for (int i = recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
+        recentFilesMenu->removeAction(recentFilesMenu->actions().at(i));
+    }
+
+    updateMenuState();
 }
 
 void MainWindow::about() {

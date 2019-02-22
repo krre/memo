@@ -10,4 +10,9 @@ namespace Constants {
         constexpr auto SettingsName = "memo.conf";
         constexpr auto Copyright = "Copyright © 2019, Vladimir Zarypov";
     }
+
+    namespace Window {
+        constexpr int MaxRecentFiles = 10;
+        constexpr int SystemRecentFilesActions = 2;
+    }
 }

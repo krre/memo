@@ -22,6 +22,7 @@ private slots:
     void newFile();
     void openFile();
     void closeFile();
+    void clearMenuRecentFiles();
     void about();
     void quit();
 
@@ -40,12 +41,14 @@ private:
 
     void loadFile(const QString filePath);
     void setCurrentFile(const QString& filePath = QString());
+    void addRecentFile(const QString filePath);
 
     void showErrorDialog(const QString& message);
     void showDatabaseErrorDialog();
 
     QSystemTrayIcon* trayIcon;
     QMenu* trayIconMenu;
+    QMenu* recentFilesMenu;
     QAction* closeAction;
 
     QSplitter* splitter;
