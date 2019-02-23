@@ -26,8 +26,8 @@ bool Database::create(const QString& filepath) {
                     "depth INTEGER,"
                     "title TEXT,"
                     "note TEXT,"
-                    "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
-                    "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")) {
+                    "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
+                    "updated_at TIMESTAMP DEFAULT (datetime('now', 'localtime')))")) {
         queryError(query);
         return false;
     }
@@ -101,7 +101,7 @@ bool Database::removeRecord(int id) {
 
 bool Database::updateValue(int id, const QString& name, const QVariant& value) {
     QSqlQuery query;
-    query.prepare(QString("UPDATE notes SET %1 = :value, updated_at = datetime('now') WHERE id = :id").arg(name));
+    query.prepare(QString("UPDATE notes SET %1 = :value, updated_at = datetime('now', 'localtime') WHERE id = :id").arg(name));
     query.bindValue(":id", id);
     query.bindValue(":value", value);
 
