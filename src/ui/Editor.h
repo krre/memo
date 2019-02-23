@@ -10,6 +10,12 @@ public:
     void setId(int id);
     int id() const;
 
+signals:
+    void focusLost();
+
+protected:
+    void focusOutEvent(QFocusEvent* event) override;
+
 private:
     int noteId = 0;
 };

@@ -12,3 +12,8 @@ void Editor::setId(int id) {
 int Editor::id() const {
     return noteId;
 }
+
+void Editor::focusOutEvent(QFocusEvent* event) {
+    Q_UNUSED(event)
+    emit focusLost();
+}

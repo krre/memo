@@ -27,6 +27,7 @@ private slots:
     void quit();
 
     void onNoteChanged(int id);
+    void onEditorFocusLost();
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
 

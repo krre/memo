@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     setupSplitter();
 
     connect(outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
+    connect(editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
 
     readSettings();
 
@@ -250,12 +251,6 @@ void MainWindow::quit() {
 }
 
 void MainWindow::onNoteChanged(int id) {
-    int lastId = editor->id();
-
-    if (lastId && editor->document()->isModified()) {
-        database->updateValue(lastId, "note", editor->document()->toPlainText());
-    }
-
     editor->setId(id);
     editor->setEnabled(id > 0);
 
@@ -265,6 +260,14 @@ void MainWindow::onNoteChanged(int id) {
         editor->setFocus();
     } else {
         editor->clear();
+    }
+}
+
+void MainWindow::onEditorFocusLost() {
+    int lastId = editor->id();
+
+    if (lastId && editor->document()->isModified()) {
+        database->updateValue(lastId, "note", editor->document()->toPlainText());
     }
 }
 
