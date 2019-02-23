@@ -48,7 +48,7 @@ bool Database::create(const QString& filepath) {
 }
 
 bool Database::open(const QString& filepath) {
-    qDebug().noquote() << "Open database:" << filepath;
+    qInfo().noquote() << "Open database:" << filepath;
     db.close();
     db.setDatabaseName(filepath);
     if (!db.open()) {
