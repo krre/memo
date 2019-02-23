@@ -153,12 +153,10 @@ void Outliner::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && !indexAt(event->localPos().toPoint()).isValid()) {
         selectionModel()->clearSelection();
         setCurrentIndex(QModelIndex());
-        event->accept();
     } else {
         QTreeView::mousePressEvent(event);
     }
 }
-
 
 void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
     Q_UNUSED(previous)
