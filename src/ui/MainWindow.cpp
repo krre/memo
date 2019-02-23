@@ -252,7 +252,7 @@ void MainWindow::quit() {
 void MainWindow::onNoteChanged(int id) {
     int lastId = editor->id();
 
-    if (lastId) {
+    if (lastId && editor->document()->isModified()) {
         database->updateValue(lastId, "note", editor->document()->toPlainText());
     }
 
