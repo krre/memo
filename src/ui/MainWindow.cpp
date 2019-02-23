@@ -188,9 +188,9 @@ void MainWindow::newFile() {
 
     if (fileName.isEmpty()) return;
 
-    if (QFile::exists(fileName)) {
-        closeFile();
+    closeFile();
 
+    if (QFile::exists(fileName)) {
         if (!QFile::remove(fileName)) {
             showErrorDialog(tr("Error rewriting old file"));
         }
@@ -208,17 +208,14 @@ void MainWindow::openFile() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
                                 tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
     if (!fileName.isEmpty()) {
-        if (database->open(fileName)) {
-            loadFile(fileName);
-        } else {
-            showDatabaseErrorDialog();
-        }
+        closeFile();
+        loadFile(fileName);
     }
 }
 
 void MainWindow::closeFile() {
     database->close();
-    editor->setId(0);
+    onNoteChanged(0);
     outliner->clear();
     setCurrentFile();
 }
