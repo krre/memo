@@ -84,9 +84,9 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence::New);
-    fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence::Open);
-    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence::Close);
+    fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
+    fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
+    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
 
     recentFilesMenu = new QMenu(tr("Recent Files"), this);
     recentFilesMenu->addSeparator();
@@ -94,9 +94,9 @@ void MainWindow::createActions() {
     fileMenu->addAction(recentFilesMenu->menuAction());
 
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence::Cancel);
+    fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence("Esc"));
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence::Quit);
+    fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
