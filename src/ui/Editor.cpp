@@ -14,8 +14,8 @@ int Editor::id() const {
 }
 
 void Editor::focusOutEvent(QFocusEvent* event) {
-    Q_UNUSED(event)
     emit focusLost();
+    QPlainTextEdit::focusOutEvent(event);
 }
 
 void Editor::keyPressEvent(QKeyEvent* event) {
