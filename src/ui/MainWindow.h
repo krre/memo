@@ -2,7 +2,6 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 
-class QSystemTrayIcon;
 class QSplitter;
 class Outliner;
 class Editor;
