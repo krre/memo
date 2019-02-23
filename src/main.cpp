@@ -3,7 +3,6 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QSettings>
-#include <QDebug>
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);

@@ -1,7 +1,6 @@
 #include "TreeItem.h"
 #include <QStringList>
 #include <QModelIndex>
-#include <QDebug>
 
 TreeItem::TreeItem(TreeItem* parent) : parentItem(parent) {
 }
