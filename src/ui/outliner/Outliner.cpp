@@ -143,6 +143,8 @@ void Outliner::insertChild(const QString& title) {
     model->item(child)->setId(childId);
 
     selectionModel()->setCurrentIndex(model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
+    setExpanded(currentIndex, true);
+
     updateActions();
 }
 
