@@ -256,7 +256,6 @@ void MainWindow::onNoteChanged(int id) {
     if (id) {
         QString note = database->value(id, "note").toString();
         editor->setPlainText(note);
-        editor->setFocus();
     } else {
         editor->clear();
     }
