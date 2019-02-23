@@ -14,8 +14,7 @@ public:
 
 public slots:
     void updateActions();
-    // Build tree and select row by id.
-    void build(int id = 0);
+    void build();
     void clear();
 
 signals:
@@ -43,4 +42,5 @@ private:
     QAction* renameAction;
     TreeModel* model = nullptr;
     Database* database = nullptr;
+    bool isInited = false;
 };

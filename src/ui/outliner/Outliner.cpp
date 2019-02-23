@@ -26,9 +26,10 @@ void Outliner::updateActions() {
     }
 }
 
-void Outliner::build(int id) {
+void Outliner::build() {
     clear();
     QVector<Database::Title> titles = database->titles();
+    int selectedId = database->metaValue("selected_id").toInt();
 
     TreeItem* rootItem = model->root();
 
@@ -42,10 +43,10 @@ void Outliner::build(int id) {
         model->item(index)->setId(title.id);
     }
 
-    if (id == 0) {
+    if (selectedId == 0) {
         setCurrentIndex(QModelIndex());
     } else {
-        TreeItem* item = model->root()->find(id);
+        TreeItem* item = model->root()->find(selectedId);
         QModelIndex index = model->index(item);
         setCurrentIndex(index);
 
@@ -59,12 +60,16 @@ void Outliner::build(int id) {
 }
 
 void Outliner::clear() {
+    isInited = false;
+
     if (model) {
         delete model;
     }
 
     model = new TreeModel;
     setModel(model);
+
+    isInited = true;
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {
@@ -155,5 +160,9 @@ void Outliner::mousePressEvent(QMouseEvent* event) {
 
 void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
     Q_UNUSED(previous)
-    emit noteChanged(model->item(current)->id());
+    if (!isInited) return;
+
+    int id = model->item(current)->id();
+    database->updateMetaValue("selected_id", id);
+    emit noteChanged(id);
 }

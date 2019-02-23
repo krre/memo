@@ -27,8 +27,19 @@ bool Database::create(const QString& filepath) {
                     "title TEXT,"
                     "note TEXT,"
                     "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
-                    "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
-                    ")")) {
+                    "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)")) {
+        queryError(query);
+        return false;
+    }
+
+    if (!query.exec("CREATE TABLE meta("
+                    "version INTEGER,"
+                    "selected_id INTEGER)")) {
+        queryError(query);
+        return false;
+    }
+
+    if (!query.exec("INSERT INTO meta (version, selected_id) VALUES (1, 0)")) {
         queryError(query);
         return false;
     }
@@ -119,6 +130,36 @@ QVariant Database::value(int id, const QString& name) {
     return QVariant();
 }
 
+bool Database::updateMetaValue(const QString& name, const QVariant& value) {
+    if (!db.isOpen()) return false;
+
+    QSqlQuery query;
+    query.prepare(QString("UPDATE meta SET %1 = :value").arg(name));
+    query.bindValue(":value", value);
+
+    if (!query.exec()) {
+        queryError(query);
+        return false;
+    }
+
+    return true;
+}
+
+QVariant Database::metaValue(const QString& name) {
+    QSqlQuery query;
+    query.prepare(QString("SELECT %1 FROM meta").arg(name));
+
+    if (!query.exec()) {
+        queryError(query);
+        return QVariant();
+    }
+
+    if (query.first()) {
+        return query.value(name);
+    }
+
+    return QVariant();
+}
 
 QVector<Database::Title> Database::titles() {
     QVector<Title> list;

@@ -27,6 +27,9 @@ public:
     bool updateValue(int id, const QString& name, const QVariant& value);
     QVariant value(int id, const QString& name);
 
+    bool updateMetaValue(const QString& name, const QVariant& value);
+    QVariant metaValue(const QString& name);
+
     QVector<Title> titles();
 
 private:
