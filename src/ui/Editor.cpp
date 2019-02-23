@@ -17,3 +17,11 @@ void Editor::focusOutEvent(QFocusEvent* event) {
     Q_UNUSED(event)
     emit focusLost();
 }
+
+void Editor::keyPressEvent(QKeyEvent* event) {
+    if (event->key() == Qt::Key_Backtab) {
+        emit leave();
+    } else {
+        QPlainTextEdit::keyPressEvent(event);
+    }
+}

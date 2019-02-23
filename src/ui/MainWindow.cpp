@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
 
     connect(outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
     connect(editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
+    connect(editor, &Editor::leave, [=] {
+       outliner->setFocus();
+    });
 
     readSettings();
 
