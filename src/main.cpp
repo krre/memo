@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QMessageBox>
 #include <QSettings>
+#include <QTranslator>
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
@@ -18,6 +19,10 @@ int main(int argc, char* argv[]) {
 
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QApplication::setQuitOnLastWindowClosed(false);
+
+    QTranslator translator;
+    translator.load("memo-ru", ":/i18n");
+//    app.installTranslator(&translator);
 
     MainWindow window;
     window.show();

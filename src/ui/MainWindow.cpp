@@ -239,12 +239,12 @@ void MainWindow::about() {
            Outliner for quick notes<br><br> \
            Based on Qt %4<br> \
            Build on %5<br><br> \
-           <a href=%6>%6</a><br><br>%7")
+           <a href=%6>%6</a><br><br>Copyright © %7, Vladimir Zarypov")
             .arg(Constants::App::Name)
             .arg(Constants::App::Version).arg(Constants::App::Status)
             .arg(QT_VERSION_STR)
             .arg(__DATE__)
-            .arg(Constants::App::URL).arg(Constants::App::Copyright));
+            .arg(Constants::App::URL).arg(Constants::App::CopyrightYear));
 }
 
 void MainWindow::quit() {

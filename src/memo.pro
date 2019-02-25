@@ -8,6 +8,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++17
 
+TRANSLATIONS = i18n/memo-ru.ts
+
 SOURCES += \
         main.cpp \
     ui/MainWindow.cpp \
@@ -28,3 +30,6 @@ HEADERS += \
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    i18n/memo-ru.ts

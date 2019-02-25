@@ -8,7 +8,7 @@ namespace Constants {
         constexpr auto Status = ""; // Release, Beta, Alpha
         constexpr auto URL = "https://github.com/krre/memo";
         constexpr auto SettingsName = "memo.conf";
-        constexpr auto Copyright = "Copyright © 2019, Vladimir Zarypov";
+        constexpr auto CopyrightYear = "2019";
     }
 
     namespace Window {
