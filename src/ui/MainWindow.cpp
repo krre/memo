@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Editor.h"
+#include "Options.h"
 #include "core/Constants.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
@@ -100,6 +101,12 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence("Esc"));
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
+
+    QMenu* toolsMenu = menuBar()->addMenu(tr("Tools"));
+    toolsMenu->addAction(tr("Options..."), [] {
+        Options options;
+        options.exec();
+    });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
