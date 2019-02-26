@@ -20,9 +20,18 @@ int main(int argc, char* argv[]) {
     QSettings::setDefaultFormat(QSettings::IniFormat);
     QApplication::setQuitOnLastWindowClosed(false);
 
+    QSettings settings;
+    QString language = settings.value("language").toString();
+
     QTranslator translator;
-    translator.load("memo-ru", ":/i18n");
-//    app.installTranslator(&translator);
+
+    if(language.isEmpty()) {
+        translator.load(QLocale(), QLatin1String("memo"), QLatin1String("-"), QLatin1String(":/i18n"));
+    } else {
+        translator.load(QString("memo-%1").arg(language), ":/i18n");
+    }
+
+    app.installTranslator(&translator);
 
     MainWindow window;
     window.show();
