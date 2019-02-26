@@ -110,9 +110,24 @@
 <context>
     <name>Options</name>
     <message>
-        <location filename="../ui/Options.cpp" line="4"/>
+        <location filename="../ui/Options.cpp" line="5"/>
         <source>Options</source>
         <translation>Настройки</translation>
+    </message>
+    <message>
+        <location filename="../ui/Options.cpp" line="8"/>
+        <source>User Interface</source>
+        <translation>Интерфейс пользователя</translation>
+    </message>
+    <message>
+        <location filename="../ui/Options.cpp" line="11"/>
+        <source>Language:</source>
+        <translation>Язык:</translation>
+    </message>
+    <message>
+        <location filename="../ui/Options.cpp" line="14"/>
+        <source>&lt;System&gt;</source>
+        <translation>&lt;Системный&gt;</translation>
     </message>
 </context>
 <context>
