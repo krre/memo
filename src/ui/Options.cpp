@@ -36,9 +36,11 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     readSettings();
 }
 
-
 void Options::accept() {
-    writeSettings();
+    if (writeSettings()) {
+        QMessageBox::information(this, tr("Restart requred"), tr("You should be restart application"));
+    }
+
     close();
 }
 
@@ -54,7 +56,17 @@ void Options::readSettings() {
     }
 }
 
-void Options::writeSettings() {
+bool Options::writeSettings() {
+    bool restartRequre = false;
+
     QSettings settings;
-    settings.setValue("language", languageComboBox->currentData());
+
+    QString language = languageComboBox->currentData().toString();
+    if (language != settings.value("language").toString()) {
+        restartRequre = true;
+    }
+
+    settings.setValue("language", language);
+
+    return restartRequre;
 }

@@ -14,7 +14,7 @@ public slots:
 
 private:
     void readSettings();
-    void writeSettings();
+    bool writeSettings();
 
     QComboBox* languageComboBox;
 };

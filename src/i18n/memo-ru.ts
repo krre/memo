@@ -129,6 +129,16 @@
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
+    <message>
+        <location filename="../ui/Options.cpp" line="41"/>
+        <source>Restart requred</source>
+        <translation>Требуется перезапуск</translation>
+    </message>
+    <message>
+        <location filename="../ui/Options.cpp" line="41"/>
+        <source>You should be restart application</source>
+        <translation>Вы должны перезапустить приложение</translation>
+    </message>
 </context>
 <context>
     <name>Outliner</name>
