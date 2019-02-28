@@ -141,8 +141,12 @@
     </message>
     <message>
         <location filename="../ui/Options.cpp" line="44"/>
-        <source>You should be restart application</source>
+        <source>You must restart application</source>
         <translation>Вы должны перезапустить приложение</translation>
+    </message>
+    <message>
+        <source>You should be restart application</source>
+        <translation type="vanished">Вы должны перезапустить приложение</translation>
     </message>
 </context>
 <context>

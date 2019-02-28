@@ -41,7 +41,7 @@ Options::Options(QWidget* parent) : QDialog (parent) {
 
 void Options::accept() {
     if (writeSettings()) {
-        QMessageBox::information(this, tr("Restart requred"), tr("You should be restart application"));
+        QMessageBox::information(this, tr("Restart requred"), tr("You must restart application"));
     }
 
     close();
