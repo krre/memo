@@ -9,6 +9,7 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSplitter) {
     setWindowTitle(Constants::App::Name);
+    setWindowIcon(QIcon(":/images/icon.png"));
     setCentralWidget(splitter);
 
     database = new Database(this);
@@ -24,11 +25,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     });
 
     readSettings();
-
-    QIcon icon = QIcon(":/images/icon.png");
-    setWindowIcon(icon);
-    trayIcon->setIcon(icon);
-    trayIcon->show();
 
     updateMenuState();
 }
@@ -127,6 +123,8 @@ void MainWindow::createTrayIcon() {
     trayIcon = new QSystemTrayIcon(this);
     connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
     trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setIcon(windowIcon());
+    trayIcon->show();
 }
 
 void MainWindow::updateMenuState() {
