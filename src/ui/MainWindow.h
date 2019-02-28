@@ -33,6 +33,7 @@ private slots:
 private:
     void readSettings();
     void writeSettings();
+    void applyHotSettings();
 
     void setupSplitter();
     void createActions();

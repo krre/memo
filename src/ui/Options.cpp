@@ -8,6 +8,7 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     QGroupBox* groupBox = new QGroupBox(tr("User Interface"));
 
     QGridLayout* gridLayout = new QGridLayout;
+
     gridLayout->addWidget(new QLabel(tr("Language:")), 0, 0);
 
     languageComboBox = new QComboBox;
@@ -19,7 +20,10 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     gridLayout->setColumnStretch(1, 1);
 
     minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
-    gridLayout->addWidget(minimizeCheckBox, 1, 0, 2, 0);
+    gridLayout->addWidget(minimizeCheckBox, 1, 0, 1, -1);
+
+    hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
+    gridLayout->addWidget(hideTrayCheckBox, 2, 0, 1, -1);
 
     groupBox->setLayout(gridLayout);
 
@@ -44,7 +48,7 @@ void Options::accept() {
         QMessageBox::information(this, tr("Restart requred"), tr("You must restart application"));
     }
 
-    close();
+    QDialog::accept();
 }
 
 void Options::readSettings() {
@@ -59,6 +63,7 @@ void Options::readSettings() {
     }
 
     minimizeCheckBox->setChecked(settings.value("minimizeOnStartup").toBool());
+    hideTrayCheckBox->setChecked(settings.value("hideTrayIcon").toBool());
 }
 
 bool Options::writeSettings() {
@@ -73,6 +78,7 @@ bool Options::writeSettings() {
 
     settings.setValue("language", language);
     settings.setValue("minimizeOnStartup", minimizeCheckBox->isChecked());
+    settings.setValue("hideTrayIcon", hideTrayCheckBox->isChecked());
 
     return restartRequre;
 }

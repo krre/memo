@@ -33,6 +33,8 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::readSettings() {
+    applyHotSettings();
+
     QSettings settings;
     if (settings.value("minimizeOnStartup").toBool()) {
         QTimer::singleShot(0, this, SLOT(hide()));
@@ -74,6 +76,11 @@ void MainWindow::writeSettings() {
     settings.endArray();
 }
 
+void MainWindow::applyHotSettings() {
+    QSettings settings;
+    trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
+}
+
 void MainWindow::setupSplitter() {
     outliner = new Outliner(database);
     editor = new Editor;
@@ -103,9 +110,11 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 
     QMenu* toolsMenu = menuBar()->addMenu(tr("Tools"));
-    toolsMenu->addAction(tr("Options..."), [] {
+    toolsMenu->addAction(tr("Options..."), [this] {
         Options options;
-        options.exec();
+        if (options.exec() == QDialog::Accepted) {
+            applyHotSettings();
+        }
     });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));

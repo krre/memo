@@ -19,4 +19,5 @@ private:
 
     QComboBox* languageComboBox;
     QCheckBox* minimizeCheckBox;
+    QCheckBox* hideTrayCheckBox;
 };
