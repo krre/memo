@@ -2,6 +2,7 @@
 #include <QDialog>
 
 class QComboBox;
+class QCheckBox;
 
 class Options : public QDialog {
     Q_OBJECT
@@ -17,4 +18,5 @@ private:
     bool writeSettings();
 
     QComboBox* languageComboBox;
+    QCheckBox* minimizeCheckBox;
 };

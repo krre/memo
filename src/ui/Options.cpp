@@ -18,6 +18,9 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     gridLayout->addWidget(languageComboBox, 0, 1, Qt::AlignLeft);
     gridLayout->setColumnStretch(1, 1);
 
+    minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
+    gridLayout->addWidget(minimizeCheckBox, 1, 0, 2, 0);
+
     groupBox->setLayout(gridLayout);
 
     verticalLayout->addWidget(groupBox);
@@ -54,6 +57,8 @@ void Options::readSettings() {
             languageComboBox->setCurrentIndex(index);
         }
     }
+
+    minimizeCheckBox->setChecked(settings.value("minimizeOnStartup").toBool());
 }
 
 bool Options::writeSettings() {
@@ -67,6 +72,7 @@ bool Options::writeSettings() {
     }
 
     settings.setValue("language", language);
+    settings.setValue("minimizeOnStartup", minimizeCheckBox->isChecked());
 
     return restartRequre;
 }
