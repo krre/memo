@@ -10,13 +10,13 @@ public:
 
     bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override;
 
-    void setShortcut(int keycode, unsigned int modifiers);
+    void setShortcut(int key, unsigned int mods);
     void unsetShortcut();
 
 signals:
     void activated();
 
 private:
-    int keycode;
-    unsigned int modifiers;
+    int key;
+    unsigned int mods;
 };

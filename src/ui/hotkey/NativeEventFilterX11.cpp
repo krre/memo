@@ -26,7 +26,7 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* mes
             xcb_key_press_event_t* keyEvent = static_cast<xcb_key_press_event_t*>(message);
 
             for (quint32 maskMods : maskModifiers) {
-                if((keyEvent->state == (modifiers | maskMods )) &&  keyEvent->detail == keycode) {
+                if((keyEvent->state == (mods | maskMods )) &&  keyEvent->detail == key) {
                     emit activated();
                     return true;
                 }
@@ -45,20 +45,20 @@ void NativeEventFilter::setShortcut(int keycode, unsigned int modifiers) {
     if (modifiers & Qt::AltModifier) mods |= Mod1Mask;
     if (modifiers & Qt::MetaModifier) mods |= Mod4Mask;
 
-    this->modifiers = mods;
+    this->mods = mods;
 
     QString keyString = QKeySequence(keycode).toString(QKeySequence::NativeText);
     KeySym keysym = XStringToKeysym(keyString.toLatin1().constData());
 
-    this->keycode = XKeysymToKeycode(display, keysym);
+    this->key = XKeysymToKeycode(display, keysym);
 
     for (quint32 maskMods : maskModifiers) {
-        XGrabKey(display, this->keycode, this->modifiers | maskMods, win, True, GrabModeAsync, GrabModeAsync);
+        XGrabKey(display, this->key, this->mods | maskMods, win, True, GrabModeAsync, GrabModeAsync);
     }
 }
 
 void NativeEventFilter::unsetShortcut() {
     for(quint32 maskMods : maskModifiers) {
-        XUngrabKey(display, keycode, modifiers | maskMods, win);
+        XUngrabKey(display, key, mods | maskMods, win);
     }
 }
