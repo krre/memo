@@ -22,11 +22,11 @@ SOURCES += \
     database/Database.cpp \
     ui/Editor.cpp \
     ui/Options.cpp \
-    ui/hotkey/GlobalHotkey.cpp \
-    ui/hotkey/NativeEventFilterMac.cpp
+    ui/hotkey/GlobalHotkey.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
+mac: SOURCES += ui/hotkey/NativeEventFilterMac.cpp
 
 HEADERS += \
     core/Constants.h \
