@@ -14,5 +14,6 @@ namespace Constants {
     namespace Window {
         constexpr int MaxRecentFiles = 10;
         constexpr int SystemRecentFilesActions = 2;
+        constexpr auto DefaultGlobalHotkey = "Ctrl+Alt+M";
     }
 }

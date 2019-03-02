@@ -1,14 +1,16 @@
 QT += core gui widgets sql
+unix: QT += x11extras
 
 TARGET = memo
 TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
-# Use QMessageLogContext in release build
 
 CONFIG += c++17
 
 TRANSLATIONS = i18n/memo-ru.ts
+
+unix: LIBS += -lX11
 
 SOURCES += \
         main.cpp \
@@ -18,7 +20,11 @@ SOURCES += \
     ui/outliner/TreeItem.cpp \
     database/Database.cpp \
     ui/Editor.cpp \
-    ui/Options.cpp
+    ui/Options.cpp \
+    ui/hotkey/GlobalHotkey.cpp
+
+unix: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
+else: win32: SOURCES += ui/hotkey/NativeEventFilterWin32.cpp
 
 HEADERS += \
     core/Constants.h \
@@ -28,7 +34,9 @@ HEADERS += \
     ui/outliner/TreeItem.h \
     database/Database.h \
     ui/Editor.h \
-    ui/Options.h
+    ui/Options.h \
+    ui/hotkey/NativeEventFilter.h \
+    ui/hotkey/GlobalHotkey.h
 
 RESOURCES += \
     resources.qrc

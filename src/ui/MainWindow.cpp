@@ -4,6 +4,7 @@
 #include "core/Constants.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
+#include "hotkey/GlobalHotkey.h"
 #include <QtCore>
 #include <QtWidgets>
 
@@ -13,6 +14,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     setCentralWidget(splitter);
 
     database = new Database(this);
+    globalHotkey = new GlobalHotkey(this);
+    connect(globalHotkey, &GlobalHotkey::activated, this, &MainWindow::show);
 
     createActions();
     createTrayIcon();
@@ -52,7 +55,7 @@ void MainWindow::readSettings() {
 
     splitter->restoreState(settings.value("splitter").toByteArray());
 
-    int size = settings.beginReadArray("recentFiles");
+    int size = settings.beginReadArray("RecentFiles");
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
         addRecentFile(settings.value("path").toString());
@@ -68,7 +71,7 @@ void MainWindow::writeSettings() {
     settings.setValue("splitter", splitter->saveState());
     settings.setValue("filePath", currentFile);
 
-    settings.beginWriteArray("recentFiles");
+    settings.beginWriteArray("RecentFiles");
     for (int i = 0; i < recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
         settings.setArrayIndex(i);
         settings.setValue("path", recentFilesMenu->actions().at(i)->text());
@@ -79,6 +82,12 @@ void MainWindow::writeSettings() {
 void MainWindow::applyHotSettings() {
     QSettings settings;
     trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
+
+    if (settings.value("GlobalHotkey/enabled").toBool()) {
+        globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Constants::Window::DefaultGlobalHotkey).toString());
+    } else {
+        globalHotkey->unsetShortcut();
+    }
 }
 
 void MainWindow::setupSplitter() {

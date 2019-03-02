@@ -6,6 +6,7 @@ class QSplitter;
 class Outliner;
 class Editor;
 class Database;
+class GlobalHotkey;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -55,6 +56,7 @@ private:
     QSplitter* splitter;
     Outliner* outliner;
     Editor* editor;
+    GlobalHotkey* globalHotkey;
 
     Database* database;
     QString currentFile;
