@@ -1,5 +1,5 @@
 QT += core gui widgets sql
-unix: QT += x11extras
+linux: QT += x11extras
 
 TARGET = memo
 TEMPLATE = app
@@ -10,11 +10,11 @@ CONFIG += c++17
 
 TRANSLATIONS = i18n/memo-ru.ts
 
-unix: LIBS += -lX11
+linux: LIBS += -lX11
 win32: LIBS += -luser32
 
 SOURCES += \
-        main.cpp \
+    main.cpp \
     ui/MainWindow.cpp \
     ui/outliner/Outliner.cpp \
     ui/outliner/TreeModel.cpp \
@@ -22,9 +22,10 @@ SOURCES += \
     database/Database.cpp \
     ui/Editor.cpp \
     ui/Options.cpp \
-    ui/hotkey/GlobalHotkey.cpp
+    ui/hotkey/GlobalHotkey.cpp \
+    ui/hotkey/NativeEventFilterMac.cpp
 
-unix: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
+linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
 
 HEADERS += \
