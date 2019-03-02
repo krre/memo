@@ -1,7 +1,5 @@
 #include "NativeEventFilter.h"
 #include <QtX11Extras/QX11Info>
-#include <QDebug>
-#include <QMetaMethod>
 #include <QKeySequence>
 #include <xcb/xcb.h>
 #include <X11/Xutil.h>
