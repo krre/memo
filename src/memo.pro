@@ -11,6 +11,7 @@ CONFIG += c++17
 TRANSLATIONS = i18n/memo-ru.ts
 
 unix: LIBS += -lX11
+win32: LIBS += -luser32
 
 SOURCES += \
         main.cpp \
@@ -24,7 +25,7 @@ SOURCES += \
     ui/hotkey/GlobalHotkey.cpp
 
 unix: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
-else: win32: SOURCES += ui/hotkey/NativeEventFilterWin32.cpp
+win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
 
 HEADERS += \
     core/Constants.h \
