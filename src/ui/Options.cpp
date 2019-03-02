@@ -1,42 +1,53 @@
 #include "Options.h"
+#include "core/Constants.h"
 #include <QtWidgets>
 
 Options::Options(QWidget* parent) : QDialog (parent) {
     setWindowTitle(tr("Options"));
-    QVBoxLayout* verticalLayout = new QVBoxLayout;
+    QVBoxLayout* layout = new QVBoxLayout;
 
-    QGroupBox* groupBox = new QGroupBox(tr("User Interface"));
+    QGroupBox* groupBoxUi = new QGroupBox(tr("User Interface"));
 
-    QGridLayout* gridLayout = new QGridLayout;
+    QGridLayout* gridLayoutUi = new QGridLayout;
+    gridLayoutUi->setColumnStretch(1, 1);
 
-    gridLayout->addWidget(new QLabel(tr("Language:")), 0, 0);
+    gridLayoutUi->addWidget(new QLabel(tr("Language:")), 0, 0);
 
     languageComboBox = new QComboBox;
     languageComboBox->addItem(tr("<System>"));
     languageComboBox->addItem("English", "en");
     languageComboBox->addItem("Russian", "ru");
 
-    gridLayout->addWidget(languageComboBox, 0, 1, Qt::AlignLeft);
-    gridLayout->setColumnStretch(1, 1);
+    gridLayoutUi->addWidget(languageComboBox, 0, 1, Qt::AlignLeft);
 
     minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
-    gridLayout->addWidget(minimizeCheckBox, 1, 0, 1, -1);
+    gridLayoutUi->addWidget(minimizeCheckBox, 1, 0, 1, -1);
 
     hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
-    gridLayout->addWidget(hideTrayCheckBox, 2, 0, 1, -1);
+    gridLayoutUi->addWidget(hideTrayCheckBox, 2, 0, 1, -1);
 
-    groupBox->setLayout(gridLayout);
+    groupBoxUi->setLayout(gridLayoutUi);
 
-    verticalLayout->addWidget(groupBox);
-    verticalLayout->addStretch(1);
+    layout->addWidget(groupBoxUi);
+
+    groupBoxHotkey = new QGroupBox(tr("Global Hotkey"));
+    groupBoxHotkey->setCheckable(true);
+    QVBoxLayout* layoutHotkey = new QVBoxLayout;
+    hotkeyLineEdit = new QLineEdit(groupBoxHotkey);
+    layoutHotkey->addWidget(hotkeyLineEdit);
+    groupBoxHotkey->setLayout(layoutHotkey);
+
+    layout->addWidget(groupBoxHotkey);
+
+    layout->addStretch(1);
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    verticalLayout->addWidget(buttonBox);
+    layout->addWidget(buttonBox);
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-    setLayout(verticalLayout);
+    setLayout(layout);
 
     resize(500, 300);
 
@@ -64,6 +75,9 @@ void Options::readSettings() {
 
     minimizeCheckBox->setChecked(settings.value("minimizeOnStartup").toBool());
     hideTrayCheckBox->setChecked(settings.value("hideTrayIcon").toBool());
+
+    hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Constants::Window::DefaultGlobalHotkey).toString());
+    groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
 }
 
 bool Options::writeSettings() {
@@ -79,6 +93,9 @@ bool Options::writeSettings() {
     settings.setValue("language", language);
     settings.setValue("minimizeOnStartup", minimizeCheckBox->isChecked());
     settings.setValue("hideTrayIcon", hideTrayCheckBox->isChecked());
+
+    settings.setValue("GlobalHotkey/hotkey", hotkeyLineEdit->text());
+    settings.setValue("GlobalHotkey/enabled", groupBoxHotkey->isChecked());
 
     return restartRequre;
 }

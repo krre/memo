@@ -2,7 +2,9 @@
 #include <QDialog>
 
 class QComboBox;
+class QLineEdit;
 class QCheckBox;
+class QGroupBox;
 
 class Options : public QDialog {
     Q_OBJECT
@@ -20,4 +22,7 @@ private:
     QComboBox* languageComboBox;
     QCheckBox* minimizeCheckBox;
     QCheckBox* hideTrayCheckBox;
+
+    QGroupBox* groupBoxHotkey;
+    QLineEdit* hotkeyLineEdit;
 };
