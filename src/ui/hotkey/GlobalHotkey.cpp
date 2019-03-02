@@ -2,6 +2,7 @@
 #include "NativeEventFilter.h"
 #include <QCoreApplication>
 #include <QKeySequence>
+#include <QDebug>
 
 GlobalHotkey::GlobalHotkey(QObject* parent) : QObject(parent) {
     nativeEventFilter = new NativeEventFilter(this);
@@ -13,7 +14,10 @@ void GlobalHotkey::setShortcut(const QString& shortcut) {
     if (shortcut.isEmpty()) {
         nativeEventFilter->unsetShortcut();
     } else {
-        nativeEventFilter->setShortcut(QKeySequence(shortcut));
+        QKeySequence ks = QKeySequence(shortcut);
+        Qt::Key key = Qt::Key(ks[0] & ~Qt::KeyboardModifierMask);
+        Qt::KeyboardModifiers modifiers = Qt::KeyboardModifiers(ks[0] & Qt::KeyboardModifierMask);
+        nativeEventFilter->setShortcut(key, modifiers);
     }
 }
 
