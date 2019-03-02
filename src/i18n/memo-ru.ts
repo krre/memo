@@ -4,158 +4,155 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="97"/>
+        <location filename="../ui/MainWindow.cpp" line="101"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="98"/>
+        <location filename="../ui/MainWindow.cpp" line="102"/>
         <source>New...</source>
         <translation>Создать...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="99"/>
+        <location filename="../ui/MainWindow.cpp" line="103"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="100"/>
+        <location filename="../ui/MainWindow.cpp" line="104"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="102"/>
+        <location filename="../ui/MainWindow.cpp" line="106"/>
         <source>Recent Files</source>
         <translation>Недавние файлы</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="104"/>
+        <location filename="../ui/MainWindow.cpp" line="108"/>
         <source>Clear</source>
         <translation>Очистить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="108"/>
-        <location filename="../ui/MainWindow.cpp" line="128"/>
+        <location filename="../ui/MainWindow.cpp" line="112"/>
+        <location filename="../ui/MainWindow.cpp" line="132"/>
         <source>Hide</source>
         <translation>Спрятать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="110"/>
-        <location filename="../ui/MainWindow.cpp" line="130"/>
+        <location filename="../ui/MainWindow.cpp" line="114"/>
+        <location filename="../ui/MainWindow.cpp" line="134"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="112"/>
+        <location filename="../ui/MainWindow.cpp" line="116"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="113"/>
+        <location filename="../ui/MainWindow.cpp" line="117"/>
         <source>Options...</source>
         <translation>Настройки...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="120"/>
+        <location filename="../ui/MainWindow.cpp" line="124"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="121"/>
+        <location filename="../ui/MainWindow.cpp" line="125"/>
         <source>About %1...</source>
         <translation>О программе %1...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="127"/>
+        <location filename="../ui/MainWindow.cpp" line="131"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="195"/>
+        <location filename="../ui/MainWindow.cpp" line="199"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="209"/>
+        <location filename="../ui/MainWindow.cpp" line="213"/>
         <source>New File</source>
         <translation>Новый файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="210"/>
-        <location filename="../ui/MainWindow.cpp" line="232"/>
+        <location filename="../ui/MainWindow.cpp" line="214"/>
+        <location filename="../ui/MainWindow.cpp" line="236"/>
         <source>All Files (*);;Database Files (*.db)</source>
         <translation>Все файлы (*);;Файлы баз данных (*.db)</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="218"/>
+        <location filename="../ui/MainWindow.cpp" line="222"/>
         <source>Error rewriting old file</source>
         <translation>Ошибка перезаписи старого файла</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="231"/>
+        <location filename="../ui/MainWindow.cpp" line="235"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="255"/>
+        <location filename="../ui/MainWindow.cpp" line="259"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="256"/>
+        <location filename="../ui/MainWindow.cpp" line="260"/>
         <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Outliner for quick notes&lt;br&gt;&lt;br&gt;            Based on Qt %4&lt;br&gt;            Build on %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;            Основано на Qt %4&lt;br&gt;            Собрано %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;© %8, Владимир Зарыпов</translation>
-    </message>
-    <message>
-        <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Outliner for quick notes&lt;br&gt;&lt;br&gt;            Based on Qt %4&lt;br&gt;            Build on %5&lt;br&gt;&lt;br&gt;            &lt;a href=%6&gt;%6&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %7, Vladimir Zarypov</source>
-        <translation type="vanished">&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;            Основано на Qt %4&lt;br&gt;            Собрано %5&lt;br&gt;&lt;br&gt;            &lt;a href=%6&gt;%6&lt;/a&gt;&lt;br&gt;&lt;br&gt;© %7, Владимир Зарыпов</translation>
     </message>
 </context>
 <context>
     <name>Options</name>
     <message>
-        <location filename="../ui/Options.cpp" line="5"/>
+        <location filename="../ui/Options.cpp" line="6"/>
         <source>Options</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="8"/>
+        <location filename="../ui/Options.cpp" line="9"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="12"/>
+        <location filename="../ui/Options.cpp" line="14"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="15"/>
+        <location filename="../ui/Options.cpp" line="17"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="22"/>
+        <location filename="../ui/Options.cpp" line="23"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="25"/>
+        <location filename="../ui/Options.cpp" line="26"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="48"/>
+        <location filename="../ui/Options.cpp" line="33"/>
+        <source>Global Hotkey</source>
+        <translation>Глобальная горячая клавиша</translation>
+    </message>
+    <message>
+        <location filename="../ui/Options.cpp" line="59"/>
         <source>Restart requred</source>
         <translation>Требуется перезапуск</translation>
     </message>
     <message>
-        <location filename="../ui/Options.cpp" line="48"/>
+        <location filename="../ui/Options.cpp" line="59"/>
         <source>You must restart application</source>
         <translation>Вы должны перезапустить приложение</translation>
-    </message>
-    <message>
-        <source>You should be restart application</source>
-        <translation type="vanished">Вы должны перезапустить приложение</translation>
     </message>
 </context>
 <context>
