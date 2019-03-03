@@ -34,7 +34,10 @@ int main(int argc, char* argv[]) {
     app.installTranslator(&translator);
 
     MainWindow window;
-    window.show();
+
+    if (!settings.value("minimizeOnStartup", false).toBool()) {
+        window.show();
+    }
 
     return app.exec();
 }

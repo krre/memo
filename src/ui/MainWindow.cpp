@@ -39,9 +39,6 @@ void MainWindow::readSettings() {
     applyHotSettings();
 
     QSettings settings;
-    if (settings.value("minimizeOnStartup").toBool()) {
-        QTimer::singleShot(0, this, SLOT(hide()));
-    }
 
     const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
 
