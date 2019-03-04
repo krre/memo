@@ -42,6 +42,8 @@ private:
     QMenu* contextMenu;
     QAction* removeAction;
     QAction* renameAction;
+    QAction* moveUpAction;
+    QAction* moveDownAction;
     TreeModel* model = nullptr;
     Database* database = nullptr;
     bool isInited = false;

@@ -125,14 +125,17 @@ void Outliner::createContextMenu() {
     contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
     removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
     renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
-    renameAction = contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
-    renameAction = contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
+    moveUpAction = contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
+    moveDownAction = contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
 }
 
 void Outliner::updateContextMenu() {
     bool enabled = currentIndex().isValid();
     removeAction->setEnabled(enabled);
     renameAction->setEnabled(enabled);
+
+    moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
+    moveDownAction->setEnabled(enabled && currentIndex().row() < model->rowCount(currentIndex().parent()) - 1);
 }
 
 void Outliner::insertChild(const QString& title) {
