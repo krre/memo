@@ -31,6 +31,8 @@ private slots:
     void addNote();
     void removeNotes();
     void renameNote();
+    void moveUp();
+    void moveDown();
 
 private:
     void createContextMenu();

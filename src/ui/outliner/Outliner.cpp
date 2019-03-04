@@ -112,11 +112,21 @@ void Outliner::renameNote() {
     edit(selectionModel()->currentIndex());
 }
 
+void Outliner::moveUp() {
+    qDebug() << "up";
+}
+
+void Outliner::moveDown() {
+    qDebug() << "down";
+}
+
 void Outliner::createContextMenu() {
     contextMenu = new QMenu(this);
     contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
     removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
     renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
+    renameAction = contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
+    renameAction = contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
 }
 
 void Outliner::updateContextMenu() {
