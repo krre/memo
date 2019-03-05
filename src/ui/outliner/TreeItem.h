@@ -10,6 +10,8 @@ public:
     ~TreeItem();
 
     TreeItem* parent();
+    void setParent(TreeItem* parent);
+
     TreeItem* find(int id);
 
     TreeItem* child(int number);
@@ -21,6 +23,9 @@ public:
 
     bool insertChildren(int position, int count);
     bool removeChildren(int position, int count);
+
+    bool insertChild(int position, TreeItem* item);
+    bool removeChild(int position);
 
     int id() const;
     void setId(int id);

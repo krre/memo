@@ -113,11 +113,13 @@ void Outliner::renameNote() {
 }
 
 void Outliner::moveUp() {
-    qDebug() << "up";
+    int row = currentIndex().row();
+    model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row - 1);
 }
 
 void Outliner::moveDown() {
-    qDebug() << "down";
+    int row = currentIndex().row();
+    model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row + 2);
 }
 
 void Outliner::createContextMenu() {

@@ -45,6 +45,10 @@ TreeItem* TreeItem::parent() {
     return parentItem;
 }
 
+void TreeItem::setParent(TreeItem* parent) {
+    parentItem = parent;
+}
+
 TreeItem* TreeItem::find(int id) {
     if (itemId == id) return this;
 
@@ -66,6 +70,21 @@ bool TreeItem::removeChildren(int position, int count) {
     for (int row = 0; row < count; ++row) {
         delete childItems.takeAt(position);
     }
+
+    return true;
+}
+
+bool TreeItem::insertChild(int position, TreeItem* item) {
+    childItems.insert(position, item);
+    item->setParent(this);
+
+    return true;
+}
+
+bool TreeItem::removeChild(int position) {
+    if (position < 0 || position > childItems.count() - 1) return false;
+
+    childItems.removeAt(position);
 
     return true;
 }

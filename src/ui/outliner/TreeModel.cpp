@@ -76,10 +76,8 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
 }
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
-    bool success;
-
     beginInsertRows(parent, position, position + rows - 1);
-    success = item(parent)->insertChildren(position, rows);
+    bool success = item(parent)->insertChildren(position, rows);
     endInsertRows();
 
     return success;
@@ -87,11 +85,38 @@ bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
 
 bool TreeModel::removeRows(int position, int rows, const QModelIndex& parent) {
     TreeItem* parentItem = item(parent);
-    bool success = true;
 
     beginRemoveRows(parent, position, position + rows - 1);
-    success = parentItem->removeChildren(position, rows);
+    bool success = parentItem->removeChildren(position, rows);
     endRemoveRows();
+
+    return success;
+}
+
+bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int count, const QModelIndex& destinationParent, int destinationChild) {
+    Q_UNUSED(count)
+
+    bool success = false;
+
+    beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationChild);
+    TreeItem* sourceParentItem = item(sourceParent);
+    TreeItem* targetItem = sourceParentItem->child(sourceRow);
+
+    success = item(destinationParent)->insertChild(destinationChild, targetItem);
+
+    if (success) {
+        if (sourceParent == destinationParent) {
+            if (sourceRow > destinationChild) {
+                success = sourceParentItem->removeChild(sourceRow + 1);
+            } else {
+                success = sourceParentItem->removeChild(sourceRow);
+            }
+        } else {
+
+        }
+    }
+
+    endMoveRows();
 
     return success;
 }
@@ -128,3 +153,4 @@ QVector<int> TreeModel::childIds(TreeItem* item) {
 
     return ids;
 }
+
