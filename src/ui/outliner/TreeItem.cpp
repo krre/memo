@@ -29,18 +29,6 @@ QVariant TreeItem::data() const {
     return itemData;
 }
 
-bool TreeItem::insertChildren(int position, int count) {
-    if (position < 0 || position > childItems.size()) {
-        return false;
-    }
-
-    for (int row = 0; row < count; ++row) {
-        childItems.insert(position, new TreeItem(this));
-    }
-
-    return true;
-}
-
 TreeItem* TreeItem::parent() {
     return parentItem;
 }
@@ -62,21 +50,10 @@ TreeItem* TreeItem::find(int id) {
     return nullptr;
 }
 
-bool TreeItem::removeChildren(int position, int count) {
-    if (position < 0 || position + count > childItems.size()) {
-        return false;
-    }
-
-    for (int row = 0; row < count; ++row) {
-        delete childItems.takeAt(position);
-    }
-
-    return true;
-}
-
 bool TreeItem::insertChild(int position, TreeItem* item) {
-    childItems.insert(position, item);
-    item->setParent(this);
+    TreeItem* childItem = item ? item : new TreeItem;
+    childItem->setParent(this);
+    childItems.insert(position, childItem);
 
     return true;
 }

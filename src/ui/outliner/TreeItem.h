@@ -21,10 +21,7 @@ public:
     QVariant data() const;
     void setData(const QVariant& value);
 
-    bool insertChildren(int position, int count);
-    bool removeChildren(int position, int count);
-
-    bool insertChild(int position, TreeItem* item);
+    bool insertChild(int position, TreeItem* item = nullptr);
     bool removeChild(int position);
 
     int id() const;

@@ -76,18 +76,20 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
 }
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
-    beginInsertRows(parent, position, position + rows - 1);
-    bool success = item(parent)->insertChildren(position, rows);
+    Q_UNUSED(rows)
+
+    beginInsertRows(parent, position, position);
+    bool success = item(parent)->insertChild(position);
     endInsertRows();
 
     return success;
 }
 
 bool TreeModel::removeRows(int position, int rows, const QModelIndex& parent) {
-    TreeItem* parentItem = item(parent);
+    Q_UNUSED(rows)
 
-    beginRemoveRows(parent, position, position + rows - 1);
-    bool success = parentItem->removeChildren(position, rows);
+    beginRemoveRows(parent, position, position);
+    bool success = item(parent)->removeChild(position);
     endRemoveRows();
 
     return success;
