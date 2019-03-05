@@ -114,12 +114,26 @@ void Outliner::renameNote() {
 
 void Outliner::moveUp() {
     int row = currentIndex().row();
+
+    int id1 = model->item(currentIndex())->id();
+    int id2 = model->item(currentIndex().sibling(row - 1, 0))->id();
+
     model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row - 1);
+
+    database->updateValue(id1, "pos", row - 1);
+    database->updateValue(id2, "pos", row);
 }
 
 void Outliner::moveDown() {
     int row = currentIndex().row();
+
+    int id1 = model->item(currentIndex())->id();
+    int id2 = model->item(currentIndex().sibling(row + 1, 0))->id();
+
     model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row + 2);
+
+    database->updateValue(id1, "pos", row + 1);
+    database->updateValue(id2, "pos", row);
 }
 
 void Outliner::createContextMenu() {
