@@ -100,7 +100,8 @@ bool Database::removeRecord(int id) {
 
 bool Database::updateValue(int id, const QString& name, const QVariant& value) {
     QSqlQuery query;
-    query.prepare(QString("UPDATE notes SET %1 = :value, updated_at = datetime('now', 'localtime') WHERE id = :id").arg(name));
+    QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";
+    query.prepare(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name).arg(updateDate));
     query.bindValue(":id", id);
     query.bindValue(":value", value);
 
