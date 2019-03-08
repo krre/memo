@@ -16,4 +16,8 @@ namespace Constants {
         constexpr int SystemRecentFilesActions = 2;
         constexpr auto DefaultGlobalHotkey = "Ctrl+Alt+M";
     }
+
+    namespace Outliner {
+        constexpr auto TreeItemMimeType = "application/x-treeitem";
+    }
 }

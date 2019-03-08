@@ -1,5 +1,6 @@
 #include "TreeModel.h"
 #include "TreeItem.h"
+#include "core/Constants.h"
 #include <QtCore>
 
 TreeModel::TreeModel(QObject* parent) : QAbstractItemModel (parent) {
@@ -57,10 +58,10 @@ QVariant TreeModel::data(const QModelIndex& index, int role) const {
 
 Qt::ItemFlags TreeModel::flags(const QModelIndex& index) const {
     if (!index.isValid()) {
-        return nullptr;
+        return Qt::ItemIsDropEnabled | QAbstractItemModel::flags(index);
     }
 
-    return Qt::ItemIsEditable | QAbstractItemModel::flags(index);
+    return Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | QAbstractItemModel::flags(index);
 }
 
 bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int role) {
@@ -73,6 +74,68 @@ bool TreeModel::setData(const QModelIndex& index, const QVariant& value, int rol
     emit dataChanged(index, index);
 
     return true;
+}
+
+Qt::DropActions TreeModel::supportedDropActions() const {
+    return Qt::MoveAction;
+}
+
+Qt::DropActions TreeModel::supportedDragActions() const {
+    return Qt::MoveAction;
+}
+
+QStringList TreeModel::mimeTypes() const {
+    return QStringList() << Constants::Outliner::TreeItemMimeType;
+}
+
+QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
+    QMimeData* mimeData = new QMimeData;
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << item(indexes.first())->id();
+    mimeData->setData(Constants::Outliner::TreeItemMimeType, data);
+    return mimeData;
+}
+
+bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column, const QModelIndex& parent) const {
+    Q_UNUSED(row);
+    Q_UNUSED(column);
+    Q_UNUSED(parent);
+
+    if (action != Qt::MoveAction) return false;
+    if (!mimeData->hasFormat(Constants::Outliner::TreeItemMimeType)) return false;
+
+    return true;
+}
+
+bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
+    Q_UNUSED(column);
+
+    if (!canDropMimeData(mimeData, action, row, column, parent)) return false;
+
+    QByteArray data = mimeData->data(Constants::Outliner::TreeItemMimeType);
+    QDataStream stream(&data, QIODevice::ReadOnly);
+    int id;
+    stream >> id;
+
+    TreeItem* sourceItem = rootItem->find(id);
+    QModelIndex sourceParent = index(sourceItem->parent());
+
+    if (row < 0 && !parent.isValid()) {
+        row = rowCount(parent) - 1;
+    } else if (sourceItem->parent() == item(parent)&& sourceItem->childNumber() < row) {
+        row--;
+    }
+
+    removeRow(sourceItem->childNumber(), sourceParent);
+
+    beginInsertRows(parent, row, row);
+    item(parent)->insertChild(row, sourceItem);
+    endInsertRows();
+
+    emit itemDropped(index(row, 0, parent));
+
+    return false; // Need false to disable removing row by Qt.
 }
 
 bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
@@ -155,4 +218,3 @@ QVector<int> TreeModel::childIds(TreeItem* item) {
 
     return ids;
 }
-

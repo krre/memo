@@ -1,7 +1,8 @@
 #include "Outliner.h"
 #include "TreeModel.h"
 #include "TreeItem.h"
-#include "../../database/Database.h"
+#include "database/Database.h"
+#include "core/Constants.h"
 #include <QtWidgets>
 
 Outliner::Outliner(Database* database) : database(database) {
@@ -9,6 +10,12 @@ Outliner::Outliner(Database* database) : database(database) {
     connect(this, &QTreeView::customContextMenuRequested, this, &Outliner::onCustomContextMenu);
     createContextMenu();
     header()->setVisible(false);
+
+    setDragEnabled(true);
+    setAcceptDrops(true);
+    setDropIndicatorShown(true);
+    setDragDropMode(QAbstractItemView::InternalMove);
+    setSelectionMode(QAbstractItemView::SingleSelection);
 
     clear();
 
@@ -62,12 +69,14 @@ void Outliner::build() {
 void Outliner::clear() {
     isInited = false;
 
-    if (model) {
-        delete model;
-    }
+    delete model;
 
     model = new TreeModel;
     setModel(model);
+
+    connect(model, &TreeModel::itemDropped, [this] (const QModelIndex& index) {
+       selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+    });
 
     isInited = true;
 }
