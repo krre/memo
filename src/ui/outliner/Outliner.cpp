@@ -73,11 +73,7 @@ void Outliner::clear() {
 
     model = new TreeModel;
     setModel(model);
-
-    connect(model, &TreeModel::itemDropped, [this] (const QModelIndex& index) {
-       selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
-       expand(index.parent());
-    });
+    connect(model, &TreeModel::itemDropped, this, &Outliner::moveTree);
 
     isInited = true;
 }
@@ -144,6 +140,42 @@ void Outliner::moveDown() {
 
     database->updateValue(id1, "pos", row + 1);
     database->updateValue(id2, "pos", row);
+}
+
+void Outliner::moveTree(const QModelIndex& index) {
+    selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+    expand(index.parent());
+
+    // Move tree in database.
+    TreeItem* targetItem = model->item(index);
+    int sourceId = targetItem->id();
+    int sourceParentId = database->value(sourceId, "parent_id").toInt();
+    int destinationParentId = targetItem->parent()->id();
+
+    TreeItem* sourceParentItem = model->root()->find(sourceParentId);
+
+    // Rewrite note positions on source parent.
+    for (int i = 0; i < sourceParentItem->childCount(); i++) {
+         database->updateValue(sourceParentItem->child(i)->id(), "pos", i);
+    }
+
+    if (sourceParentId != destinationParentId) {
+         database->updateValue(sourceId, "parent_id", destinationParentId);
+
+         TreeItem* destinationParentItem = model->root()->find(destinationParentId);
+
+         // Rewrite note positions on destination parent.
+         for (int i = 0; i < destinationParentItem->childCount(); i++) {
+             database->updateValue(destinationParentItem->child(i)->id(), "pos", i);
+         }
+
+         // Rewrite depth in all children of target note.
+         QVector<int> childIds = model->childIds(targetItem);
+         for (int id : childIds) {
+             int depth = targetItem->find(id)->depth() - 1;
+             database->updateValue(id, "depth", depth);
+         }
+     }
 }
 
 void Outliner::createContextMenu() {

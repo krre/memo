@@ -33,6 +33,7 @@ private slots:
     void renameNote();
     void moveUp();
     void moveDown();
+    void moveTree(const QModelIndex& index);
 
 private:
     void createContextMenu();
