@@ -76,6 +76,7 @@ void Outliner::clear() {
 
     connect(model, &TreeModel::itemDropped, [this] (const QModelIndex& index) {
        selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
+       expand(index.parent());
     });
 
     isInited = true;
