@@ -1,5 +1,6 @@
 #include "NativeEventFilter.h"
 #include <qt_windows.h>
+#include <QDebug>
 
 #define HKEY_ID(key, modifiers) (((key ^ (modifiers << 8)) & 0x0FFF) | 0x7000)
 
