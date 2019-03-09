@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
 
     database = new Database(this);
     globalHotkey = new GlobalHotkey(this);
-    connect(globalHotkey, &GlobalHotkey::activated, this, &MainWindow::show);
+    connect(globalHotkey, &GlobalHotkey::activated, this, &MainWindow::showWindow);
 
     createActions();
     createTrayIcon();
@@ -329,4 +329,10 @@ void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         setVisible(!isVisible());
     }
+}
+
+void MainWindow::showWindow() {
+    show();
+    raise();
+    activateWindow();
 }

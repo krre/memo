@@ -31,6 +31,7 @@ private slots:
     void onEditorFocusLost();
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+    void showWindow();
 
 private:
     void readSettings();
