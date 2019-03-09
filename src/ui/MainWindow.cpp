@@ -85,6 +85,19 @@ void MainWindow::applyHotSettings() {
     } else {
         globalHotkey->unsetShortcut();
     }
+
+    QString fontFamily = settings.value("Editor/fontFamily").toString();
+    if (!fontFamily.isEmpty()) {
+        QFont font;
+        font.setFamily(fontFamily);
+
+        QString fontSize = settings.value("Editor/fontSize").toString();
+        if (!fontSize.isEmpty()) {
+            font.setPointSize(fontSize.toInt());
+        }
+
+        editor->setFont(font);
+    }
 }
 
 void MainWindow::setupSplitter() {

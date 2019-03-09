@@ -15,11 +15,16 @@ public:
 public slots:
     void accept() override;
 
+private slots:
+    void openFontDialog();
+
 private:
     void readSettings();
     bool writeSettings();
 
     QComboBox* languageComboBox;
+    QLineEdit* fontFamilyLineEdit;
+    QLineEdit* fontSizeLineEdit;
     QCheckBox* minimizeCheckBox;
     QCheckBox* hideTrayCheckBox;
 
