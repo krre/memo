@@ -5,7 +5,7 @@ namespace Constants {
         constexpr auto Organization = "Memo";
         constexpr auto Name = "Memo";
         constexpr auto Version = "1.2";
-        constexpr auto Status = "Alpha"; // Release, Beta, Alpha
+        constexpr auto Status = ""; // Release, Beta, Alpha
         constexpr auto URL = "https://github.com/krre/memo";
         constexpr auto SettingsName = "memo.conf";
         constexpr auto CopyrightYear = "2019";
