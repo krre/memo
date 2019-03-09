@@ -198,8 +198,10 @@ void Outliner::createContextMenu() {
     contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
     removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
     renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
+    contextMenu->addSeparator();
     moveUpAction = contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
     moveDownAction = contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
+    contextMenu->addSeparator();
     propertiesAction = contextMenu->addAction(tr("Properties..."), this, &Outliner::showProperties);
 }
 
