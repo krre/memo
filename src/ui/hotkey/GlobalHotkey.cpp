@@ -2,7 +2,6 @@
 #include "NativeEventFilter.h"
 #include <QCoreApplication>
 #include <QKeySequence>
-#include <QDebug>
 
 GlobalHotkey::GlobalHotkey(QObject* parent) : QObject(parent) {
     nativeEventFilter = new NativeEventFilter(this);
