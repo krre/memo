@@ -108,6 +108,29 @@
     </message>
 </context>
 <context>
+    <name>NoteProperties</name>
+    <message>
+        <location filename="../ui/outliner/NoteProperties.cpp" line="5"/>
+        <source>Note Properties</source>
+        <translation>Свойства заметки</translation>
+    </message>
+    <message>
+        <location filename="../ui/outliner/NoteProperties.cpp" line="13"/>
+        <source>Name:</source>
+        <translation>Название:</translation>
+    </message>
+    <message>
+        <location filename="../ui/outliner/NoteProperties.cpp" line="16"/>
+        <source>Created at:</source>
+        <translation>Создано:</translation>
+    </message>
+    <message>
+        <location filename="../ui/outliner/NoteProperties.cpp" line="19"/>
+        <source>Updated at:</source>
+        <translation>Обновлено:</translation>
+    </message>
+</context>
+<context>
     <name>Options</name>
     <message>
         <location filename="../ui/Options.cpp" line="6"/>
@@ -158,49 +181,54 @@
 <context>
     <name>Outliner</name>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="84"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="92"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="84"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="92"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="94"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="102"/>
         <source>Remove Notes</source>
         <translation>Удалить заметки</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="94"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="102"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="125"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="198"/>
         <source>Add...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="126"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="199"/>
         <source>Remove...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="127"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="200"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="128"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="201"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="129"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="202"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
+    </message>
+    <message>
+        <location filename="../ui/outliner/Outliner.cpp" line="203"/>
+        <source>Properties...</source>
+        <translation>Свойства...</translation>
     </message>
 </context>
 <context>
