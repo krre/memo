@@ -19,90 +19,100 @@
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="119"/>
+        <location filename="../ui/MainWindow.cpp" line="126"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="121"/>
+        <location filename="../ui/MainWindow.cpp" line="120"/>
         <source>Recent Files</source>
         <translation>Недавние файлы</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="123"/>
+        <location filename="../ui/MainWindow.cpp" line="122"/>
         <source>Clear</source>
         <translation>Очистить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="127"/>
-        <location filename="../ui/MainWindow.cpp" line="147"/>
-        <source>Hide</source>
-        <translation>Спрятать</translation>
+        <location filename="../ui/MainWindow.cpp" line="125"/>
+        <source>Export All...</source>
+        <translation>Экспортировать всё...</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.cpp" line="129"/>
         <location filename="../ui/MainWindow.cpp" line="149"/>
+        <source>Hide</source>
+        <translation>Спрятать</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="131"/>
+        <location filename="../ui/MainWindow.cpp" line="151"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="131"/>
+        <location filename="../ui/MainWindow.cpp" line="133"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="132"/>
+        <location filename="../ui/MainWindow.cpp" line="134"/>
         <source>Options...</source>
         <translation>Настройки...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="139"/>
+        <location filename="../ui/MainWindow.cpp" line="141"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="140"/>
+        <location filename="../ui/MainWindow.cpp" line="142"/>
         <source>About %1...</source>
         <translation>О программе %1...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="146"/>
+        <location filename="../ui/MainWindow.cpp" line="148"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="214"/>
+        <location filename="../ui/MainWindow.cpp" line="217"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="228"/>
+        <location filename="../ui/MainWindow.cpp" line="231"/>
         <source>New File</source>
         <translation>Новый файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="229"/>
-        <location filename="../ui/MainWindow.cpp" line="251"/>
+        <location filename="../ui/MainWindow.cpp" line="232"/>
+        <location filename="../ui/MainWindow.cpp" line="254"/>
         <source>All Files (*);;Database Files (*.db)</source>
         <translation>Все файлы (*);;Файлы баз данных (*.db)</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="237"/>
+        <location filename="../ui/MainWindow.cpp" line="240"/>
         <source>Error rewriting old file</source>
         <translation>Ошибка перезаписи старого файла</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="250"/>
+        <location filename="../ui/MainWindow.cpp" line="253"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="274"/>
+        <location filename="../ui/MainWindow.cpp" line="263"/>
+        <source>Select Directory</source>
+        <translation>Выбрать директорию</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="286"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="275"/>
+        <location filename="../ui/MainWindow.cpp" line="287"/>
         <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Outliner for quick notes&lt;br&gt;&lt;br&gt;            Based on Qt %4&lt;br&gt;            Build on %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;            Основано на Qt %4&lt;br&gt;            Собрано %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;© %8, Владимир Зарыпов</translation>
     </message>
@@ -196,52 +206,62 @@
 <context>
     <name>Outliner</name>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="92"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="38"/>
+        <source>Export Finished</source>
+        <translation>Экспорт завершён</translation>
+    </message>
+    <message>
+        <location filename="../ui/outliner/Outliner.cpp" line="38"/>
+        <source>Count of notes: %1</source>
+        <translation>Количество заметок: %1</translation>
+    </message>
+    <message>
+        <location filename="../ui/outliner/Outliner.cpp" line="103"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="92"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="103"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="102"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="113"/>
         <source>Remove Notes</source>
         <translation>Удалить заметки</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="102"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="113"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="198"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="209"/>
         <source>Add...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="199"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="210"/>
         <source>Remove...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="200"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="211"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="201"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="213"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="202"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="214"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="203"/>
+        <location filename="../ui/outliner/Outliner.cpp" line="216"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
