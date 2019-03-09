@@ -1,9 +1,11 @@
 #include "Outliner.h"
 #include "TreeModel.h"
 #include "TreeItem.h"
+#include "NoteProperties.h"
 #include "database/Database.h"
 #include "core/Constants.h"
 #include <QtWidgets>
+#include <QtSql>
 
 Outliner::Outliner(Database* database) : database(database) {
     setContextMenuPolicy(Qt::CustomContextMenu);
@@ -175,7 +177,20 @@ void Outliner::moveTree(const QModelIndex& index) {
              int depth = targetItem->find(id)->depth() - 1;
              database->updateValue(id, "depth", depth);
          }
-     }
+    }
+}
+
+void Outliner::showProperties() {
+    int id = model->item(currentIndex())->id();
+    QSqlQuery query = database->record(id);
+
+    NoteProperties::Data data;
+    data.title = query.value("title").toString();
+    data.createdAt = query.value("created_at").toString();
+    data.updatedAt = query.value("updated_at").toString();
+
+    NoteProperties props(data);
+    props.exec();
 }
 
 void Outliner::createContextMenu() {
@@ -185,6 +200,7 @@ void Outliner::createContextMenu() {
     renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
     moveUpAction = contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
     moveDownAction = contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
+    propertiesAction = contextMenu->addAction(tr("Properties..."), this, &Outliner::showProperties);
 }
 
 void Outliner::updateContextMenu() {
@@ -194,6 +210,8 @@ void Outliner::updateContextMenu() {
 
     moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
     moveDownAction->setEnabled(enabled && currentIndex().row() < model->rowCount(currentIndex().parent()) - 1);
+
+    propertiesAction->setEnabled(enabled);
 }
 
 void Outliner::insertChild(const QString& title) {

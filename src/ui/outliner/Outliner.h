@@ -34,6 +34,7 @@ private slots:
     void moveUp();
     void moveDown();
     void moveTree(const QModelIndex& index);
+    void showProperties();
 
 private:
     void createContextMenu();
@@ -45,6 +46,7 @@ private:
     QAction* renameAction;
     QAction* moveUpAction;
     QAction* moveDownAction;
+    QAction* propertiesAction;
     TreeModel* model = nullptr;
     Database* database = nullptr;
     bool isInited = false;

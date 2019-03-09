@@ -23,6 +23,7 @@ public:
 
     int insertRecord(int parentId, int pos, int depth, const QString& title);
     bool removeRecord(int id);
+    QSqlQuery record(int id);
 
     bool updateValue(int id, const QString& name, const QVariant& value);
     QVariant value(int id, const QString& name);

@@ -98,6 +98,20 @@ bool Database::removeRecord(int id) {
     return true;
 }
 
+QSqlQuery Database::record(int id) {
+    QSqlQuery query;
+    query.prepare(QString("SELECT * FROM notes WHERE id = :id"));
+    query.bindValue(":id", id);
+
+    if (!query.exec()) {
+        queryError(query);
+    } else {
+        query.next();
+    }
+
+    return query;
+}
+
 bool Database::updateValue(int id, const QString& name, const QVariant& value) {
     QSqlQuery query;
     QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";

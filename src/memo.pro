@@ -22,7 +22,8 @@ SOURCES += \
     database/Database.cpp \
     ui/Editor.cpp \
     ui/Options.cpp \
-    ui/hotkey/GlobalHotkey.cpp
+    ui/hotkey/GlobalHotkey.cpp \
+    ui/outliner/NoteProperties.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -38,7 +39,8 @@ HEADERS += \
     ui/Editor.h \
     ui/Options.h \
     ui/hotkey/NativeEventFilter.h \
-    ui/hotkey/GlobalHotkey.h
+    ui/hotkey/GlobalHotkey.h \
+    ui/outliner/NoteProperties.h
 
 RESOURCES += \
     resources.qrc
