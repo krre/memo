@@ -116,12 +116,14 @@ void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
-    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
 
     recentFilesMenu = new QMenu(tr("Recent Files"), this);
     recentFilesMenu->addSeparator();
     recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentFiles);
     fileMenu->addAction(recentFilesMenu->menuAction());
+
+    exportAction = fileMenu->addAction(tr("Export All..."), this, &MainWindow::exportFile, QKeySequence("Ctrl+E"));
+    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
 
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence("Esc"));
@@ -158,6 +160,7 @@ void MainWindow::createTrayIcon() {
 void MainWindow::updateMenuState() {
     bool isFileOpen = !currentFile.isEmpty();
 
+    exportAction->setEnabled(isFileOpen);
     closeAction->setEnabled(isFileOpen);
 }
 
@@ -252,6 +255,15 @@ void MainWindow::openFile() {
     if (!fileName.isEmpty()) {
         closeFile();
         loadFile(fileName);
+    }
+}
+
+void MainWindow::exportFile() {
+    QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
+    QString directory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), "", options);
+
+    if (!directory.isEmpty()) {
+        outliner->exportAllNotes(directory);
     }
 }
 

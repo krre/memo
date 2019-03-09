@@ -12,6 +12,8 @@ class Outliner : public QTreeView {
 public:
     Outliner(Database* database);
 
+    void exportAllNotes(const QString& directory);
+
 public slots:
     void updateActions();
     void build();
@@ -40,6 +42,7 @@ private:
     void createContextMenu();
     void updateContextMenu();
     void insertChild(const QString& title);
+    int exportNote(int parentId, const QString& path);
 
     QMenu* contextMenu;
     QAction* removeAction;

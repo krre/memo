@@ -27,6 +27,17 @@ Outliner::Outliner(Database* database) : database(database) {
     });
 }
 
+void Outliner::exportAllNotes(const QString& directory) {
+    QDateTime dateTime = QDateTime::currentDateTime();
+    QString path = directory + "/Memo-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss");
+    QDir dir;
+    dir.mkdir(path);
+
+    int count = exportNote(0, path);
+
+    QMessageBox::information(this, tr("Export Finished"), tr("Count of notes: %1").arg(count));
+}
+
 void Outliner::updateActions() {
     bool hasCurrent = selectionModel()->currentIndex().isValid();
 
@@ -237,6 +248,37 @@ void Outliner::insertChild(const QString& title) {
     setExpanded(currentIndex, true);
 
     updateActions();
+}
+
+int Outliner::exportNote(int parentId, const QString& path) {
+    QDir dir;
+    dir.mkdir(path);
+
+    int count = 0;
+    TreeItem* parentItem = model->root()->find(parentId);
+
+    for (int i = 0; i < parentItem->childCount(); i++) {
+        TreeItem* childItem = parentItem->child(i);
+        QString title = childItem->data().toString();
+        QString note = database->value(childItem->id(), "note").toString();
+        QString notePath = path + "/" + title;
+
+        QString filename = notePath + ".txt";
+        QFile file(filename);
+        if (file.open(QIODevice::ReadWrite)) {
+            QTextStream stream(&file);
+            stream << note;
+            file.close();
+        }
+
+        count++;
+
+        if (childItem->childCount()) {
+            count += exportNote(childItem->id(), notePath);
+        }
+    }
+
+    return count;
 }
 
 

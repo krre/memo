@@ -21,6 +21,7 @@ protected:
 private slots:
     void newFile();
     void openFile();
+    void exportFile();
     void closeFile();
     void clearMenuRecentFiles();
     void about();
@@ -51,6 +52,7 @@ private:
     QSystemTrayIcon* trayIcon;
     QMenu* trayIconMenu;
     QMenu* recentFilesMenu;
+    QAction* exportAction;
     QAction* closeAction;
 
     QSplitter* splitter;
