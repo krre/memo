@@ -44,9 +44,5 @@ int main(int argc, char* argv[]) {
 
     MainWindow window;
 
-    if (!settings.value("minimizeOnStartup", false).toBool()) {
-        window.show();
-    }
-
     return app.exec();
 }

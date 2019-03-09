@@ -60,6 +60,10 @@ void MainWindow::readSettings() {
     settings.endArray();
 
     loadFile(settings.value("filePath").toString());
+
+    if (!settings.value("minimizeOnStartup", false).toBool()) {
+        show();
+    }
 }
 
 void MainWindow::writeSettings() {
