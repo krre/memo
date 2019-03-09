@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QTranslator>
+#include <QLibraryInfo>
 
 int main(int argc, char* argv[]) {
     QApplication app(argc, argv);
@@ -21,17 +22,25 @@ int main(int argc, char* argv[]) {
     QApplication::setQuitOnLastWindowClosed(false);
 
     QSettings settings;
+
     QString language = settings.value("language").toString();
-
-    QTranslator translator;
-
-    if(language.isEmpty()) {
-        translator.load(QLocale(), QLatin1String("memo"), QLatin1String("-"), QLatin1String(":/i18n"));
-    } else {
-        translator.load(QString("memo-%1").arg(language), ":/i18n");
+    if (language.isEmpty()) {
+        language = QLocale::system().name().split("_").first();
     }
 
-    app.installTranslator(&translator);
+    QString qtTranslatorFileName = QLatin1String("qt_") + language;
+    QTranslator* qtTranslator = new QTranslator(&app);
+
+    if (qtTranslator->load(qtTranslatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        app.installTranslator(qtTranslator);
+    }
+
+    QString memoTranslatorFileName = QLatin1String("memo-") + language;
+    QTranslator* memoTranslator = new QTranslator(&app);
+
+    if (memoTranslator->load(memoTranslatorFileName, ":/i18n")) {
+        app.installTranslator(memoTranslator);
+    }
 
     MainWindow window;
 
