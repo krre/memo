@@ -9,6 +9,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 
 TRANSLATIONS = i18n/memo-ru.ts
+win32: RC_ICONS += images/icon.ico
 
 linux: LIBS += -lX11
 win32: LIBS += -luser32
