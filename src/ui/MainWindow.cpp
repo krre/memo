@@ -143,6 +143,7 @@ void MainWindow::createActions() {
     });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
+    helpMenu->addAction(tr("Check for updates..."), this, &MainWindow::checkForUpdates);
     helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
 }
 
@@ -284,6 +285,10 @@ void MainWindow::clearMenuRecentFiles() {
     }
 
     updateMenuState();
+}
+
+void MainWindow::checkForUpdates() {
+    qDebug() << "checkForUpdates";
 }
 
 void MainWindow::about() {
