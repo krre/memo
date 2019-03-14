@@ -7,6 +7,9 @@ class Outliner;
 class Editor;
 class Database;
 class GlobalHotkey;
+class UpdateChecker;
+
+struct Update;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -24,12 +27,12 @@ private slots:
     void exportFile();
     void closeFile();
     void clearMenuRecentFiles();
-    void checkForUpdates();
     void about();
     void quit();
 
     void onNoteChanged(int id);
     void onEditorFocusLost();
+    void onCheckUpdatesResult(const Update& update);
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void showWindow();
@@ -61,6 +64,7 @@ private:
     Outliner* outliner;
     Editor* editor;
     GlobalHotkey* globalHotkey;
+    UpdateChecker* updateChecker;
 
     Database* database;
     QString currentFile;

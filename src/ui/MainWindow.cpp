@@ -5,6 +5,7 @@
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
+#include "updater/UpdateChecker.h"
 #include <QtCore>
 #include <QtWidgets>
 
@@ -14,6 +15,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     setCentralWidget(splitter);
 
     database = new Database(this);
+
+    updateChecker = new UpdateChecker(this);
+    connect(updateChecker, &UpdateChecker::checkResult, this, &MainWindow::onCheckUpdatesResult);
+
     globalHotkey = new GlobalHotkey(this);
     connect(globalHotkey, &GlobalHotkey::activated, this, &MainWindow::showWindow);
 
@@ -143,7 +148,7 @@ void MainWindow::createActions() {
     });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("Check for updates..."), this, &MainWindow::checkForUpdates);
+    helpMenu->addAction(tr("Check for updates..."), updateChecker, &UpdateChecker::check);
     helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
 }
 
@@ -287,8 +292,8 @@ void MainWindow::clearMenuRecentFiles() {
     updateMenuState();
 }
 
-void MainWindow::checkForUpdates() {
-    qDebug() << "checkForUpdates";
+void MainWindow::onCheckUpdatesResult(const Update& update) {
+    qDebug() << "checkForUpdates" << update.url;
 }
 
 void MainWindow::about() {
