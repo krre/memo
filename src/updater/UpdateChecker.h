@@ -5,6 +5,7 @@
 
 struct Update {
     QUrl url;
+    bool isValid;
 };
 
 class UpdateChecker : public QObject {

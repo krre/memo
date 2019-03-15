@@ -60,5 +60,9 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
 
 void UpdateChecker::findUpdate(const QJsonObject& manifest) {
     qDebug() << manifest;
-    emit checkResult({});
+
+    Update update;
+    update.isValid = false;
+
+    emit checkResult(update);
 }

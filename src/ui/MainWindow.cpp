@@ -293,7 +293,11 @@ void MainWindow::clearMenuRecentFiles() {
 }
 
 void MainWindow::onCheckUpdatesResult(const Update& update) {
-    qDebug() << "checkForUpdates" << update.url;
+    if (!update.isValid) {
+        QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
+    } else {
+
+    }
 }
 
 void MainWindow::about() {
