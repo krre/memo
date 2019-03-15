@@ -17,4 +17,9 @@ public slots:
 
 signals:
     void checkResult(const Update& update);
+
+private:
+    void loadRedirector();
+    void loadManifest(const QUrl& manifestUrl);
+    void findUpdate(const QJsonObject& manifest);
 };
