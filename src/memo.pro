@@ -1,4 +1,4 @@
-QT += core gui widgets sql
+QT += core gui widgets sql network
 linux: QT += x11extras
 
 TARGET = memo
