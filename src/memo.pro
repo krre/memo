@@ -51,4 +51,5 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    i18n/memo-ru.ts
+    i18n/memo-ru.ts \
+    updater/redirector.json

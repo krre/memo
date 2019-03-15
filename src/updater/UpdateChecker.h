@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QUrl>
+#include <QNetworkReply>
 
 struct Update {
     QUrl url;

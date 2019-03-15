@@ -20,4 +20,8 @@ namespace Constants {
     namespace Outliner {
         constexpr auto TreeItemMimeType = "application/x-treeitem";
     }
+
+    namespace Updater {
+        constexpr auto ManifestRedirectorUrl = "https://raw.githubusercontent.com/krre/memo/master/src/updater/redirector.json";
+    }
 }
