@@ -1,13 +1,13 @@
 #include "ui/MainWindow.h"
 #include "core/Constants.h"
-#include <QApplication>
+#include "core/App.h"
 #include <QMessageBox>
 #include <QSettings>
 #include <QTranslator>
 #include <QLibraryInfo>
 
 int main(int argc, char* argv[]) {
-    QApplication app(argc, argv);
+    App app(argc, argv);
 
     app.setOrganizationName(Constants::App::Organization);
     app.setApplicationName(Constants::App::Name);

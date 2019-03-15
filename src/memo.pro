@@ -25,7 +25,8 @@ SOURCES += \
     ui/Options.cpp \
     ui/hotkey/GlobalHotkey.cpp \
     ui/outliner/NoteProperties.cpp \
-    updater/UpdateChecker.cpp
+    updater/UpdateChecker.cpp \
+    core/App.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -43,7 +44,8 @@ HEADERS += \
     ui/hotkey/NativeEventFilter.h \
     ui/hotkey/GlobalHotkey.h \
     ui/outliner/NoteProperties.h \
-    updater/UpdateChecker.h
+    updater/UpdateChecker.h \
+    core/App.h
 
 RESOURCES += \
     resources.qrc
