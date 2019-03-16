@@ -122,14 +122,57 @@
         <translation>Установлена последняя версия %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="304"/>
+        <location filename="../ui/MainWindow.cpp" line="308"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="305"/>
+        <location filename="../ui/MainWindow.cpp" line="309"/>
         <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Outliner for quick notes&lt;br&gt;&lt;br&gt;            Based on Qt %4&lt;br&gt;            Build on %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;            Основано на Qt %4&lt;br&gt;            Собрано %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;© %8, Владимир Зарыпов</translation>
+    </message>
+</context>
+<context>
+    <name>NewUpdate</name>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="5"/>
+        <source>New Update Available</source>
+        <translation>Доступно новое обновление</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="13"/>
+        <source>Version:</source>
+        <translation>Версия:</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="16"/>
+        <source>Date:</source>
+        <translation>Дата:</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="19"/>
+        <source>Size:</source>
+        <translation>Размер:</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="20"/>
+        <source>MB</source>
+        <translation>МБ</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="23"/>
+        <source>Channel:</source>
+        <translation>Канал:</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="26"/>
+        <source>Description:</source>
+        <translation>Описание:</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdate.cpp" line="34"/>
+        <source>Update</source>
+        <translation>Обновить</translation>
     </message>
 </context>
 <context>
