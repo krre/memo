@@ -5,6 +5,7 @@
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
+#include "updater/NewUpdate.h"
 #include <QtCore>
 #include <QtWidgets>
 
@@ -295,7 +296,11 @@ void MainWindow::onCheckUpdatesResult(const UpdateChecker::Update& latestUpdate,
     if (!latestUpdate.isValid) {
         QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
     } else {
-        qDebug() << "new update!";
+        int size = latestUpdate.version.app == qtUpdate.version.app ? latestUpdate.size : latestUpdate.size + qtUpdate.size;
+        NewUpdate newUpdate(latestUpdate, size);
+        if (newUpdate.exec() == QDialog::Accepted) {
+            qDebug() << "run update";
+        }
     }
 }
 
