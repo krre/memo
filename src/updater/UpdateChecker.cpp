@@ -22,8 +22,15 @@ void UpdateChecker::loadRedirector() {
     QNetworkReply* redirectorReply = App::networkAccessManager()->get(QNetworkRequest(QUrl(Constants::Updater::ManifestRedirectorUrl)));
 
     connect(redirectorReply, &QNetworkReply::finished, [redirectorReply, this] () {
-        QJsonObject redirector = QJsonDocument::fromJson(redirectorReply->readAll()).object();
-        loadManifest(QUrl(redirector["manifest"].toString()));
+        QJsonParseError parseError;
+        QJsonObject redirector = QJsonDocument::fromJson(redirectorReply->readAll(), &parseError).object();
+        qDebug() << redirector;
+
+        if (parseError.error != QJsonParseError::NoError) {
+            qCritical() << QString("Failed to parse redirector at offset %1: %2").arg(parseError.offset).arg(parseError.errorString());
+        } else {
+            loadManifest(QUrl(redirector["manifest"].toString()));
+        }
 
         redirectorReply->deleteLater();
     });
@@ -38,10 +45,11 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
     QNetworkReply* manifestReply = App::networkAccessManager()->get(QNetworkRequest(manifestUrl));
 
     connect(manifestReply, &QNetworkReply::finished, [manifestReply, manifestUrl, this] () {
-        QJsonObject manifest = QJsonDocument::fromJson(manifestReply->readAll()).object();
+        QJsonParseError parseError;
+        QJsonObject manifest = QJsonDocument::fromJson(manifestReply->readAll(), &parseError).object();
 
-        if (manifest.isEmpty()) {
-            loadRedirector();
+        if (parseError.error != QJsonParseError::NoError) {
+            qCritical() << QString("Failed to parse manifest at offset %1: %2").arg(parseError.offset).arg(parseError.errorString());
         } else {
             QSettings settings;
             settings.setValue("Network/manifestUrl", manifestUrl.toString());
