@@ -33,7 +33,7 @@ private slots:
 
     void onNoteChanged(int id);
     void onEditorFocusLost();
-    void onCheckUpdatesResult(const UpdateChecker::Update& update);
+    void onCheckUpdatesResult(const UpdateChecker::Update& latestUpdate, const UpdateChecker::Update& qtUpdate);
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void showWindow();

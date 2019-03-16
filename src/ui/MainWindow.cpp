@@ -291,8 +291,8 @@ void MainWindow::clearMenuRecentFiles() {
     updateMenuState();
 }
 
-void MainWindow::onCheckUpdatesResult(const UpdateChecker::Update& update) {
-    if (!update.isValid) {
+void MainWindow::onCheckUpdatesResult(const UpdateChecker::Update& latestUpdate, const UpdateChecker::Update& qtUpdate) {
+    if (!latestUpdate.isValid) {
         QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
     } else {
         qDebug() << "new update!";
