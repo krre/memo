@@ -18,7 +18,11 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
+
+#ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);
+#endif
+
     QApplication::setQuitOnLastWindowClosed(false);
 
     QSettings settings;
