@@ -3,14 +3,14 @@
 #include <QUrl>
 #include <QNetworkReply>
 
-struct Update {
-    QUrl url;
-    bool isValid;
-};
-
 class UpdateChecker : public QObject {
     Q_OBJECT
 public:
+    struct Update {
+        QUrl url;
+        bool isValid;
+    };
+
     explicit UpdateChecker(QObject* parent = nullptr);
 
 public slots:

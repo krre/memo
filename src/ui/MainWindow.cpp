@@ -5,7 +5,6 @@
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
-#include "updater/UpdateChecker.h"
 #include <QtCore>
 #include <QtWidgets>
 
@@ -292,11 +291,11 @@ void MainWindow::clearMenuRecentFiles() {
     updateMenuState();
 }
 
-void MainWindow::onCheckUpdatesResult(const Update& update) {
+void MainWindow::onCheckUpdatesResult(const UpdateChecker::Update& update) {
     if (!update.isValid) {
         QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
     } else {
-
+        qDebug() << "new update!";
     }
 }
 

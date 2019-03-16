@@ -1,6 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <QSystemTrayIcon>
+#include "updater/UpdateChecker.h"
 
 class QSplitter;
 class Outliner;
@@ -32,7 +33,7 @@ private slots:
 
     void onNoteChanged(int id);
     void onEditorFocusLost();
-    void onCheckUpdatesResult(const Update& update);
+    void onCheckUpdatesResult(const UpdateChecker::Update& update);
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void showWindow();
