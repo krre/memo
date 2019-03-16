@@ -8,6 +8,6 @@ App::App(int& argc, char** argv) : QApplication(argc, argv) {
     nam = new QNetworkAccessManager(this);
 }
 
-QNetworkAccessManager*App::networkAccessManager() {
+QNetworkAccessManager* App::networkAccessManager() {
     return instance->nam;
 }
