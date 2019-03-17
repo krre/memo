@@ -11,7 +11,7 @@ NewUpdate::NewUpdate(const UpdateChecker::Update& update, int size, QWidget* par
     QGridLayout* gridLayout = new QGridLayout;
 
     gridLayout->addWidget(new QLabel(tr("Version:")), 0, 0);
-    gridLayout->addWidget(new QLabel(update.version.app), 0, 1);
+    gridLayout->addWidget(new QLabel(update.version), 0, 1);
 
     gridLayout->addWidget(new QLabel(tr("Date:")), 1, 0);
     gridLayout->addWidget(new QLabel(update.date), 1, 1);

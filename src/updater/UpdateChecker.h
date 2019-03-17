@@ -6,20 +6,14 @@
 class UpdateChecker : public QObject {
     Q_OBJECT
 public:
-    struct Version {
-        QString app;
-        QString qt;
-    };
-
     struct Update {
         QString url;
-        Version version;
+        QString version;
         QString description;
         QString date;
         QVector<QString> os;
         int size;
         QString channel;
-        bool lite;
         bool isValid = false;
     };
 

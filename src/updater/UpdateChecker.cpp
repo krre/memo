@@ -74,7 +74,7 @@ void UpdateChecker::findUpdate(const QJsonObject& manifest) {
     populateUpdate(updates.first().toObject(), latestUpdate);
 
     QVersionNumber currentAppVer = QVersionNumber::fromString(Constants::App::Version);
-    QVersionNumber updateAppVer = QVersionNumber::fromString(latestUpdate.version.app);
+    QVersionNumber updateAppVer = QVersionNumber::fromString(latestUpdate.version);
 
     // Updates are absent.
     if (currentAppVer == updateAppVer) {
@@ -88,9 +88,6 @@ void UpdateChecker::findUpdate(const QJsonObject& manifest) {
         emit checkResult(latestUpdate, qtUpdate);
         return;
     }
-
-    QVersionNumber currentQtVer = QVersionNumber::fromString(QT_VERSION_STR);
-    QVersionNumber updateQtVer = QVersionNumber::fromString(latestUpdate.version.qt);
 
 #if defined Q_OS_LINUX
     QString currentOS = "linux";
@@ -112,24 +109,10 @@ void UpdateChecker::findUpdate(const QJsonObject& manifest) {
             }
         }
 
-        if (currentQtVer == updateQtVer) {
-            break;
-        }
-
-        if (currentQtVer > updateQtVer) {
-            qCritical() << "Application Qt version greater than update Qt version";
-            break;
-        }
-
         populateUpdate(value.toObject(), qtUpdate);
 
         if (!qtUpdate.os.isEmpty() && !qtUpdate.os.contains(currentOS)) {
             continue;
-        }
-
-        if (!qtUpdate.lite) {
-            qtUpdate.isValid = true;
-            break;
         }
     }
 
@@ -137,9 +120,7 @@ void UpdateChecker::findUpdate(const QJsonObject& manifest) {
 }
 
 void UpdateChecker::populateUpdate(const QJsonObject& obj, Update& update) {
-    QJsonObject version = obj["version"].toObject();
-    update.version.app = version["app"].toString();
-    update.version.qt = version["qt"].toString();
+    update.version = obj["version"].toString();
     update.description = obj["description"].toString();
     update.date = obj["date"].toString();
 
@@ -149,5 +130,4 @@ void UpdateChecker::populateUpdate(const QJsonObject& obj, Update& update) {
 
     update.size = obj["size"].toInt();
     update.channel = obj["channel"].toString();
-    update.lite = obj["lite"].toBool();
 }
