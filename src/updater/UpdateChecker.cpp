@@ -86,7 +86,7 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 
         QVersionNumber updateAppVer = QVersionNumber::fromString(update.version);
 
-        if (updateAppVer == currentAppVer) {
+        if (updateAppVer <= currentAppVer) {
             break;
         }
 
