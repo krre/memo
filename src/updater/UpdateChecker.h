@@ -14,7 +14,6 @@ public:
         QVector<QString> os;
         int size;
         QString channel;
-        bool isValid = false;
     };
 
     explicit UpdateChecker(QObject* parent = nullptr);
@@ -23,11 +22,10 @@ public slots:
     void check();
 
 signals:
-    void checkResult(const Update& latestUpdate, const Update& qtUpdate);
+    void checkResult(const QVector<Update>& updates);
 
 private:
     void loadRedirector();
     void loadManifest(const QUrl& manifestUrl);
-    void findUpdate(const QJsonObject& manifest);
-    void populateUpdate(const QJsonObject& obj, Update& update);
+    void findUpdates(const QJsonObject& manifest);
 };

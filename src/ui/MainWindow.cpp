@@ -292,12 +292,11 @@ void MainWindow::clearMenuRecentFiles() {
     updateMenuState();
 }
 
-void MainWindow::onCheckUpdatesResult(const UpdateChecker::Update& latestUpdate, const UpdateChecker::Update& qtUpdate) {
-    if (!latestUpdate.isValid) {
+void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates) {
+    if (updates.isEmpty()) {
         QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
     } else {
-        int size = latestUpdate.size;
-        NewUpdates newUpdates(latestUpdate, size);
+        NewUpdates newUpdates(updates);
         if (newUpdates.exec() == QDialog::Accepted) {
             qDebug() << "run update";
         }

@@ -10,8 +10,6 @@ class Database;
 class GlobalHotkey;
 class UpdateChecker;
 
-struct Update;
-
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -33,7 +31,7 @@ private slots:
 
     void onNoteChanged(int id);
     void onEditorFocusLost();
-    void onCheckUpdatesResult(const UpdateChecker::Update& latestUpdate, const UpdateChecker::Update& qtUpdate);
+    void onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates);
 
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void showWindow();

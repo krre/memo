@@ -53,7 +53,7 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
             QSettings settings;
             settings.setValue("Network/manifestUrl", manifestUrl.toString());
 
-            findUpdate(manifest);
+            findUpdates(manifest);
         }
 
         manifestReply->deleteLater();
@@ -65,30 +65,7 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
     });
 }
 
-void UpdateChecker::findUpdate(const QJsonObject& manifest) {
-    QJsonArray updates = manifest["updates"].toArray();
-
-    Update latestUpdate{};
-    Update qtUpdate{};
-
-    populateUpdate(updates.first().toObject(), latestUpdate);
-
-    QVersionNumber currentAppVer = QVersionNumber::fromString(Constants::App::Version);
-    QVersionNumber updateAppVer = QVersionNumber::fromString(latestUpdate.version);
-
-    // Updates are absent.
-    if (currentAppVer == updateAppVer) {
-        emit checkResult(latestUpdate, qtUpdate);
-        return;
-    }
-
-    // Error update version.
-    if (currentAppVer > updateAppVer) {
-        qCritical() << "Application version greater than update version";
-        emit checkResult(latestUpdate, qtUpdate);
-        return;
-    }
-
+void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 #if defined Q_OS_LINUX
     QString currentOS = "linux";
 #elif defined Q_OS_WIN
@@ -97,37 +74,38 @@ void UpdateChecker::findUpdate(const QJsonObject& manifest) {
     QString currentOS = "macos";
 #endif
 
-    // Find valid OS and Qt update.
-    for (const auto value : updates) {
-        if (!latestUpdate.isValid) {
-            populateUpdate(value.toObject(), latestUpdate);
+    QVector<Update> updates;
 
-            if (latestUpdate.os.isEmpty() || latestUpdate.os.contains(currentOS)) {
-                latestUpdate.isValid = true;
-            } else {
-                continue;
-            }
+    QVersionNumber currentAppVer = QVersionNumber::fromString(Constants::App::Version);
+
+    for (const auto value : manifest["updates"].toArray()) {
+        QJsonObject updateObj = value.toObject();
+
+        Update update{};
+        update.version = updateObj["version"].toString();
+
+        QVersionNumber updateAppVer = QVersionNumber::fromString(update.version);
+
+        if (updateAppVer == currentAppVer) {
+            break;
         }
 
-        populateUpdate(value.toObject(), qtUpdate);
+        for (const auto value : updateObj["os"].toArray()) {
+            update.os.append(value.toString());
+        }
 
-        if (!qtUpdate.os.isEmpty() && !qtUpdate.os.contains(currentOS)) {
+        // Find valid OS update.
+        if (update.os.isEmpty() || update.os.contains(currentOS)) {
+            update.description = updateObj["description"].toString();
+            update.date = updateObj["date"].toString();
+            update.size = updateObj["size"].toInt();
+            update.channel = updateObj["channel"].toString();
+
+            updates.append(update);
+        } else {
             continue;
         }
     }
 
-    emit checkResult(latestUpdate, qtUpdate);
-}
-
-void UpdateChecker::populateUpdate(const QJsonObject& obj, Update& update) {
-    update.version = obj["version"].toString();
-    update.description = obj["description"].toString();
-    update.date = obj["date"].toString();
-
-    for (const auto value : obj["os"].toArray()) {
-        update.os.append(value.toString());
-    }
-
-    update.size = obj["size"].toInt();
-    update.channel = obj["channel"].toString();
+    emit checkResult(updates);
 }

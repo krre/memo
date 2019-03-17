@@ -1,32 +1,36 @@
 #include "NewUpdates.h"
 #include <QtWidgets>
 
-NewUpdates::NewUpdates(const UpdateChecker::Update& update, int size, QWidget* parent) : QDialog(parent){
+NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent) : QDialog(parent){
     setWindowTitle(tr("New Updates Available"));
     resize(600, 300);
 
     QVBoxLayout* layout = new QVBoxLayout;
     setLayout(layout);
 
+    QString description;
+
+    QPlainTextEdit* textEdit = new QPlainTextEdit(description);
+    textEdit->setReadOnly(true);
+    layout->addWidget(textEdit);
+
     QGridLayout* gridLayout = new QGridLayout;
+    gridLayout->setColumnStretch(1, 1);
 
-    gridLayout->addWidget(new QLabel(tr("Version:")), 0, 0);
-    gridLayout->addWidget(new QLabel(update.version), 0, 1);
+    gridLayout->addWidget(new QLabel(tr("Channel:")), 0, 0);
+    gridLayout->addWidget(new QLabel(updates.first().channel), 0, 1);
 
-    gridLayout->addWidget(new QLabel(tr("Date:")), 1, 0);
-    gridLayout->addWidget(new QLabel(update.date), 1, 1);
+    gridLayout->addWidget(new QLabel(tr("Count:")), 1, 0);
+    gridLayout->addWidget(new QLabel(QString::number(updates.count())), 1, 1);
 
     gridLayout->addWidget(new QLabel(tr("Size:")), 2, 0);
-    QString updateSize = QString::number(size / 1000000) + " " + tr("MB");
-    gridLayout->addWidget(new QLabel(updateSize), 2, 1);
 
-    gridLayout->addWidget(new QLabel(tr("Channel:")), 3, 0);
-    gridLayout->addWidget(new QLabel(update.channel), 3, 1);
+    int size = 0;
+    for (const auto& update : updates) {
+        size += update.size;
+    }
 
-    gridLayout->addWidget(new QLabel(tr("Description:")), 4, 0);
-    QPlainTextEdit* textEdit = new QPlainTextEdit(update.description);
-    textEdit->setReadOnly(true);
-    gridLayout->addWidget(textEdit, 4, 1);
+    gridLayout->addWidget(new QLabel(QString::number(size / 1000000) + " " + tr("MB")), 2, 1);
 
     layout->addLayout(gridLayout);
 
