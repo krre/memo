@@ -1,8 +1,8 @@
-#include "NewUpdate.h"
+#include "NewUpdates.h"
 #include <QtWidgets>
 
-NewUpdate::NewUpdate(const UpdateChecker::Update& update, int size, QWidget* parent) : QDialog(parent){
-    setWindowTitle(tr("New Update Available"));
+NewUpdates::NewUpdates(const UpdateChecker::Update& update, int size, QWidget* parent) : QDialog(parent){
+    setWindowTitle(tr("New Updates Available"));
     resize(600, 300);
 
     QVBoxLayout* layout = new QVBoxLayout;
