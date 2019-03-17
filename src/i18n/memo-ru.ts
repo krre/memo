@@ -140,27 +140,34 @@
         <translation>Доступны новые обновления</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="20"/>
+        <location filename="../updater/NewUpdates.cpp" line="11"/>
+        <source>Version: %1 - Date: %2 - Size: %3.
+</source>
+        <translation>Версия: %1 - Дата: %2 - Размер: %3.
+</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdates.cpp" line="28"/>
         <source>Channel:</source>
         <translation>Канал:</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="23"/>
+        <location filename="../updater/NewUpdates.cpp" line="31"/>
         <source>Count:</source>
         <translation>Количество:</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="26"/>
+        <location filename="../updater/NewUpdates.cpp" line="34"/>
         <source>Size:</source>
         <translation>Размер:</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="33"/>
+        <location filename="../updater/NewUpdates.cpp" line="50"/>
         <source>MB</source>
         <translation>МБ</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="38"/>
+        <location filename="../updater/NewUpdates.cpp" line="40"/>
         <source>Update</source>
         <translation>Обновить</translation>
     </message>
