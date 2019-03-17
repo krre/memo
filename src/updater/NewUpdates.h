@@ -7,4 +7,7 @@ class NewUpdates : public QDialog {
 
 public:
     NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent = nullptr);
+
+private:
+    QString sizeToMegabyte(int size);
 };

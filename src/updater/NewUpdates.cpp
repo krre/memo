@@ -5,10 +5,18 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     setWindowTitle(tr("New Updates Available"));
     resize(600, 300);
 
+    QString description;
+    int totalSize = 0;
+    for (const auto& update : updates) {
+        description += tr("Version: %1 - Date: %2 - Size: %3.\n").arg(update.version).arg(update.date).arg(sizeToMegabyte(update.size));
+        description += update.description;
+        description += "\n\n";
+
+        totalSize += update.size;
+    }
+
     QVBoxLayout* layout = new QVBoxLayout;
     setLayout(layout);
-
-    QString description;
 
     QPlainTextEdit* textEdit = new QPlainTextEdit(description);
     textEdit->setReadOnly(true);
@@ -24,13 +32,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     gridLayout->addWidget(new QLabel(QString::number(updates.count())), 1, 1);
 
     gridLayout->addWidget(new QLabel(tr("Size:")), 2, 0);
-
-    int size = 0;
-    for (const auto& update : updates) {
-        size += update.size;
-    }
-
-    gridLayout->addWidget(new QLabel(QString::number(size / 1000000) + " " + tr("MB")), 2, 1);
+    gridLayout->addWidget(new QLabel(sizeToMegabyte(totalSize)), 2, 1);
 
     layout->addLayout(gridLayout);
 
@@ -42,4 +44,8 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+}
+
+QString NewUpdates::sizeToMegabyte(int size) {
+    return QString::number(size / 1000000.0, 'f', 1) + " " + tr("MB");
 }
