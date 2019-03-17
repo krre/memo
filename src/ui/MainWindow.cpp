@@ -297,8 +297,8 @@ void MainWindow::onCheckUpdatesResult(const UpdateChecker::Update& latestUpdate,
         QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
     } else {
         int size = latestUpdate.size;
-        NewUpdates newUpdate(latestUpdate, size);
-        if (newUpdate.exec() == QDialog::Accepted) {
+        NewUpdates newUpdates(latestUpdate, size);
+        if (newUpdates.exec() == QDialog::Accepted) {
             qDebug() << "run update";
         }
     }
