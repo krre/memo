@@ -36,14 +36,23 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     layout->addLayout(gridLayout);
 
+    progressBar = new QProgressBar;
+    progressBar->setMaximum(totalSize);
+    layout->addWidget(progressBar);
+
     QDialogButtonBox* buttonBox = new QDialogButtonBox;
-    buttonBox->addButton(tr("Update"), QDialogButtonBox::AcceptRole);
+    updateButton = new QPushButton(tr("Update"));
+    buttonBox->addButton(updateButton, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(QDialogButtonBox::Cancel);
 
     layout->addWidget(buttonBox);
 
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &NewUpdates::startUpdate);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+}
+
+void NewUpdates::startUpdate() {
+    updateButton->setEnabled(false);
 }
 
 QString NewUpdates::sizeToMegabyte(int size) {
