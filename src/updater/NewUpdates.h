@@ -18,4 +18,6 @@ private:
 
     QPushButton* updateButton;
     QProgressBar* progressBar;
+    QVector<QUrl> urls;
+    int bytesCounter = 0;
 };

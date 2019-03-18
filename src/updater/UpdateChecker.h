@@ -7,7 +7,7 @@ class UpdateChecker : public QObject {
     Q_OBJECT
 public:
     struct Update {
-        QString url;
+        QUrl url;
         QString version;
         QString description;
         QString date;
@@ -27,5 +27,5 @@ signals:
 private:
     void loadRedirector();
     void loadManifest(const QUrl& manifestUrl);
-    void findUpdates(const QJsonObject& manifest);
+    void findUpdates(const QJsonObject& manifest, const QUrl& manifestUrl);
 };

@@ -7,12 +7,17 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     QString description;
     int totalSize = 0;
+    int i = updates.count() - 1;
+
     for (const auto& update : updates) {
         description += tr("Version: %1 - Date: %2 - Size: %3.\n").arg(update.version).arg(update.date).arg(sizeToMegabyte(update.size));
         description += update.description;
         description += "\n\n";
 
         totalSize += update.size;
+
+        // In reverse order.
+        urls.append(updates.at(i--).url);
     }
 
     QVBoxLayout* layout = new QVBoxLayout;
@@ -53,6 +58,8 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
 void NewUpdates::startUpdate() {
     updateButton->setEnabled(false);
+
+    qDebug() << urls;
 }
 
 QString NewUpdates::sizeToMegabyte(int size) {

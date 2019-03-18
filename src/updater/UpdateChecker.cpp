@@ -53,7 +53,7 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
             QSettings settings;
             settings.setValue("Network/manifestUrl", manifestUrl.toString());
 
-            findUpdates(manifest);
+            findUpdates(manifest, manifestUrl);
         }
 
         manifestReply->deleteLater();
@@ -65,7 +65,7 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
     });
 }
 
-void UpdateChecker::findUpdates(const QJsonObject& manifest) {
+void UpdateChecker::findUpdates(const QJsonObject& manifest, const QUrl& manifestUrl) {
 #if defined Q_OS_LINUX
     QString currentOS = "linux";
 #elif defined Q_OS_WIN
@@ -75,7 +75,6 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 #endif
 
     QVector<Update> updates;
-
     QVersionNumber currentAppVer = QVersionNumber::fromString(Constants::App::Version);
 
     for (const auto value : manifest["updates"].toArray()) {
@@ -96,6 +95,8 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 
         // Find valid OS update.
         if (update.os.isEmpty() || update.os.contains(currentOS)) {
+            QString urlTemplate = manifest["url"].toString();
+            update.url = manifestUrl.resolved(QUrl(QString("./%1").arg(urlTemplate.replace("$os", currentOS).replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
             update.size = updateObj["size"].toInt();
