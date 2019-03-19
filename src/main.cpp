@@ -9,8 +9,8 @@
 int main(int argc, char* argv[]) {
     App app(argc, argv);
 
-    app.setOrganizationName(Constants::App::Organization);
-    app.setApplicationName(Constants::App::Name);
+    App::setOrganizationName(Constants::App::Organization);
+    App::setApplicationName(Constants::App::Name);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, QObject::tr("Systray"),
@@ -33,20 +33,20 @@ int main(int argc, char* argv[]) {
     }
 
     QString qtTranslatorFileName = QLatin1String("qt_") + language;
-    QTranslator* qtTranslator = new QTranslator(&app);
+    auto qtTranslator = new QTranslator(&app);
 
     if (qtTranslator->load(qtTranslatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-        app.installTranslator(qtTranslator);
+        App::installTranslator(qtTranslator);
     }
 
     QString memoTranslatorFileName = QLatin1String("memo-") + language;
-    QTranslator* memoTranslator = new QTranslator(&app);
+    auto memoTranslator = new QTranslator(&app);
 
     if (memoTranslator->load(memoTranslatorFileName, ":/i18n")) {
-        app.installTranslator(memoTranslator);
+        App::installTranslator(memoTranslator);
     }
 
     MainWindow window;
 
-    return app.exec();
+    return App::exec();
 }

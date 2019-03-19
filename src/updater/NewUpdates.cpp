@@ -10,7 +10,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     int i = updates.count() - 1;
 
     for (const auto& update : updates) {
-        description += tr("Version: %1 - Date: %2 - Size: %3.\n").arg(update.version).arg(update.date).arg(sizeToMegabyte(update.size));
+        description += tr("Version: %1 - Date: %2 - Size: %3.\n").arg(update.version, update.date, sizeToMegabyte(update.size));
         description += update.description;
         description += "\n\n";
 
@@ -20,14 +20,14 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
         urls.append(updates.at(i--).url);
     }
 
-    QVBoxLayout* layout = new QVBoxLayout;
+    auto layout = new QVBoxLayout;
     setLayout(layout);
 
-    QPlainTextEdit* textEdit = new QPlainTextEdit(description);
+    auto textEdit = new QPlainTextEdit(description);
     textEdit->setReadOnly(true);
     layout->addWidget(textEdit);
 
-    QGridLayout* gridLayout = new QGridLayout;
+    auto gridLayout = new QGridLayout;
     gridLayout->setColumnStretch(1, 1);
 
     gridLayout->addWidget(new QLabel(tr("Channel:")), 0, 0);
@@ -45,7 +45,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     progressBar->setMaximum(totalSize);
     layout->addWidget(progressBar);
 
-    QDialogButtonBox* buttonBox = new QDialogButtonBox;
+    auto buttonBox = new QDialogButtonBox;
     updateButton = new QPushButton(tr("Update"));
     buttonBox->addButton(updateButton, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(QDialogButtonBox::Cancel);

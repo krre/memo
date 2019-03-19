@@ -13,12 +13,7 @@ TreeModel::~TreeModel() {
 
 QModelIndex TreeModel::index(int row, int column, const QModelIndex& parent) const {
     TreeItem* childItem = item(parent)->child(row);
-
-    if (childItem) {
-        return createIndex(row, column, childItem);
-    } else {
-        return QModelIndex();
-    }
+    return childItem ? createIndex(row, column, childItem) : QModelIndex();
 }
 
 QModelIndex TreeModel::parent(const QModelIndex& child) const {
@@ -89,7 +84,7 @@ QStringList TreeModel::mimeTypes() const {
 }
 
 QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
-    QMimeData* mimeData = new QMimeData;
+    auto mimeData = new QMimeData;
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << item(indexes.first())->id();
@@ -198,7 +193,7 @@ TreeItem* TreeModel::root() const {
 
 TreeItem* TreeModel::item(const QModelIndex& index) const {
     if (index.isValid()) {
-        TreeItem* item = static_cast<TreeItem*>(index.internalPointer());
+        auto item = static_cast<TreeItem*>(index.internalPointer());
         if (item) {
             return item;
         }
@@ -207,11 +202,7 @@ TreeItem* TreeModel::item(const QModelIndex& index) const {
 }
 
 QModelIndex TreeModel::index(TreeItem* item) const {
-    if (item) {
-        return createIndex(item->childNumber(), 0, item);
-    } else {
-        return QModelIndex();
-    }
+    return item ? createIndex(item->childNumber(), 0, item) : QModelIndex();
 }
 
 QVector<int> TreeModel::childIds(TreeItem* item) {

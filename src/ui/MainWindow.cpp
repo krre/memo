@@ -37,9 +37,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSpl
     updateMenuState();
 }
 
-MainWindow::~MainWindow() {
-}
-
 void MainWindow::readSettings() {
     applyHotSettings();
 
@@ -174,7 +171,7 @@ void MainWindow::updateMenuState() {
     closeAction->setEnabled(isFileOpen);
 }
 
-void MainWindow::loadFile(const QString filePath) {
+void MainWindow::loadFile(const QString& filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     if (database->open(filePath)) {
@@ -200,7 +197,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
     updateMenuState();
 }
 
-void MainWindow::addRecentFile(const QString filePath) {
+void MainWindow::addRecentFile(const QString& filePath) {
     if (!QFile::exists(filePath)) return;
 
     for (QAction* action : recentFilesMenu->actions()) {
@@ -209,7 +206,7 @@ void MainWindow::addRecentFile(const QString filePath) {
         }
     }
 
-    QAction* fileAction = new QAction(filePath);
+    auto fileAction = new QAction(filePath);
     connect(fileAction, &QAction::triggered, [=] {
         loadFile(filePath);
     });
@@ -310,11 +307,14 @@ void MainWindow::about() {
            Based on Qt %4<br> \
            Build on %5 %6<br><br> \
            <a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
-            .arg(Constants::App::Name)
-            .arg(Constants::App::Version).arg(Constants::App::Status)
-            .arg(QT_VERSION_STR)
-            .arg(__DATE__).arg(__TIME__)
-            .arg(Constants::App::URL).arg(Constants::App::CopyrightYear));
+            .arg(Constants::App::Name,
+                 Constants::App::Version,
+                 Constants::App::Status,
+                 QT_VERSION_STR,
+                 __DATE__,
+                 __TIME__,
+                 Constants::App::URL,
+                 Constants::App::CopyrightYear));
 }
 
 void MainWindow::quit() {

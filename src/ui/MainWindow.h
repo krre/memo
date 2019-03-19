@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow {
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    virtual ~MainWindow() override;
+    virtual ~MainWindow() override = default;
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -46,25 +46,25 @@ private:
     void createTrayIcon();
     void updateMenuState();
 
-    void loadFile(const QString filePath);
+    void loadFile(const QString& filePath);
     void setCurrentFile(const QString& filePath = QString());
-    void addRecentFile(const QString filePath);
+    void addRecentFile(const QString& filePath);
 
     void showErrorDialog(const QString& message);
     void showDatabaseErrorDialog();
 
-    QSystemTrayIcon* trayIcon;
-    QMenu* trayIconMenu;
-    QMenu* recentFilesMenu;
-    QAction* exportAction;
-    QAction* closeAction;
+    QSystemTrayIcon* trayIcon = nullptr;
+    QMenu* trayIconMenu = nullptr;
+    QMenu* recentFilesMenu = nullptr;
+    QAction* exportAction = nullptr;
+    QAction* closeAction = nullptr;
 
-    QSplitter* splitter;
-    Outliner* outliner;
-    Editor* editor;
-    GlobalHotkey* globalHotkey;
-    UpdateChecker* updateChecker;
+    QSplitter* splitter = nullptr;
+    Outliner* outliner = nullptr;
+    Editor* editor = nullptr;
+    GlobalHotkey* globalHotkey = nullptr;
+    UpdateChecker* updateChecker = nullptr;
 
-    Database* database;
+    Database* database = nullptr;
     QString currentFile;
 };

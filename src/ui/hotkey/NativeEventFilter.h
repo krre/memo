@@ -17,6 +17,6 @@ signals:
     void activated();
 
 private:
-    int key;
-    unsigned int mods;
+    int key = 0;
+    unsigned int mods = 0;
 };

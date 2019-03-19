@@ -21,10 +21,10 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* mes
     Q_UNUSED(result)
 
     if (eventType == "xcb_generic_event_t") {
-        xcb_generic_event_t* event = static_cast<xcb_generic_event_t *>(message);
+        auto event = static_cast<xcb_generic_event_t*>(message);
 
         if ((event->response_type & 127) == XCB_KEY_PRESS) {
-            xcb_key_press_event_t* keyEvent = static_cast<xcb_key_press_event_t*>(message);
+            auto keyEvent = static_cast<xcb_key_press_event_t*>(message);
 
             for (quint32 maskMods : maskModifiers) {
                 if ((keyEvent->state == (mods | maskMods )) && keyEvent->detail == key) {

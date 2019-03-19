@@ -4,11 +4,11 @@
 
 Options::Options(QWidget* parent) : QDialog (parent) {
     setWindowTitle(tr("Options"));
-    QVBoxLayout* layout = new QVBoxLayout;
+    auto layout = new QVBoxLayout;
 
-    QGroupBox* groupBoxUi = new QGroupBox(tr("User Interface"));
+    auto groupBoxUi = new QGroupBox(tr("User Interface"));
 
-    QGridLayout* gridLayoutUi = new QGridLayout;
+    auto gridLayoutUi = new QGridLayout;
     gridLayoutUi->setColumnStretch(1, 1);
 
     // Language
@@ -55,7 +55,7 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     // Global hotkey
     groupBoxHotkey = new QGroupBox(tr("Global Hotkey"));
     groupBoxHotkey->setCheckable(true);
-    QVBoxLayout* layoutHotkey = new QVBoxLayout;
+    auto layoutHotkey = new QVBoxLayout;
     hotkeyLineEdit = new QLineEdit(groupBoxHotkey);
     layoutHotkey->addWidget(hotkeyLineEdit);
     groupBoxHotkey->setLayout(layoutHotkey);
@@ -64,7 +64,7 @@ Options::Options(QWidget* parent) : QDialog (parent) {
 
     layout->addStretch(1);
 
-    QDialogButtonBox* buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);

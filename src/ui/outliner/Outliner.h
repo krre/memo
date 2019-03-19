@@ -44,12 +44,12 @@ private:
     void insertChild(const QString& title);
     int exportNote(int parentId, const QString& path);
 
-    QMenu* contextMenu;
-    QAction* removeAction;
-    QAction* renameAction;
-    QAction* moveUpAction;
-    QAction* moveDownAction;
-    QAction* propertiesAction;
+    QMenu* contextMenu = nullptr;
+    QAction* removeAction = nullptr;
+    QAction* renameAction = nullptr;
+    QAction* moveUpAction = nullptr;
+    QAction* moveDownAction = nullptr;
+    QAction* propertiesAction = nullptr;
     TreeModel* model = nullptr;
     Database* database = nullptr;
     bool isInited = false;

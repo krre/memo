@@ -14,8 +14,8 @@ void GlobalHotkey::setShortcut(const QString& shortcut) {
         nativeEventFilter->unsetShortcut();
     } else {
         QKeySequence ks = QKeySequence(shortcut);
-        Qt::Key key = Qt::Key(ks[0] & ~Qt::KeyboardModifierMask);
-        Qt::KeyboardModifiers modifiers = Qt::KeyboardModifiers(ks[0] & Qt::KeyboardModifierMask);
+        auto key = Qt::Key(ks[0] & ~Qt::KeyboardModifierMask);
+        auto modifiers = Qt::KeyboardModifiers(ks[0] & Qt::KeyboardModifierMask);
         nativeEventFilter->setShortcut(key, modifiers);
     }
 }

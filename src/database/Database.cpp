@@ -115,7 +115,7 @@ QSqlQuery Database::record(int id) {
 bool Database::updateValue(int id, const QString& name, const QVariant& value) {
     QSqlQuery query;
     QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";
-    query.prepare(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name).arg(updateDate));
+    query.prepare(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate));
     query.bindValue(":id", id);
     query.bindValue(":value", value);
 
