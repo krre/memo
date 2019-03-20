@@ -54,5 +54,4 @@ RESOURCES += \
 
 DISTFILES += \
     i18n/memo-ru.ts \
-    updater/redirector.json \
     updater/manifest.json.example

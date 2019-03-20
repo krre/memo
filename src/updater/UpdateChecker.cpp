@@ -3,57 +3,21 @@
 #include "core/Constants.h"
 #include <QtNetwork>
 
-UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent) {
+UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent), manifestUrl(QUrl(Constants::Updater::ManifestUrl)) {
 
 }
 
 void UpdateChecker::check() {
-    QSettings settings;
-    QString manifestUrl = settings.value("Network/manifestUrl").toString();
-
-    if (manifestUrl.isEmpty()) {
-        loadRedirector();
-    } else {
-        loadManifest(QUrl(manifestUrl));
-    }
-}
-
-void UpdateChecker::loadRedirector() {
-    QNetworkReply* redirectorReply = App::networkAccessManager()->get(QNetworkRequest(QUrl(Constants::Updater::ManifestRedirectorUrl)));
-
-    connect(redirectorReply, &QNetworkReply::finished, [redirectorReply, this] () {
-        QJsonParseError parseError;
-        QJsonObject redirector = QJsonDocument::fromJson(redirectorReply->readAll(), &parseError).object();
-
-        if (parseError.error != QJsonParseError::NoError) {
-            qCritical() << QString("Failed to parse redirector at offset %1: %2").arg(parseError.offset).arg(parseError.errorString());
-        } else {
-            loadManifest(QUrl(redirector["manifest"].toString()));
-        }
-
-        redirectorReply->deleteLater();
-    });
-
-    connect(redirectorReply, qOverload<QNetworkReply::NetworkError>(&QNetworkReply::error), [redirectorReply] (QNetworkReply::NetworkError code) {
-       qCritical() << "Failed to get redirector. Error code" << code;
-       redirectorReply->deleteLater();
-    });
-}
-
-void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
     QNetworkReply* manifestReply = App::networkAccessManager()->get(QNetworkRequest(manifestUrl));
 
-    connect(manifestReply, &QNetworkReply::finished, [manifestReply, manifestUrl, this] () {
+    connect(manifestReply, &QNetworkReply::finished, [manifestReply, this] () {
         QJsonParseError parseError;
         QJsonObject manifest = QJsonDocument::fromJson(manifestReply->readAll(), &parseError).object();
 
         if (parseError.error != QJsonParseError::NoError) {
             qCritical() << QString("Failed to parse manifest at offset %1: %2").arg(parseError.offset).arg(parseError.errorString());
         } else {
-            QSettings settings;
-            settings.setValue("Network/manifestUrl", manifestUrl.toString());
-
-            findUpdates(manifest, manifestUrl);
+            findUpdates(manifest);
         }
 
         manifestReply->deleteLater();
@@ -65,7 +29,7 @@ void UpdateChecker::loadManifest(const QUrl& manifestUrl) {
     });
 }
 
-void UpdateChecker::findUpdates(const QJsonObject& manifest, const QUrl& manifestUrl) {
+void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 #if defined Q_OS_LINUX
     QString currentOS = "linux";
 #elif defined Q_OS_WIN

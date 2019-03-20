@@ -25,7 +25,6 @@ signals:
     void checkResult(const QVector<Update>& updates);
 
 private:
-    void loadRedirector();
-    void loadManifest(const QUrl& manifestUrl);
-    void findUpdates(const QJsonObject& manifest, const QUrl& manifestUrl);
+    void findUpdates(const QJsonObject& manifest);
+    const QUrl manifestUrl;
 };

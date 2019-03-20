@@ -22,6 +22,6 @@ namespace Constants {
     }
 
     namespace Updater {
-        constexpr auto ManifestRedirectorUrl = "https://raw.githubusercontent.com/krre/memo/master/src/updater/redirector.json";
+        constexpr auto ManifestUrl = "http://memo.inf.ua/download/update/manifest.json";
     }
 }
