@@ -1,4 +1,21 @@
 {
+    "url": "$os/memo-update-$version.zip",
     "updates": [
+        {
+            "version": "1.2.2",
+            "description": "- Large release.",
+            "date": "17.03.2019",
+            "os": ["windows","linux"],
+            "size": 7300401,
+            "channel": "release"
+        },
+        {
+            "version": "1.2.1",
+            "description": "- Small release.",
+            "date": "15.03.2019",
+            "os": ["linux"],
+            "size": 2300401,
+            "channel": "release"
+        }
     ]
 }
