@@ -1,4 +1,5 @@
 #include "NewUpdates.h"
+#include "UpdateDownloader.h"
 #include <QtWidgets>
 
 NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent) : QDialog(parent){
@@ -54,12 +55,13 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &NewUpdates::startUpdate);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    updateDownloader = new UpdateDownloader(this);
 }
 
 void NewUpdates::startUpdate() {
     updateButton->setEnabled(false);
-
-    qDebug() << urls;
+    updateDownloader->download(urls);
 }
 
 QString NewUpdates::sizeToMegabyte(int size) {

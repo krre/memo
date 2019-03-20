@@ -3,6 +3,7 @@
 #include <QDialog>
 
 class QProgressBar;
+class UpdateDownloader;
 
 class NewUpdates : public QDialog {
     Q_OBJECT
@@ -16,8 +17,9 @@ private slots:
 private:
     QString sizeToMegabyte(int size);
 
-    QPushButton* updateButton;
-    QProgressBar* progressBar;
+    UpdateDownloader* updateDownloader = nullptr;
+    QPushButton* updateButton = nullptr;
+    QProgressBar* progressBar = nullptr;
     QVector<QUrl> urls;
     int bytesCounter = 0;
 };

@@ -27,7 +27,8 @@ SOURCES += \
     ui/outliner/NoteProperties.cpp \
     updater/UpdateChecker.cpp \
     core/App.cpp \
-    updater/NewUpdates.cpp
+    updater/NewUpdates.cpp \
+    updater/UpdateDownloader.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -47,7 +48,8 @@ HEADERS += \
     ui/outliner/NoteProperties.h \
     updater/UpdateChecker.h \
     core/App.h \
-    updater/NewUpdates.h
+    updater/NewUpdates.h \
+    updater/UpdateDownloader.h
 
 RESOURCES += \
     resources.qrc
