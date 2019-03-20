@@ -11,8 +11,12 @@ class NewUpdates : public QDialog {
 public:
     NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent = nullptr);
 
+public slots:
+    void reject() override;
+
 private slots:
     void startUpdate();
+    void finishUpdate();
 
 private:
     QString sizeToMegabyte(int size);
@@ -21,5 +25,4 @@ private:
     QPushButton* updateButton = nullptr;
     QProgressBar* progressBar = nullptr;
     QVector<QUrl> urls;
-    int bytesCounter = 0;
 };

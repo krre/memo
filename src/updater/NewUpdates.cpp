@@ -8,7 +8,6 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     QString description;
     int totalSize = 0;
-    int i = updates.count() - 1;
 
     for (const auto& update : updates) {
         description += tr("Version: %1 - Date: %2 - Size: %3.\n").arg(update.version, update.date, sizeToMegabyte(update.size));
@@ -17,8 +16,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
         totalSize += update.size;
 
-        // In reverse order.
-        urls.append(updates.at(i--).url);
+        urls.append(update.url);
     }
 
     auto layout = new QVBoxLayout;
@@ -53,15 +51,26 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     layout->addWidget(buttonBox);
 
+    updateDownloader = new UpdateDownloader(this);
+    connect(updateDownloader, &UpdateDownloader::downloadProgress, progressBar, &QProgressBar::setValue);
+    connect(updateDownloader, &UpdateDownloader::finished, this, &NewUpdates::finishUpdate);
+
     connect(buttonBox, &QDialogButtonBox::accepted, this, &NewUpdates::startUpdate);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+}
 
-    updateDownloader = new UpdateDownloader(this);
+void NewUpdates::reject() {
+    updateDownloader->cancel();
+    QDialog::reject();
 }
 
 void NewUpdates::startUpdate() {
     updateButton->setEnabled(false);
     updateDownloader->download(urls);
+}
+
+void NewUpdates::finishUpdate() {
+    accept();
 }
 
 QString NewUpdates::sizeToMegabyte(int size) {
