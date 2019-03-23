@@ -1,8 +1,9 @@
 #include "MainWindow.h"
+#include "Constants.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    setWindowTitle("Memo Update Creator");
+    setWindowTitle(Constants::WindowTitle);
 
     splitter = new QSplitter;
     setCentralWidget(splitter);
@@ -31,7 +32,19 @@ void MainWindow::quit() {
 }
 
 void MainWindow::about() {
-
+    QMessageBox::about(this, tr("About %1").arg(Constants::ApplicationName),
+        tr("<h3>%1 %2</h3>\
+           Creator of updates for Memo<br><br> \
+           Based on Qt %3<br> \
+           Build on %4 %5<br><br> \
+           <a href=%6>%6</a><br><br>Copyright © %7, Vladimir Zarypov")
+            .arg(Constants::WindowTitle,
+                 Constants::Version,
+                 QT_VERSION_STR,
+                 __DATE__,
+                 __TIME__,
+                 Constants::URL,
+                 Constants::CopyrightYear));
 }
 
 void MainWindow::readSettings() {
@@ -73,5 +86,5 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("About %1...").arg(windowTitle()), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Constants::WindowTitle), this, &MainWindow::about);
 }
