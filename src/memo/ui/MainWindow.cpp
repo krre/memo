@@ -8,9 +8,11 @@
 #include "updater/NewUpdates.h"
 #include <QtWidgets>
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSplitter) {
+MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Constants::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
+
+    splitter = new QSplitter;
     setCentralWidget(splitter);
 
     database = new Database(this);
