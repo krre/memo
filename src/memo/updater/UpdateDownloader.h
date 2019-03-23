@@ -18,7 +18,7 @@ signals:
 
 private:
     void downloadFile();
-    void saveFile(const QByteArray& data);
+    void saveFile(const QByteArray& data, const QString& fileName);
 
     QVector<QUrl> urls;
     qint64 totalSize = 0;
