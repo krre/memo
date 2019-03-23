@@ -6,7 +6,6 @@
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
 #include "updater/NewUpdates.h"
-#include <QtCore>
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), splitter(new QSplitter) {
