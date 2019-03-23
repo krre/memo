@@ -1,6 +1,8 @@
 #pragma once
 #include <QMainWindow>
 
+class QSplitter;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
@@ -14,4 +16,7 @@ protected:
 private:
     void readSettings();
     void writeSettings();
+    void setupSplitter();
+
+    QSplitter* splitter = nullptr;
 };
