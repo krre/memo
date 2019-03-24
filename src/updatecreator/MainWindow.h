@@ -19,7 +19,7 @@ protected:
 private slots:
     void newFile();
     void openFile();
-    void saveFile();
+    bool saveFile();
     void quit();
     void about();
 
@@ -32,9 +32,13 @@ private:
 
     void setupSplitter();
     void createActions();
+    bool wantQuit();
+    void saveManifest();
 
     QSplitter* splitter = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;
     ListModel* listModel = nullptr;
+    bool dirty = false;
+    QString filePath;
 };

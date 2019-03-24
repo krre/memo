@@ -19,8 +19,12 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
-    writeSettings();
-    event->accept();
+    if (wantQuit()) {
+        writeSettings();
+        event->accept();
+    } else {
+        event->ignore();
+    }
 }
 
 void MainWindow::newFile() {
@@ -31,13 +35,28 @@ void MainWindow::openFile() {
 
 }
 
-void MainWindow::saveFile() {
+bool MainWindow::saveFile() {
+    if (filePath.isEmpty()) {
+        QString selectedFilter;
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "manifest.json",
+                                    tr("JSON Files (*.json);;All Files (*)"), &selectedFilter);
+        if (fileName.isEmpty()) {
+            return false;
+        }
 
+        filePath = fileName;
+    }
+
+    saveManifest();
+
+    return true;
 }
 
 void MainWindow::quit() {
-    writeSettings();
-    QCoreApplication::quit();
+    if (wantQuit()) {
+        writeSettings();
+        QCoreApplication::quit();
+    }
 }
 
 void MainWindow::about() {
@@ -70,12 +89,14 @@ void MainWindow::addUpdate() {
     update.date = QDate::currentDate().toString("dd.MM.yyyy");
     listModel->addUpdate(update);
     outliner->selectRow(0);
+    dirty = true;
 }
 
 void MainWindow::removeUpdate(int row) {
     int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
     if (result == QMessageBox::Yes) {
         listModel->removeUpdate(row);
+        dirty = true;
     }
 }
 
@@ -126,4 +147,21 @@ void MainWindow::createActions() {
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("About %1...").arg(Constants::WindowTitle), this, &MainWindow::about);
+}
+
+bool MainWindow::wantQuit() {
+    if (!dirty) return true;
+
+    int result = QMessageBox::question(this, tr("Save Changes"), tr("Are you want save manifest?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    if (result == QMessageBox::Yes) {
+        return saveFile();
+    } else if (result == QMessageBox::No) {
+        return true;
+    }
+
+    return false;
+}
+
+void MainWindow::saveManifest() {
+    qDebug() << "save manifest" << filePath;
 }
