@@ -40,8 +40,6 @@ private:
     void createActions();
     bool wantQuit();
 
-
-
     QSplitter* splitter = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;
