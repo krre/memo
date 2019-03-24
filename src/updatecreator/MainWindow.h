@@ -2,6 +2,7 @@
 #include <QMainWindow>
 
 class QSplitter;
+class Outliner;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -28,4 +29,5 @@ private:
     void createActions();
 
     QSplitter* splitter = nullptr;
+    Outliner* outliner = nullptr;
 };

@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Constants.h"
+#include "Outliner.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -74,7 +75,7 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    splitter->addWidget(new QListView);
+    splitter->addWidget(new Outliner);
     splitter->addWidget(new QTextEdit);
 
     splitter->setHandleWidth(1);
