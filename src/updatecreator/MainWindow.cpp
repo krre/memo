@@ -135,7 +135,7 @@ void MainWindow::writeSettings() {
 
 void MainWindow::newManifest() {
     closeManifest();
-
+    addUpdate();
     dirty = true;
 }
 
