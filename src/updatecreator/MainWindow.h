@@ -24,7 +24,7 @@ private slots:
     void about();
 
     void addUpdate();
-    void removeUpdate();
+    void removeUpdate(int row);
 
 private:
     void readSettings();

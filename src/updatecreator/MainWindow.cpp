@@ -64,8 +64,11 @@ void MainWindow::addUpdate() {
     outliner->selectRow(0);
 }
 
-void MainWindow::removeUpdate() {
-
+void MainWindow::removeUpdate(int row) {
+    int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
+    if (result == QMessageBox::Yes) {
+        listModel->removeUpdate(row);
+    }
 }
 
 void MainWindow::readSettings() {

@@ -20,6 +20,7 @@ public:
     QVariant data(const QModelIndex& index, int role) const override;
 
     void addUpdate(const Update& update);
+    void removeUpdate(int row);
 
 private:
     QList<Update> updates;

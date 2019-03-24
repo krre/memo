@@ -29,3 +29,11 @@ void ListModel::addUpdate(const ListModel::Update& update) {
     updates.insert(0, update);
     endInsertRows();
 }
+
+void ListModel::removeUpdate(int row) {
+    if (row < 0 || row > updates.count() - 1) return;
+
+    beginRemoveRows(QModelIndex(), row, row);
+    updates.removeAt(row);
+    endRemoveRows();
+}

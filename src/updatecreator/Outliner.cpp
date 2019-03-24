@@ -18,6 +18,7 @@ Outliner::Outliner(ListModel* model, QWidget* parent) : QWidget(parent) {
     connect(addButton, &QPushButton::clicked, this, &Outliner::addClicked);
 
     auto removeButton = new QPushButton(tr("Remove"));
+    removeButton->setEnabled(false);
     connect(removeButton, &QPushButton::clicked, this, &Outliner::removeUpdate);
 
     auto buttonLaoyut = new QHBoxLayout;
@@ -27,6 +28,11 @@ Outliner::Outliner(ListModel* model, QWidget* parent) : QWidget(parent) {
     buttonLaoyut->addWidget(removeButton);
 
     layout->addLayout(buttonLaoyut);
+
+    connect(listView->selectionModel(), &QItemSelectionModel::selectionChanged, [removeButton] (const QItemSelection &selected, const QItemSelection &deselected) {
+        Q_UNUSED(deselected)
+        removeButton->setEnabled(selected.count() > 0);
+    });
 }
 
 void Outliner::selectRow(int row) {
