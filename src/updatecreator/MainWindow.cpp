@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "Constants.h"
 #include "Outliner.h"
+#include "ListModel.h"
 #include "Form.h"
 #include <QtWidgets>
 
@@ -9,6 +10,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     splitter = new QSplitter;
     setCentralWidget(splitter);
+
+    listModel = new ListModel(this);
 
     createActions();
     setupSplitter();
@@ -53,6 +56,18 @@ void MainWindow::about() {
                  Constants::CopyrightYear));
 }
 
+void MainWindow::addUpdate() {
+    ListModel::Update update;
+    update.version = "1.0.0";
+    update.date = "24.03.2019";
+    listModel->addUpdate(update);
+    outliner->selectRow(0);
+}
+
+void MainWindow::removeUpdate() {
+
+}
+
 void MainWindow::readSettings() {
     QSettings settings;
 
@@ -76,7 +91,10 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    outliner = new Outliner;
+    outliner = new Outliner(listModel);
+    connect(outliner, &Outliner::addClicked, this, &MainWindow::addUpdate);
+    connect(outliner, &Outliner::removeClicked, this, &MainWindow::removeUpdate);
+
     form = new Form;
 
     splitter->addWidget(outliner);

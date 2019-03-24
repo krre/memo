@@ -1,7 +1,8 @@
 #include "Outliner.h"
+#include "ListModel.h"
 #include <QtWidgets>
 
-Outliner::Outliner(QWidget* parent) : QWidget(parent) {
+Outliner::Outliner(ListModel* model, QWidget* parent) : QWidget(parent) {
     setMinimumWidth(100);
 
     auto layout = new QVBoxLayout;
@@ -9,11 +10,12 @@ Outliner::Outliner(QWidget* parent) : QWidget(parent) {
     layout->setSpacing(0);
     setLayout(layout);
 
-    listWidget = new QListWidget;
-    layout->addWidget(listWidget);
+    listView = new QListView;
+    listView->setModel(model);
+    layout->addWidget(listView);
 
     auto addButton = new QPushButton(tr("Add"));
-    connect(addButton, &QPushButton::clicked, this, &Outliner::addUpdate);
+    connect(addButton, &QPushButton::clicked, this, &Outliner::addClicked);
 
     auto removeButton = new QPushButton(tr("Remove"));
     connect(removeButton, &QPushButton::clicked, this, &Outliner::removeUpdate);
@@ -27,10 +29,10 @@ Outliner::Outliner(QWidget* parent) : QWidget(parent) {
     layout->addLayout(buttonLaoyut);
 }
 
-void Outliner::addUpdate() {
-    qDebug() << "add";
+void Outliner::selectRow(int row) {
+    listView->setCurrentIndex(listView->model()->index(row, 0));
 }
 
 void Outliner::removeUpdate() {
-    qDebug() << "remove";
+    removeClicked(listView->currentIndex().row());
 }

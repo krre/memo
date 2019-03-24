@@ -11,10 +11,12 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     Outliner.cpp \
-    Form.cpp
+    Form.cpp \
+    ListModel.cpp
 
 HEADERS += \
     MainWindow.h \
     Constants.h \
     Outliner.h \
-    Form.h
+    Form.h \
+    ListModel.h

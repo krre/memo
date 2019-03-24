@@ -4,6 +4,7 @@
 class QSplitter;
 class Outliner;
 class Form;
+class ListModel;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -22,6 +23,9 @@ private slots:
     void quit();
     void about();
 
+    void addUpdate();
+    void removeUpdate();
+
 private:
     void readSettings();
     void writeSettings();
@@ -32,4 +36,5 @@ private:
     QSplitter* splitter = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;
+    ListModel* listModel = nullptr;
 };
