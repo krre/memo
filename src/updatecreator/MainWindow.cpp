@@ -30,13 +30,6 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::newFile() {
-    QString selectedFilter;
-    QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "manifest.json",
-                                tr(FILE_DIALOG_FILTER), &selectedFilter);
-
-    if (fileName.isEmpty()) return;
-
-    filePath = fileName;
     newManifest();
 }
 
@@ -64,6 +57,10 @@ bool MainWindow::saveFile() {
     saveManifest();
 
     return true;
+}
+
+void MainWindow::closeFile() {
+    closeManifest();
 }
 
 void MainWindow::quit() {
@@ -137,15 +134,30 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::newManifest() {
-    qDebug() << "new manifest" << filePath;
+    closeManifest();
+
+    dirty = true;
 }
 
 void MainWindow::saveManifest() {
     qDebug() << "save manifest" << filePath;
+
+    dirty = false;
 }
 
 void MainWindow::openManifest() {
+    closeManifest();
     qDebug() << "open manifest" << filePath;
+}
+
+void MainWindow::closeManifest() {
+    int count = listModel->rowCount();
+    for (int i = 0; i < count; i++) {
+        listModel->removeUpdate(0);
+    }
+
+    dirty = false;
+    filePath = QString();
 }
 
 void MainWindow::setupSplitter() {
@@ -168,6 +180,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
     fileMenu->addAction(tr("Save"), this, &MainWindow::saveFile, QKeySequence("Ctrl+S"));
+    fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 

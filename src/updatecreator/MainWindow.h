@@ -20,6 +20,7 @@ private slots:
     void newFile();
     void openFile();
     bool saveFile();
+    void closeFile();
     void quit();
     void about();
 
@@ -33,6 +34,7 @@ private:
     void newManifest();
     void saveManifest();
     void openManifest();
+    void closeManifest();
 
     void setupSplitter();
     void createActions();
