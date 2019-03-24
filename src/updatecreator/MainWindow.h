@@ -3,6 +3,7 @@
 
 class QSplitter;
 class Outliner;
+class Form;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -30,4 +31,5 @@ private:
 
     QSplitter* splitter = nullptr;
     Outliner* outliner = nullptr;
+    Form* form = nullptr;
 };

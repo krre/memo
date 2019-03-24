@@ -10,9 +10,11 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     MainWindow.cpp \
-    Outliner.cpp
+    Outliner.cpp \
+    Form.cpp
 
 HEADERS += \
     MainWindow.h \
     Constants.h \
-    Outliner.h
+    Outliner.h \
+    Form.h

@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "Constants.h"
 #include "Outliner.h"
+#include "Form.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -75,8 +76,11 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    splitter->addWidget(new Outliner);
-    splitter->addWidget(new QTextEdit);
+    outliner = new Outliner;
+    form = new Form;
+
+    splitter->addWidget(outliner);
+    splitter->addWidget(form);
 
     splitter->setHandleWidth(1);
     splitter->setChildrenCollapsible(false);
