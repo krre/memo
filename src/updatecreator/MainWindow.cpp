@@ -92,7 +92,7 @@ void MainWindow::about() {
 void MainWindow::addUpdate() {
     ListModel::Update update;
 
-    if (listModel->rowCount(QModelIndex())) {
+    if (listModel->rowCount()) {
         QVersionNumber lastVersion = QVersionNumber::fromString(listModel->getUpdate(0).version);
         QVersionNumber newVersion(lastVersion.majorVersion(), lastVersion.minorVersion(), lastVersion.microVersion() + 1);
         update.version = newVersion.toString();

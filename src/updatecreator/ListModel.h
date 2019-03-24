@@ -16,7 +16,7 @@ public:
 
     ListModel(QObject* parent = nullptr);
 
-    int rowCount(const QModelIndex& parent) const override;
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
     QVariant data(const QModelIndex& index, int role) const override;
 
     void addUpdate(const Update& update);
