@@ -58,8 +58,16 @@ void MainWindow::about() {
 
 void MainWindow::addUpdate() {
     ListModel::Update update;
-    update.version = "1.0.0";
-    update.date = "24.03.2019";
+
+    if (listModel->rowCount(QModelIndex())) {
+        QVersionNumber lastVersion = QVersionNumber::fromString(listModel->getUpdate(0).version);
+        QVersionNumber newVersion(lastVersion.majorVersion(), lastVersion.minorVersion(), lastVersion.microVersion() + 1);
+        update.version = newVersion.toString();
+    } else {
+        update.version = "1.0.0";
+    }
+
+    update.date = QDate::currentDate().toString("dd.MM.yyyy");
     listModel->addUpdate(update);
     outliner->selectRow(0);
 }

@@ -37,3 +37,7 @@ void ListModel::removeUpdate(int row) {
     updates.removeAt(row);
     endRemoveRows();
 }
+
+const ListModel::Update& ListModel::getUpdate(int row) const {
+    return updates.at(row);
+}
