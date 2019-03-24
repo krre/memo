@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     createActions();
     setupSplitter();
     readSettings();
+    updateActions();
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
@@ -40,8 +41,7 @@ void MainWindow::openFile() {
 
     if (fileName.isEmpty()) return;
 
-    filePath = fileName;
-    openManifest();
+    openManifest(fileName);
 }
 
 bool MainWindow::saveFile() {
@@ -101,6 +101,7 @@ void MainWindow::addUpdate() {
     listModel->addUpdate(update);
     outliner->selectRow(0);
     dirty = true;
+    updateActions();
 }
 
 void MainWindow::removeUpdate(int row) {
@@ -108,6 +109,7 @@ void MainWindow::removeUpdate(int row) {
     if (result == QMessageBox::Yes) {
         listModel->removeUpdate(row);
         dirty = true;
+        updateActions();
     }
 }
 
@@ -137,17 +139,21 @@ void MainWindow::newManifest() {
     closeManifest();
     addUpdate();
     dirty = true;
+    updateActions();
 }
 
 void MainWindow::saveManifest() {
     qDebug() << "save manifest" << filePath;
 
     dirty = false;
+    updateActions();
 }
 
-void MainWindow::openManifest() {
+void MainWindow::openManifest(const QString& filePath) {
     closeManifest();
     qDebug() << "open manifest" << filePath;
+    this->filePath = filePath;
+    updateActions();
 }
 
 void MainWindow::closeManifest() {
@@ -156,8 +162,9 @@ void MainWindow::closeManifest() {
         listModel->removeUpdate(0);
     }
 
-    dirty = false;
     filePath = QString();
+    dirty = false;
+    updateActions();
 }
 
 void MainWindow::setupSplitter() {
@@ -179,13 +186,18 @@ void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
-    fileMenu->addAction(tr("Save"), this, &MainWindow::saveFile, QKeySequence("Ctrl+S"));
-    fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
+    saveAction = fileMenu->addAction(tr("Save"), this, &MainWindow::saveFile, QKeySequence("Ctrl+S"));
+    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("About %1...").arg(Constants::WindowTitle), this, &MainWindow::about);
+}
+
+void MainWindow::updateActions() {
+    saveAction->setEnabled(dirty);
+    closeAction->setEnabled(!filePath.isEmpty());
 }
 
 bool MainWindow::wantQuit() {

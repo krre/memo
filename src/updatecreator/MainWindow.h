@@ -33,11 +33,13 @@ private:
 
     void newManifest();
     void saveManifest();
-    void openManifest();
+    void openManifest(const QString& filePath);
     void closeManifest();
 
-    void setupSplitter();
     void createActions();
+    void updateActions();
+
+    void setupSplitter();
     bool wantQuit();
 
     QSplitter* splitter = nullptr;
@@ -46,4 +48,7 @@ private:
     ListModel* listModel = nullptr;
     bool dirty = false;
     QString filePath;
+
+    QAction* saveAction = nullptr;
+    QAction* closeAction = nullptr;
 };
