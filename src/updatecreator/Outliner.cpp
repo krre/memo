@@ -29,9 +29,10 @@ Outliner::Outliner(ListModel* model, QWidget* parent) : QWidget(parent) {
 
     layout->addLayout(buttonLaoyut);
 
-    connect(listView->selectionModel(), &QItemSelectionModel::selectionChanged, [removeButton] (const QItemSelection &selected, const QItemSelection &deselected) {
+    connect(listView->selectionModel(), &QItemSelectionModel::selectionChanged, [removeButton, this] (const QItemSelection &selected, const QItemSelection &deselected) {
         Q_UNUSED(deselected)
         removeButton->setEnabled(selected.count() > 0);
+        emit currentRowChanged(selected.indexes().first().row());
     });
 }
 

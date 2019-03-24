@@ -98,6 +98,9 @@ void MainWindow::addUpdate() {
     }
 
     update.date = QDate::currentDate().toString("dd.MM.yyyy");
+    update.channel = "release";
+    update.size = 0;
+
     listModel->addUpdate(update);
     outliner->selectRow(0);
     dirty = true;
@@ -171,6 +174,9 @@ void MainWindow::setupSplitter() {
     outliner = new Outliner(listModel);
     connect(outliner, &Outliner::addClicked, this, &MainWindow::addUpdate);
     connect(outliner, &Outliner::removeClicked, this, &MainWindow::removeUpdate);
+    connect(outliner, &Outliner::currentRowChanged, [this] (int row) {
+        form->populateUpdate(listModel->getUpdate(row));
+    });
 
     form = new Form;
 

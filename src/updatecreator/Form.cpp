@@ -64,3 +64,20 @@ Form::Form(QWidget* parent) : QWidget(parent) {
     layout->addWidget(updateGroupBox);
     layout->setStretch(1, 0);
 }
+
+void Form::populateUpdate(const ListModel::Update& update) {
+    versionLineEdit->setText(update.version);
+    dateLineEdit->setText(update.date);
+
+    for (const auto& os : update.os) {
+        windowsCheckBox->setChecked(os == "windows");
+        linuxCheckBox->setChecked(os == "linux");
+        macosCheckBox->setChecked(os == "macos");
+    }
+
+    int channelIndex = channelComboBox->findText(update.channel);
+    channelComboBox->setCurrentIndex(channelIndex);
+
+    sizeLabel->setText(QString::number(update.size));
+    descriptionTextEdit->setPlainText(update.description);
+}

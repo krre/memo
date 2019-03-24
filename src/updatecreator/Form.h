@@ -1,5 +1,6 @@
 #pragma once
 #include <QWidget>
+#include "ListModel.h"
 
 class QLineEdit;
 class QPlainTextEdit;
@@ -11,6 +12,7 @@ class Form : public QWidget {
     Q_OBJECT
 public:
     explicit Form(QWidget* parent = nullptr);
+    void populateUpdate(const ListModel::Update& update);
 
 private:
     QLineEdit* templateLineEdit = nullptr;
