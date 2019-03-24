@@ -30,10 +30,15 @@ private:
     void readSettings();
     void writeSettings();
 
+    void newManifest();
+    void saveManifest();
+    void openManifest();
+
     void setupSplitter();
     void createActions();
     bool wantQuit();
-    void saveManifest();
+
+
 
     QSplitter* splitter = nullptr;
     Outliner* outliner = nullptr;

@@ -5,6 +5,8 @@
 #include "Form.h"
 #include <QtWidgets>
 
+constexpr auto FILE_DIALOG_FILTER = "JSON Files (*.json);;All Files (*)";
+
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Constants::WindowTitle);
 
@@ -28,21 +30,33 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::newFile() {
+    QString selectedFilter;
+    QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "manifest.json",
+                                tr(FILE_DIALOG_FILTER), &selectedFilter);
 
+    if (fileName.isEmpty()) return;
+
+    filePath = fileName;
+    newManifest();
 }
 
 void MainWindow::openFile() {
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
+                                tr(FILE_DIALOG_FILTER), &selectedFilter);
 
+    if (fileName.isEmpty()) return;
+
+    filePath = fileName;
+    openManifest();
 }
 
 bool MainWindow::saveFile() {
     if (filePath.isEmpty()) {
         QString selectedFilter;
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "manifest.json",
-                                    tr("JSON Files (*.json);;All Files (*)"), &selectedFilter);
-        if (fileName.isEmpty()) {
-            return false;
-        }
+                                    tr(FILE_DIALOG_FILTER), &selectedFilter);
+        if (fileName.isEmpty()) return false;
 
         filePath = fileName;
     }
@@ -122,6 +136,18 @@ void MainWindow::writeSettings() {
     settings.setValue("splitter", splitter->saveState());
 }
 
+void MainWindow::newManifest() {
+    qDebug() << "new manifest" << filePath;
+}
+
+void MainWindow::saveManifest() {
+    qDebug() << "save manifest" << filePath;
+}
+
+void MainWindow::openManifest() {
+    qDebug() << "open manifest" << filePath;
+}
+
 void MainWindow::setupSplitter() {
     outliner = new Outliner(listModel);
     connect(outliner, &Outliner::addClicked, this, &MainWindow::addUpdate);
@@ -160,8 +186,4 @@ bool MainWindow::wantQuit() {
     }
 
     return false;
-}
-
-void MainWindow::saveManifest() {
-    qDebug() << "save manifest" << filePath;
 }
