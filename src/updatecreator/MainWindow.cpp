@@ -130,12 +130,19 @@ void MainWindow::readSettings() {
     }
 
     splitter->restoreState(settings.value("splitter").toByteArray());
+
+    QString filePath = settings.value("filepath").toString();
+
+    if (!filePath.isEmpty() && QFile::exists(filePath)) {
+        openManifest(filePath);
+    }
 }
 
 void MainWindow::writeSettings() {
     QSettings settings;
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
+    settings.setValue("filepath", filePath);
 }
 
 void MainWindow::newManifest() {
