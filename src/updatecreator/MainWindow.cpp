@@ -189,6 +189,7 @@ void MainWindow::openManifest(const QString& filePath) {
 
     form->setUrl(manifest["url"].toString());
     listModel->fromJson(manifest["updates"].toArray());
+    outliner->selectRow(0);
 
     this->filePath = filePath;
     updateActions();
