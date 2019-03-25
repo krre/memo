@@ -53,6 +53,10 @@ void Outliner::selectRow(int row) {
     listView->setCurrentIndex(listView->model()->index(row, 0));
 }
 
+int Outliner::currentRow() const {
+    return listView->currentIndex().row();
+}
+
 void Outliner::removeUpdate() {
     removeClicked(listView->currentIndex().row());
 }

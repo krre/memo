@@ -153,6 +153,8 @@ void MainWindow::newManifest() {
 }
 
 void MainWindow::saveManifest() {
+    listModel->setUpdate(outliner->currentRow(), form->getUpdate());
+
     QJsonObject manifest;
     manifest["url"] = form->getUrl();
     manifest["updates"] = listModel->toJson();
@@ -165,6 +167,8 @@ void MainWindow::saveManifest() {
 
     file.write(QJsonDocument(manifest).toJson(QJsonDocument::Indented));
     file.close();
+
+    qDebug() << manifest;
 
     dirty = false;
     updateActions();

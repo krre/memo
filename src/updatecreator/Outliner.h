@@ -9,6 +9,7 @@ class Outliner : public QWidget {
 public:
     explicit Outliner(ListModel* model, QWidget* parent = nullptr);
     void selectRow(int row);
+    int currentRow() const;
 
 signals:
     void addClicked();
