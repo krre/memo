@@ -13,6 +13,7 @@ class Form : public QWidget {
 public:
     explicit Form(QWidget* parent = nullptr);
     void populateUpdate(const ListModel::Update& update);
+    ListModel::Update getUpdate() const;
 
 private:
     QLineEdit* templateLineEdit = nullptr;
@@ -24,4 +25,6 @@ private:
     QComboBox* channelComboBox = nullptr;
     QLabel* sizeLabel = nullptr;
     QPlainTextEdit* descriptionTextEdit = nullptr;
+
+    int fileSize = 0;
 };

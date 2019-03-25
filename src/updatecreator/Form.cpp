@@ -79,5 +79,30 @@ void Form::populateUpdate(const ListModel::Update& update) {
     channelComboBox->setCurrentIndex(channelIndex);
 
     sizeLabel->setText(QString::number(update.size));
+    fileSize = update.size;
     descriptionTextEdit->setPlainText(update.description);
+}
+
+ListModel::Update Form::getUpdate() const {
+    ListModel::Update update;
+    update.version = versionLineEdit->text();
+    update.date = dateLineEdit->text();
+
+    if (windowsCheckBox->isChecked()) {
+        update.os.append("windows");
+    }
+
+    if (linuxCheckBox->isChecked()) {
+        update.os.append("linux");
+    }
+
+    if (macosCheckBox->isChecked()) {
+        update.os.append("macos");
+    }
+
+    update.channel = channelComboBox->currentText();
+    update.size = fileSize;
+    update.description = descriptionTextEdit->document()->toPlainText();
+
+    return update;
 }
