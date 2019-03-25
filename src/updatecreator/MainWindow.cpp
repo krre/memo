@@ -146,8 +146,6 @@ void MainWindow::newManifest() {
 }
 
 void MainWindow::saveManifest() {
-    qDebug() << "save manifest" << filePath << listModel->toJson();
-
     QJsonObject manifest;
     manifest["url"] = form->getUrl();
     manifest["updates"] = listModel->toJson();
@@ -167,7 +165,7 @@ void MainWindow::saveManifest() {
 
 void MainWindow::openManifest(const QString& filePath) {
     closeManifest();
-    qDebug() << "open manifest" << filePath;
+
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
         qCritical() << "Error opening manifest file. Path:" << filePath;
