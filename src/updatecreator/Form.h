@@ -19,6 +19,9 @@ public:
     void setUrl(const QString& url);
     QString getUrl() const;
 
+signals:
+    void edited();
+
 private:
     QLineEdit* urlLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;

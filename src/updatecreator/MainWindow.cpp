@@ -190,7 +190,7 @@ void MainWindow::openManifest(const QString& filePath) {
     form->setUrl(manifest["url"].toString());
     listModel->fromJson(manifest["updates"].toArray());
     outliner->selectRow(0);
-
+    dirty = false;
     this->filePath = filePath;
     updateActions();
 }
@@ -221,6 +221,10 @@ void MainWindow::setupSplitter() {
     });
 
     form = new Form;
+    connect(form, &Form::edited, [this] {
+        dirty = true;
+        updateActions();
+    });
 
     splitter->addWidget(outliner);
     splitter->addWidget(form);
