@@ -42,6 +42,9 @@ private:
     void setupSplitter();
     bool wantQuit();
 
+    void markDirty();
+    void clearDirty();
+
     QSplitter* splitter = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;

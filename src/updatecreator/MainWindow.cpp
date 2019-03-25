@@ -103,16 +103,14 @@ void MainWindow::addUpdate() {
 
     listModel->addUpdate(update);
     outliner->selectRow(0);
-    dirty = true;
-    updateActions();
+    markDirty();
 }
 
 void MainWindow::removeUpdate(int row) {
     int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
     if (result == QMessageBox::Yes) {
         listModel->removeUpdate(row);
-        dirty = true;
-        updateActions();
+        markDirty();
     }
 }
 
@@ -148,8 +146,7 @@ void MainWindow::writeSettings() {
 void MainWindow::newManifest() {
     closeManifest();
     addUpdate();
-    dirty = true;
-    updateActions();
+    markDirty();
 }
 
 void MainWindow::saveManifest() {
@@ -168,10 +165,7 @@ void MainWindow::saveManifest() {
     file.write(QJsonDocument(manifest).toJson(QJsonDocument::Indented));
     file.close();
 
-    qDebug() << manifest;
-
-    dirty = false;
-    updateActions();
+    clearDirty();
 }
 
 void MainWindow::openManifest(const QString& filePath) {
@@ -194,9 +188,8 @@ void MainWindow::openManifest(const QString& filePath) {
     form->setUrl(manifest["url"].toString());
     listModel->fromJson(manifest["updates"].toArray());
     outliner->selectRow(0);
-    dirty = false;
     this->filePath = filePath;
-    updateActions();
+    clearDirty();
 }
 
 void MainWindow::closeManifest() {
@@ -206,8 +199,7 @@ void MainWindow::closeManifest() {
     }
 
     filePath = QString();
-    dirty = false;
-    updateActions();
+    clearDirty();
 }
 
 void MainWindow::setupSplitter() {
@@ -226,8 +218,7 @@ void MainWindow::setupSplitter() {
 
     form = new Form;
     connect(form, &Form::edited, [this] {
-        dirty = true;
-        updateActions();
+        markDirty();
     });
 
     splitter->addWidget(outliner);
@@ -266,4 +257,13 @@ bool MainWindow::wantQuit() {
     }
 
     return result == QMessageBox::No;
+}
+
+void MainWindow::markDirty() {
+    dirty = true;
+    updateActions();
+}
+
+void MainWindow::clearDirty() {
+    dirty = false;
 }
