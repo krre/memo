@@ -41,3 +41,10 @@ void ListModel::removeUpdate(int row) {
 const ListModel::Update& ListModel::getUpdate(int row) const {
     return updates.at(row);
 }
+
+void ListModel::setUpdate(int row, const ListModel::Update& update) {
+    if (row < 0 || row > updates.count() - 1) return;
+
+    updates[row] = update;
+    emit dataChanged(index(row), index(row));
+}

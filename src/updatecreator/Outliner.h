@@ -13,7 +13,7 @@ public:
 signals:
     void addClicked();
     void removeClicked(int row);
-    void currentRowChanged(int row);
+    void selectionChanged(int selectedRow, int deselectedRow);
 
 private slots:
     void removeUpdate();

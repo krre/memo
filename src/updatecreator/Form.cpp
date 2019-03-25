@@ -69,11 +69,9 @@ void Form::populateUpdate(const ListModel::Update& update) {
     versionLineEdit->setText(update.version);
     dateLineEdit->setText(update.date);
 
-    for (const auto& os : update.os) {
-        windowsCheckBox->setChecked(os == "windows");
-        linuxCheckBox->setChecked(os == "linux");
-        macosCheckBox->setChecked(os == "macos");
-    }
+    windowsCheckBox->setChecked(update.os.contains("windows"));
+    linuxCheckBox->setChecked(update.os.contains("linux"));
+    macosCheckBox->setChecked(update.os.contains("macos"));
 
     int channelIndex = channelComboBox->findText(update.channel);
     channelComboBox->setCurrentIndex(channelIndex);

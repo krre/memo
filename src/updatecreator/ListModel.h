@@ -22,6 +22,7 @@ public:
     void addUpdate(const Update& update);
     void removeUpdate(int row);
     const Update& getUpdate(int row) const;
+    void setUpdate(int row, const Update& update);
 
 private:
     QList<Update> updates;

@@ -174,8 +174,14 @@ void MainWindow::setupSplitter() {
     outliner = new Outliner(listModel);
     connect(outliner, &Outliner::addClicked, this, &MainWindow::addUpdate);
     connect(outliner, &Outliner::removeClicked, this, &MainWindow::removeUpdate);
-    connect(outliner, &Outliner::currentRowChanged, [this] (int row) {
-        form->populateUpdate(listModel->getUpdate(row));
+    connect(outliner, &Outliner::selectionChanged, [this] (int selectedRow, int deselectedRow) {
+        if (deselectedRow >= 0) {
+            listModel->setUpdate(deselectedRow, form->getUpdate());
+        }
+
+        if (selectedRow >= 0) {
+            form->populateUpdate(listModel->getUpdate(selectedRow));
+        }
     });
 
     form = new Form;

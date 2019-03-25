@@ -32,7 +32,20 @@ Outliner::Outliner(ListModel* model, QWidget* parent) : QWidget(parent) {
     connect(listView->selectionModel(), &QItemSelectionModel::selectionChanged, [removeButton, this] (const QItemSelection &selected, const QItemSelection &deselected) {
         Q_UNUSED(deselected)
         removeButton->setEnabled(selected.count() > 0);
-        emit currentRowChanged(selected.indexes().first().row());
+
+        int selectedRow = -1;
+
+        if (selected.indexes().count()) {
+            selectedRow = selected.indexes().first().row();
+        }
+
+        int deselectedRow = -1;
+
+        if (deselected.indexes().count()) {
+            deselectedRow = deselected.indexes().first().row();
+        }
+
+        emit selectionChanged(selectedRow, deselectedRow);
     });
 }
 
