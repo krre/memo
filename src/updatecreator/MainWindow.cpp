@@ -210,11 +210,10 @@ bool MainWindow::wantQuit() {
     if (!dirty) return true;
 
     int result = QMessageBox::question(this, tr("Save Changes"), tr("Are you want save manifest?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+
     if (result == QMessageBox::Yes) {
         return saveFile();
-    } else if (result == QMessageBox::No) {
-        return true;
     }
 
-    return false;
+    return result == QMessageBox::No;
 }
