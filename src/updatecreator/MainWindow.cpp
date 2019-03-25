@@ -168,6 +168,23 @@ void MainWindow::saveManifest() {
 void MainWindow::openManifest(const QString& filePath) {
     closeManifest();
     qDebug() << "open manifest" << filePath;
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        qCritical() << "Error opening manifest file. Path:" << filePath;
+        return;
+    }
+
+    QJsonParseError error;
+    QJsonObject manifest = QJsonDocument::fromJson(file.readAll(), &error).object();
+
+    if (error.error != QJsonParseError::NoError) {
+        qCritical() << "Error parsing manifest:" << error.errorString() << "Offset:" << error.offset;
+        return;
+    }
+
+    form->setUrl(manifest["url"].toString());
+    listModel->fromJson(manifest["updates"].toArray());
+
     this->filePath = filePath;
     updateActions();
 }

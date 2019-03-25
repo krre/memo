@@ -12,8 +12,11 @@ class Form : public QWidget {
     Q_OBJECT
 public:
     explicit Form(QWidget* parent = nullptr);
+
     void populateUpdate(const ListModel::Update& update);
     ListModel::Update getUpdate() const;
+
+    void setUrl(const QString& url);
     QString getUrl() const;
 
 private:

@@ -105,6 +105,10 @@ ListModel::Update Form::getUpdate() const {
     return update;
 }
 
+void Form::setUrl(const QString& url) {
+    urlLineEdit->setText(url);
+}
+
 QString Form::getUrl() const {
     return urlLineEdit->text();
 }

@@ -72,3 +72,21 @@ QJsonArray ListModel::toJson() {
 
     return list;
 }
+
+void ListModel::fromJson(const QJsonArray& json) {
+    for (int i = json.count() - 1; i >= 0; i--) {
+        QJsonObject obj = json.at(i).toObject();
+
+        Update update;
+        update.version = obj["version"].toString();
+        update.date = obj["date"].toString();
+        update.size = obj["size"].toInt();
+        update.channel = obj["channel"].toString();
+
+        for (const auto osValue : obj["os"].toArray()) {
+            update.os.append(osValue.toString());
+        }
+
+        addUpdate(update);
+    }
+}

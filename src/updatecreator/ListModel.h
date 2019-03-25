@@ -25,6 +25,7 @@ public:
     void setUpdate(int row, const Update& update);
 
     QJsonArray toJson();
+    void fromJson(const QJsonArray& json);
 
 private:
     QList<Update> updates;
