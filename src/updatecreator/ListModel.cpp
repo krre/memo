@@ -60,6 +60,7 @@ QJsonArray ListModel::toJson() {
         obj["date"] = update.date;
         obj["size"] = update.size;
         obj["channel"] = update.channel;
+        obj["description"] = update.description;
 
         QJsonArray os;
         for (const QString& value : update.os) {
@@ -82,6 +83,7 @@ void ListModel::fromJson(const QJsonArray& json) {
         update.date = obj["date"].toString();
         update.size = obj["size"].toInt();
         update.channel = obj["channel"].toString();
+        update.description = obj["description"].toString();
 
         for (const auto osValue : obj["os"].toArray()) {
             update.os.append(osValue.toString());
