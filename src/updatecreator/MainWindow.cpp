@@ -71,7 +71,7 @@ void MainWindow::quit() {
 }
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About %1").arg(Constants::ApplicationName),
+    QMessageBox::about(this, tr("About %1").arg(Constants::WindowTitle),
         tr("<h3>%1 %2</h3>\
            Creator of updates for Memo<br><br> \
            Based on Qt %3<br> \
