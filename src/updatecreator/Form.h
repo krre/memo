@@ -14,9 +14,10 @@ public:
     explicit Form(QWidget* parent = nullptr);
     void populateUpdate(const ListModel::Update& update);
     ListModel::Update getUpdate() const;
+    QString getUrl() const;
 
 private:
-    QLineEdit* templateLineEdit = nullptr;
+    QLineEdit* urlLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;
     QLineEdit* dateLineEdit = nullptr;
     QCheckBox* windowsCheckBox = nullptr;

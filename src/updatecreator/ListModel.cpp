@@ -1,4 +1,6 @@
 #include "ListModel.h"
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QDebug>
 
 ListModel::ListModel(QObject* parent) : QAbstractListModel(parent) {
@@ -47,4 +49,26 @@ void ListModel::setUpdate(int row, const ListModel::Update& update) {
 
     updates[row] = update;
     emit dataChanged(index(row), index(row));
+}
+
+QJsonArray ListModel::toJson() {
+    QJsonArray list;
+
+    for (const Update& update : updates) {
+        QJsonObject obj;
+        obj["version"] = update.version;
+        obj["date"] = update.date;
+        obj["size"] = update.size;
+        obj["channel"] = update.channel;
+
+        QJsonArray os;
+        for (const QString& value : update.os) {
+            os.append(value);
+        }
+
+        obj["os"] = os;
+        list.append(obj);
+    }
+
+    return list;
 }

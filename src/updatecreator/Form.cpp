@@ -12,9 +12,9 @@ Form::Form(QWidget* parent) : QWidget(parent) {
     auto generalGridLayout = new QGridLayout;
     generalGroupBox->setLayout(generalGridLayout);
 
-    generalGridLayout->addWidget(new QLabel(tr("File template:")), 0, 0);
-    templateLineEdit = new QLineEdit;
-    generalGridLayout->addWidget(templateLineEdit, 0, 1);
+    generalGridLayout->addWidget(new QLabel(tr("URL:")), 0, 0);
+    urlLineEdit = new QLineEdit;
+    generalGridLayout->addWidget(urlLineEdit, 0, 1);
 
     layout->addWidget(generalGroupBox);
 
@@ -103,4 +103,8 @@ ListModel::Update Form::getUpdate() const {
     update.description = descriptionTextEdit->document()->toPlainText();
 
     return update;
+}
+
+QString Form::getUrl() const {
+    return urlLineEdit->text();
 }
