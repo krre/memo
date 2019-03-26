@@ -8,7 +8,7 @@
 constexpr auto FILE_DIALOG_FILTER = "JSON Files (*.json);;All Files (*)";
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    setWindowTitle(Constants::WindowTitle);
+    changeWindowTitle();
 
     splitter = new QSplitter;
     setCentralWidget(splitter);
@@ -188,6 +188,7 @@ void MainWindow::openManifest(const QString& filePath) {
     listModel->fromJson(manifest["updates"].toArray());
     outliner->selectRow(0);
     this->filePath = filePath;
+    changeWindowTitle();
 }
 
 void MainWindow::closeManifest() {
@@ -257,12 +258,25 @@ bool MainWindow::wantQuit() {
     return result == QMessageBox::No;
 }
 
+void MainWindow::changeWindowTitle() {
+    QString title = Constants::WindowTitle;
+
+    if (!filePath.isEmpty()) {
+        QFileInfo fi(filePath);
+        title = title + " - " + fi.fileName() + (dirty ? "*" : "");
+    }
+
+    setWindowTitle(title);
+}
+
 void MainWindow::markDirty() {
     dirty = true;
     updateActions();
+    changeWindowTitle();
 }
 
 void MainWindow::clearDirty() {
     dirty = false;
     updateActions();
+    changeWindowTitle();
 }

@@ -41,6 +41,7 @@ private:
 
     void setupSplitter();
     bool wantQuit();
+    void changeWindowTitle();
 
     void markDirty();
     void clearDirty();
