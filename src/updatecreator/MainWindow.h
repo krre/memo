@@ -40,7 +40,7 @@ private:
     void updateActions();
 
     void setupSplitter();
-    bool wantQuit();
+    bool wantSave();
     void changeWindowTitle();
 
     void markDirty();

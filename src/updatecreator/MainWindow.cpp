@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
-    if (wantQuit()) {
+    if (wantSave()) {
         writeSettings();
         event->accept();
     } else {
@@ -64,7 +64,7 @@ void MainWindow::closeFile() {
 }
 
 void MainWindow::quit() {
-    if (wantQuit()) {
+    if (wantSave()) {
         writeSettings();
         QCoreApplication::quit();
     }
@@ -192,6 +192,8 @@ void MainWindow::openManifest(const QString& filePath) {
 }
 
 void MainWindow::closeManifest() {
+    if (!wantSave()) return;
+
     int count = listModel->rowCount();
     for (int i = 0; i < count; i++) {
         listModel->removeUpdate(0);
@@ -246,7 +248,7 @@ void MainWindow::updateActions() {
     closeAction->setEnabled(!filePath.isEmpty());
 }
 
-bool MainWindow::wantQuit() {
+bool MainWindow::wantSave() {
     if (!dirty) return true;
 
     int result = QMessageBox::question(this, tr("Save Changes"), tr("Are you want save manifest?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
