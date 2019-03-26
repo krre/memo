@@ -74,6 +74,8 @@ Form::Form(QWidget* parent) : QWidget(parent) {
 }
 
 void Form::populateUpdate(const ListModel::Update& update) {
+    allowEmitFormChanged = false;
+
     versionLineEdit->setText(update.version);
     dateLineEdit->setText(update.date);
 
@@ -87,6 +89,8 @@ void Form::populateUpdate(const ListModel::Update& update) {
     sizeLabel->setText(QString::number(update.size));
     fileSize = update.size;
     descriptionTextEdit->setPlainText(update.description);
+
+    allowEmitFormChanged = true;
 }
 
 ListModel::Update Form::getUpdate() const {
@@ -119,4 +123,10 @@ void Form::setUrl(const QString& url) {
 
 QString Form::getUrl() const {
     return urlLineEdit->text();
+}
+
+void Form::edited() {
+    if (allowEmitFormChanged) {
+        emit formChanged();
+    }
 }

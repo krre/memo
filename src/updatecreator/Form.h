@@ -20,6 +20,9 @@ public:
     QString getUrl() const;
 
 signals:
+    void formChanged();
+
+private slots:
     void edited();
 
 private:
@@ -34,4 +37,5 @@ private:
     QPlainTextEdit* descriptionTextEdit = nullptr;
 
     int fileSize = 0;
+    bool allowEmitFormChanged = true;
 };

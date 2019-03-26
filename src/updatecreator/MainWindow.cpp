@@ -146,7 +146,6 @@ void MainWindow::writeSettings() {
 void MainWindow::newManifest() {
     closeManifest();
     addUpdate();
-    markDirty();
 }
 
 void MainWindow::saveManifest() {
@@ -189,7 +188,6 @@ void MainWindow::openManifest(const QString& filePath) {
     listModel->fromJson(manifest["updates"].toArray());
     outliner->selectRow(0);
     this->filePath = filePath;
-    clearDirty();
 }
 
 void MainWindow::closeManifest() {
@@ -217,7 +215,7 @@ void MainWindow::setupSplitter() {
     });
 
     form = new Form;
-    connect(form, &Form::edited, [this] {
+    connect(form, &Form::formChanged, [this] {
         markDirty();
     });
 
@@ -266,4 +264,5 @@ void MainWindow::markDirty() {
 
 void MainWindow::clearDirty() {
     dirty = false;
+    updateActions();
 }
