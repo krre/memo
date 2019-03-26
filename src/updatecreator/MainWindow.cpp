@@ -199,6 +199,7 @@ void MainWindow::closeManifest() {
         listModel->removeUpdate(0);
     }
 
+    form->clear();
     filePath = QString();
     clearDirty();
 }

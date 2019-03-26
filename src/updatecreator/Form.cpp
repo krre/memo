@@ -125,6 +125,18 @@ QString Form::getUrl() const {
     return urlLineEdit->text();
 }
 
+void Form::clear() {
+    urlLineEdit->clear();
+    versionLineEdit->clear();
+    dateLineEdit->clear();
+    windowsCheckBox->setChecked(false);
+    linuxCheckBox->setChecked(false);
+    macosCheckBox->setChecked(false);
+    channelComboBox->setCurrentIndex(0);
+    sizeLabel->clear();
+    descriptionTextEdit->clear();
+}
+
 void Form::edited() {
     if (allowEmitFormChanged) {
         emit formChanged();

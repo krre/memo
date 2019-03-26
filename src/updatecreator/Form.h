@@ -19,6 +19,8 @@ public:
     void setUrl(const QString& url);
     QString getUrl() const;
 
+    void clear();
+
 signals:
     void formChanged();
 
