@@ -235,9 +235,8 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::newFile() {
-    QString selectedFilter;
-    QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
-                                tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
+    QString fileName = QFileDialog::getSaveFileName(this, QString(), "notes.db",
+                                                    tr("All Files (*);;Database Files (*.db)"));
 
     if (fileName.isEmpty()) return;
 
@@ -257,9 +256,8 @@ void MainWindow::newFile() {
 }
 
 void MainWindow::openFile() {
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
-                                tr("All Files (*);;Database Files (*.db)"), &selectedFilter);
+    QString fileName = QFileDialog::getOpenFileName(this, QString(), QString(),
+                                                    tr("All Files (*);;Database Files (*.db)"));
     if (!fileName.isEmpty()) {
         closeFile();
         loadFile(fileName);
@@ -267,8 +265,7 @@ void MainWindow::openFile() {
 }
 
 void MainWindow::exportFile() {
-    QFileDialog::Options options = QFileDialog::DontResolveSymlinks | QFileDialog::ShowDirsOnly;
-    QString directory = QFileDialog::getExistingDirectory(this, tr("Select Directory"), "", options);
+    QString directory = QFileDialog::getExistingDirectory(this);
 
     if (!directory.isEmpty()) {
         outliner->exportAllNotes(directory);
