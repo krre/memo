@@ -5,6 +5,7 @@ class QSplitter;
 class QTabWidget;
 class Outliner;
 class Form;
+class Builder;
 class ListModel;
 
 class MainWindow : public QMainWindow {
@@ -51,6 +52,7 @@ private:
     QTabWidget* tabWidget = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;
+    Builder* builder = nullptr;
     ListModel* listModel = nullptr;
     bool dirty = false;
     QString filePath;

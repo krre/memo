@@ -3,6 +3,7 @@
 #include "Outliner.h"
 #include "ListModel.h"
 #include "Form.h"
+#include "Builder.h"
 #include <QtWidgets>
 
 constexpr auto FILE_DIALOG_FILTER = "JSON Files (*.json);;All Files (*)";
@@ -219,16 +220,19 @@ void MainWindow::setupSplitter() {
         }
     });
 
+    splitter->addWidget(outliner);
+
+    tabWidget = new QTabWidget;
+
     form = new Form;
     connect(form, &Form::formChanged, [this] {
         markDirty();
     });
-
-    splitter->addWidget(outliner);
-
-    tabWidget = new QTabWidget;
     tabWidget->addTab(form, tr("Manifest"));
     splitter->addWidget(tabWidget);
+
+    builder = new Builder;
+    tabWidget->addTab(builder, tr("Builder"));
 
     splitter->setHandleWidth(1);
     splitter->setChildrenCollapsible(false);
