@@ -14,6 +14,9 @@ private slots:
     void selectWorkspaceDir();
 
 private:
+    void createDirectoryWidgets();
+    void createFilesWidgets();
+
     void readSettings();
     void writeSettings();
 

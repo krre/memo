@@ -5,6 +5,36 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
+    createDirectoryWidgets();
+    createFilesWidgets();
+
+    auto buildButton = new QPushButton(tr("Build"));
+    layout->addWidget(buildButton, 1, Qt::AlignLeft);
+
+    readSettings();
+}
+
+Builder::~Builder() {
+    writeSettings();
+}
+
+void Builder::selectAppDir() {
+    QString directory = QFileDialog::getExistingDirectory(this);
+
+    if (!directory.isEmpty()) {
+        appLineEdit->setText(directory);
+    }
+}
+
+void Builder::selectWorkspaceDir() {
+    QString directory = QFileDialog::getExistingDirectory(this);
+
+    if (!directory.isEmpty()) {
+        workspaceLineEdit->setText(directory);
+    }
+}
+
+void Builder::createDirectoryWidgets() {
     auto directoriesGroupBox = new QGroupBox(tr("Directories"));
 
     auto directoriesLayout = new QVBoxLayout;
@@ -31,8 +61,10 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
 
     directoriesLayout->addLayout(workspaceLayout);
 
-    layout->addWidget(directoriesGroupBox);
+    layout()->addWidget(directoriesGroupBox);
+}
 
+void Builder::createFilesWidgets() {
     auto filesGroupBox = new QGroupBox(tr("Files"));
 
     auto filesLayout = new QVBoxLayout;
@@ -41,32 +73,7 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
     auto createButton = new QPushButton(tr("Create"));
     filesLayout->addWidget(createButton, 1, Qt::AlignLeft);
 
-    layout->addWidget(filesGroupBox);
-
-    auto buildButton = new QPushButton(tr("Build"));
-    layout->addWidget(buildButton, 1, Qt::AlignLeft);
-
-    readSettings();
-}
-
-Builder::~Builder() {
-    writeSettings();
-}
-
-void Builder::selectAppDir() {
-    QString directory = QFileDialog::getExistingDirectory(this);
-
-    if (!directory.isEmpty()) {
-        appLineEdit->setText(directory);
-    }
-}
-
-void Builder::selectWorkspaceDir() {
-    QString directory = QFileDialog::getExistingDirectory(this);
-
-    if (!directory.isEmpty()) {
-        workspaceLineEdit->setText(directory);
-    }
+    layout()->addWidget(filesGroupBox);
 }
 
 void Builder::readSettings() {
