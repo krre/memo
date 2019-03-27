@@ -131,6 +131,7 @@ void MainWindow::readSettings() {
     splitter->restoreState(settings.value("splitter").toByteArray());
 
     QString filePath = settings.value("filepath").toString();
+    tabWidget->setCurrentIndex(settings.value("tab").toInt());
 
     if (!filePath.isEmpty() && QFile::exists(filePath)) {
         openManifest(filePath);
@@ -142,6 +143,7 @@ void MainWindow::writeSettings() {
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
     settings.setValue("filepath", filePath);
+    settings.setValue("tab", tabWidget->currentIndex());
 }
 
 void MainWindow::newManifest() {
