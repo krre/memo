@@ -5,6 +5,10 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
+    auto directoriesGroupBox = new QGroupBox(tr("Directories"));
+
+    auto directoriesLayout = new QVBoxLayout;
+
     auto appLayout = new QHBoxLayout;
     appLayout->addWidget(new QLabel(tr("Application:")));
     appLineEdit = new QLineEdit;
@@ -12,7 +16,10 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
     auto appButton = new QPushButton(tr("Browse..."));
     connect(appButton, &QPushButton::clicked, this, &Builder::selectAppDir);
     appLayout->addWidget(appButton);
-    layout->addLayout(appLayout);
+
+    directoriesLayout->addLayout(appLayout);
+
+    directoriesGroupBox->setLayout(directoriesLayout);
 
     auto workspaceLayout = new QHBoxLayout;
     workspaceLayout->addWidget(new QLabel(tr("Workspace:")));
@@ -21,7 +28,10 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
     auto workspaceButton = new QPushButton(tr("Browse..."));
     connect(workspaceButton, &QPushButton::clicked, this, &Builder::selectWorkspaceDir);
     workspaceLayout->addWidget(workspaceButton);
-    layout->addLayout(workspaceLayout);
+
+    directoriesLayout->addLayout(workspaceLayout);
+
+    layout->addWidget(directoriesGroupBox);
 
     auto filesGroupBox = new QGroupBox(tr("Files"));
 
