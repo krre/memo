@@ -2,6 +2,7 @@
 #include <QMainWindow>
 
 class QSplitter;
+class QTabWidget;
 class Outliner;
 class Form;
 class ListModel;
@@ -47,6 +48,7 @@ private:
     void clearDirty();
 
     QSplitter* splitter = nullptr;
+    QTabWidget* tabWidget = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;
     ListModel* listModel = nullptr;

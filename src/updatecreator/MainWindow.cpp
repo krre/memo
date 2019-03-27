@@ -225,7 +225,10 @@ void MainWindow::setupSplitter() {
     });
 
     splitter->addWidget(outliner);
-    splitter->addWidget(form);
+
+    tabWidget = new QTabWidget;
+    tabWidget->addTab(form, tr("Manifest"));
+    splitter->addWidget(tabWidget);
 
     splitter->setHandleWidth(1);
     splitter->setChildrenCollapsible(false);
