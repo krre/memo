@@ -2,8 +2,6 @@
 #include <QtWidgets>
 
 Form::Form(QWidget* parent) : QWidget(parent) {
-    setMinimumWidth(100);
-
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
