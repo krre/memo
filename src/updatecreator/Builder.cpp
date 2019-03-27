@@ -23,15 +23,15 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
     workspaceLayout->addWidget(workspaceButton);
     layout->addLayout(workspaceLayout);
 
-    auto cacheGroupBox = new QGroupBox(tr("Cache"));
+    auto filesGroupBox = new QGroupBox(tr("Files"));
 
-    auto cacheLayout = new QVBoxLayout;
-    cacheGroupBox->setLayout(cacheLayout);
+    auto filesLayout = new QVBoxLayout;
+    filesGroupBox->setLayout(filesLayout);
 
     auto createButton = new QPushButton(tr("Create"));
-    cacheLayout->addWidget(createButton, 1, Qt::AlignLeft);
+    filesLayout->addWidget(createButton, 1, Qt::AlignLeft);
 
-    layout->addWidget(cacheGroupBox);
+    layout->addWidget(filesGroupBox);
 
     auto buildButton = new QPushButton(tr("Build"));
     layout->addWidget(buildButton, 1, Qt::AlignLeft);
