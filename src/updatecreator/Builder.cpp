@@ -70,10 +70,17 @@ void Builder::createFilesWidgets() {
     auto filesLayout = new QVBoxLayout;
     filesGroupBox->setLayout(filesLayout);
 
-    auto createButton = new QPushButton(tr("Create"));
-    filesLayout->addWidget(createButton, 1, Qt::AlignLeft);
+    auto splitter = new QSplitter;
+    splitter->setHandleWidth(1);
+    splitter->setChildrenCollapsible(false);
 
-    layout()->addWidget(filesGroupBox);
+    splitter->addWidget(new QListWidget);
+    splitter->addWidget(new QListWidget);
+
+    filesLayout->addWidget(splitter);
+
+    auto mainLayout = static_cast<QVBoxLayout*>(layout());
+    mainLayout->addWidget(filesGroupBox, 1);
 }
 
 void Builder::readSettings() {
