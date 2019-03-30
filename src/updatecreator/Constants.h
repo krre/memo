@@ -9,4 +9,6 @@ namespace Constants {
     constexpr auto CopyrightYear = "2019";
     constexpr auto ProjectName = "MemoUpdateCreator.json";
     constexpr auto ManifestName = "manifest.json";
+    constexpr int SystemRecentProjectsActions = 2;
+    constexpr int MaxRecentProjects = 10;
 }

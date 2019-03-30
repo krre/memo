@@ -24,6 +24,8 @@ private slots:
     void saveProject();
     void closeProject();
 
+    void clearMenuRecentProjects();
+
     void quit();
     void about();
 
@@ -43,6 +45,8 @@ private:
 
     void setupSplitter();
     void setProjectPath(const QString& path);
+    void addRecentProject(const QString& path);
+    void loadProject(const QString& path);
 
     QSplitter* splitter = nullptr;
     QTabWidget* tabWidget = nullptr;
@@ -55,4 +59,5 @@ private:
 
     QAction* saveAction = nullptr;
     QAction* closeAction = nullptr;
+    QMenu* recentProjectsMenu = nullptr;
 };

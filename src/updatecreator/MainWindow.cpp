@@ -32,9 +32,11 @@ void MainWindow::newProject() {
     NewProjectDialog newDialog;
     if (newDialog.exec() == QDialog::Accepted) {
         closeProject();
-        manifestPath = newDialog.workspaceDir() + "/" + Constants::ManifestName;
+        QString path = newDialog.workspaceDir() + "/" + Constants::ProjectName;
+        setProjectPath(path);
         addUpdate();
         saveManifest();
+        addRecentProject(path);
         tabWidget->setCurrentIndex(0);
     }
 }
@@ -46,8 +48,7 @@ void MainWindow::openProject() {
 
     if (fileName.isEmpty()) return;
 
-    setProjectPath(fileName);
-    openManifest();
+    loadProject(fileName);
 }
 
 void MainWindow::saveProject() {
@@ -57,6 +58,14 @@ void MainWindow::saveProject() {
 void MainWindow::closeProject() {
     closeManifest();
     setProjectPath(QString());
+}
+
+void MainWindow::clearMenuRecentProjects() {
+    for (int i = recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions - 1; i >= 0; i--) {
+        recentProjectsMenu->removeAction(recentProjectsMenu->actions().at(i));
+    }
+
+    updateActions();
 }
 
 void MainWindow::quit() {
@@ -123,12 +132,11 @@ void MainWindow::readSettings() {
 
     splitter->restoreState(settings.value("splitter").toByteArray());
 
-    projectPath = settings.value("projectPath").toString();
+    QString projectPath = settings.value("projectPath").toString();
     tabWidget->setCurrentIndex(settings.value("tab").toInt());
 
     if (!projectPath.isEmpty() && QFile::exists(projectPath)) {
-        setProjectPath(projectPath);
-        openManifest();
+        loadProject(projectPath);
     }
 }
 
@@ -136,7 +144,7 @@ void MainWindow::writeSettings() {
     QSettings settings;
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
-    settings.setValue("projectPath", manifestPath);
+    settings.setValue("projectPath", projectPath);
     settings.setValue("tab", tabWidget->currentIndex());
 }
 
@@ -232,6 +240,12 @@ void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newProject, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openProject, QKeySequence("Ctrl+O"));
+
+    recentProjectsMenu = new QMenu(tr("Recent Projects"), this);
+    recentProjectsMenu->addSeparator();
+    recentProjectsMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentProjects);
+    fileMenu->addAction(recentProjectsMenu->menuAction());
+
     closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeProject, QKeySequence("Ctrl+W"));
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
@@ -253,4 +267,34 @@ void MainWindow::setProjectPath(const QString& path) {
     } else {
         manifestPath = QString();
     }
+}
+
+void MainWindow::addRecentProject(const QString& path) {
+    if (!QFile::exists(path)) return;
+
+    for (QAction* action : recentProjectsMenu->actions()) {
+        if (action->text() == path) {
+            recentProjectsMenu->removeAction(action);
+        }
+    }
+
+    auto fileAction = new QAction(path);
+    connect(fileAction, &QAction::triggered, [=] {
+        loadProject(path);
+    });
+
+    recentProjectsMenu->insertAction(recentProjectsMenu->actions().first(), fileAction);
+
+    if (recentProjectsMenu->actions().size() > Constants::MaxRecentProjects + Constants::SystemRecentProjectsActions) {
+        recentProjectsMenu->removeAction(recentProjectsMenu->actions().at(recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions - 1));
+    }
+
+    updateActions();
+}
+
+void MainWindow::loadProject(const QString& path) {
+    closeProject();
+    setProjectPath(path);
+    openManifest();
+    addRecentProject(path);
 }
