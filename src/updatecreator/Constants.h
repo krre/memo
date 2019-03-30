@@ -7,5 +7,5 @@ namespace Constants {
     constexpr auto Version = "1.0.0";
     constexpr auto URL = "https://github.com/krre/memo";
     constexpr auto CopyrightYear = "2019";
-    constexpr auto ProjectName = "MemoUpdate.json";
+    constexpr auto ProjectName = "MemoUpdateCreator.json";
 }
