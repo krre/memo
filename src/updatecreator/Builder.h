@@ -9,17 +9,9 @@ public:
     explicit Builder(QWidget* parent = nullptr);
     ~Builder();
 
-private slots:
-    void selectAppDir();
-    void selectWorkspaceDir();
-
 private:
-    void createDirectoryWidgets();
     void createFilesWidgets();
 
     void readSettings();
     void writeSettings();
-
-    QLineEdit* appLineEdit = nullptr;
-    QLineEdit* workspaceLineEdit = nullptr;
 };
