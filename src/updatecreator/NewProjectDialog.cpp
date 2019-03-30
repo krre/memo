@@ -1,4 +1,5 @@
 #include "NewProjectDialog.h"
+#include "Constants.h"
 #include <QtWidgets>
 
 NewProjectDialog::NewProjectDialog(QWidget* parent) : QDialog(parent) {
@@ -37,14 +38,56 @@ NewProjectDialog::NewProjectDialog(QWidget* parent) : QDialog(parent) {
     resize(500, height());
 }
 
+QString NewProjectDialog::workspaceDir() const {
+    return workspaceLineEdit->text();
+}
+
 void NewProjectDialog::accept() {
-    QDialog::accept();
+    if (createProject()) {
+        QDialog::accept();
+    }
 }
 
 void NewProjectDialog::selectAppDir() {
+    QString directory = QFileDialog::getExistingDirectory(this);
 
+    if (!directory.isEmpty()) {
+        appLineEdit->setText(directory);
+    }
 }
 
 void NewProjectDialog::selectWorkspaceDir() {
+    QString directory = QFileDialog::getExistingDirectory(this);
 
+    if (!directory.isEmpty()) {
+        workspaceLineEdit->setText(directory);
+    }
+}
+
+bool NewProjectDialog::createProject() {
+    QString workspaceDir = workspaceLineEdit->text();
+    if (workspaceDir.isEmpty() || !QDir(workspaceDir).exists()) {
+        QMessageBox::critical(this, tr("Error"), tr("Wrong workspace directory"));
+        return false;
+    }
+
+    QString appDir = appLineEdit->text();
+    if (appDir.isEmpty() || !QDir(appDir).exists()) {
+        QMessageBox::critical(this, tr("Error"), tr("Wrong application directory"));
+        return false;
+    }
+
+    QFile file(workspaceDir + "/" + Constants::ProjectName);
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::critical(this, tr("Error"), tr("Failed to open project file for writting"));
+        return false;
+    }
+
+    QJsonObject project;
+    project["applicationDir"] = appDir;
+
+    file.write(QJsonDocument(project).toJson());
+
+    return true;
 }
