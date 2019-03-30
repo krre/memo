@@ -5,6 +5,7 @@ TARGET = memo
 TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_MESSAGELOGCONTEXT
 
 CONFIG += c++17
 
@@ -28,7 +29,8 @@ SOURCES += \
     updater/UpdateChecker.cpp \
     core/App.cpp \
     updater/NewUpdates.cpp \
-    updater/UpdateDownloader.cpp
+    updater/UpdateDownloader.cpp \
+    core/Exception.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -49,7 +51,8 @@ HEADERS += \
     updater/UpdateChecker.h \
     core/App.h \
     updater/NewUpdates.h \
-    updater/UpdateDownloader.h
+    updater/UpdateDownloader.h \
+    core/Exception.h
 
 RESOURCES += \
     resources.qrc

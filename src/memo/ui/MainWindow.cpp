@@ -2,6 +2,7 @@
 #include "Editor.h"
 #include "Options.h"
 #include "core/Constants.h"
+#include "core/Exception.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -175,14 +176,14 @@ void MainWindow::updateMenuState() {
 void MainWindow::loadFile(const QString& filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
-    if (database->open(filePath)) {
+    try {
+        database->open(filePath);
         outliner->build();
         setCurrentFile(filePath);
-    } else {
-        showDatabaseErrorDialog();
+        addRecentFile(filePath);
+    } catch (const Exception& e) {
+        showErrorDialog(e.text());
     }
-
-    addRecentFile(filePath);
 }
 
 void MainWindow::setCurrentFile(const QString& filePath) {
@@ -225,10 +226,6 @@ void MainWindow::showErrorDialog(const QString& message) {
     QMessageBox::critical(this, tr("Error"), message, QMessageBox::Ok);
 }
 
-void MainWindow::showDatabaseErrorDialog() {
-    showErrorDialog("Database error");
-}
-
 void MainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     event->accept();
@@ -248,11 +245,12 @@ void MainWindow::newFile() {
         }
     }
 
-    if (!database->create(fileName)) {
-        showDatabaseErrorDialog();
+    try {
+        database->create(fileName);
+        setCurrentFile(fileName);
+    } catch (const Exception& e) {
+        showErrorDialog(e.text());
     }
-
-    setCurrentFile(fileName);
 }
 
 void MainWindow::openFile() {

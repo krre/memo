@@ -1,4 +1,5 @@
 #include "Database.h"
+#include "core/Exception.h"
 #include <QtSql>
 
 Database::Database(QObject* parent) : QObject(parent) {
@@ -9,13 +10,12 @@ Database::~Database() {
     close();
 }
 
-bool Database::create(const QString& filepath) {
+void Database::create(const QString& filepath) {
     qInfo().noquote() << "Create database:" << filepath;
     db.close();
     db.setDatabaseName(filepath);
     if (!db.open()) {
-        databaseError(db.lastError());
-        return false;
+        throw SqlDatabaseError(db.lastError());
     }
 
     QSqlQuery query;
@@ -28,34 +28,26 @@ bool Database::create(const QString& filepath) {
                     "note TEXT,"
                     "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
                     "updated_at TIMESTAMP DEFAULT (datetime('now', 'localtime')))")) {
-        queryError(query);
-        return false;
+        throw SqlQueryError(query);
     }
 
     if (!query.exec("CREATE TABLE meta("
                     "version INTEGER,"
                     "selected_id INTEGER)")) {
-        queryError(query);
-        return false;
+        throw SqlQueryError(query);
     }
 
     if (!query.exec("INSERT INTO meta (version, selected_id) VALUES (1, 0)")) {
-        queryError(query);
-        return false;
+        throw SqlQueryError(query);
     }
-
-    return true;
 }
 
-bool Database::open(const QString& filepath) {
+void Database::open(const QString& filepath) {
     qInfo().noquote() << "Open database:" << filepath;
     db.setDatabaseName(filepath);
     if (!db.open()) {
-        databaseError(db.lastError());
-        return false;
+        throw SqlDatabaseError(db.lastError());
     }
-
-    return true;
 }
 
 void Database::close() {
@@ -78,24 +70,20 @@ int Database::insertRecord(int parentId, int pos, int depth, const QString& titl
     query.bindValue(":title", title);
 
     if (!query.exec()) {
-        queryError(query);
-        return -1;
+        throw SqlQueryError(query);
     }
 
     return query.lastInsertId().toInt();
 }
 
-bool Database::removeRecord(int id) {
+void Database::removeRecord(int id) {
     QSqlQuery query;
     query.prepare("DELETE FROM notes WHERE id = :id");
     query.bindValue(":id", id);
 
     if (!query.exec()) {
-        queryError(query);
-        return false;
+        throw SqlQueryError(query);
     }
-
-    return true;
 }
 
 QSqlQuery Database::record(int id) {
@@ -104,7 +92,7 @@ QSqlQuery Database::record(int id) {
     query.bindValue(":id", id);
 
     if (!query.exec()) {
-        queryError(query);
+        throw SqlQueryError(query);
     } else {
         query.next();
     }
@@ -112,7 +100,7 @@ QSqlQuery Database::record(int id) {
     return query;
 }
 
-bool Database::updateValue(int id, const QString& name, const QVariant& value) {
+void Database::updateValue(int id, const QString& name, const QVariant& value) {
     QSqlQuery query;
     QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";
     query.prepare(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate));
@@ -120,11 +108,8 @@ bool Database::updateValue(int id, const QString& name, const QVariant& value) {
     query.bindValue(":value", value);
 
     if (!query.exec()) {
-        queryError(query);
-        return false;
+        throw SqlQueryError(query);
     }
-
-    return true;
 }
 
 QVariant Database::value(int id, const QString& name) {
@@ -133,8 +118,7 @@ QVariant Database::value(int id, const QString& name) {
     query.bindValue(":id", id);
 
     if (!query.exec()) {
-        queryError(query);
-        return QVariant();
+        throw SqlQueryError(query);
     }
 
     if (query.first()) {
@@ -144,19 +128,14 @@ QVariant Database::value(int id, const QString& name) {
     return QVariant();
 }
 
-bool Database::updateMetaValue(const QString& name, const QVariant& value) {
-    if (!db.isOpen()) return false;
-
+void Database::updateMetaValue(const QString& name, const QVariant& value) {
     QSqlQuery query;
     query.prepare(QString("UPDATE meta SET %1 = :value").arg(name));
     query.bindValue(":value", value);
 
     if (!query.exec()) {
-        queryError(query);
-        return false;
+        throw SqlQueryError(query);
     }
-
-    return true;
 }
 
 QVariant Database::metaValue(const QString& name) {
@@ -164,8 +143,7 @@ QVariant Database::metaValue(const QString& name) {
     query.prepare(QString("SELECT %1 FROM meta").arg(name));
 
     if (!query.exec()) {
-        queryError(query);
-        return QVariant();
+        throw SqlQueryError(query);
     }
 
     if (query.first()) {
@@ -191,12 +169,4 @@ QVector<Database::Title> Database::titles() {
     }
 
     return list;
-}
-
-void Database::databaseError(const QSqlError& error) {
-    qCritical("Database error: %s. %s", qUtf8Printable(error.databaseText()), qUtf8Printable(error.driverText()));
-}
-
-void Database::queryError(const QSqlQuery& query) {
-    qCritical("SQL query error: %s. %s. %s", qUtf8Printable(query.lastError().databaseText()), qUtf8Printable(query.lastError().driverText()), qUtf8Printable(query.lastQuery()));
 }

@@ -51,7 +51,6 @@ private:
     void addRecentFile(const QString& filePath);
 
     void showErrorDialog(const QString& message);
-    void showDatabaseErrorDialog();
 
     QSystemTrayIcon* trayIcon = nullptr;
     QMenu* trayIconMenu = nullptr;
