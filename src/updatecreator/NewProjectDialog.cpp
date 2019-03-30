@@ -9,25 +9,23 @@ NewProjectDialog::NewProjectDialog(QWidget* parent) : QDialog(parent) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
-    auto workspaceLayout = new QHBoxLayout;
-    workspaceLayout->addWidget(new QLabel(tr("Workspace:")));
-    workspaceLineEdit = new QLineEdit;
-    workspaceLayout->addWidget(workspaceLineEdit);
-    auto workspaceButton = new QPushButton(tr("Browse..."));
-    connect(workspaceButton, &QPushButton::clicked, this, &NewProjectDialog::selectWorkspaceDir);
-    workspaceLayout->addWidget(workspaceButton);
+    auto gridLayout = new QGridLayout;
 
-    layout->addLayout(workspaceLayout);
+    gridLayout->addWidget(new QLabel(tr("Name:")), 0, 0);
+    nameLineEdit = new QLineEdit;
+    gridLayout->addWidget(nameLineEdit, 0, 1);
 
-    auto appLayout = new QHBoxLayout;
-    appLayout->addWidget(new QLabel(tr("Application:")));
-    appLineEdit = new QLineEdit;
-    appLayout->addWidget(appLineEdit);
-    auto appButton = new QPushButton(tr("Browse..."));
-    connect(appButton, &QPushButton::clicked, this, &NewProjectDialog::selectAppDir);
-    appLayout->addWidget(appButton);
+    gridLayout->addWidget(new QLabel(tr("Directory:")), 1, 0);
+    directoryLineEdit = new QLineEdit;
+    auto directoryLayout = new QHBoxLayout;
+    directoryLayout->addWidget(directoryLineEdit);
+    auto directoryButton = new QPushButton(tr("Browse..."));
+    connect(directoryButton, &QPushButton::clicked, this, &NewProjectDialog::selectDirectory);
+    directoryLayout->addWidget(directoryButton);
 
-    layout->addLayout(appLayout);
+    gridLayout->addLayout(directoryLayout, 1, 1);
+
+    layout->addLayout(gridLayout);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
@@ -39,8 +37,8 @@ NewProjectDialog::NewProjectDialog(QWidget* parent) : QDialog(parent) {
     resize(500, height());
 }
 
-QString NewProjectDialog::workspaceDir() const {
-    return workspaceLineEdit->text();
+QString NewProjectDialog::projectDir() const {
+    return projectDirPath;
 }
 
 void NewProjectDialog::accept() {
@@ -52,41 +50,41 @@ void NewProjectDialog::accept() {
     }
 }
 
-void NewProjectDialog::selectAppDir() {
+void NewProjectDialog::selectDirectory() {
     QString directory = QFileDialog::getExistingDirectory(this);
 
     if (!directory.isEmpty()) {
-        appLineEdit->setText(directory);
-    }
-}
-
-void NewProjectDialog::selectWorkspaceDir() {
-    QString directory = QFileDialog::getExistingDirectory(this);
-
-    if (!directory.isEmpty()) {
-        workspaceLineEdit->setText(directory);
+        directoryLineEdit->setText(directory);
     }
 }
 
 void NewProjectDialog::createProject() {
-    QString workspaceDir = workspaceLineEdit->text();
-    if (workspaceDir.isEmpty() || !QDir(workspaceDir).exists()) {
-        throw MemoLib::RuntimeError(tr("Wrong workspace directory"));
+    QString name = nameLineEdit->text();
+    if (name.isEmpty()) {
+        throw MemoLib::RuntimeError(tr("Name is empty"));
     }
 
-    QString appDir = appLineEdit->text();
-    if (appDir.isEmpty() || !QDir(appDir).exists()) {
-        throw MemoLib::RuntimeError(tr("Wrong application directory"));
+    QString directory = directoryLineEdit->text();
+    if (directory.isEmpty() || !QDir(directory).exists()) {
+        throw MemoLib::RuntimeError(tr("Wrong directory path"));
     }
 
-    QFile file(workspaceDir + "/" + Constants::ProjectName);
+    projectDirPath = directory + "/" + name;
+    QDir dir;
+    if (!dir.mkpath(projectDirPath)) {
+        throw MemoLib::RuntimeError(tr("Failed to create project directory"));
+    }
+
+    QString projectPath = projectDirPath + "/" + Constants::ProjectName;
+
+    QFile file(projectPath);
 
     if (!file.open(QIODevice::WriteOnly)) {
         throw MemoLib::RuntimeError(tr("Failed to open project file for writting"));
     }
 
     QJsonObject project;
-    project["applicationDir"] = appDir;
+    project["applicationDir"] = name;
 
     file.write(QJsonDocument(project).toJson());
 }

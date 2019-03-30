@@ -7,8 +7,6 @@
 #include "Builder.h"
 #include <QtWidgets>
 
-constexpr auto FILE_DIALOG_FILTER = "JSON Files (*.json);;All Files (*)";
-
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Constants::WindowTitle);
 
@@ -32,23 +30,26 @@ void MainWindow::newProject() {
     NewProjectDialog newDialog;
     if (newDialog.exec() == QDialog::Accepted) {
         closeProject();
-        QString path = newDialog.workspaceDir() + "/" + Constants::ProjectName;
-        setProjectPath(path);
+        QString projectDir = newDialog.projectDir();
+        setProjectPath(projectDir);
+        form->setManifestPath(manifestPath);
         addUpdate();
         saveManifest();
-        addRecentProject(path);
+        addRecentProject(projectDir);
         tabWidget->setCurrentIndex(0);
     }
 }
 
 void MainWindow::openProject() {
-    QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "",
-                                tr(FILE_DIALOG_FILTER), &selectedFilter);
+    QString path = QFileDialog::getExistingDirectory(this, tr("Open Project"));
+    if (path.isEmpty()) return;
 
-    if (fileName.isEmpty()) return;
+    if (!QFile::exists(path + "/" + Constants::ProjectName)) {
+        QMessageBox::critical(this, tr("Error"), tr("Wrong project directory"));
+        return;
+    }
 
-    loadProject(fileName);
+    loadProject(path);
 }
 
 void MainWindow::saveProject() {
@@ -131,9 +132,16 @@ void MainWindow::readSettings() {
     }
 
     splitter->restoreState(settings.value("splitter").toByteArray());
+    tabWidget->setCurrentIndex(settings.value("tab").toInt());
+
+    int size = settings.beginReadArray("RecentProjects");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        addRecentProject(settings.value("path").toString());
+    }
+    settings.endArray();
 
     QString projectPath = settings.value("projectPath").toString();
-    tabWidget->setCurrentIndex(settings.value("tab").toInt());
 
     if (!projectPath.isEmpty() && QFile::exists(projectPath)) {
         loadProject(projectPath);
@@ -146,6 +154,13 @@ void MainWindow::writeSettings() {
     settings.setValue("splitter", splitter->saveState());
     settings.setValue("projectPath", projectPath);
     settings.setValue("tab", tabWidget->currentIndex());
+
+    settings.beginWriteArray("RecentProjects");
+    for (int i = 0; i < recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions; ++i) {
+        settings.setArrayIndex(i);
+        settings.setValue("path", recentProjectsMenu->actions().at(i)->text());
+    }
+    settings.endArray();
 }
 
 void MainWindow::saveManifest() {
@@ -262,8 +277,7 @@ void MainWindow::setProjectPath(const QString& path) {
     projectPath = path;
 
     if (!path.isEmpty()) {
-        QFileInfo fi(path);
-        manifestPath = fi.absolutePath() + "/" + Constants::ManifestName;
+        manifestPath = path + "/" + Constants::ManifestName;
     } else {
         manifestPath = QString();
     }
