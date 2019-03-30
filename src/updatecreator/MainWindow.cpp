@@ -10,7 +10,7 @@
 constexpr auto FILE_DIALOG_FILTER = "JSON Files (*.json);;All Files (*)";
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    changeWindowTitle();
+    setWindowTitle(Constants::WindowTitle);
 
     splitter = new QSplitter;
     setCentralWidget(splitter);
@@ -59,7 +59,7 @@ void MainWindow::saveProject() {
 }
 
 void MainWindow::closeProject() {
-    projectPath = QString();
+    setProjectPath(QString());
     closeManifest();
 }
 
@@ -180,11 +180,11 @@ void MainWindow::openManifest() {
         return;
     }
 
+    form->setManifestPath(manifestPath);
     form->setUrl(manifest["url"].toString());
     listModel->fromJson(manifest["updates"].toArray());
     outliner->selectRow(0);
     updateActions();
-    changeWindowTitle();
 }
 
 void MainWindow::closeManifest() {
@@ -197,6 +197,7 @@ void MainWindow::closeManifest() {
 
     form->clear();
     manifestPath = QString();
+    form->setManifestPath(manifestPath);
     clearDirty();
 }
 
@@ -264,17 +265,6 @@ bool MainWindow::wantSave() {
     return result == QMessageBox::No;
 }
 
-void MainWindow::changeWindowTitle() {
-    QString title = Constants::WindowTitle;
-
-    if (!manifestPath.isEmpty()) {
-        QFileInfo fi(manifestPath);
-        title = title + " - " + fi.fileName() + (dirty ? "*" : "");
-    }
-
-    setWindowTitle(title);
-}
-
 void MainWindow::setProjectPath(const QString& path) {
     projectPath = path;
 
@@ -285,11 +275,9 @@ void MainWindow::setProjectPath(const QString& path) {
 void MainWindow::markDirty() {
     dirty = true;
     updateActions();
-    changeWindowTitle();
 }
 
 void MainWindow::clearDirty() {
     dirty = false;
     updateActions();
-    changeWindowTitle();
 }

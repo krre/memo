@@ -16,6 +16,8 @@ public:
     void populateUpdate(const ListModel::Update& update);
     ListModel::Update getUpdate() const;
 
+    void setManifestPath(const QString path);
+
     void setUrl(const QString& url);
     QString getUrl() const;
 
@@ -28,6 +30,7 @@ private slots:
     void edited();
 
 private:
+    QLabel* manifestLabel = nullptr;
     QLineEdit* urlLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;
     QLineEdit* dateLineEdit = nullptr;

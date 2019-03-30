@@ -10,10 +10,14 @@ Form::Form(QWidget* parent) : QWidget(parent) {
     auto generalGridLayout = new QGridLayout;
     generalGroupBox->setLayout(generalGridLayout);
 
-    generalGridLayout->addWidget(new QLabel(tr("URL:")), 0, 0);
+    generalGridLayout->addWidget(new QLabel(tr("Path:")), 0, 0);
+    manifestLabel = new QLabel;
+    generalGridLayout->addWidget(manifestLabel, 0, 1);
+
+    generalGridLayout->addWidget(new QLabel(tr("URL:")), 1, 0);
     urlLineEdit = new QLineEdit;
     connect(urlLineEdit, &QLineEdit::textEdited, this, &Form::edited);
-    generalGridLayout->addWidget(urlLineEdit, 0, 1);
+    generalGridLayout->addWidget(urlLineEdit, 1, 1);
 
     layout->addWidget(generalGroupBox);
 
@@ -113,6 +117,10 @@ ListModel::Update Form::getUpdate() const {
     update.description = descriptionTextEdit->document()->toPlainText();
 
     return update;
+}
+
+void Form::setManifestPath(const QString path) {
+    manifestLabel->setText(path);
 }
 
 void Form::setUrl(const QString& url) {

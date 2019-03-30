@@ -43,7 +43,6 @@ private:
 
     void setupSplitter();
     bool wantSave();
-    void changeWindowTitle();
     void setProjectPath(const QString& path);
 
     void markDirty();
