@@ -24,12 +24,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
-    if (wantSave()) {
-        writeSettings();
-        event->accept();
-    } else {
-        event->ignore();
-    }
+    writeSettings();
+    event->accept();
 }
 
 void MainWindow::newProject() {
@@ -59,15 +55,13 @@ void MainWindow::saveProject() {
 }
 
 void MainWindow::closeProject() {
-    setProjectPath(QString());
     closeManifest();
+    setProjectPath(QString());
 }
 
 void MainWindow::quit() {
-    if (wantSave()) {
-        writeSettings();
-        QCoreApplication::quit();
-    }
+    writeSettings();
+    QCoreApplication::quit();
 }
 
 void MainWindow::about() {
@@ -103,14 +97,14 @@ void MainWindow::addUpdate() {
 
     listModel->addUpdate(update);
     outliner->selectRow(0);
-    markDirty();
+    saveManifest();
 }
 
 void MainWindow::removeUpdate(int row) {
     int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
     if (result == QMessageBox::Yes) {
         listModel->removeUpdate(row);
-        markDirty();
+        saveManifest();
     }
 }
 
@@ -147,6 +141,8 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::saveManifest() {
+    if (manifestPath.isEmpty()) return;
+
     listModel->setUpdate(outliner->currentRow(), form->getUpdate());
 
     QJsonObject manifest;
@@ -161,8 +157,6 @@ void MainWindow::saveManifest() {
 
     file.write(QJsonDocument(manifest).toJson(QJsonDocument::Indented));
     file.close();
-
-    clearDirty();
 }
 
 void MainWindow::openManifest() {
@@ -188,7 +182,7 @@ void MainWindow::openManifest() {
 }
 
 void MainWindow::closeManifest() {
-    if (!wantSave()) return;
+    saveManifest();
 
     int count = listModel->rowCount();
     for (int i = 0; i < count; i++) {
@@ -198,7 +192,7 @@ void MainWindow::closeManifest() {
     form->clear();
     manifestPath = QString();
     form->setManifestPath(manifestPath);
-    clearDirty();
+    updateActions();
 }
 
 void MainWindow::setupSplitter() {
@@ -220,8 +214,8 @@ void MainWindow::setupSplitter() {
     tabWidget = new QTabWidget;
 
     form = new Form;
-    connect(form, &Form::formChanged, [this] {
-        markDirty();
+    connect(form, &Form::lostFocus, [this] {
+        saveManifest();
     });
     tabWidget->addTab(form, tr("Manifest"));
     splitter->addWidget(tabWidget);
@@ -238,7 +232,6 @@ void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newProject, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openProject, QKeySequence("Ctrl+O"));
-    saveAction = fileMenu->addAction(tr("Save"), this, &MainWindow::saveProject, QKeySequence("Ctrl+S"));
     closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeProject, QKeySequence("Ctrl+W"));
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
@@ -248,36 +241,16 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::updateActions() {
-    saveAction->setEnabled(dirty);
     closeAction->setEnabled(!manifestPath.isEmpty());
-}
-
-bool MainWindow::wantSave() {
-    if (!dirty) return true;
-
-    int result = QMessageBox::question(this, tr("Save Changes"), tr("Are you want save manifest?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
-
-    if (result == QMessageBox::Yes) {
-        saveManifest();
-        return true;
-    }
-
-    return result == QMessageBox::No;
 }
 
 void MainWindow::setProjectPath(const QString& path) {
     projectPath = path;
 
-    QFileInfo fi(path);
-    manifestPath = fi.absolutePath() + "/" + Constants::ManifestName;
-}
-
-void MainWindow::markDirty() {
-    dirty = true;
-    updateActions();
-}
-
-void MainWindow::clearDirty() {
-    dirty = false;
-    updateActions();
+    if (!path.isEmpty()) {
+        QFileInfo fi(path);
+        manifestPath = fi.absolutePath() + "/" + Constants::ManifestName;
+    } else {
+        manifestPath = QString();
+    }
 }

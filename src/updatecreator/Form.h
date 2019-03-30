@@ -24,12 +24,14 @@ public:
     void clear();
 
 signals:
-    void formChanged();
+    void lostFocus();
 
 private slots:
-    void edited();
+    void onFocusChanged(QWidget* from, QWidget* to);
 
 private:
+    QWidget* root(QWidget* child);
+
     QLabel* manifestLabel = nullptr;
     QLineEdit* urlLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;
@@ -42,5 +44,4 @@ private:
     QPlainTextEdit* descriptionTextEdit = nullptr;
 
     int fileSize = 0;
-    bool allowEmitFormChanged = true;
 };

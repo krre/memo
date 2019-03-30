@@ -42,11 +42,7 @@ private:
     void updateActions();
 
     void setupSplitter();
-    bool wantSave();
     void setProjectPath(const QString& path);
-
-    void markDirty();
-    void clearDirty();
 
     QSplitter* splitter = nullptr;
     QTabWidget* tabWidget = nullptr;
@@ -54,7 +50,6 @@ private:
     Form* form = nullptr;
     Builder* builder = nullptr;
     ListModel* listModel = nullptr;
-    bool dirty = false;
     QString manifestPath;
     QString projectPath;
 
