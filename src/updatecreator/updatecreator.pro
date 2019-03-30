@@ -1,4 +1,4 @@
-QT += core gui widgets sql
+QT += core gui widgets
 
 TARGET = updatecreator
 TEMPLATE = app
@@ -6,6 +6,8 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 CONFIG += c++17
+
+include(../memolib/memolib.pri)
 
 SOURCES += \
     main.cpp \

@@ -8,12 +8,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
 
 CONFIG += c++17
+CONFIG += object_parallel_to_source
 
 TRANSLATIONS = i18n/memo-ru.ts
 win32: RC_ICONS += images/icon.ico
 
 linux: LIBS += -lX11
 win32: LIBS += -luser32
+
+include(../memolib/memolib.pri)
 
 SOURCES += \
     main.cpp \

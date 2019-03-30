@@ -1,16 +1,9 @@
 #pragma once
-#include <stdexcept>
+#include "lib/Exception.h"
 #include <QSqlError>
 #include <QSqlQuery>
 
-class Exception : std::exception {
-
-public:
-    Exception() = default;
-    virtual QString text() const = 0;
-};
-
-class SqlDatabaseError : Exception {
+class SqlDatabaseError : MemoLib::Exception {
 
 public:
     SqlDatabaseError(const QSqlError& error);
@@ -20,7 +13,7 @@ private:
     QSqlError error;
 };
 
-class SqlQueryError : Exception {
+class SqlQueryError : MemoLib::Exception {
 
 public:
     SqlQueryError(const QSqlQuery& query);
