@@ -35,40 +35,31 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 void MainWindow::newProject() {
     NewProjectDialog newDialog;
     if (newDialog.exec() == QDialog::Accepted) {
-        qDebug() << "ok";
+        closeProject();
+        manifestPath = newDialog.workspaceDir() + "/" + Constants::ManifestName;
+        addUpdate();
+        saveManifest();
+        tabWidget->setCurrentIndex(0);
     }
 }
 
-void MainWindow::newFile() {
-    newManifest();
-}
-
-void MainWindow::openFile() {
+void MainWindow::openProject() {
     QString selectedFilter;
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), "",
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Project"), "",
                                 tr(FILE_DIALOG_FILTER), &selectedFilter);
 
     if (fileName.isEmpty()) return;
 
-    openManifest(fileName);
+    setProjectPath(fileName);
+    openManifest();
 }
 
-bool MainWindow::saveFile() {
-    if (filePath.isEmpty()) {
-        QString selectedFilter;
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), "manifest.json",
-                                    tr(FILE_DIALOG_FILTER), &selectedFilter);
-        if (fileName.isEmpty()) return false;
-
-        filePath = fileName;
-    }
-
+void MainWindow::saveProject() {
     saveManifest();
-
-    return true;
 }
 
-void MainWindow::closeFile() {
+void MainWindow::closeProject() {
+    projectPath = QString();
     closeManifest();
 }
 
@@ -138,11 +129,12 @@ void MainWindow::readSettings() {
 
     splitter->restoreState(settings.value("splitter").toByteArray());
 
-    QString filePath = settings.value("filepath").toString();
+    projectPath = settings.value("projectPath").toString();
     tabWidget->setCurrentIndex(settings.value("tab").toInt());
 
-    if (!filePath.isEmpty() && QFile::exists(filePath)) {
-        openManifest(filePath);
+    if (!projectPath.isEmpty() && QFile::exists(projectPath)) {
+        setProjectPath(projectPath);
+        openManifest();
     }
 }
 
@@ -150,13 +142,8 @@ void MainWindow::writeSettings() {
     QSettings settings;
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
-    settings.setValue("filepath", filePath);
+    settings.setValue("projectPath", manifestPath);
     settings.setValue("tab", tabWidget->currentIndex());
-}
-
-void MainWindow::newManifest() {
-    closeManifest();
-    addUpdate();
 }
 
 void MainWindow::saveManifest() {
@@ -166,9 +153,9 @@ void MainWindow::saveManifest() {
     manifest["url"] = form->getUrl();
     manifest["updates"] = listModel->toJson();
 
-    QFile file(filePath);
+    QFile file(manifestPath);
     if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << "Error opening manifest file. Path:" << filePath;
+        qWarning() << "Error opening manifest file. Path:" << manifestPath;
         return;
     }
 
@@ -178,12 +165,10 @@ void MainWindow::saveManifest() {
     clearDirty();
 }
 
-void MainWindow::openManifest(const QString& filePath) {
-    closeManifest();
-
-    QFile file(filePath);
+void MainWindow::openManifest() {
+    QFile file(manifestPath);
     if (!file.open(QIODevice::ReadOnly)) {
-        qCritical() << "Error opening manifest file. Path:" << filePath;
+        qCritical() << "Error opening manifest file. Path:" << manifestPath;
         return;
     }
 
@@ -198,7 +183,6 @@ void MainWindow::openManifest(const QString& filePath) {
     form->setUrl(manifest["url"].toString());
     listModel->fromJson(manifest["updates"].toArray());
     outliner->selectRow(0);
-    this->filePath = filePath;
     updateActions();
     changeWindowTitle();
 }
@@ -212,7 +196,7 @@ void MainWindow::closeManifest() {
     }
 
     form->clear();
-    filePath = QString();
+    manifestPath = QString();
     clearDirty();
 }
 
@@ -252,9 +236,9 @@ void MainWindow::setupSplitter() {
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), this, &MainWindow::newProject, QKeySequence("Ctrl+N"));
-    fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
-    saveAction = fileMenu->addAction(tr("Save"), this, &MainWindow::saveFile, QKeySequence("Ctrl+S"));
-    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
+    fileMenu->addAction(tr("Open..."), this, &MainWindow::openProject, QKeySequence("Ctrl+O"));
+    saveAction = fileMenu->addAction(tr("Save"), this, &MainWindow::saveProject, QKeySequence("Ctrl+S"));
+    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeProject, QKeySequence("Ctrl+W"));
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 
@@ -264,7 +248,7 @@ void MainWindow::createActions() {
 
 void MainWindow::updateActions() {
     saveAction->setEnabled(dirty);
-    closeAction->setEnabled(!filePath.isEmpty());
+    closeAction->setEnabled(!manifestPath.isEmpty());
 }
 
 bool MainWindow::wantSave() {
@@ -273,7 +257,8 @@ bool MainWindow::wantSave() {
     int result = QMessageBox::question(this, tr("Save Changes"), tr("Are you want save manifest?"), QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
 
     if (result == QMessageBox::Yes) {
-        return saveFile();
+        saveManifest();
+        return true;
     }
 
     return result == QMessageBox::No;
@@ -282,12 +267,19 @@ bool MainWindow::wantSave() {
 void MainWindow::changeWindowTitle() {
     QString title = Constants::WindowTitle;
 
-    if (!filePath.isEmpty()) {
-        QFileInfo fi(filePath);
+    if (!manifestPath.isEmpty()) {
+        QFileInfo fi(manifestPath);
         title = title + " - " + fi.fileName() + (dirty ? "*" : "");
     }
 
     setWindowTitle(title);
+}
+
+void MainWindow::setProjectPath(const QString& path) {
+    projectPath = path;
+
+    QFileInfo fi(path);
+    manifestPath = fi.absolutePath() + "/" + Constants::ManifestName;
 }
 
 void MainWindow::markDirty() {

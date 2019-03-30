@@ -8,4 +8,5 @@ namespace Constants {
     constexpr auto URL = "https://github.com/krre/memo";
     constexpr auto CopyrightYear = "2019";
     constexpr auto ProjectName = "MemoUpdateCreator.json";
+    constexpr auto ManifestName = "manifest.json";
 }

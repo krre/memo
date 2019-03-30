@@ -20,11 +20,10 @@ protected:
 
 private slots:
     void newProject();
+    void openProject();
+    void saveProject();
+    void closeProject();
 
-    void newFile();
-    void openFile();
-    bool saveFile();
-    void closeFile();
     void quit();
     void about();
 
@@ -35,9 +34,8 @@ private:
     void readSettings();
     void writeSettings();
 
-    void newManifest();
     void saveManifest();
-    void openManifest(const QString& filePath);
+    void openManifest();
     void closeManifest();
 
     void createActions();
@@ -46,6 +44,7 @@ private:
     void setupSplitter();
     bool wantSave();
     void changeWindowTitle();
+    void setProjectPath(const QString& path);
 
     void markDirty();
     void clearDirty();
@@ -57,7 +56,8 @@ private:
     Builder* builder = nullptr;
     ListModel* listModel = nullptr;
     bool dirty = false;
-    QString filePath;
+    QString manifestPath;
+    QString projectPath;
 
     QAction* saveAction = nullptr;
     QAction* closeAction = nullptr;
