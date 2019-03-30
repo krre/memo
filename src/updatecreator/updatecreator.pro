@@ -13,7 +13,8 @@ SOURCES += \
     Outliner.cpp \
     Form.cpp \
     ListModel.cpp \
-    Builder.cpp
+    Builder.cpp \
+    NewProjectDialog.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -21,4 +22,5 @@ HEADERS += \
     Outliner.h \
     Form.h \
     ListModel.h \
-    Builder.h
+    Builder.h \
+    NewProjectDialog.h

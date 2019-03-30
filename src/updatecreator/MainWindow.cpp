@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Constants.h"
+#include "NewProjectDialog.h"
 #include "Outliner.h"
 #include "ListModel.h"
 #include "Form.h"
@@ -28,6 +29,13 @@ void MainWindow::closeEvent(QCloseEvent* event) {
         event->accept();
     } else {
         event->ignore();
+    }
+}
+
+void MainWindow::newProject() {
+    NewProjectDialog newDialog;
+    if (newDialog.exec() == QDialog::Accepted) {
+        qDebug() << "ok";
     }
 }
 
@@ -243,7 +251,7 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
+    fileMenu->addAction(tr("New..."), this, &MainWindow::newProject, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
     saveAction = fileMenu->addAction(tr("Save"), this, &MainWindow::saveFile, QKeySequence("Ctrl+S"));
     closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));

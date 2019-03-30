@@ -19,6 +19,8 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
+    void newProject();
+
     void newFile();
     void openFile();
     bool saveFile();
