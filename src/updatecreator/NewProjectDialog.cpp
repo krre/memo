@@ -83,8 +83,10 @@ void NewProjectDialog::createProject() {
         throw MemoLib::RuntimeError(tr("Failed to open project file for writting"));
     }
 
+    QJsonObject appDir = { { "windows", "" }, { "linux", "" }, { "macos", "" } };
+
     QJsonObject project;
-    project["applicationDir"] = name;
+    project["appDir"] = appDir;
 
     file.write(QJsonDocument(project).toJson());
 }
