@@ -43,7 +43,23 @@ QString NewProjectDialog::projectDir() const {
 
 void NewProjectDialog::accept() {
     try {
-        createProject();
+        QString name = nameLineEdit->text();
+        if (name.isEmpty()) {
+            throw MemoLib::RuntimeError(tr("Name is empty"));
+        }
+
+        QString directory = directoryLineEdit->text();
+        if (directory.isEmpty() || !QDir(directory).exists()) {
+            throw MemoLib::RuntimeError(tr("Wrong directory path"));
+        }
+
+        projectDirPath = directory + "/" + name;
+
+        QDir dir;
+        if (!dir.mkpath(projectDirPath)) {
+            throw MemoLib::RuntimeError(tr("Failed to create project directory"));
+        }
+
         QDialog::accept();
     } catch (const MemoLib::RuntimeError& e) {
         QMessageBox::critical(this, tr("Error"), e.text());
@@ -56,37 +72,4 @@ void NewProjectDialog::selectDirectory() {
     if (!directory.isEmpty()) {
         directoryLineEdit->setText(directory);
     }
-}
-
-void NewProjectDialog::createProject() {
-    QString name = nameLineEdit->text();
-    if (name.isEmpty()) {
-        throw MemoLib::RuntimeError(tr("Name is empty"));
-    }
-
-    QString directory = directoryLineEdit->text();
-    if (directory.isEmpty() || !QDir(directory).exists()) {
-        throw MemoLib::RuntimeError(tr("Wrong directory path"));
-    }
-
-    projectDirPath = directory + "/" + name;
-    QDir dir;
-    if (!dir.mkpath(projectDirPath)) {
-        throw MemoLib::RuntimeError(tr("Failed to create project directory"));
-    }
-
-    QString projectPath = projectDirPath + "/" + Constants::ProjectName;
-
-    QFile file(projectPath);
-
-    if (!file.open(QIODevice::WriteOnly)) {
-        throw MemoLib::RuntimeError(tr("Failed to open project file for writting"));
-    }
-
-    QJsonObject appDir = { { "windows", "" }, { "linux", "" }, { "macos", "" } };
-
-    QJsonObject project;
-    project["appDir"] = appDir;
-
-    file.write(QJsonDocument(project).toJson());
 }

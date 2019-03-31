@@ -7,6 +7,7 @@ class Outliner;
 class Form;
 class Builder;
 class ListModel;
+class ProjectSettings;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -50,6 +51,7 @@ private:
 
     QSplitter* splitter = nullptr;
     QTabWidget* tabWidget = nullptr;
+    ProjectSettings* projectSettings = nullptr;
     Outliner* outliner = nullptr;
     Form* form = nullptr;
     Builder* builder = nullptr;

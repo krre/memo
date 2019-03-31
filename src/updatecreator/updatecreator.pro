@@ -16,7 +16,8 @@ SOURCES += \
     Form.cpp \
     ListModel.cpp \
     Builder.cpp \
-    NewProjectDialog.cpp
+    NewProjectDialog.cpp \
+    ProjectSettings.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -25,4 +26,5 @@ HEADERS += \
     Form.h \
     ListModel.h \
     Builder.h \
-    NewProjectDialog.h
+    NewProjectDialog.h \
+    ProjectSettings.h

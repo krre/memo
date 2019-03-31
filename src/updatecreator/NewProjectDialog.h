@@ -16,8 +16,6 @@ private slots:
     void selectDirectory();
 
 private:
-    void createProject();
-
     QLineEdit* nameLineEdit = nullptr;
     QLineEdit* directoryLineEdit = nullptr;
     QString projectDirPath;

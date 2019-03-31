@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Constants.h"
+#include "ProjectSettings.h"
 #include "NewProjectDialog.h"
 #include "Outliner.h"
 #include "ListModel.h"
@@ -13,6 +14,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     splitter = new QSplitter;
     setCentralWidget(splitter);
 
+    projectSettings = new ProjectSettings(this);
     listModel = new ListModel(this);
 
     createActions();
@@ -22,6 +24,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 void MainWindow::closeEvent(QCloseEvent* event) {
+    saveProject();
     writeSettings();
     event->accept();
 }
@@ -29,8 +32,12 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 void MainWindow::newProject() {
     NewProjectDialog newDialog;
     if (newDialog.exec() == QDialog::Accepted) {
-        closeProject();
+        if (!projectPath.isEmpty()) {
+            closeProject();
+        }
+
         QString projectDir = newDialog.projectDir();
+        projectSettings->create(projectDir + "/" + Constants::ProjectName);
         setProjectPath(projectDir);
         form->setManifestPath(manifestPath);
         addUpdate();
@@ -53,10 +60,12 @@ void MainWindow::openProject() {
 }
 
 void MainWindow::saveProject() {
+    projectSettings->save();
     saveManifest();
 }
 
 void MainWindow::closeProject() {
+    projectSettings->close();
     closeManifest();
     setProjectPath(QString());
 }
@@ -70,6 +79,7 @@ void MainWindow::clearMenuRecentProjects() {
 }
 
 void MainWindow::quit() {
+    saveProject();
     writeSettings();
     QCoreApplication::quit();
 }
@@ -314,8 +324,12 @@ void MainWindow::addRecentProject(const QString& path) {
 }
 
 void MainWindow::loadProject(const QString& path) {
-    closeProject();
+    if (!projectPath.isEmpty()) {
+        closeProject();
+    }
+
     setProjectPath(path);
+    projectSettings->open(path + "/" + Constants::ProjectName);
     openManifest();
     addRecentProject(path);
 }
