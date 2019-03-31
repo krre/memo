@@ -14,7 +14,7 @@ Outliner::Outliner(ListModel* model, QWidget* parent) : QWidget(parent) {
     listView->setModel(model);
     layout->addWidget(listView);
 
-    auto addButton = new QPushButton(tr("Add"));
+    addButton = new QPushButton(tr("Add"));
     connect(addButton, &QPushButton::clicked, this, &Outliner::addClicked);
 
     auto removeButton = new QPushButton(tr("Remove"));
@@ -55,6 +55,10 @@ void Outliner::selectRow(int row) {
 
 int Outliner::currentRow() const {
     return listView->currentIndex().row();
+}
+
+void Outliner::setAddButtonEnabled(bool enabled) {
+    addButton->setEnabled(enabled);
 }
 
 void Outliner::removeUpdate() {

@@ -2,6 +2,7 @@
 #include <QWidget>
 
 class QListView;
+class QPushButton;
 class ListModel;
 
 class Outliner : public QWidget {
@@ -10,6 +11,7 @@ public:
     explicit Outliner(ListModel* model, QWidget* parent = nullptr);
     void selectRow(int row);
     int currentRow() const;
+    void setAddButtonEnabled(bool enabled);
 
 signals:
     void addClicked();
@@ -21,4 +23,5 @@ private slots:
 
 private:
     QListView* listView = nullptr;
+    QPushButton* addButton = nullptr;
 };

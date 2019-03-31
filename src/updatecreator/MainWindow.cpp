@@ -270,7 +270,14 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::updateActions() {
-    closeAction->setEnabled(!manifestPath.isEmpty());
+    bool enabled = !manifestPath.isEmpty();
+    closeAction->setEnabled(enabled);
+
+    for (int i = 0; i < tabWidget->count(); i++) {
+        tabWidget->widget(i)->setEnabled(enabled);
+    }
+
+    outliner->setAddButtonEnabled(enabled);
 }
 
 void MainWindow::setProjectPath(const QString& path) {
