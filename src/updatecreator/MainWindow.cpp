@@ -66,6 +66,7 @@ void MainWindow::saveProject() {
 
 void MainWindow::closeProject() {
     projectSettings->close();
+    builder->clear();
     closeManifest();
     setProjectPath(QString());
 }
@@ -253,7 +254,7 @@ void MainWindow::setupSplitter() {
     tabWidget->addTab(form, tr("Manifest"));
     splitter->addWidget(tabWidget);
 
-    builder = new Builder;
+    builder = new Builder(projectSettings);
     tabWidget->addTab(builder, tr("Builder"));
 
     splitter->setHandleWidth(1);
@@ -330,6 +331,7 @@ void MainWindow::loadProject(const QString& path) {
 
     setProjectPath(path);
     projectSettings->open(path + "/" + Constants::ProjectName);
+    builder->load();
     openManifest();
     addRecentProject(path);
 }

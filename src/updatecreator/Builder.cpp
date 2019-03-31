@@ -1,7 +1,8 @@
 #include "Builder.h"
+#include "ProjectSettings.h"
 #include <QtWidgets>
 
-Builder::Builder(QWidget* parent) : QWidget(parent) {
+Builder::Builder(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
@@ -16,6 +17,14 @@ Builder::Builder(QWidget* parent) : QWidget(parent) {
 
 Builder::~Builder() {
     writeSettings();
+}
+
+void Builder::load() {
+    qDebug() << "load builder";
+}
+
+void Builder::clear() {
+    qDebug() << "clear builder";
 }
 
 void Builder::selectDirectory() {

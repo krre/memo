@@ -2,12 +2,16 @@
 #include <QWidget>
 
 class QLineEdit;
+class ProjectSettings;
 
 class Builder : public QWidget {
     Q_OBJECT
 public:
-    explicit Builder(QWidget* parent = nullptr);
+    explicit Builder(ProjectSettings* settings, QWidget* parent = nullptr);
     ~Builder();
+
+    void load();
+    void clear();
 
 private slots:
     void selectDirectory();
@@ -20,4 +24,5 @@ private:
     void writeSettings();
 
     QLineEdit* appDirLineEdit = nullptr;
+    ProjectSettings* projectSettings;
 };
