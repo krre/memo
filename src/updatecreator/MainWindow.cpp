@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     splitter = new QSplitter;
     setCentralWidget(splitter);
 
-    projectSettings = new ProjectSettings(this);
     listModel = new ListModel(this);
+    projectSettings = new ProjectSettings(this);
 
     createActions();
     setupSplitter();

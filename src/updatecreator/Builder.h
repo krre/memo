@@ -8,7 +8,6 @@ class Builder : public QWidget {
     Q_OBJECT
 public:
     explicit Builder(ProjectSettings* settings, QWidget* parent = nullptr);
-    ~Builder();
 
     void load();
     void clear();
@@ -19,9 +18,6 @@ private slots:
 private:
     void createAppDirWidgets();
     void createFilesWidgets();
-
-    void readSettings();
-    void writeSettings();
 
     QLineEdit* appDirLineEdit = nullptr;
     ProjectSettings* projectSettings;

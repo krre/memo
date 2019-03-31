@@ -11,20 +11,14 @@ Builder::Builder(ProjectSettings* settings, QWidget* parent) : QWidget(parent), 
 
     auto buildButton = new QPushButton(tr("Build"));
     layout->addWidget(buildButton, 1, Qt::AlignLeft);
-
-    readSettings();
-}
-
-Builder::~Builder() {
-    writeSettings();
 }
 
 void Builder::load() {
-    qDebug() << "load builder";
+    appDirLineEdit->setText(projectSettings->appDir());
 }
 
 void Builder::clear() {
-    qDebug() << "clear builder";
+    appDirLineEdit->clear();
 }
 
 void Builder::selectDirectory() {
@@ -32,6 +26,7 @@ void Builder::selectDirectory() {
 
     if (!directory.isEmpty()) {
         appDirLineEdit->setText(directory);
+        projectSettings->setAppDir(directory);
     }
 }
 
@@ -39,6 +34,9 @@ void Builder::createAppDirWidgets() {
     auto appDirLayout = new QHBoxLayout;
     appDirLayout->addWidget(new QLabel(tr("Application:")));
     appDirLineEdit = new QLineEdit;
+    connect(appDirLineEdit, &QLineEdit::textEdited, [this] (const QString& text) {
+        projectSettings->setAppDir(text);
+    });
     appDirLayout->addWidget(appDirLineEdit);
     auto appDirButton = new QPushButton(tr("Browse..."));
     connect(appDirButton, &QPushButton::clicked, this, &Builder::selectDirectory);
@@ -65,12 +63,4 @@ void Builder::createFilesWidgets() {
 
     auto mainLayout = static_cast<QVBoxLayout*>(layout());
     mainLayout->addWidget(filesGroupBox, 1);
-}
-
-void Builder::readSettings() {
-    QSettings settings;
-}
-
-void Builder::writeSettings() {
-    QSettings settings;
 }
