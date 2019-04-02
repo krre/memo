@@ -91,3 +91,19 @@ void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& ver
     snapshots[version] = os;
     project["snapshots"] = snapshots;
 }
+
+QJsonArray ProjectSettings::snapshot(const QString& version) const {
+    if (project["snapshots"].toObject().contains(version)) {
+        QJsonObject snapshots = project["snapshots"].toObject()[version].toObject();
+
+#ifdef Q_OS_WIN
+    return snapshots.contains("windows") ? snapshots["windows"].toArray() : QJsonArray();
+#elif defined (Q_OS_LINUX)
+    return snapshots.contains("linux") ? snapshots["linux"].toArray() : QJsonArray();
+#elif defined (Q_OS_MACOS)
+    return snapshots.contains("macos") ? snapshots["macos"].toArray() : QJsonArray();
+#endif
+    } else {
+        return QJsonArray();
+    }
+}

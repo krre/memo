@@ -16,6 +16,7 @@ public:
     QString appDir() const;
 
     void setSnapshot(const QJsonArray& snapshot, const QString& version);
+    QJsonArray snapshot(const QString& version) const;
 
 private:
     QString filePath;

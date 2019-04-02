@@ -16,6 +16,10 @@ Builder::Builder(ProjectSettings* settings, QWidget* parent) : QWidget(parent), 
 
 void Builder::load() {
     appDirLineEdit->setText(projectSettings->appDir());
+
+    for (const auto value : projectSettings->snapshot("base")) {
+        allFilesListWidget->addItem(value.toObject()["file"].toString());
+    }
 }
 
 void Builder::clear() {
