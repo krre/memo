@@ -10,8 +10,8 @@ ProjectSettings::ProjectSettings(QObject* parent) : QObject(parent) {
 void ProjectSettings::create(const QString& path) {
     filePath = path;
 
-    QJsonObject appDir = { { "windows", "" }, { "linux", "" }, { "macos", "" } };
-    project["appDir"] = appDir;
+    project["appDir"] = {};
+    project["snapshots"] = {};
 
     save();
 }
@@ -72,16 +72,22 @@ QString ProjectSettings::appDir() const {
 }
 
 void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& version) {
-    qDebug() << snapshot;
+    QJsonObject snapshots = project["snapshots"].toObject();
 
-//    QJsonObject content = project["appDir"].toObject();
-//#ifdef Q_OS_WIN
-//    appDir["windows"] = path;
-//#elif defined (Q_OS_LINUX)
-//    appDir["linux"] = path;
-//#elif defined (Q_OS_MACOS)
-//    appDir["macos"] = path;
-//#endif
+    if (!snapshots.contains(version)) {
+        snapshots[version] = {};
+    }
 
-//    project["appDir"] = appDir;
+    QJsonObject os = snapshots[version].toObject();
+
+#ifdef Q_OS_WIN
+    os["windows"] = snapshot;
+#elif defined (Q_OS_LINUX)
+    os["linux"] = snapshot;
+#elif defined (Q_OS_MACOS)
+    os["macos"] = snapshot;
+#endif
+
+    snapshots[version] = os;
+    project["snapshots"] = snapshots;
 }

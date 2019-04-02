@@ -13,8 +13,8 @@ public:
     void load();
     void clear();
 
-    void createSnapshot(const QString& version = QString());
-    void removeSnapshot(const QString& version = QString());
+    void createSnapshot(const QString& version = "base");
+    void removeSnapshot(const QString& version);
 
 private slots:
     void selectDirectory();
