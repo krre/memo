@@ -15,6 +15,8 @@ public:
     void setAppDir(const QString& path);
     QString appDir() const;
 
+    void setSnapshot(const QJsonArray& snapshot, const QString& version);
+
 private:
     QString filePath;
     QJsonObject project;

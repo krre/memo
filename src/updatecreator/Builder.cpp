@@ -1,5 +1,6 @@
 #include "Builder.h"
 #include "ProjectSettings.h"
+#include "lib/Exception.h"
 #include <QtWidgets>
 
 Builder::Builder(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
@@ -21,12 +22,47 @@ void Builder::clear() {
     appDirLineEdit->clear();
 }
 
+void Builder::createSnapshot(const QString& version) {
+    QString appDir = appDirLineEdit->text();
+    QFileInfo fi(appDir);
+
+    if (!fi.exists() || !fi.isDir()) {
+        throw MemoLib::RuntimeError("Wrong application directory");
+    }
+
+    QJsonArray snapshot;
+
+    QDirIterator it(appDir, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+
+    while (it.hasNext()) {
+        QString path = it.next();
+
+        if (it.fileInfo().isFile()) {
+            QJsonObject item;
+            item["hash"] = QString(fileChecksum(path).toHex());
+
+            QString relativePath = path.remove(appDir + "/");
+            item["file"] = relativePath;
+
+            allFilesListWidget->addItem(relativePath);
+            snapshot.append(item);
+        }
+    }
+
+    projectSettings->setSnapshot(snapshot, version);
+}
+
+void Builder::removeSnapshot(const QString& version) {
+
+}
+
 void Builder::selectDirectory() {
     QString directory = QFileDialog::getExistingDirectory(this);
 
     if (!directory.isEmpty()) {
         appDirLineEdit->setText(directory);
         projectSettings->setAppDir(directory);
+        createSnapshot();
     }
 }
 
@@ -56,11 +92,25 @@ void Builder::createFilesWidgets() {
     splitter->setHandleWidth(1);
     splitter->setChildrenCollapsible(false);
 
-    splitter->addWidget(new QListWidget);
-    splitter->addWidget(new QListWidget);
+    allFilesListWidget = new QListWidget;
+    splitter->addWidget(allFilesListWidget);
+    modifiedFilesListWidget = new QListWidget;
+    splitter->addWidget(modifiedFilesListWidget);
 
     filesLayout->addWidget(splitter);
 
     auto mainLayout = static_cast<QVBoxLayout*>(layout());
     mainLayout->addWidget(filesGroupBox, 1);
+}
+
+QByteArray Builder::fileChecksum(const QString& filePath) {
+    QFile file(filePath);
+    if (file.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(QCryptographicHash::Sha1);
+        if (hash.addData(&file)) {
+            return hash.result();
+        }
+    }
+
+    return QByteArray();
 }

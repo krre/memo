@@ -70,3 +70,18 @@ QString ProjectSettings::appDir() const {
     return project["appDir"].toObject()["macos"].toString();
 #endif
 }
+
+void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& version) {
+    qDebug() << snapshot;
+
+//    QJsonObject content = project["appDir"].toObject();
+//#ifdef Q_OS_WIN
+//    appDir["windows"] = path;
+//#elif defined (Q_OS_LINUX)
+//    appDir["linux"] = path;
+//#elif defined (Q_OS_MACOS)
+//    appDir["macos"] = path;
+//#endif
+
+//    project["appDir"] = appDir;
+}
