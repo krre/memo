@@ -10,8 +10,17 @@ Builder::Builder(ProjectSettings* settings, QWidget* parent) : QWidget(parent), 
     createAppDirWidgets();
     createFilesWidgets();
 
+    auto buttonLayout = new QHBoxLayout;
+
+    auto refreshButton = new QPushButton(tr("Refresh"));
+    connect(refreshButton, &QPushButton::clicked, this, &Builder::refresh);
+    buttonLayout->addWidget(refreshButton);
+
     auto buildButton = new QPushButton(tr("Build"));
-    layout->addWidget(buildButton, 1, Qt::AlignLeft);
+    connect(buildButton, &QPushButton::clicked, this, &Builder::build);
+    buttonLayout->addWidget(buildButton, 1, Qt::AlignLeft);
+
+    layout->addLayout(buttonLayout);
 }
 
 void Builder::load() {
@@ -68,6 +77,14 @@ void Builder::selectDirectory() {
         projectSettings->setAppDir(directory);
         createSnapshot();
     }
+}
+
+void Builder::refresh() {
+    qDebug() << "refresh";
+}
+
+void Builder::build() {
+    qDebug() << "build";
 }
 
 void Builder::createAppDirWidgets() {

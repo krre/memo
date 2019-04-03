@@ -18,6 +18,8 @@ public:
 
 private slots:
     void selectDirectory();
+    void refresh();
+    void build();
 
 private:
     void createAppDirWidgets();
