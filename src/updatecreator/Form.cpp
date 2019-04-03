@@ -144,11 +144,12 @@ void Form::onFocusChanged(QWidget* from, QWidget* to) {
     }
 }
 
-QWidget*Form::root(QWidget* child) {
+QWidget* Form::root(QWidget* child) {
     auto widget = child;
 
     while (widget != nullptr && widget != this) {
          widget = widget->parentWidget();
     }
+
     return widget;
 }
