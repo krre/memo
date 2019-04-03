@@ -13,8 +13,10 @@ public:
     void load();
     void clear();
 
-    void createSnapshot(const QString& version = "base");
+    void createSnapshot(const QString& version);
     void removeSnapshot(const QString& version);
+
+    void setVersion(const QString& version);
 
 private slots:
     void selectDirectory();
@@ -31,4 +33,6 @@ private:
     ProjectSettings* projectSettings;
     QListWidget* allFilesListWidget = nullptr;
     QListWidget* modifiedFilesListWidget = nullptr;
+    QVector<QString> modifiedFiles;
+    QString version;
 };

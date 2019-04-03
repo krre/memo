@@ -23,6 +23,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     updateActions();
 }
 
+MainWindow::~MainWindow() {
+
+}
+
 void MainWindow::closeEvent(QCloseEvent* event) {
     saveProject();
     writeSettings();
@@ -239,7 +243,9 @@ void MainWindow::setupSplitter() {
         }
 
         if (selectedRow >= 0) {
-            form->populateUpdate(listModel->getUpdate(selectedRow));
+            const ListModel::Update& update = listModel->getUpdate(selectedRow);
+            form->populateUpdate(update);
+            builder->setVersion(update.version);
         }
     });
 

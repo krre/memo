@@ -11,4 +11,5 @@ namespace Constants {
     constexpr auto ManifestName = "manifest.json";
     constexpr int SystemRecentProjectsActions = 2;
     constexpr int MaxRecentProjects = 10;
+    constexpr auto ZeroVersion = "0.0.0";
 }

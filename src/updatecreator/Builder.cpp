@@ -1,5 +1,6 @@
 #include "Builder.h"
 #include "ProjectSettings.h"
+#include "Constants.h"
 #include "lib/Exception.h"
 #include <QtWidgets>
 
@@ -69,18 +70,42 @@ void Builder::removeSnapshot(const QString& version) {
 
 }
 
+void Builder::setVersion(const QString& version) {
+    this->version = version;
+}
+
 void Builder::selectDirectory() {
     QString directory = QFileDialog::getExistingDirectory(this);
 
     if (!directory.isEmpty()) {
         appDirLineEdit->setText(directory);
         projectSettings->setAppDir(directory);
-        createSnapshot();
+        createSnapshot(Constants::ZeroVersion);
     }
 }
 
 void Builder::refresh() {
-    qDebug() << "refresh";
+    modifiedFiles.clear();
+
+    QJsonArray snapshot = projectSettings->snapshot(version);
+
+    qDebug() << snapshot;
+
+    QString appDir = appDirLineEdit->text();
+
+    QDirIterator it(appDir, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+
+    while (it.hasNext()) {
+        QString path = it.next();
+
+        if (it.fileInfo().isFile()) {
+            QString hash = QString(fileChecksum(path).toHex());
+
+            modifiedFiles.append(path);
+            QString relativePath = path.remove(appDir + "/");
+            modifiedFilesListWidget->addItem(relativePath);
+        }
+    }
 }
 
 void Builder::build() {

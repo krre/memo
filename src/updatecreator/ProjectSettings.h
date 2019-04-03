@@ -19,6 +19,9 @@ public:
     QJsonArray snapshot(const QString& version) const;
 
 private:
+    QString previousVersion(const QString& version) const;
+
     QString filePath;
     QJsonObject project;
+    QString currentOS;
 };
