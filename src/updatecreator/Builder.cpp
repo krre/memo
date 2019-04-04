@@ -86,6 +86,7 @@ void Builder::selectDirectory() {
 
 void Builder::refresh() {
     modifiedFiles.clear();
+    modifiedFilesListWidget->clear();
 
     QJsonArray snapshot = projectSettings->snapshot(version);
     QString appDir = appDirLineEdit->text();
