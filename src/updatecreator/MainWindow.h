@@ -4,7 +4,7 @@
 class QSplitter;
 class QTabWidget;
 class Outliner;
-class Form;
+class Manifest;
 class Builder;
 class ListModel;
 class ProjectSettings;
@@ -53,7 +53,7 @@ private:
     QTabWidget* tabWidget = nullptr;
     ProjectSettings* projectSettings = nullptr;
     Outliner* outliner = nullptr;
-    Form* form = nullptr;
+    Manifest* manifest = nullptr;
     Builder* builder = nullptr;
     ListModel* listModel = nullptr;
     QString manifestPath;

@@ -13,18 +13,18 @@ SOURCES += \
     main.cpp \
     MainWindow.cpp \
     Outliner.cpp \
-    Form.cpp \
     ListModel.cpp \
     Builder.cpp \
     NewProjectDialog.cpp \
-    ProjectSettings.cpp
+    ProjectSettings.cpp \
+    Manifest.cpp
 
 HEADERS += \
     MainWindow.h \
     Constants.h \
     Outliner.h \
-    Form.h \
     ListModel.h \
     Builder.h \
     NewProjectDialog.h \
-    ProjectSettings.h
+    ProjectSettings.h \
+    Manifest.h

@@ -8,10 +8,10 @@ class QLabel;
 class QComboBox;
 class QCheckBox;
 
-class Form : public QWidget {
+class Manifest : public QWidget {
     Q_OBJECT
 public:
-    explicit Form(QWidget* parent = nullptr);
+    explicit Manifest(QWidget* parent = nullptr);
 
     void populateUpdate(const ListModel::Update& update);
     ListModel::Update getUpdate() const;

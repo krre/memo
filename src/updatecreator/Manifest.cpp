@@ -1,7 +1,7 @@
-#include "Form.h"
+#include "Manifest.h"
 #include <QtWidgets>
 
-Form::Form(QWidget* parent) : QWidget(parent) {
+Manifest::Manifest(QWidget* parent) : QWidget(parent) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
@@ -66,10 +66,10 @@ Form::Form(QWidget* parent) : QWidget(parent) {
     layout->addWidget(updateGroupBox);
     layout->setStretch(1, 0);
 
-    connect(qApp, &QApplication::focusChanged, this, &Form::onFocusChanged);
+    connect(qApp, &QApplication::focusChanged, this, &Manifest::onFocusChanged);
 }
 
-void Form::populateUpdate(const ListModel::Update& update) {
+void Manifest::populateUpdate(const ListModel::Update& update) {
     versionLineEdit->setText(update.version);
     dateLineEdit->setText(update.date);
 
@@ -85,7 +85,7 @@ void Form::populateUpdate(const ListModel::Update& update) {
     descriptionTextEdit->setPlainText(update.description);
 }
 
-ListModel::Update Form::getUpdate() const {
+ListModel::Update Manifest::getUpdate() const {
     ListModel::Update update;
     update.version = versionLineEdit->text();
     update.date = dateLineEdit->text();
@@ -109,19 +109,19 @@ ListModel::Update Form::getUpdate() const {
     return update;
 }
 
-void Form::setManifestPath(const QString path) {
+void Manifest::setManifestPath(const QString path) {
     manifestLabel->setText(path);
 }
 
-void Form::setUrl(const QString& url) {
+void Manifest::setUrl(const QString& url) {
     urlLineEdit->setText(url);
 }
 
-QString Form::getUrl() const {
+QString Manifest::getUrl() const {
     return urlLineEdit->text();
 }
 
-void Form::clear() {
+void Manifest::clear() {
     urlLineEdit->clear();
     versionLineEdit->clear();
     dateLineEdit->clear();
@@ -133,7 +133,7 @@ void Form::clear() {
     descriptionTextEdit->clear();
 }
 
-void Form::onFocusChanged(QWidget* from, QWidget* to) {
+void Manifest::onFocusChanged(QWidget* from, QWidget* to) {
     Q_UNUSED(to)
 
     QWidget* rootTo = root(to);
@@ -144,7 +144,7 @@ void Form::onFocusChanged(QWidget* from, QWidget* to) {
     }
 }
 
-QWidget* Form::root(QWidget* child) {
+QWidget* Manifest::root(QWidget* child) {
     auto widget = child;
 
     while (widget != nullptr && widget != this) {

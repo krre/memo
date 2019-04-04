@@ -4,7 +4,7 @@
 #include "NewProjectDialog.h"
 #include "Outliner.h"
 #include "ListModel.h"
-#include "Form.h"
+#include "Manifest.h"
 #include "Builder.h"
 #include <QtWidgets>
 
@@ -43,7 +43,7 @@ void MainWindow::newProject() {
         QString projectDir = newDialog.projectDir();
         projectSettings->create(projectDir + "/" + Constants::ProjectName);
         setProjectPath(projectDir);
-        form->setManifestPath(manifestPath);
+        manifest->setManifestPath(manifestPath);
         addUpdate();
         saveManifest();
         addRecentProject(projectDir);
@@ -181,11 +181,11 @@ void MainWindow::writeSettings() {
 void MainWindow::saveManifest() {
     if (manifestPath.isEmpty()) return;
 
-    listModel->setUpdate(outliner->currentRow(), form->getUpdate());
+    listModel->setUpdate(outliner->currentRow(), manifest->getUpdate());
 
-    QJsonObject manifest;
-    manifest["url"] = form->getUrl();
-    manifest["updates"] = listModel->toJson();
+    QJsonObject manifestData;
+    manifestData["url"] = manifest->getUrl();
+    manifestData["updates"] = listModel->toJson();
 
     QFile file(manifestPath);
     if (!file.open(QIODevice::WriteOnly)) {
@@ -193,7 +193,7 @@ void MainWindow::saveManifest() {
         return;
     }
 
-    file.write(QJsonDocument(manifest).toJson(QJsonDocument::Indented));
+    file.write(QJsonDocument(manifestData).toJson(QJsonDocument::Indented));
     file.close();
 }
 
@@ -205,16 +205,16 @@ void MainWindow::openManifest() {
     }
 
     QJsonParseError error;
-    QJsonObject manifest = QJsonDocument::fromJson(file.readAll(), &error).object();
+    QJsonObject manifestData = QJsonDocument::fromJson(file.readAll(), &error).object();
 
     if (error.error != QJsonParseError::NoError) {
         qCritical() << "Error parsing manifest:" << error.errorString() << "Offset:" << error.offset;
         return;
     }
 
-    form->setManifestPath(manifestPath);
-    form->setUrl(manifest["url"].toString());
-    listModel->fromJson(manifest["updates"].toArray());
+    manifest->setManifestPath(manifestPath);
+    manifest->setUrl(manifestData["url"].toString());
+    listModel->fromJson(manifestData["updates"].toArray());
     outliner->selectRow(0);
     updateActions();
 }
@@ -227,9 +227,9 @@ void MainWindow::closeManifest() {
         listModel->removeUpdate(0);
     }
 
-    form->clear();
+    manifest->clear();
     manifestPath = QString();
-    form->setManifestPath(manifestPath);
+    manifest->setManifestPath(manifestPath);
     updateActions();
 }
 
@@ -239,12 +239,12 @@ void MainWindow::setupSplitter() {
     connect(outliner, &Outliner::removeClicked, this, &MainWindow::removeUpdate);
     connect(outliner, &Outliner::selectionChanged, [this] (int selectedRow, int deselectedRow) {
         if (deselectedRow >= 0) {
-            listModel->setUpdate(deselectedRow, form->getUpdate());
+            listModel->setUpdate(deselectedRow, manifest->getUpdate());
         }
 
         if (selectedRow >= 0) {
             const ListModel::Update& update = listModel->getUpdate(selectedRow);
-            form->populateUpdate(update);
+            manifest->populateUpdate(update);
             builder->setVersion(update.version);
         }
     });
@@ -253,11 +253,11 @@ void MainWindow::setupSplitter() {
 
     tabWidget = new QTabWidget;
 
-    form = new Form;
-    connect(form, &Form::lostFocus, [this] {
+    manifest = new Manifest;
+    connect(manifest, &Manifest::lostFocus, [this] {
         saveManifest();
     });
-    tabWidget->addTab(form, tr("Manifest"));
+    tabWidget->addTab(manifest, tr("Manifest"));
     splitter->addWidget(tabWidget);
 
     builder = new Builder(projectSettings);
