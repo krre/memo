@@ -88,22 +88,36 @@ void Builder::refresh() {
     modifiedFiles.clear();
 
     QJsonArray snapshot = projectSettings->snapshot(version);
-
-    qDebug() << snapshot;
-
     QString appDir = appDirLineEdit->text();
 
     QDirIterator it(appDir, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
 
     while (it.hasNext()) {
-        QString path = it.next();
+        const QString path = it.next();
 
         if (it.fileInfo().isFile()) {
-            QString hash = QString(fileChecksum(path).toHex());
+            QString relativePath = path;
+            relativePath = relativePath.remove(appDir + "/");
 
-            modifiedFiles.append(path);
-            QString relativePath = path.remove(appDir + "/");
-            modifiedFilesListWidget->addItem(relativePath);
+            bool isExists = false;
+
+            for (const auto value : snapshot) {
+                QString file = value.toObject()["file"].toString();
+                if (file == relativePath) {
+                    QString hash = QString(fileChecksum(path).toHex());
+                    if (hash != value.toObject()["hash"].toString()) {
+                        modifiedFiles.append(path);
+                        modifiedFilesListWidget->addItem(relativePath);
+                    }
+
+                    isExists = true;
+                }
+            }
+
+            if (!isExists) {
+                modifiedFiles.append(path);
+                modifiedFilesListWidget->addItem(relativePath);
+            }
         }
     }
 }
