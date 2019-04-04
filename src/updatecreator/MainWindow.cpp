@@ -44,6 +44,7 @@ void MainWindow::newProject() {
         projectSettings->create(projectDir + "/" + Constants::ProjectName);
         setProjectPath(projectDir);
         manifest->setManifestPath(manifestPath);
+        manifest->setFileTemplate(Constants::FileTemplate);
         addUpdate();
         saveManifest();
         addRecentProject(projectDir);
