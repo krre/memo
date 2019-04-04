@@ -18,8 +18,8 @@ public:
 
     void setManifestPath(const QString path);
 
-    void setUrl(const QString& url);
-    QString getUrl() const;
+    void setFileTemplate(const QString& fileTemplate);
+    QString getFileTemplate() const;
 
     void clear();
 
@@ -33,7 +33,7 @@ private:
     QWidget* root(QWidget* child);
 
     QLabel* manifestLabel = nullptr;
-    QLineEdit* urlLineEdit = nullptr;
+    QLineEdit* templateLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;
     QLineEdit* dateLineEdit = nullptr;
     QCheckBox* windowsCheckBox = nullptr;

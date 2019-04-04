@@ -184,7 +184,7 @@ void MainWindow::saveManifest() {
     listModel->setUpdate(outliner->currentRow(), manifest->getUpdate());
 
     QJsonObject manifestData;
-    manifestData["url"] = manifest->getUrl();
+    manifestData["template"] = manifest->getFileTemplate();
     manifestData["updates"] = listModel->toJson();
 
     QFile file(manifestPath);
@@ -213,7 +213,7 @@ void MainWindow::openManifest() {
     }
 
     manifest->setManifestPath(manifestPath);
-    manifest->setUrl(manifestData["url"].toString());
+    manifest->setFileTemplate(manifestData["template"].toString());
     listModel->fromJson(manifestData["updates"].toArray());
     outliner->selectRow(0);
     updateActions();

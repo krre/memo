@@ -14,9 +14,9 @@ Manifest::Manifest(QWidget* parent) : QWidget(parent) {
     manifestLabel = new QLabel;
     generalGridLayout->addWidget(manifestLabel, 0, 1);
 
-    generalGridLayout->addWidget(new QLabel(tr("URL:")), 1, 0);
-    urlLineEdit = new QLineEdit;
-    generalGridLayout->addWidget(urlLineEdit, 1, 1);
+    generalGridLayout->addWidget(new QLabel(tr("File template:")), 1, 0);
+    templateLineEdit = new QLineEdit;
+    generalGridLayout->addWidget(templateLineEdit, 1, 1);
 
     layout->addWidget(generalGroupBox);
 
@@ -113,16 +113,16 @@ void Manifest::setManifestPath(const QString path) {
     manifestLabel->setText(path);
 }
 
-void Manifest::setUrl(const QString& url) {
-    urlLineEdit->setText(url);
+void Manifest::setFileTemplate(const QString& fileTemplate) {
+    templateLineEdit->setText(fileTemplate);
 }
 
-QString Manifest::getUrl() const {
-    return urlLineEdit->text();
+QString Manifest::getFileTemplate() const {
+    return templateLineEdit->text();
 }
 
 void Manifest::clear() {
-    urlLineEdit->clear();
+    templateLineEdit->clear();
     versionLineEdit->clear();
     dateLineEdit->clear();
     windowsCheckBox->setChecked(false);
