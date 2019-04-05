@@ -36,6 +36,5 @@ private:
     QLineEdit* appDirLineEdit = nullptr;
     QListWidget* allFilesListWidget = nullptr;
     QListWidget* modifiedFilesListWidget = nullptr;
-    QVector<QString> modifiedFiles;
     QString version;
 };

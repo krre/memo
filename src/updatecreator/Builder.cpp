@@ -87,7 +87,6 @@ void Builder::selectDirectory() {
 }
 
 void Builder::refresh() {
-    modifiedFiles.clear();
     modifiedFilesListWidget->clear();
 
     QJsonArray snapshot = projectSettings->snapshot(version);
@@ -109,7 +108,6 @@ void Builder::refresh() {
                 if (file == relativePath) {
                     QString hash = QString(fileChecksum(path).toHex());
                     if (hash != value.toObject()["hash"].toString()) {
-                        modifiedFiles.append(path);
                         modifiedFilesListWidget->addItem(relativePath);
                     }
 
@@ -118,7 +116,6 @@ void Builder::refresh() {
             }
 
             if (!isExists) {
-                modifiedFiles.append(path);
                 modifiedFilesListWidget->addItem(relativePath);
             }
         }
@@ -131,8 +128,17 @@ void Builder::build() {
 
     QDir dir(updateDirPath);
     dir.removeRecursively();
-    dir.mkpath(updateDirPath);
 
+    for (int i = 0; i < modifiedFilesListWidget->count(); i++) {
+        QString modifiedFile = modifiedFilesListWidget->item(i)->text();
+        QString srcPath = appDirLineEdit->text() + "/" + modifiedFile;
+        QString dstPath = updateDirPath + "/" + modifiedFile;
+
+        QFileInfo fi(dstPath);
+        dir.mkpath(fi.absolutePath());
+
+        QFile::copy(srcPath, dstPath);
+    }
 }
 
 void Builder::createAppDirWidgets() {
