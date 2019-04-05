@@ -15,6 +15,8 @@ public:
     void setAppDir(const QString& path);
     QString appDir() const;
 
+    QString projectDir() const;
+
     void setSnapshot(const QJsonArray& snapshot, const QString& version);
     QJsonArray snapshot(const QString& version) const;
 
@@ -23,5 +25,4 @@ private:
 
     QString filePath;
     QJsonObject project;
-    QString currentOS;
 };

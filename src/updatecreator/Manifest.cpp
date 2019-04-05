@@ -36,6 +36,7 @@ Manifest::Manifest(QWidget* parent) : QWidget(parent) {
     updateGridLayout->addWidget(new QLabel(tr("OS:")), 2, 0);
 
     auto osLayout = new QHBoxLayout;
+
     windowsCheckBox = new QCheckBox("Windows");
     osLayout->addWidget(windowsCheckBox);
 

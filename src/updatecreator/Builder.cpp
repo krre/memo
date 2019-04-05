@@ -1,10 +1,12 @@
 #include "Builder.h"
 #include "ProjectSettings.h"
+#include "Manifest.h"
 #include "Constants.h"
 #include "lib/Exception.h"
 #include <QtWidgets>
 
-Builder::Builder(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
+Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent) :
+        QWidget(parent), projectSettings(settings), manifest(manifest) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
@@ -124,7 +126,13 @@ void Builder::refresh() {
 }
 
 void Builder::build() {
-    qDebug() << "build";
+    QString updateDirName = manifest->getFileTemplate().replace("$version", version);
+    QString updateDirPath = projectSettings->projectDir() + "/" + Constants::CurrentOS + "/" + updateDirName;
+
+    QDir dir(updateDirPath);
+    dir.removeRecursively();
+    dir.mkpath(updateDirPath);
+
 }
 
 void Builder::createAppDirWidgets() {

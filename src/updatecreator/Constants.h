@@ -1,4 +1,5 @@
 #pragma once
+#include <QtGlobal>
 
 namespace Constants {
     constexpr auto Organization = "Memo";
@@ -13,4 +14,12 @@ namespace Constants {
     constexpr int SystemRecentProjectsActions = 2;
     constexpr int MaxRecentProjects = 10;
     constexpr auto ZeroVersion = "0.0.0";
+
+#ifdef Q_OS_WIN
+    constexpr auto CurrentOS = "windows";
+#elif defined (Q_OS_LINUX)
+    constexpr auto CurrentOS = "linux";
+#elif defined (Q_OS_MACOS)
+    constexpr auto CurrentOS = "macos";
+#endif
 }

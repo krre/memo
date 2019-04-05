@@ -261,7 +261,7 @@ void MainWindow::setupSplitter() {
     tabWidget->addTab(manifest, tr("Manifest"));
     splitter->addWidget(tabWidget);
 
-    builder = new Builder(projectSettings);
+    builder = new Builder(projectSettings, manifest);
     tabWidget->addTab(builder, tr("Builder"));
 
     splitter->setHandleWidth(1);

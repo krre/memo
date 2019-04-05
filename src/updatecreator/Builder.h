@@ -4,11 +4,12 @@
 class QLineEdit;
 class QListWidget;
 class ProjectSettings;
+class Manifest;
 
 class Builder : public QWidget {
     Q_OBJECT
 public:
-    explicit Builder(ProjectSettings* settings, QWidget* parent = nullptr);
+    explicit Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent = nullptr);
 
     void load();
     void clear();
@@ -29,8 +30,10 @@ private:
 
     QByteArray fileChecksum(const QString& filePath);
 
-    QLineEdit* appDirLineEdit = nullptr;
     ProjectSettings* projectSettings;
+    Manifest* manifest;
+
+    QLineEdit* appDirLineEdit = nullptr;
     QListWidget* allFilesListWidget = nullptr;
     QListWidget* modifiedFilesListWidget = nullptr;
     QVector<QString> modifiedFiles;

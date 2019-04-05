@@ -4,13 +4,7 @@
 #include <QtCore>
 
 ProjectSettings::ProjectSettings(QObject* parent) : QObject(parent) {
-#ifdef Q_OS_WIN
-    currentOS = "windows";
-#elif defined (Q_OS_LINUX)
-    currentOS = "linux";
-#elif defined (Q_OS_MACOS)
-    currentOS = "macos";
-#endif
+
 }
 
 void ProjectSettings::create(const QString& path) {
@@ -56,12 +50,17 @@ void ProjectSettings::close() {
 
 void ProjectSettings::setAppDir(const QString& path) {
     QJsonObject appDir = project["appDir"].toObject();
-    appDir[currentOS] = path;
+    appDir[Constants::CurrentOS] = path;
     project["appDir"] = appDir;
 }
 
 QString ProjectSettings::appDir() const {
-    return project["appDir"].toObject()[currentOS].toString();
+    return project["appDir"].toObject()[Constants::CurrentOS].toString();
+}
+
+QString ProjectSettings::projectDir() const {
+    QFileInfo fi(filePath);
+    return fi.absolutePath();
 }
 
 void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& version) {
@@ -72,7 +71,7 @@ void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& ver
     }
 
     QJsonObject os = snapshots[version].toObject();
-    os[currentOS] = snapshot;
+    os[Constants::CurrentOS] = snapshot;
     snapshots[version] = os;
     project["snapshots"] = snapshots;
 }
@@ -81,7 +80,7 @@ QJsonArray ProjectSettings::snapshot(const QString& version) const {
     QString snapshotVersion = previousVersion(version);
     if (!snapshotVersion.isEmpty()) {
         QJsonObject snapshots = project["snapshots"].toObject()[snapshotVersion].toObject();
-        return snapshots.contains(currentOS) ? snapshots[currentOS].toArray() : QJsonArray();
+        return snapshots.contains(Constants::CurrentOS) ? snapshots[Constants::CurrentOS].toArray() : QJsonArray();
     } else {
         return QJsonArray();
     }
