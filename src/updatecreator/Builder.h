@@ -15,6 +15,7 @@ public:
     void clear();
 
     void createSnapshot(const QString& version);
+    void selectSnapshot(const QString& version);
     void removeSnapshot(const QString& version);
 
     void setVersion(const QString& version);

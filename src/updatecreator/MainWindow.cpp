@@ -121,6 +121,7 @@ void MainWindow::addUpdate() {
     update.channel = "release";
 
     listModel->addUpdate(update);
+    builder->createSnapshot(update.version);
     outliner->selectRow(0);
     saveManifest();
 }

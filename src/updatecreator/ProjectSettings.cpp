@@ -74,27 +74,10 @@ void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& ver
     os[Constants::CurrentOS] = snapshot;
     snapshots[version] = os;
     project["snapshots"] = snapshots;
+    save();
 }
 
 QJsonArray ProjectSettings::snapshot(const QString& version) const {
-    QString snapshotVersion = previousVersion(version);
-    if (!snapshotVersion.isEmpty()) {
-        QJsonObject snapshots = project["snapshots"].toObject()[snapshotVersion].toObject();
-        return snapshots.contains(Constants::CurrentOS) ? snapshots[Constants::CurrentOS].toArray() : QJsonArray();
-    } else {
-        return QJsonArray();
-    }
-}
-
-QString ProjectSettings::previousVersion(const QString& version) const {
-    QString maxVersion = Constants::ZeroVersion;
-
-    for (auto key : project["snapshots"].toObject().keys()) {
-        QVersionNumber v = QVersionNumber::fromString(key);
-        if (v < QVersionNumber::fromString(version) && v > QVersionNumber::fromString(maxVersion)) {
-            maxVersion = key;
-        }
-    }
-
-    return maxVersion;
+    QJsonObject snapshots = project["snapshots"].toObject()[version].toObject();
+    return snapshots.contains(Constants::CurrentOS) ? snapshots[Constants::CurrentOS].toArray() : QJsonArray();
 }

@@ -29,12 +29,6 @@ Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent)
 
 void Builder::load() {
     appDirLineEdit->setText(projectSettings->appDir());
-
-    for (const auto value : projectSettings->snapshot(manifest->getVersion())) {
-        allFilesListWidget->addItem(value.toObject()["file"].toString());
-    }
-
-    refresh();
 }
 
 void Builder::clear() {
@@ -45,7 +39,13 @@ void Builder::clear() {
 }
 
 void Builder::createSnapshot(const QString& version) {
+    allFilesListWidget->clear();
+    modifiedFilesListWidget->clear();
+
     QString appDir = appDirLineEdit->text();
+
+    if (appDir.isEmpty()) return;
+
     QFileInfo fi(appDir);
 
     if (!fi.exists() || !fi.isDir()) {
@@ -74,12 +74,22 @@ void Builder::createSnapshot(const QString& version) {
     projectSettings->setSnapshot(snapshot, version);
 }
 
+void Builder::selectSnapshot(const QString& version) {
+    allFilesListWidget->clear();
+    modifiedFilesListWidget->clear();
+
+    for (const auto value : projectSettings->snapshot(version)) {
+        allFilesListWidget->addItem(value.toObject()["file"].toString());
+    }
+}
+
 void Builder::removeSnapshot(const QString& version) {
 
 }
 
 void Builder::setVersion(const QString& version) {
     this->version = version;
+    selectSnapshot(version);
 }
 
 void Builder::selectDirectory() {
@@ -88,7 +98,7 @@ void Builder::selectDirectory() {
     if (!directory.isEmpty()) {
         appDirLineEdit->setText(directory);
         projectSettings->setAppDir(directory);
-        createSnapshot(Constants::ZeroVersion);
+        createSnapshot(version);
     }
 }
 
