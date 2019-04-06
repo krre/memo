@@ -55,20 +55,19 @@ QJsonArray ListModel::toJson() {
     QJsonArray list;
 
     for (const Update& update : updates) {
-        QJsonObject obj;
-        obj["version"] = update.version;
-        obj["date"] = update.date;
-        obj["size"] = update.size;
-        obj["channel"] = update.channel;
-        obj["description"] = update.description;
+        QJsonObject updateObj;
+        updateObj["version"] = update.version;
+        updateObj["date"] = update.date;
+        updateObj["channel"] = update.channel;
+        updateObj["description"] = update.description;
 
-        QJsonArray os;
-        for (const QString& value : update.os) {
-            os.append(value);
+        QJsonObject sizeObj;
+        for (const auto& os : update.size.keys()) {
+            sizeObj[os] = update.size[os];
         }
 
-        obj["os"] = os;
-        list.append(obj);
+        updateObj["size"] = sizeObj;
+        list.append(updateObj);
     }
 
     return list;
@@ -76,17 +75,16 @@ QJsonArray ListModel::toJson() {
 
 void ListModel::fromJson(const QJsonArray& json) {
     for (int i = json.count() - 1; i >= 0; i--) {
-        QJsonObject obj = json.at(i).toObject();
+        QJsonObject updateObj = json.at(i).toObject();
 
         Update update;
-        update.version = obj["version"].toString();
-        update.date = obj["date"].toString();
-        update.size = obj["size"].toInt();
-        update.channel = obj["channel"].toString();
-        update.description = obj["description"].toString();
+        update.version = updateObj["version"].toString();
+        update.date = updateObj["date"].toString();
+        update.channel = updateObj["channel"].toString();
+        update.description = updateObj["description"].toString();
 
-        for (const auto osValue : obj["os"].toArray()) {
-            update.os.append(osValue.toString());
+        for (const auto& os : updateObj["size"].toObject().keys()) {
+            update.size[os] = updateObj["size"].toObject()[os].toInt();
         }
 
         addUpdate(update);

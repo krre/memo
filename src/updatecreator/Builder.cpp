@@ -30,9 +30,11 @@ Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent)
 void Builder::load() {
     appDirLineEdit->setText(projectSettings->appDir());
 
-    for (const auto value : projectSettings->snapshot("base")) {
+    for (const auto value : projectSettings->snapshot(Constants::ZeroVersion)) {
         allFilesListWidget->addItem(value.toObject()["file"].toString());
     }
+
+    refresh();
 }
 
 void Builder::clear() {
@@ -141,8 +143,14 @@ void Builder::build() {
         QFile::copy(srcPath, dstPath);
     }
 
-    MemoLib::ZipCompressor::compress(updateDirPath + ".zip", updateDirPath + "/");
+    QString zipPath = updateDirPath + ".zip";
+    MemoLib::ZipCompressor::compress(zipPath, updateDirPath + "/");
     dir.removeRecursively();
+
+    QFileInfo fi(zipPath);
+    manifest->setFileSize(Constants::CurrentOS, fi.size());
+
+    QMessageBox::information(this, tr("Build complete"), tr("Update successfully created"));
 }
 
 void Builder::createAppDirWidgets() {

@@ -6,7 +6,6 @@ class QLineEdit;
 class QPlainTextEdit;
 class QLabel;
 class QComboBox;
-class QCheckBox;
 
 class Manifest : public QWidget {
     Q_OBJECT
@@ -20,6 +19,8 @@ public:
 
     void setFileTemplate(const QString& fileTemplate);
     QString getFileTemplate() const;
+
+    void setFileSize(const QString& os, qint64 size);
 
     void clear();
 
@@ -36,12 +37,9 @@ private:
     QLineEdit* templateLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;
     QLineEdit* dateLineEdit = nullptr;
-    QCheckBox* windowsCheckBox = nullptr;
-    QCheckBox* linuxCheckBox = nullptr;
-    QCheckBox* macosCheckBox = nullptr;
     QComboBox* channelComboBox = nullptr;
-    QLabel* sizeLabel = nullptr;
+    QLabel* sizeWindowsLabel = nullptr;
+    QLabel* sizeLinuxLabel = nullptr;
+    QLabel* sizeMacOSLabel = nullptr;
     QPlainTextEdit* descriptionTextEdit = nullptr;
-
-    int fileSize = 0;
 };

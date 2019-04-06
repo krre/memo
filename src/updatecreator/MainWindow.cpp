@@ -119,7 +119,6 @@ void MainWindow::addUpdate() {
 
     update.date = QDate::currentDate().toString("dd.MM.yyyy");
     update.channel = "release";
-    update.size = 0;
 
     listModel->addUpdate(update);
     outliner->selectRow(0);

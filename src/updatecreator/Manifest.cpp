@@ -33,21 +33,6 @@ Manifest::Manifest(QWidget* parent) : QWidget(parent) {
     dateLineEdit = new QLineEdit;
     updateGridLayout->addWidget(dateLineEdit, 1, 1);
 
-    updateGridLayout->addWidget(new QLabel(tr("OS:")), 2, 0);
-
-    auto osLayout = new QHBoxLayout;
-
-    windowsCheckBox = new QCheckBox("Windows");
-    osLayout->addWidget(windowsCheckBox);
-
-    linuxCheckBox = new QCheckBox("Linux");
-    osLayout->addWidget(linuxCheckBox);
-
-    macosCheckBox = new QCheckBox("MacOS");
-    osLayout->addWidget(macosCheckBox);
-
-    updateGridLayout->addLayout(osLayout, 2, 1, Qt::AlignLeft);
-
     updateGridLayout->addWidget(new QLabel("Channel:"), 3, 0);
     channelComboBox = new QComboBox;
     channelComboBox->addItem("release");
@@ -55,8 +40,23 @@ Manifest::Manifest(QWidget* parent) : QWidget(parent) {
     updateGridLayout->addWidget(channelComboBox, 3, 1, Qt::AlignLeft);
 
     updateGridLayout->addWidget(new QLabel(tr("Size:")), 4, 0);
-    sizeLabel = new QLabel;
-    updateGridLayout->addWidget(sizeLabel, 4, 1);
+
+    auto sizeLayout = new QGridLayout;
+    sizeLayout->addWidget(new QLabel(tr("Windows")), 0, 0);
+    sizeLayout->addWidget(new QLabel(tr("Linux")), 0, 1);
+    sizeLayout->addWidget(new QLabel(tr("MacOS")), 0, 2);
+    sizeLayout->setColumnStretch(2, 1);
+
+    sizeWindowsLabel = new QLabel;
+    sizeLayout->addWidget(sizeWindowsLabel, 1, 0);
+
+    sizeLinuxLabel = new QLabel;
+    sizeLayout->addWidget(sizeLinuxLabel, 1, 1);
+
+    sizeMacOSLabel = new QLabel;
+    sizeLayout->addWidget(sizeMacOSLabel, 1, 1);
+
+    updateGridLayout->addLayout(sizeLayout, 4, 1);
 
     updateGridLayout->addWidget(new QLabel(tr("Description:")), 5, 0);
     descriptionTextEdit = new QPlainTextEdit;
@@ -74,15 +74,13 @@ void Manifest::populateUpdate(const ListModel::Update& update) {
     versionLineEdit->setText(update.version);
     dateLineEdit->setText(update.date);
 
-    windowsCheckBox->setChecked(update.os.contains("windows"));
-    linuxCheckBox->setChecked(update.os.contains("linux"));
-    macosCheckBox->setChecked(update.os.contains("macos"));
-
     int channelIndex = channelComboBox->findText(update.channel);
     channelComboBox->setCurrentIndex(channelIndex);
 
-    sizeLabel->setText(QString::number(update.size));
-    fileSize = update.size;
+    sizeWindowsLabel->setText(update.size.contains("windows") ? QString::number(update.size["windows"]) : "");
+    sizeLinuxLabel->setText(update.size.contains("linux") ? QString::number(update.size["linux"]) : "");
+    sizeMacOSLabel->setText(update.size.contains("macos") ? QString::number(update.size["macos"]) : "");
+
     descriptionTextEdit->setPlainText(update.description);
 }
 
@@ -90,21 +88,20 @@ ListModel::Update Manifest::getUpdate() const {
     ListModel::Update update;
     update.version = versionLineEdit->text();
     update.date = dateLineEdit->text();
-
-    if (windowsCheckBox->isChecked()) {
-        update.os.append("windows");
-    }
-
-    if (linuxCheckBox->isChecked()) {
-        update.os.append("linux");
-    }
-
-    if (macosCheckBox->isChecked()) {
-        update.os.append("macos");
-    }
-
     update.channel = channelComboBox->currentText();
-    update.size = fileSize;
+
+    if (!sizeWindowsLabel->text().isEmpty()) {
+        update.size["windows"] = sizeWindowsLabel->text().toInt();
+    }
+
+    if (!sizeLinuxLabel->text().isEmpty()) {
+        update.size["linux"] = sizeLinuxLabel->text().toInt();
+    }
+
+    if (!sizeMacOSLabel->text().isEmpty()) {
+        update.size["macos"] = sizeMacOSLabel->text().toInt();
+    }
+
     update.description = descriptionTextEdit->document()->toPlainText();
 
     return update;
@@ -122,15 +119,25 @@ QString Manifest::getFileTemplate() const {
     return templateLineEdit->text();
 }
 
+void Manifest::setFileSize(const QString& os, qint64 size) {
+    QString value = QString::number(size);
+    if (os == "windows") {
+        sizeWindowsLabel->setText(value);
+    } else if (os == "linux") {
+        sizeLinuxLabel->setText(value);
+    } else if (os == "macos") {
+        sizeMacOSLabel->setText(value);
+    }
+}
+
 void Manifest::clear() {
     templateLineEdit->clear();
     versionLineEdit->clear();
     dateLineEdit->clear();
-    windowsCheckBox->setChecked(false);
-    linuxCheckBox->setChecked(false);
-    macosCheckBox->setChecked(false);
     channelComboBox->setCurrentIndex(0);
-    sizeLabel->clear();
+    sizeLinuxLabel->clear();
+    sizeWindowsLabel->clear();
+    sizeMacOSLabel->clear();
     descriptionTextEdit->clear();
 }
 

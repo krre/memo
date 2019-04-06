@@ -9,8 +9,7 @@ public:
         QString version;
         QString description;
         QString date;
-        QVector<QString> os;
-        int size;
+        QMap<QString, qint64> size;
         QString channel;
     };
 
