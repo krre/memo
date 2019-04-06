@@ -340,7 +340,7 @@ void MainWindow::loadProject(const QString& path) {
 
     setProjectPath(path);
     projectSettings->open(path + "/" + Constants::ProjectName);
-    openManifest();
     builder->load();
+    openManifest();
     addRecentProject(path);
 }
