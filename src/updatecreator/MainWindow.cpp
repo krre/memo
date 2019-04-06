@@ -34,13 +34,13 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::newProject() {
-    NewProjectDialog newDialog;
-    if (newDialog.exec() == QDialog::Accepted) {
+    NewProjectDialog newProjectDialog;
+    if (newProjectDialog.exec() == QDialog::Accepted) {
         if (!projectPath.isEmpty()) {
             closeProject();
         }
 
-        QString projectDir = newDialog.projectDir();
+        QString projectDir = newProjectDialog.projectDir();
         projectSettings->create(projectDir + "/" + Constants::ProjectName);
         setProjectPath(projectDir);
         manifest->setManifestPath(manifestPath);
