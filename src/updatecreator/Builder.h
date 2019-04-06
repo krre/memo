@@ -24,6 +24,7 @@ private slots:
     void selectDirectory();
     void refresh();
     void build();
+    void upload();
 
 private:
     void createAppDirWidgets();
@@ -38,4 +39,5 @@ private:
     QListWidget* allFilesListWidget = nullptr;
     QListWidget* modifiedFilesListWidget = nullptr;
     QString version;
+    QString zipPath;
 };

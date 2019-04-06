@@ -1,4 +1,4 @@
-QT += core gui widgets
+QT += core gui widgets network
 
 TARGET = updatecreator
 TEMPLATE = app
@@ -17,7 +17,8 @@ SOURCES += \
     Builder.cpp \
     NewProjectDialog.cpp \
     ProjectSettings.cpp \
-    Manifest.cpp
+    Manifest.cpp \
+    UploadDialog.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -27,4 +28,5 @@ HEADERS += \
     Builder.h \
     NewProjectDialog.h \
     ProjectSettings.h \
-    Manifest.h
+    Manifest.h \
+    UploadDialog.h

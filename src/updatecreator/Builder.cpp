@@ -2,6 +2,7 @@
 #include "ProjectSettings.h"
 #include "Manifest.h"
 #include "Constants.h"
+#include "UploadDialog.h"
 #include "lib/Exception.h"
 #include "lib/ZipCompressor.h"
 #include <QtWidgets>
@@ -22,7 +23,11 @@ Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent)
 
     auto buildButton = new QPushButton(tr("Build"));
     connect(buildButton, &QPushButton::clicked, this, &Builder::build);
-    buttonLayout->addWidget(buildButton, 1, Qt::AlignLeft);
+    buttonLayout->addWidget(buildButton);
+
+    auto uploadButton = new QPushButton(tr("Upload..."));
+    connect(uploadButton, &QPushButton::clicked, this, &Builder::upload);
+    buttonLayout->addWidget(uploadButton, 1, Qt::AlignLeft);
 
     layout->addLayout(buttonLayout);
 }
@@ -162,7 +167,7 @@ void Builder::build() {
         QFile::copy(srcPath, dstPath);
     }
 
-    QString zipPath = updateDirPath + ".zip";
+    zipPath = updateDirPath + ".zip";
     MemoLib::ZipCompressor::compress(zipPath, updateDirPath + "/");
     dir.removeRecursively();
 
@@ -170,6 +175,16 @@ void Builder::build() {
     manifest->setFileSize(Constants::CurrentOS, fi.size());
 
     QMessageBox::information(this, tr("Build Complete"), tr("Update successfully created"));
+}
+
+void Builder::upload() {
+    if (zipPath.isEmpty() || !QFile::exists(zipPath)) {
+        QMessageBox::critical(this, tr("Upload Error"), tr("Nothing to upload"));
+        return;
+    }
+
+    UploadDialog uploadDialog(zipPath, projectSettings);
+    uploadDialog.exec();
 }
 
 void Builder::createAppDirWidgets() {

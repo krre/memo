@@ -63,6 +63,29 @@ QString ProjectSettings::projectDir() const {
     return fi.absolutePath();
 }
 
+void ProjectSettings::setFtpData(const ProjectSettings::FtpData& data) {
+    QJsonObject ftp;
+    ftp["url"] = data.url;
+    ftp["login"] = data.login;
+    ftp["password"] = data.password;
+
+    project["ftp"] = ftp;
+    save();
+}
+
+ProjectSettings::FtpData ProjectSettings::ftpData() const {
+    FtpData data;
+
+    if (project.contains("ftp")) {
+        QJsonObject ftp = project["ftp"].toObject();
+        data.url = ftp["url"].toString();
+        data.login = ftp["login"].toString();
+        data.password = ftp["password"].toString();
+    }
+
+    return data;
+}
+
 void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& version) {
     QJsonObject snapshots = project["snapshots"].toObject();
 
