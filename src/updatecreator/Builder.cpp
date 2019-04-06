@@ -30,7 +30,7 @@ Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent)
 void Builder::load() {
     appDirLineEdit->setText(projectSettings->appDir());
 
-    for (const auto value : projectSettings->snapshot(Constants::ZeroVersion)) {
+    for (const auto value : projectSettings->snapshot(manifest->getVersion())) {
         allFilesListWidget->addItem(value.toObject()["file"].toString());
     }
 

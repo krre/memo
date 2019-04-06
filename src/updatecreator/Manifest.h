@@ -21,6 +21,7 @@ public:
     QString getFileTemplate() const;
 
     void setFileSize(const QString& os, qint64 size);
+    QString getVersion();
 
     void clear();
 

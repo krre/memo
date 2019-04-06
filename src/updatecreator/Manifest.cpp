@@ -130,6 +130,10 @@ void Manifest::setFileSize(const QString& os, qint64 size) {
     }
 }
 
+QString Manifest::getVersion() {
+    return versionLineEdit->text();
+}
+
 void Manifest::clear() {
     templateLineEdit->clear();
     versionLineEdit->clear();
