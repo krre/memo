@@ -3,6 +3,7 @@
 #include "Manifest.h"
 #include "Constants.h"
 #include "lib/Exception.h"
+#include "lib/ZipCompressor.h"
 #include <QtWidgets>
 
 Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent) :
@@ -139,6 +140,9 @@ void Builder::build() {
 
         QFile::copy(srcPath, dstPath);
     }
+
+    MemoLib::ZipCompressor::compress(updateDirPath + ".zip", updateDirPath + "/");
+    dir.removeRecursively();
 }
 
 void Builder::createAppDirWidgets() {
