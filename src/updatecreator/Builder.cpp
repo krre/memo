@@ -139,6 +139,11 @@ void Builder::refresh() {
 }
 
 void Builder::build() {
+    if (!modifiedFilesListWidget->count()) {
+        QMessageBox::critical(this, tr("Build Error"), tr("Nothing to build"));
+        return;
+    }
+
     QString updateDirName = manifest->getFileTemplate().replace("$version", version);
     QString updateDirPath = projectSettings->projectDir() + "/" + Constants::CurrentOS + "/" + updateDirName;
 
