@@ -90,6 +90,7 @@ void Builder::removeSnapshot(const QString& version) {
 void Builder::setVersion(const QString& version) {
     this->version = version;
     selectSnapshot(version);
+    refresh();
 }
 
 void Builder::selectDirectory() {
