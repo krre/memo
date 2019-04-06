@@ -168,7 +168,7 @@ void Builder::build() {
     QFileInfo fi(zipPath);
     manifest->setFileSize(Constants::CurrentOS, fi.size());
 
-    QMessageBox::information(this, tr("Build complete"), tr("Update successfully created"));
+    QMessageBox::information(this, tr("Build Complete"), tr("Update successfully created"));
 }
 
 void Builder::createAppDirWidgets() {
