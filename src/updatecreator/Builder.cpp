@@ -39,6 +39,9 @@ void Builder::load() {
 
 void Builder::clear() {
     appDirLineEdit->clear();
+    allFilesListWidget->clear();
+    modifiedFilesListWidget->clear();
+    version.clear();
 }
 
 void Builder::createSnapshot(const QString& version) {
