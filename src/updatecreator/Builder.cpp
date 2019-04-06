@@ -84,7 +84,7 @@ void Builder::selectSnapshot(const QString& version) {
 }
 
 void Builder::removeSnapshot(const QString& version) {
-
+    projectSettings->removeSnapshot(version);
 }
 
 void Builder::setVersion(const QString& version) {

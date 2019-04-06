@@ -19,6 +19,7 @@ public:
 
     void setSnapshot(const QJsonArray& snapshot, const QString& version);
     QJsonArray snapshot(const QString& version) const;
+    void removeSnapshot(const QString& version);
 
 private:
     QString filePath;

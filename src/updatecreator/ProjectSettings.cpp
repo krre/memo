@@ -81,3 +81,10 @@ QJsonArray ProjectSettings::snapshot(const QString& version) const {
     QJsonObject snapshots = project["snapshots"].toObject()[version].toObject();
     return snapshots.contains(Constants::CurrentOS) ? snapshots[Constants::CurrentOS].toArray() : QJsonArray();
 }
+
+void ProjectSettings::removeSnapshot(const QString& version) {
+    QJsonObject snapshots = project["snapshots"].toObject();
+    snapshots.remove(version);
+    project["snapshots"] = snapshots;
+    save();
+}
