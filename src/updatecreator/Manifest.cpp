@@ -166,7 +166,7 @@ void Manifest::onFocusChanged(QWidget* from, QWidget* to) {
 }
 
 void Manifest::upload() {
-    UploadDialog uploadDialog(manifestLabel->text(), projectSettings);
+    UploadDialog uploadDialog(UploadDialog::FileType::Manifest, manifestLabel->text(), projectSettings);
     uploadDialog.exec();
 }
 

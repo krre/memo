@@ -1,10 +1,11 @@
 #include "UploadDialog.h"
 #include "ProjectSettings.h"
+#include "Constants.h"
 #include <QtWidgets>
 #include <QtNetwork>
 
-UploadDialog::UploadDialog(const QString& filePath, ProjectSettings* settings, QWidget* parent) :
-        QDialog(parent), filePath(filePath), projectSettings(settings) {
+UploadDialog::UploadDialog(FileType type, const QString& filePath, ProjectSettings* settings, QWidget* parent) :
+        QDialog(parent), fileType(type), filePath(filePath), projectSettings(settings) {
     setWindowTitle(tr("Upload File"));
 
     manager = new QNetworkAccessManager(this);
@@ -60,7 +61,7 @@ void UploadDialog::accept() {
     file = new QFile(filePath);
     QFileInfo fi(filePath);
 
-    QUrl url(urlLineEdit->text() + fi.fileName());
+    QUrl url(urlLineEdit->text() + "/" + (fileType == FileType::Zip ? QString(Constants::CurrentOS) + "/" : "") + fi.fileName());
     url.setUserName(loginLineEdit->text());
     url.setPassword(passwordLineEdit->text());
     url.setPort(21);

@@ -190,7 +190,7 @@ void Builder::upload() {
         return;
     }
 
-    UploadDialog uploadDialog(zipPath, projectSettings);
+    UploadDialog uploadDialog(UploadDialog::FileType::Zip, zipPath, projectSettings);
     uploadDialog.exec();
 }
 

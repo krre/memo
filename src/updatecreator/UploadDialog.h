@@ -11,7 +11,13 @@ class QProgressBar;
 class UploadDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit UploadDialog(const QString& filePath, ProjectSettings* settings, QWidget* parent = nullptr);
+
+    enum class FileType {
+        Manifest,
+        Zip
+    };
+
+    explicit UploadDialog(FileType type, const QString& filePath, ProjectSettings* settings, QWidget* parent = nullptr);
 
 public slots:
     void accept() override;
@@ -21,6 +27,7 @@ private slots:
     void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
 
 private:
+    FileType fileType;
     QString filePath;
     ProjectSettings* projectSettings;
 
