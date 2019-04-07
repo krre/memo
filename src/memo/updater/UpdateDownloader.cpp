@@ -3,7 +3,6 @@
 #include "lib/ZipCompressor.h"
 #include <QNetworkReply>
 #include <QFile>
-#include <QtGui/private/qzipreader_p.h>
 #include <QDebug>
 
 UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
