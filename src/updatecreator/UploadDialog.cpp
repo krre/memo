@@ -3,8 +3,8 @@
 #include <QtWidgets>
 #include <QtNetwork>
 
-UploadDialog::UploadDialog(const QString& updatePath, ProjectSettings* settings, QWidget* parent) :
-        QDialog(parent), updatePath(updatePath), projectSettings(settings) {
+UploadDialog::UploadDialog(const QString& filePath, ProjectSettings* settings, QWidget* parent) :
+        QDialog(parent), filePath(filePath), projectSettings(settings) {
     setWindowTitle(tr("Upload Update"));
 
     manager = new QNetworkAccessManager(this);
@@ -16,25 +16,32 @@ UploadDialog::UploadDialog(const QString& updatePath, ProjectSettings* settings,
     setLayout(layout);
 
     auto gridLayout = new QGridLayout;
-    gridLayout->addWidget(new QLabel(tr("URL:")), 0, 0);
+
+    QFileInfo fi(filePath);
+
+    gridLayout->addWidget(new QLabel(tr("File:")), 0, 0);
+    auto fileLineEdit = new QLineEdit(fi.fileName());
+    fileLineEdit->setReadOnly(true);
+    gridLayout->addWidget(fileLineEdit, 0, 1);
+
+    gridLayout->addWidget(new QLabel(tr("URL:")), 1, 0);
     urlLineEdit = new QLineEdit(ftpData.url);
-    gridLayout->addWidget(urlLineEdit, 0, 1);
+    gridLayout->addWidget(urlLineEdit, 1, 1);
 
-    gridLayout->addWidget(new QLabel(tr("Login:")), 1, 0);
+    gridLayout->addWidget(new QLabel(tr("Login:")), 2, 0);
     loginLineEdit = new QLineEdit(ftpData.login);
-    gridLayout->addWidget(loginLineEdit, 1, 1);
+    gridLayout->addWidget(loginLineEdit, 2, 1);
 
-    gridLayout->addWidget(new QLabel(tr("Password:")), 2, 0);
+    gridLayout->addWidget(new QLabel(tr("Password:")), 3, 0);
     passwordLineEdit = new QLineEdit(ftpData.password);
     passwordLineEdit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
-    gridLayout->addWidget(passwordLineEdit, 2, 1);
+    gridLayout->addWidget(passwordLineEdit, 3, 1);
 
     layout->addLayout(gridLayout);
 
     layout->addWidget(new QLabel(tr("Progress:")));
 
     progressBar = new QProgressBar;
-    QFileInfo fi(updatePath);
     progressBar->setMaximum(static_cast<int>(fi.size()));
     layout->addWidget(progressBar);
 
@@ -50,8 +57,8 @@ UploadDialog::UploadDialog(const QString& updatePath, ProjectSettings* settings,
 
 void UploadDialog::accept() {
 
-    file = new QFile(updatePath);
-    QFileInfo fi(updatePath);
+    file = new QFile(filePath);
+    QFileInfo fi(filePath);
 
     QUrl url(urlLineEdit->text() + fi.fileName());
     url.setUserName(loginLineEdit->text());
