@@ -6,7 +6,7 @@
 #include <QDebug>
 
 UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
-
+    tmpDir.setAutoRemove(false);
 }
 
 void UpdateDownloader::download(const QVector<QUrl>& urls) {
@@ -56,7 +56,7 @@ void UpdateDownloader::downloadFile() {
 }
 
 void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName) {
-    QString dirPath = "/home/krre/1";
+    QString dirPath = tmpDir.path();
     QString filePath = dirPath + "/" + fileName;
     QFile file(filePath);
     if (file.open(QIODevice::WriteOnly)) {

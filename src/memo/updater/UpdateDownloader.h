@@ -2,6 +2,7 @@
 #include <QObject>
 #include <QVector>
 #include <QUrl>
+#include <QTemporaryDir>
 
 class UpdateDownloader : public QObject {
     Q_OBJECT
@@ -22,4 +23,5 @@ private:
 
     QVector<QUrl> urls;
     qint64 totalSize = 0;
+    QTemporaryDir tmpDir;
 };
