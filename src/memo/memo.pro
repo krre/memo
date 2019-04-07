@@ -61,5 +61,4 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    i18n/memo-ru.ts \
-    updater/manifest.json.example
+    i18n/memo-ru.ts
