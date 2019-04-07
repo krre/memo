@@ -53,17 +53,18 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
             break;
         }
 
-        for (const auto value : updateObj["os"].toArray()) {
-            update.os.append(value.toString());
-        }
+        QJsonObject sizeObj = updateObj["size"].toObject();
 
         // Find valid OS update.
-        if (update.os.isEmpty() || update.os.contains(currentOS)) {
+        if (sizeObj.contains(currentOS)) {
+            int size = sizeObj[currentOS].toInt();
+            if (size <= 0) continue;
+
             QString urlTemplate = manifest["url"].toString();
             update.url = manifestUrl.resolved(QUrl(QString("./%1").arg(urlTemplate.replace("$os", currentOS).replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
-            update.size = updateObj["size"].toInt();
+            update.size = size;
             update.channel = updateObj["channel"].toString();
 
             updates.append(update);

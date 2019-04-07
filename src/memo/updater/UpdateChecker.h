@@ -11,7 +11,6 @@ public:
         QString version;
         QString description;
         QString date;
-        QVector<QString> os;
         int size;
         QString channel;
     };
