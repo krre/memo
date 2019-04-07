@@ -5,7 +5,7 @@
 
 UploadDialog::UploadDialog(const QString& filePath, ProjectSettings* settings, QWidget* parent) :
         QDialog(parent), filePath(filePath), projectSettings(settings) {
-    setWindowTitle(tr("Upload Update"));
+    setWindowTitle(tr("Upload File"));
 
     manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished, this, &UploadDialog::uploadFinished);
