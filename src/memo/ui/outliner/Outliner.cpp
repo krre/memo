@@ -4,6 +4,7 @@
 #include "NoteProperties.h"
 #include "database/Database.h"
 #include "core/Constants.h"
+#include "core/Exception.h"
 #include <QtWidgets>
 #include <QtSql>
 
@@ -282,7 +283,6 @@ int Outliner::exportNote(int parentId, const QString& path) {
     return count;
 }
 
-
 void Outliner::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && !indexAt(event->localPos().toPoint()).isValid()) {
         selectionModel()->clearSelection();
@@ -296,7 +296,11 @@ void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& pre
     Q_UNUSED(previous)
     if (!isInited) return;
 
-    int id = model->item(current)->id();
-    database->updateMetaValue("selected_id", id);
-    emit noteChanged(id);
+    try {
+        int id = model->item(current)->id();
+        database->updateMetaValue("selected_id", id);
+        emit noteChanged(id);
+    } catch (const SqlQueryError& e) {
+        qCritical() << "Error update selected_id: " << e.text();
+    }
 }
