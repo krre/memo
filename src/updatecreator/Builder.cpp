@@ -9,6 +9,11 @@
 
 Builder::Builder(ProjectSettings* settings, Manifest* manifest, QWidget* parent) :
         QWidget(parent), projectSettings(settings), manifest(manifest) {
+    connect(manifest, &Manifest::lostFocus, [=] {
+        projectSettings->replaceVersion(version, manifest->getVersion());
+        version = manifest->getVersion();
+    });
+
     auto layout = new QVBoxLayout;
     setLayout(layout);
 

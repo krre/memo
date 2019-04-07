@@ -257,9 +257,11 @@ void MainWindow::setupSplitter() {
     tabWidget = new QTabWidget;
 
     manifest = new Manifest;
+
     connect(manifest, &Manifest::lostFocus, [this] {
         saveManifest();
     });
+
     tabWidget->addTab(manifest, tr("Manifest"));
     splitter->addWidget(tabWidget);
 

@@ -31,6 +31,8 @@ public:
     QJsonArray snapshot(const QString& version) const;
     void removeSnapshot(const QString& version);
 
+    void replaceVersion(const QString& oldVersion, const QString& newVersion);
+
 private:
     QString filePath;
     QJsonObject project;

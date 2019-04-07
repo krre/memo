@@ -111,3 +111,14 @@ void ProjectSettings::removeSnapshot(const QString& version) {
     project["snapshots"] = snapshots;
     save();
 }
+
+void ProjectSettings::replaceVersion(const QString& oldVersion, const QString& newVersion) {
+    if (oldVersion == newVersion) return;
+
+    QJsonObject snapshots = project["snapshots"].toObject();
+    QJsonObject snapshotAllOS = snapshots[oldVersion].toObject();
+    snapshots[newVersion] = snapshotAllOS;
+    snapshots.remove(oldVersion);
+    project["snapshots"] = snapshots;
+    save();
+}
