@@ -1,5 +1,6 @@
 #include "UpdateDownloader.h"
 #include "core/App.h"
+#include "lib/ZipCompressor.h"
 #include <QNetworkReply>
 #include <QFile>
 #include <QtGui/private/qzipreader_p.h>
@@ -67,14 +68,6 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
         return;
     }
 
-    QZipReader zipReader(filePath, QIODevice::ReadOnly);
-    bool result = zipReader.extractAll(dirPath);
-    zipReader.close();
-
+    MemoLib::ZipCompressor::decompress(filePath, dirPath);
     QFile::remove(filePath);
-
-    if (!result) {
-        qCritical() << "Error extracting archive:" << dirPath;
-        return;
-    }
 }
