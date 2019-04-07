@@ -1,7 +1,8 @@
 #include "Manifest.h"
+#include "UploadDialog.h"
 #include <QtWidgets>
 
-Manifest::Manifest(QWidget* parent) : QWidget(parent) {
+Manifest::Manifest(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
     auto layout = new QVBoxLayout;
     setLayout(layout);
 
@@ -66,6 +67,10 @@ Manifest::Manifest(QWidget* parent) : QWidget(parent) {
 
     layout->addWidget(updateGroupBox);
     layout->setStretch(1, 0);
+
+    auto uploadButton = new QPushButton(tr("Upload..."));
+    connect(uploadButton, &QPushButton::clicked, this, &Manifest::upload);
+    layout->addWidget(uploadButton, 0, Qt::AlignLeft);
 
     connect(qApp, &QApplication::focusChanged, this, &Manifest::onFocusChanged);
 }
@@ -158,6 +163,11 @@ void Manifest::onFocusChanged(QWidget* from, QWidget* to) {
     if (rootFrom == this && rootTo != this) {
         emit lostFocus();
     }
+}
+
+void Manifest::upload() {
+    UploadDialog uploadDialog(manifestLabel->text(), projectSettings);
+    uploadDialog.exec();
 }
 
 QWidget* Manifest::root(QWidget* child) {

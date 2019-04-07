@@ -2,6 +2,7 @@
 #include <QWidget>
 #include "ListModel.h"
 
+class ProjectSettings;
 class QLineEdit;
 class QPlainTextEdit;
 class QLabel;
@@ -10,7 +11,7 @@ class QComboBox;
 class Manifest : public QWidget {
     Q_OBJECT
 public:
-    explicit Manifest(QWidget* parent = nullptr);
+    explicit Manifest(ProjectSettings* settings, QWidget* parent = nullptr);
 
     void populateUpdate(const ListModel::Update& update);
     ListModel::Update getUpdate() const;
@@ -31,8 +32,10 @@ signals:
 
 private slots:
     void onFocusChanged(QWidget* from, QWidget* to);
+    void upload();
 
 private:
+    ProjectSettings* projectSettings;
     QWidget* root(QWidget* child);
 
     QLabel* manifestLabel = nullptr;
