@@ -136,6 +136,10 @@ QString Manifest::getVersion() {
 
 void Manifest::clear() {
     templateLineEdit->clear();
+    clearUpdate();
+}
+
+void Manifest::clearUpdate() {
     versionLineEdit->clear();
     dateLineEdit->clear();
     channelComboBox->setCurrentIndex(0);

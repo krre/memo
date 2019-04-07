@@ -24,6 +24,7 @@ public:
     QString getVersion();
 
     void clear();
+    void clearUpdate();
 
 signals:
     void lostFocus();

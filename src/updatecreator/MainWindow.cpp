@@ -130,8 +130,9 @@ void MainWindow::removeUpdate(int row) {
     int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
     if (result == QMessageBox::Yes) {
         QString version = listModel->getUpdate(row).version;
-        listModel->removeUpdate(row);
         builder->removeSnapshot(version);
+        manifest->clearUpdate();
+        listModel->removeUpdate(row);
         saveManifest();
     }
 }

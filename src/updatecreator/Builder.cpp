@@ -95,6 +95,8 @@ void Builder::selectSnapshot(const QString& version) {
 
 void Builder::removeSnapshot(const QString& version) {
     projectSettings->removeSnapshot(version);
+    allFilesListWidget->clear();
+    modifiedFilesListWidget->clear();
 }
 
 void Builder::setVersion(const QString& version) {
