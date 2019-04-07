@@ -60,8 +60,8 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
             int size = sizeObj[currentOS].toInt();
             if (size <= 0) continue;
 
-            QString urlTemplate = manifest["url"].toString();
-            update.url = manifestUrl.resolved(QUrl(QString("./%1").arg(urlTemplate.replace("$os", currentOS).replace("$version", update.version))));
+            QString urlTemplate = manifest["template"].toString();
+            update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(currentOS).arg(urlTemplate.replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
             update.size = size;
