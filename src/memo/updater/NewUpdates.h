@@ -16,7 +16,7 @@ public slots:
 
 private slots:
     void startUpdate();
-    void finishUpdate();
+    void finishUpdate(const QString& updateDir);
 
 private:
     QString sizeToMegabyte(int size);

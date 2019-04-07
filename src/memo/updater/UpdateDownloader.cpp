@@ -3,6 +3,7 @@
 #include "lib/ZipCompressor.h"
 #include <QNetworkReply>
 #include <QFile>
+#include <QDirIterator>
 #include <QDebug>
 
 UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
@@ -51,7 +52,41 @@ void UpdateDownloader::downloadFile() {
            reply->deleteLater();
         });
     } else {
-        emit finished();
+        // Collect all updates into one directory
+        QString finalUpdateDir = tmpDir.path() + "/update";
+
+        QDir dir;
+        dir.mkpath(finalUpdateDir);
+
+        for (const auto& dirPath : updateDirs) {
+            QDirIterator it(dirPath, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+
+            while (it.hasNext()) {
+                QString path = it.next();
+
+                if (it.fileInfo().isDir()) continue;
+
+                QString relativePath = path;
+                relativePath = relativePath.remove(dirPath);
+
+                QString finalPath = finalUpdateDir + relativePath;
+
+                if (QFile::exists(finalPath)) {
+                    QFile::remove(finalPath);
+                }
+
+                QFileInfo fi(finalPath);
+                QDir dir;
+                dir.mkpath(fi.absolutePath());
+
+                QFile::rename(path, finalPath);
+            }
+
+            QDir dir(dirPath);
+            dir.removeRecursively();
+        }
+
+        emit finished(finalUpdateDir);
     }
 }
 
@@ -69,4 +104,6 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
 
     MemoLib::ZipCompressor::decompress(filePath, dirPath);
     QFile::remove(filePath);
+
+    updateDirs.append(filePath.remove(".zip"));
 }

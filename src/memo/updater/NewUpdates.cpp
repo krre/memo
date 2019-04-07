@@ -69,7 +69,8 @@ void NewUpdates::startUpdate() {
     updateDownloader->download(urls);
 }
 
-void NewUpdates::finishUpdate() {
+void NewUpdates::finishUpdate(const QString& updateDir) {
+    qDebug() << updateDir;
     accept();
 }
 
