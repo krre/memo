@@ -13,12 +13,12 @@ void Loader::timerEvent(QTimerEvent* event) {
     Q_UNUSED(event)
 
     if (!QFile::exists(srcDir)) {
-        qCritical() << "Source not exists: " << srcDir;
+        qCritical() << "Source not exists:" << srcDir;
         quit();
     }
 
     if (!QFile::exists(dstDir)) {
-        qCritical() << "Destination not exists:"  << dstDir;
+        qCritical() << "Destination not exists:" << dstDir;
         quit();
     }
 
@@ -56,11 +56,11 @@ void Loader::timerEvent(QTimerEvent* event) {
     }
 
     if (!QFile::exists(program)) {
-        qCritical() << "Program not exists: " << program;
+        qCritical() << "Program not exists:" << program;
         quit();
     }
 
-    qInfo() << "Start program: " << program;
+    qInfo() << "Start program:" << program;
     QProcess::startDetached(program);
 
     quit();
