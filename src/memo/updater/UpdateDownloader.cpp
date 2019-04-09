@@ -48,7 +48,7 @@ void UpdateDownloader::downloadFile() {
         connect(this, &UpdateDownloader::abort, reply, &QNetworkReply::abort);
 
         connect(reply, qOverload<QNetworkReply::NetworkError>(&QNetworkReply::error), [reply] (QNetworkReply::NetworkError code) {
-           qCritical() << "Failed to download update. Error code" << code;
+           qCritical() << "Failed to download update. Error code:" << code;
            reply->deleteLater();
         });
     } else {
@@ -98,7 +98,7 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
         file.write(data);
         file.close();
     } else {
-        qCritical() << "Error opening temporary file:" + filePath;
+        qCritical() << "Error opening temporary file:" << filePath;
         return;
     }
 
