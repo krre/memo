@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS = memo updatecreator
+SUBDIRS = memo updatecreator loader
