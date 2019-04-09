@@ -86,6 +86,21 @@ void UpdateDownloader::downloadFile() {
             dir.removeRecursively();
         }
 
+        // Update loader.
+#ifdef Q_OS_WIN
+        QString loaderName = "loader.exe";
+#else
+        QString loaderName = "loader";
+#endif
+
+        QString loaderSrcPath = finalUpdateDir + "/" + loaderName;
+
+        if (QFile::exists(loaderSrcPath)) {
+            QString loaderDstPath = qApp->applicationDirPath() + "/" + loaderName;
+            QFile::remove(loaderDstPath);
+            QFile::rename(loaderSrcPath, loaderDstPath);
+        }
+
         emit finished(finalUpdateDir);
     }
 }

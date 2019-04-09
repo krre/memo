@@ -291,7 +291,14 @@ void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& upda
     } else {
         NewUpdates newUpdates(updates);
         if (newUpdates.exec() == QDialog::Accepted) {
-            qDebug() << "run update";
+            QString updateDir = newUpdates.getUpdateDir();
+            if (!updateDir.isEmpty()) {
+                QString loaderPath = qApp->applicationDirPath() + "/loader";
+                QProcess::startDetached(loaderPath, QStringList() << updateDir << qApp->applicationDirPath() << qApp->applicationFilePath());
+                quit();
+            } else {
+                qCritical() << "Failed to get update directory";
+            }
         }
     }
 }

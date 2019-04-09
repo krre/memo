@@ -59,6 +59,10 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 }
 
+QString NewUpdates::getUpdateDir() const {
+    return updateDir;
+}
+
 void NewUpdates::reject() {
     updateDownloader->cancel();
     QDialog::reject();
@@ -70,7 +74,7 @@ void NewUpdates::startUpdate() {
 }
 
 void NewUpdates::finishUpdate(const QString& updateDir) {
-    qDebug() << updateDir;
+    this->updateDir = updateDir;
     accept();
 }
 

@@ -7,9 +7,9 @@ class UpdateDownloader;
 
 class NewUpdates : public QDialog {
     Q_OBJECT
-
 public:
     NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent = nullptr);
+    QString getUpdateDir() const;
 
 public slots:
     void reject() override;
@@ -25,4 +25,5 @@ private:
     QPushButton* updateButton = nullptr;
     QProgressBar* progressBar = nullptr;
     QVector<QUrl> urls;
+    QString updateDir;
 };
