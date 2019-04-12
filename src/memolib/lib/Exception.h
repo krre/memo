@@ -9,6 +9,7 @@ class Exception : std::exception {
 public:
     Exception() = default;
     virtual QString text() const = 0;
+    const char* what() const noexcept override;
 };
 
 class RuntimeError : Exception {
