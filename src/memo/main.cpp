@@ -1,34 +1,14 @@
 #include "ui/MainWindow.h"
 #include "core/Constants.h"
 #include "core/App.h"
+#include "lib/MessageHandler.h"
 #include <QMessageBox>
 #include <QSettings>
 #include <QTranslator>
 #include <QLibraryInfo>
 
-void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
-     QByteArray localMsg = msg.toLocal8Bit();
-     switch (type) {
-     case QtDebugMsg:
-         fprintf(stderr, "[Debug] %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-         break;
-     case QtInfoMsg:
-         fprintf(stderr, "[Info] %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-         break;
-     case QtWarningMsg:
-         fprintf(stderr, "[Warning] %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-         break;
-     case QtCriticalMsg:
-         fprintf(stderr, "[Critical] %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-         break;
-     case QtFatalMsg:
-         fprintf(stderr, "[Fatal] %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
-         break;
-    }
-}
-
 int main(int argc, char* argv[]) {
-    qInstallMessageHandler(messageHandler);
+    qInstallMessageHandler(MemoLib::messageHandler);
 
     App app(argc, argv);
 
@@ -40,7 +20,6 @@ int main(int argc, char* argv[]) {
                               QObject::tr("Absent any system tray on this system"));
         return EXIT_FAILURE;
     }
-
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);
