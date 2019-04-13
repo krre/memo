@@ -2,7 +2,7 @@
 #include "Editor.h"
 #include "Options.h"
 #include "core/Constants.h"
-#include "core/Exception.h"
+#include "core/SqlException.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"

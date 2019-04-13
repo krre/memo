@@ -4,7 +4,7 @@
 #include "NoteProperties.h"
 #include "database/Database.h"
 #include "core/Constants.h"
-#include "core/Exception.h"
+#include "core/SqlException.h"
 #include <QtWidgets>
 #include <QtSql>
 

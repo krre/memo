@@ -8,7 +8,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
 
 CONFIG += c++17
-CONFIG += object_parallel_to_source
 
 TRANSLATIONS = i18n/memo-ru.ts
 win32: RC_ICONS += images/icon.ico
@@ -33,7 +32,7 @@ SOURCES += \
     core/App.cpp \
     updater/NewUpdates.cpp \
     updater/UpdateDownloader.cpp \
-    core/Exception.cpp
+    core/SqlException.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -55,7 +54,7 @@ HEADERS += \
     core/App.h \
     updater/NewUpdates.h \
     updater/UpdateDownloader.h \
-    core/Exception.h
+    core/SqlException.h
 
 RESOURCES += \
     resources.qrc
