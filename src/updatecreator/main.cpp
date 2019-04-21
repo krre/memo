@@ -9,8 +9,8 @@ int main(int argc, char* argv[]) {
 
     QApplication app(argc, argv);
 
-    QApplication::setOrganizationName(Constants::Organization);
-    QApplication::setApplicationName(Constants::ApplicationName);
+    QCoreApplication::setOrganizationName(Constants::Organization);
+    QCoreApplication::setApplicationName(Constants::ApplicationName);
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -19,5 +19,5 @@ int main(int argc, char* argv[]) {
     MainWindow window;
     window.show();
 
-    return QApplication::exec();
+    return QCoreApplication::exec();
 }
