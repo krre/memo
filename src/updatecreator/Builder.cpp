@@ -233,8 +233,10 @@ void Builder::createFilesWidgets() {
 
 QByteArray Builder::fileChecksum(const QString& filePath) {
     QFile file(filePath);
+
     if (file.open(QFile::ReadOnly)) {
         QCryptographicHash hash(QCryptographicHash::Sha1);
+
         if (hash.addData(&file)) {
             return hash.result();
         }

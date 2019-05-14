@@ -14,6 +14,7 @@ void Database::create(const QString& filepath) {
     qInfo().noquote() << "Create database:" << filepath;
     db.close();
     db.setDatabaseName(filepath);
+
     if (!db.open()) {
         throw SqlDatabaseError(db.lastError());
     }
@@ -45,6 +46,7 @@ void Database::create(const QString& filepath) {
 void Database::open(const QString& filepath) {
     qInfo().noquote() << "Open database:" << filepath;
     db.setDatabaseName(filepath);
+
     if (!db.open()) {
         throw SqlDatabaseError(db.lastError());
     }
@@ -157,6 +159,7 @@ QVector<Database::Title> Database::titles() {
     QVector<Title> list;
 
     QSqlQuery query("SELECT id, parent_id, pos, depth, title FROM notes ORDER BY depth, pos");
+
     while (query.next()) {
         Title title;
         title.id = query.value("id").toInt();

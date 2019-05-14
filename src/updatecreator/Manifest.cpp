@@ -126,6 +126,7 @@ QString Manifest::getFileTemplate() const {
 
 void Manifest::setFileSize(const QString& os, qint64 size) {
     QString value = QString::number(size);
+
     if (os == "windows") {
         sizeWindowsLabel->setText(value);
     } else if (os == "linux") {

@@ -109,6 +109,7 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
     QString dirPath = tmpDir.path();
     QString filePath = dirPath + "/" + fileName;
     QFile file(filePath);
+
     if (file.open(QIODevice::WriteOnly)) {
         file.write(data);
         file.close();

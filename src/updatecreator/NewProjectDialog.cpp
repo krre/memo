@@ -44,11 +44,13 @@ QString NewProjectDialog::projectDir() const {
 void NewProjectDialog::accept() {
     try {
         QString name = nameLineEdit->text();
+
         if (name.isEmpty()) {
             throw MemoLib::RuntimeError(tr("Name is empty"));
         }
 
         QString directory = directoryLineEdit->text();
+
         if (directory.isEmpty() || !QDir(directory).exists()) {
             throw MemoLib::RuntimeError(tr("Wrong directory path"));
         }
@@ -56,6 +58,7 @@ void NewProjectDialog::accept() {
         projectDirPath = directory + "/" + name;
 
         QDir dir;
+
         if (!dir.mkpath(projectDirPath)) {
             throw MemoLib::RuntimeError(tr("Failed to create project directory"));
         }

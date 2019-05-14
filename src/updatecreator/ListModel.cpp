@@ -62,6 +62,7 @@ QJsonArray ListModel::toJson() {
         updateObj["description"] = update.description;
 
         QJsonObject sizeObj;
+
         for (const auto& os : update.size.keys()) {
             sizeObj[os] = update.size[os];
         }

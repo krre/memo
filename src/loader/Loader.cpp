@@ -33,6 +33,7 @@ void Loader::timerEvent(QTimerEvent* event) {
 
         if (!QFile::exists(destinationPath)) {
             QFileInfo fi(destinationPath);
+
             if (fi.absolutePath() != dstDir) {
                 QDir dir;
                 dir.mkpath(fi.absolutePath());

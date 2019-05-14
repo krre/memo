@@ -57,10 +57,12 @@ void MainWindow::readSettings() {
     splitter->restoreState(settings.value("splitter").toByteArray());
 
     int size = settings.beginReadArray("RecentFiles");
+
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
         addRecentFile(settings.value("path").toString());
     }
+
     settings.endArray();
 
     loadFile(settings.value("filePath").toString());
@@ -77,10 +79,12 @@ void MainWindow::writeSettings() {
     settings.setValue("filePath", currentFile);
 
     settings.beginWriteArray("RecentFiles");
+
     for (int i = 0; i < recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
         settings.setArrayIndex(i);
         settings.setValue("path", recentFilesMenu->actions().at(i)->text());
     }
+
     settings.endArray();
 }
 
@@ -95,11 +99,13 @@ void MainWindow::applyHotSettings() {
     }
 
     QString fontFamily = settings.value("Editor/fontFamily").toString();
+
     if (!fontFamily.isEmpty()) {
         QFont font;
         font.setFamily(fontFamily);
 
         QString fontSize = settings.value("Editor/fontSize").toString();
+
         if (!fontSize.isEmpty()) {
             font.setPointSize(fontSize.toInt());
         }
@@ -141,6 +147,7 @@ void MainWindow::createActions() {
     QMenu* toolsMenu = menuBar()->addMenu(tr("Tools"));
     toolsMenu->addAction(tr("Options..."), [this] {
         Options options;
+
         if (options.exec() == QDialog::Accepted) {
             applyHotSettings();
         }
@@ -290,8 +297,10 @@ void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& upda
         QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
     } else {
         NewUpdates newUpdates(updates);
+
         if (newUpdates.exec() == QDialog::Accepted) {
             QString updateDir = newUpdates.getUpdateDir();
+
             if (!updateDir.isEmpty()) {
                 QString loaderPath = qApp->applicationDirPath() + "/loader";
                 QProcess::startDetached(loaderPath, QStringList() << updateDir << qApp->applicationDirPath() << qApp->applicationFilePath());

@@ -30,6 +30,7 @@ int main(int argc, char* argv[]) {
     QSettings settings;
 
     QString language = settings.value("language").toString();
+
     if (language.isEmpty()) {
         language = QLocale::system().name().split("_").first();
     }

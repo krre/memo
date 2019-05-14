@@ -125,6 +125,7 @@ bool Options::writeSettings() {
     QSettings settings;
 
     QString language = languageComboBox->currentData().toString();
+
     if (language != settings.value("language").toString()) {
         restartRequre = true;
     }

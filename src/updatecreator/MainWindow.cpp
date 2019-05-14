@@ -35,6 +35,7 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 
 void MainWindow::newProject() {
     NewProjectDialog newProjectDialog;
+
     if (newProjectDialog.exec() == QDialog::Accepted) {
         if (!projectPath.isEmpty()) {
             closeProject();
@@ -54,6 +55,7 @@ void MainWindow::newProject() {
 
 void MainWindow::openProject() {
     QString path = QFileDialog::getExistingDirectory(this, tr("Open Project"));
+
     if (path.isEmpty()) return;
 
     if (!QFile::exists(path + "/" + Constants::ProjectName)) {
@@ -128,6 +130,7 @@ void MainWindow::addUpdate() {
 
 void MainWindow::removeUpdate(int row) {
     int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
+
     if (result == QMessageBox::Yes) {
         QString version = listModel->getUpdate(row).version;
         builder->removeSnapshot(version);
@@ -154,10 +157,12 @@ void MainWindow::readSettings() {
     tabWidget->setCurrentIndex(settings.value("tab").toInt());
 
     int size = settings.beginReadArray("RecentProjects");
+
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
         addRecentProject(settings.value("path").toString());
     }
+
     settings.endArray();
 
     QString projectPath = settings.value("projectPath").toString();
@@ -175,10 +180,12 @@ void MainWindow::writeSettings() {
     settings.setValue("tab", tabWidget->currentIndex());
 
     settings.beginWriteArray("RecentProjects");
+
     for (int i = 0; i < recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions; ++i) {
         settings.setArrayIndex(i);
         settings.setValue("path", recentProjectsMenu->actions().at(i)->text());
     }
+
     settings.endArray();
 }
 
@@ -192,6 +199,7 @@ void MainWindow::saveManifest() {
     manifestData["updates"] = listModel->toJson();
 
     QFile file(manifestPath);
+
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning() << "Error opening manifest file. Path:" << manifestPath;
         return;
@@ -203,6 +211,7 @@ void MainWindow::saveManifest() {
 
 void MainWindow::openManifest() {
     QFile file(manifestPath);
+
     if (!file.open(QIODevice::ReadOnly)) {
         qCritical() << "Error opening manifest file. Path:" << manifestPath;
         return;
@@ -227,6 +236,7 @@ void MainWindow::closeManifest() {
     saveManifest();
 
     int count = listModel->rowCount();
+
     for (int i = 0; i < count; i++) {
         listModel->removeUpdate(0);
     }
