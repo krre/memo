@@ -8,7 +8,6 @@ class Database;
 
 class Outliner : public QTreeView {
     Q_OBJECT
-
 public:
     Outliner(Database* database);
 

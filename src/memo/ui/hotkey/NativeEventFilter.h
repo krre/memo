@@ -4,7 +4,6 @@
 
 class NativeEventFilter : public QObject, public QAbstractNativeEventFilter {
     Q_OBJECT
-
 public:
     NativeEventFilter(QObject* parent = nullptr);
 

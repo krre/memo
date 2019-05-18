@@ -4,7 +4,6 @@
 
 class NoteProperties : public QDialog {
     Q_OBJECT
-
 public:
     struct Data {
         QString title;
