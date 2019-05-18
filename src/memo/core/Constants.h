@@ -8,6 +8,8 @@ namespace Constants {
         constexpr auto Status = ""; // Release, Beta, Alpha
         constexpr auto URL = "https://github.com/krre/memo";
         constexpr auto CopyrightYear = "2019";
+        constexpr auto BuildDate = __DATE__;
+        constexpr auto BuildTime = __TIME__;
     }
 
     namespace Window {

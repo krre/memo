@@ -13,6 +13,8 @@ namespace Constants {
     constexpr auto FileTemplate = "memo-update-$version";
     constexpr int SystemRecentProjectsActions = 2;
     constexpr int MaxRecentProjects = 10;
+    constexpr auto BuildDate = __DATE__;
+    constexpr auto BuildTime = __TIME__;
 
 #ifdef Q_OS_WIN
     constexpr auto CurrentOS = "windows";

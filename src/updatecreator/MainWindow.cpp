@@ -98,8 +98,8 @@ void MainWindow::about() {
             .arg(Constants::WindowTitle,
                  Constants::Version,
                  QT_VERSION_STR,
-                 __DATE__,
-                 __TIME__,
+                 Constants::BuildDate,
+                 Constants::BuildTime,
                  Constants::URL,
                  Constants::CopyrightYear));
 }

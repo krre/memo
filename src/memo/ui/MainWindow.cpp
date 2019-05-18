@@ -323,8 +323,8 @@ void MainWindow::about() {
                  Constants::App::Version,
                  Constants::App::Status,
                  QT_VERSION_STR,
-                 __DATE__,
-                 __TIME__,
+                 Constants::App::BuildDate,
+                 Constants::App::BuildTime,
                  Constants::App::URL,
                  Constants::App::CopyrightYear));
 }
