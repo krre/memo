@@ -16,7 +16,7 @@ public:
     void populateUpdate(const ListModel::Update& update);
     ListModel::Update getUpdate() const;
 
-    void setManifestPath(const QString path);
+    void setManifestPath(const QString& path);
 
     void setFileTemplate(const QString& fileTemplate);
     QString getFileTemplate() const;

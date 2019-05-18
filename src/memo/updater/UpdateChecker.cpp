@@ -11,7 +11,7 @@ void UpdateChecker::check() {
     QNetworkReply* manifestReply = App::networkAccessManager()->get(QNetworkRequest(manifestUrl));
 
     connect(manifestReply, &QNetworkReply::finished, [manifestReply, this] () {
-        QJsonParseError parseError;
+        QJsonParseError parseError{};
         QJsonObject manifest = QJsonDocument::fromJson(manifestReply->readAll(), &parseError).object();
 
         if (parseError.error != QJsonParseError::NoError) {
@@ -61,7 +61,7 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
             if (size <= 0) continue;
 
             QString urlTemplate = manifest["template"].toString();
-            update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(currentOS).arg(urlTemplate.replace("$version", update.version))));
+            update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(currentOS, urlTemplate.replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
             update.size = size;

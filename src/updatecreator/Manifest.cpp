@@ -112,7 +112,7 @@ ListModel::Update Manifest::getUpdate() const {
     return update;
 }
 
-void Manifest::setManifestPath(const QString path) {
+void Manifest::setManifestPath(const QString& path) {
     manifestLabel->setText(path);
 }
 

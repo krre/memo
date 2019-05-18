@@ -21,7 +21,7 @@ public slots:
     void check();
 
 signals:
-    void checkResult(const QVector<Update>& updates);
+    void checkResult(const QVector<UpdateChecker::Update>& updates);
 
 private:
     void findUpdates(const QJsonObject& manifest);

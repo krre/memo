@@ -206,7 +206,7 @@ void Builder::createAppDirWidgets() {
     connect(appDirButton, &QPushButton::clicked, this, &Builder::selectDirectory);
     appDirLayout->addWidget(appDirButton);
 
-    auto mainLayout = static_cast<QVBoxLayout*>(layout());
+    auto mainLayout = dynamic_cast<QVBoxLayout*>(layout());
     mainLayout->addLayout(appDirLayout);
 }
 
@@ -227,7 +227,7 @@ void Builder::createFilesWidgets() {
 
     filesLayout->addWidget(splitter);
 
-    auto mainLayout = static_cast<QVBoxLayout*>(layout());
+    auto mainLayout = dynamic_cast<QVBoxLayout*>(layout());
     mainLayout->addWidget(filesGroupBox, 1);
 }
 

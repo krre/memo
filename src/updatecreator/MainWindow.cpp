@@ -23,10 +23,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     updateActions();
 }
 
-MainWindow::~MainWindow() {
-
-}
-
 void MainWindow::closeEvent(QCloseEvent* event) {
     saveProject();
     writeSettings();
@@ -217,7 +213,7 @@ void MainWindow::openManifest() {
         return;
     }
 
-    QJsonParseError error;
+    QJsonParseError error{};
     QJsonObject manifestData = QJsonDocument::fromJson(file.readAll(), &error).object();
 
     if (error.error != QJsonParseError::NoError) {

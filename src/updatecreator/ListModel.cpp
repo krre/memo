@@ -62,9 +62,11 @@ QJsonArray ListModel::toJson() {
         updateObj["description"] = update.description;
 
         QJsonObject sizeObj;
+        QMap<QString, qint64>::const_iterator i = update.size.constBegin();
 
-        for (const auto& os : update.size.keys()) {
-            sizeObj[os] = update.size[os];
+        while (i != update.size.constEnd()) {
+            sizeObj[i.key()] = i.value();
+            ++i;
         }
 
         updateObj["size"] = sizeObj;
