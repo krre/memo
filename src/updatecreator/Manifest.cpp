@@ -37,8 +37,9 @@ Manifest::Manifest(ProjectSettings* settings, QWidget* parent) : QWidget(parent)
 
     updateGridLayout->addWidget(new QLabel("Channel:"), 3, 0);
     channelComboBox = new QComboBox;
-    channelComboBox->addItem("release");
-    channelComboBox->addItem("beta");
+    channelComboBox->addItem(Constants::Channel::Release);
+    channelComboBox->addItem(Constants::Channel::Beta);
+    channelComboBox->addItem(Constants::Channel::Alpha);
     updateGridLayout->addWidget(channelComboBox, 3, 1, Qt::AlignLeft);
 
     updateGridLayout->addWidget(new QLabel(tr("Size:")), 4, 0);

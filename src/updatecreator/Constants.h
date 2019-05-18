@@ -17,6 +17,12 @@ namespace Constants {
     constexpr auto BuildDate = __DATE__;
     constexpr auto BuildTime = __TIME__;
 
+    namespace Channel {
+        constexpr auto Alpha = "alpha";
+        constexpr auto Beta = "beta";
+        constexpr auto Release = "release";
+    }
+
     namespace OS {
         constexpr auto Windows = "windows";
         constexpr auto Linux = "linux";

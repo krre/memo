@@ -116,7 +116,7 @@ void MainWindow::addUpdate() {
     }
 
     update.date = QDate::currentDate().toString("dd.MM.yyyy");
-    update.channel = "release";
+    update.channel = Constants::Channel::Release;
 
     listModel->addUpdate(update);
     builder->createSnapshot(update.version);
