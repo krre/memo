@@ -3,9 +3,8 @@
 #include "ProjectSettings.h"
 #include "NewProjectDialog.h"
 #include "Outliner.h"
+#include "Form.h"
 #include "ListModel.h"
-#include "Manifest.h"
-#include "Builder.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -40,12 +39,11 @@ void MainWindow::newProject() {
         QString projectDir = newProjectDialog.projectDir();
         projectSettings->create(projectDir + "/" + Constants::ProjectName);
         setProjectPath(projectDir);
-        manifest->setManifestPath(manifestPath);
-        manifest->setFileTemplate(Constants::FileTemplate);
+        form->setManifestPath(manifestPath);
+        form->setFileTemplate(Constants::FileTemplate);
         addUpdate();
         saveManifest();
         addRecentProject(projectDir);
-        tabWidget->setCurrentIndex(0);
     }
 }
 
@@ -69,7 +67,6 @@ void MainWindow::saveProject() {
 
 void MainWindow::closeProject() {
     projectSettings->close();
-    builder->clear();
     closeManifest();
     setProjectPath(QString());
 }
@@ -108,18 +105,19 @@ void MainWindow::addUpdate() {
     ListModel::Update update;
 
     if (listModel->rowCount()) {
-        QVersionNumber lastVersion = QVersionNumber::fromString(listModel->getUpdate(0).version);
+        QVersionNumber lastVersion = QVersionNumber::fromString(listModel->update(0).version);
         QVersionNumber newVersion(lastVersion.majorVersion(), lastVersion.minorVersion(), lastVersion.microVersion() + 1);
         update.version = newVersion.toString();
+        update.baseVersion = listModel->update(0).baseVersion;
     } else {
         update.version = "1.0.0";
+        update.baseVersion = "1.0.0";
     }
 
     update.date = QDate::currentDate().toString("dd.MM.yyyy");
     update.channel = Constants::Channel::Release;
 
     listModel->addUpdate(update);
-    builder->createSnapshot(update.version);
     outliner->selectRow(0);
     saveManifest();
 }
@@ -128,9 +126,7 @@ void MainWindow::removeUpdate(int row) {
     int result = QMessageBox::question(this, tr("Remove Update"), tr("Are you sure want remove update?"));
 
     if (result == QMessageBox::Yes) {
-        QString version = listModel->getUpdate(row).version;
-        builder->removeSnapshot(version);
-        manifest->clearUpdate();
+        form->clearUpdate();
         listModel->removeUpdate(row);
         saveManifest();
     }
@@ -150,7 +146,6 @@ void MainWindow::readSettings() {
     }
 
     splitter->restoreState(settings.value("splitter").toByteArray());
-    tabWidget->setCurrentIndex(settings.value("tab").toInt());
 
     int size = settings.beginReadArray("RecentProjects");
 
@@ -173,7 +168,6 @@ void MainWindow::writeSettings() {
     settings.setValue("geometry", saveGeometry());
     settings.setValue("splitter", splitter->saveState());
     settings.setValue("projectPath", projectPath);
-    settings.setValue("tab", tabWidget->currentIndex());
 
     settings.beginWriteArray("RecentProjects");
 
@@ -188,10 +182,10 @@ void MainWindow::writeSettings() {
 void MainWindow::saveManifest() {
     if (manifestPath.isEmpty()) return;
 
-    listModel->setUpdate(outliner->currentRow(), manifest->getUpdate());
+    listModel->setUpdate(outliner->currentRow(), form->update());
 
     QJsonObject manifestData;
-    manifestData["template"] = manifest->getFileTemplate();
+    manifestData["template"] = form->fileTemplate();
     manifestData["updates"] = listModel->toJson();
 
     QFile file(manifestPath);
@@ -221,8 +215,8 @@ void MainWindow::openManifest() {
         return;
     }
 
-    manifest->setManifestPath(manifestPath);
-    manifest->setFileTemplate(manifestData["template"].toString());
+    form->setManifestPath(manifestPath);
+    form->setFileTemplate(manifestData["template"].toString());
     listModel->fromJson(manifestData["updates"].toArray());
     outliner->selectRow(0);
     updateActions();
@@ -231,15 +225,10 @@ void MainWindow::openManifest() {
 void MainWindow::closeManifest() {
     saveManifest();
 
-    int count = listModel->rowCount();
-
-    for (int i = 0; i < count; i++) {
-        listModel->removeUpdate(0);
-    }
-
-    manifest->clear();
+    listModel->clear();
+    form->clear();
     manifestPath = QString();
-    manifest->setManifestPath(manifestPath);
+    form->setManifestPath(manifestPath);
     updateActions();
 }
 
@@ -249,31 +238,26 @@ void MainWindow::setupSplitter() {
     connect(outliner, &Outliner::removeClicked, this, &MainWindow::removeUpdate);
     connect(outliner, &Outliner::selectionChanged, [this] (int selectedRow, int deselectedRow) {
         if (deselectedRow >= 0) {
-            listModel->setUpdate(deselectedRow, manifest->getUpdate());
+            listModel->setUpdate(deselectedRow, form->update());
         }
 
         if (selectedRow >= 0) {
-            const ListModel::Update& update = listModel->getUpdate(selectedRow);
-            manifest->populateUpdate(update);
-            builder->setVersion(update.version);
+            const ListModel::Update& update = listModel->update(selectedRow);
+            form->populateUpdate(update);
         }
     });
 
     splitter->addWidget(outliner);
 
-    tabWidget = new QTabWidget;
+    form = new Form(projectSettings);
+    connect(form, &Form::manifestDownloaded, this, [this] {
+        openManifest();
+    });
+    splitter->addWidget(form);
 
-    manifest = new Manifest(projectSettings);
-
-    connect(manifest, &Manifest::lostFocus, [this] {
+    connect(form, &Form::lostFocus, [this] {
         saveManifest();
     });
-
-    tabWidget->addTab(manifest, tr("Manifest"));
-    splitter->addWidget(tabWidget);
-
-    builder = new Builder(projectSettings, manifest);
-    tabWidget->addTab(builder, tr("Builder"));
 
     splitter->setHandleWidth(1);
     splitter->setChildrenCollapsible(false);
@@ -301,12 +285,8 @@ void MainWindow::createActions() {
 void MainWindow::updateActions() {
     bool enabled = !manifestPath.isEmpty();
     closeAction->setEnabled(enabled);
-
-    for (int i = 0; i < tabWidget->count(); i++) {
-        tabWidget->widget(i)->setEnabled(enabled);
-    }
-
     outliner->setAddButtonEnabled(enabled);
+    form->setEnabled(enabled);
 }
 
 void MainWindow::setProjectPath(const QString& path) {
@@ -349,7 +329,8 @@ void MainWindow::loadProject(const QString& path) {
 
     setProjectPath(path);
     projectSettings->open(path + "/" + Constants::ProjectName);
-    builder->load();
+    form->setContentDir(projectSettings->contentDir());
+    form->setInstallerPath(projectSettings->installerPath());
     openManifest();
     addRecentProject(path);
 }

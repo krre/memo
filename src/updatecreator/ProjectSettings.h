@@ -6,7 +6,8 @@ class ProjectSettings : public QObject {
     Q_OBJECT
 public:
     struct FtpData {
-        QString url;
+        QString updateUrl;
+        QString installUrl;
         QString login;
         QString password;
     };
@@ -18,19 +19,16 @@ public:
     void save();
     void close();
 
-    void setAppDir(const QString& path);
-    QString appDir() const;
+    void setContentDir(const QString& path);
+    QString contentDir() const;
+
+    void setInstallerPath(const QString& path);
+    QString installerPath() const;
 
     QString projectDir() const;
 
     void setFtpData(const FtpData& data);
     FtpData ftpData() const;
-
-    void setSnapshot(const QJsonArray& snapshot, const QString& version);
-    QJsonArray snapshot(const QString& version) const;
-    void removeSnapshot(const QString& version);
-
-    void replaceVersion(const QString& oldVersion, const QString& newVersion);
 
 private:
     QString filePath;

@@ -40,7 +40,7 @@ void ListModel::removeUpdate(int row) {
     endRemoveRows();
 }
 
-const ListModel::Update& ListModel::getUpdate(int row) const {
+const ListModel::Update& ListModel::update(int row) const {
     return updates.at(row);
 }
 
@@ -51,22 +51,28 @@ void ListModel::setUpdate(int row, const ListModel::Update& update) {
     emit dataChanged(index(row), index(row));
 }
 
+void ListModel::clear() {
+    int count = rowCount();
+
+    for (int i = 0; i < count; i++) {
+        removeUpdate(0);
+    }
+}
+
 QJsonArray ListModel::toJson() {
     QJsonArray list;
 
     for (const Update& update : updates) {
         QJsonObject updateObj;
         updateObj["version"] = update.version;
+        updateObj["baseVersion"] = update.baseVersion;
         updateObj["date"] = update.date;
         updateObj["channel"] = update.channel;
         updateObj["description"] = update.description;
 
         QJsonObject sizeObj;
-        QMap<QString, qint64>::const_iterator i = update.size.constBegin();
-
-        while (i != update.size.constEnd()) {
-            sizeObj[i.key()] = i.value();
-            ++i;
+        for (const auto& os : update.size.keys()) {
+            sizeObj[os] = update.size[os];
         }
 
         updateObj["size"] = sizeObj;
@@ -77,11 +83,14 @@ QJsonArray ListModel::toJson() {
 }
 
 void ListModel::fromJson(const QJsonArray& json) {
+    clear();
+
     for (int i = json.count() - 1; i >= 0; i--) {
         QJsonObject updateObj = json.at(i).toObject();
 
         Update update;
         update.version = updateObj["version"].toString();
+        update.baseVersion = updateObj["baseVersion"].toString();
         update.date = updateObj["date"].toString();
         update.channel = updateObj["channel"].toString();
         update.description = updateObj["description"].toString();

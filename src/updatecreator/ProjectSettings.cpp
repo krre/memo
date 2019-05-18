@@ -10,9 +10,7 @@ ProjectSettings::ProjectSettings(QObject* parent) : QObject(parent) {
 void ProjectSettings::create(const QString& path) {
     filePath = path;
 
-    project["appDir"] = {};
-    project["snapshots"] = {};
-
+    project["contentDir"] = {};
     save();
 }
 
@@ -48,14 +46,24 @@ void ProjectSettings::close() {
     project = QJsonObject();
 }
 
-void ProjectSettings::setAppDir(const QString& path) {
-    QJsonObject appDir = project["appDir"].toObject();
-    appDir[Constants::CurrentOS] = path;
-    project["appDir"] = appDir;
+void ProjectSettings::setContentDir(const QString& path) {
+    QJsonObject contentDir = project["contentDir"].toObject();
+    contentDir[Constants::CurrentOS] = path;
+    project["contentDir"] = contentDir;
 }
 
-QString ProjectSettings::appDir() const {
-    return project["appDir"].toObject()[Constants::CurrentOS].toString();
+QString ProjectSettings::contentDir() const {
+    return project["contentDir"].toObject()[Constants::CurrentOS].toString();
+}
+
+void ProjectSettings::setInstallerPath(const QString& path) {
+    QJsonObject installerPath = project["installerPath"].toObject();
+    installerPath[Constants::CurrentOS] = path;
+    project["installerPath"] = installerPath;
+}
+
+QString ProjectSettings::installerPath() const {
+    return project["installerPath"].toObject()[Constants::CurrentOS].toString();
 }
 
 QString ProjectSettings::projectDir() const {
@@ -65,7 +73,8 @@ QString ProjectSettings::projectDir() const {
 
 void ProjectSettings::setFtpData(const ProjectSettings::FtpData& data) {
     QJsonObject ftp;
-    ftp["url"] = data.url;
+    ftp["updateUrl"] = data.updateUrl;
+    ftp["installUrl"] = data.installUrl;
     ftp["login"] = data.login;
     ftp["password"] = data.password;
 
@@ -78,47 +87,11 @@ ProjectSettings::FtpData ProjectSettings::ftpData() const {
 
     if (project.contains("ftp")) {
         QJsonObject ftp = project["ftp"].toObject();
-        data.url = ftp["url"].toString();
+        data.updateUrl = ftp["updateUrl"].toString();
+        data.installUrl = ftp["installUrl"].toString();
         data.login = ftp["login"].toString();
         data.password = ftp["password"].toString();
     }
 
     return data;
-}
-
-void ProjectSettings::setSnapshot(const QJsonArray& snapshot, const QString& version) {
-    QJsonObject snapshots = project["snapshots"].toObject();
-
-    if (!snapshots.contains(version)) {
-        snapshots[version] = {};
-    }
-
-    QJsonObject os = snapshots[version].toObject();
-    os[Constants::CurrentOS] = snapshot;
-    snapshots[version] = os;
-    project["snapshots"] = snapshots;
-    save();
-}
-
-QJsonArray ProjectSettings::snapshot(const QString& version) const {
-    QJsonObject snapshots = project["snapshots"].toObject()[version].toObject();
-    return snapshots.contains(Constants::CurrentOS) ? snapshots[Constants::CurrentOS].toArray() : QJsonArray();
-}
-
-void ProjectSettings::removeSnapshot(const QString& version) {
-    QJsonObject snapshots = project["snapshots"].toObject();
-    snapshots.remove(version);
-    project["snapshots"] = snapshots;
-    save();
-}
-
-void ProjectSettings::replaceVersion(const QString& oldVersion, const QString& newVersion) {
-    if (oldVersion == newVersion) return;
-
-    QJsonObject snapshots = project["snapshots"].toObject();
-    QJsonObject snapshotAllOS = snapshots[oldVersion].toObject();
-    snapshots[newVersion] = snapshotAllOS;
-    snapshots.remove(oldVersion);
-    project["snapshots"] = snapshots;
-    save();
 }

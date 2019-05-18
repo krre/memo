@@ -1,50 +1,65 @@
 #pragma once
-#include <QWidget>
 #include "ListModel.h"
+#include <QWidget>
 
-class ProjectSettings;
 class QLineEdit;
 class QPlainTextEdit;
 class QLabel;
 class QComboBox;
+class ProjectSettings;
 
-class Manifest : public QWidget {
+class Form : public QWidget {
     Q_OBJECT
 public:
-    explicit Manifest(ProjectSettings* settings, QWidget* parent = nullptr);
+    explicit Form(ProjectSettings* settings, QWidget* parent = nullptr);
 
     void populateUpdate(const ListModel::Update& update);
-    ListModel::Update getUpdate() const;
+    ListModel::Update update() const;
 
     void setManifestPath(const QString& path);
 
     void setFileTemplate(const QString& fileTemplate);
-    QString getFileTemplate() const;
+    QString fileTemplate() const;
 
-    void setFileSize(const QString& os, qint64 size);
-    QString getVersion();
+    void setContentDir(const QString& contentDir);
+    void setInstallerPath(const QString& installerPath);
 
     void clear();
     void clearUpdate();
 
 signals:
     void lostFocus();
+    void manifestDownloaded();
 
 private slots:
     void onFocusChanged(QWidget* from, QWidget* to);
-    void upload();
+    void clearSize();
+    void selectContentDirectory();
+    void selectInstallerFile();
+    void build();
+
+    void downloadManifest();
+    void uploadManifest();
+    void uploadContent();
+    void uploadInstaller();
+
 
 private:
-    ProjectSettings* projectSettings;
     QWidget* root(QWidget* child);
+    void setFileSize(const QString& os, qint64 size);
 
+    ProjectSettings* projectSettings;
     QLabel* manifestLabel = nullptr;
     QLineEdit* templateLineEdit = nullptr;
     QLineEdit* versionLineEdit = nullptr;
+    QLineEdit* baseVersionLineEdit = nullptr;
     QLineEdit* dateLineEdit = nullptr;
     QComboBox* channelComboBox = nullptr;
     QLabel* sizeWindowsLabel = nullptr;
     QLabel* sizeLinuxLabel = nullptr;
     QLabel* sizeMacOSLabel = nullptr;
     QPlainTextEdit* descriptionTextEdit = nullptr;
+    QLineEdit* contentDirLineEdit = nullptr;
+    QLineEdit* installerPathLineEdit = nullptr;
+    QString zipPath;
 };

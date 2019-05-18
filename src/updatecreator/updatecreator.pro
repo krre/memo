@@ -11,23 +11,23 @@ CONFIG += c++17
 include(../memolib/memolib.pri)
 
 SOURCES += \
+    ClearSizeDialog.cpp \
+    Form.cpp \
+    NetDialog.cpp \
     main.cpp \
     MainWindow.cpp \
     Outliner.cpp \
     ListModel.cpp \
-    Builder.cpp \
     NewProjectDialog.cpp \
-    ProjectSettings.cpp \
-    Manifest.cpp \
-    UploadDialog.cpp
+    ProjectSettings.cpp
 
 HEADERS += \
+    ClearSizeDialog.h \
+    Form.h \
     MainWindow.h \
     Constants.h \
+    NetDialog.h \
     Outliner.h \
     ListModel.h \
-    Builder.h \
     NewProjectDialog.h \
-    ProjectSettings.h \
-    Manifest.h \
-    UploadDialog.h
+    ProjectSettings.h

@@ -2,10 +2,8 @@
 #include <QMainWindow>
 
 class QSplitter;
-class QTabWidget;
 class Outliner;
-class Manifest;
-class Builder;
+class Form;
 class ListModel;
 class ProjectSettings;
 
@@ -48,11 +46,9 @@ private:
     void loadProject(const QString& path);
 
     QSplitter* splitter = nullptr;
-    QTabWidget* tabWidget = nullptr;
     ProjectSettings* projectSettings = nullptr;
     Outliner* outliner = nullptr;
-    Manifest* manifest = nullptr;
-    Builder* builder = nullptr;
+    Form* form = nullptr;
     ListModel* listModel = nullptr;
     QString manifestPath;
     QString projectPath;

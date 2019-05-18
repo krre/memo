@@ -7,25 +7,38 @@ class QNetworkReply;
 class QFile;
 class QLineEdit;
 class QProgressBar;
+class QDialogButtonBox;
 
-class UploadDialog : public QDialog {
+class NetDialog : public QDialog {
     Q_OBJECT
 public:
     enum class FileType {
         Manifest,
-        Zip
+        Update,
+        Installer
     };
 
-    explicit UploadDialog(FileType type, const QString& filePath, ProjectSettings* settings, QWidget* parent = nullptr);
+    enum class DialogType {
+        Upload,
+        Download
+    };
+
+    explicit NetDialog(DialogType dialogType, FileType fileType, const QString& filePath, ProjectSettings* projectSettings, QWidget* parent = nullptr);
+
+signals:
+    void fileDownloaded();
 
 public slots:
     void accept() override;
 
-private slots:
-    void uploadFinished(QNetworkReply* reply);
     void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
 
 private:
+    void uploadFinished(QNetworkReply* reply);
+    void downloadFinished(QNetworkReply* reply);
+
+    DialogType dialogType;
     FileType fileType;
     QString filePath;
     ProjectSettings* projectSettings;
@@ -37,4 +50,5 @@ private:
     QLineEdit* loginLineEdit = nullptr;
     QLineEdit* passwordLineEdit = nullptr;
     QProgressBar* progressBar = nullptr;
+    QDialogButtonBox* buttonBox = nullptr;
 };

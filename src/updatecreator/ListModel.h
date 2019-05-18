@@ -6,6 +6,7 @@ class ListModel : public QAbstractListModel {
 public:
     struct Update {
         QString version;
+        QString baseVersion;
         QString description;
         QString date;
         QMap<QString, qint64> size;
@@ -19,8 +20,9 @@ public:
 
     void addUpdate(const Update& update);
     void removeUpdate(int row);
-    const Update& getUpdate(int row) const;
+    const Update& update(int row) const;
     void setUpdate(int row, const Update& update);
+    void clear();
 
     QJsonArray toJson();
     void fromJson(const QJsonArray& json);
