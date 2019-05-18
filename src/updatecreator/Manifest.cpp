@@ -44,9 +44,9 @@ Manifest::Manifest(ProjectSettings* settings, QWidget* parent) : QWidget(parent)
     updateGridLayout->addWidget(new QLabel(tr("Size:")), 4, 0);
 
     auto sizeLayout = new QGridLayout;
-    sizeLayout->addWidget(new QLabel(tr("Windows")), 0, 0);
-    sizeLayout->addWidget(new QLabel(tr("Linux")), 0, 1);
-    sizeLayout->addWidget(new QLabel(tr("MacOS")), 0, 2);
+    sizeLayout->addWidget(new QLabel("Windows"), 0, 0);
+    sizeLayout->addWidget(new QLabel("Linux"), 0, 1);
+    sizeLayout->addWidget(new QLabel("macOS"), 0, 2);
     sizeLayout->setColumnStretch(2, 1);
 
     sizeWindowsLabel = new QLabel;
