@@ -11,7 +11,6 @@ class QProgressBar;
 class UploadDialog : public QDialog {
     Q_OBJECT
 public:
-
     enum class FileType {
         Manifest,
         Zip

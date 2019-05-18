@@ -5,7 +5,6 @@
 class ProjectSettings : public QObject {
     Q_OBJECT
 public:
-
     struct FtpData {
         QString url;
         QString login;

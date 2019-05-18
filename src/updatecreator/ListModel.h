@@ -4,7 +4,6 @@
 class ListModel : public QAbstractListModel {
     Q_OBJECT
 public:
-
     struct Update {
         QString version;
         QString description;
