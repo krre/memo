@@ -35,17 +35,15 @@ int main(int argc, char* argv[]) {
         language = QLocale::system().name().split("_").first();
     }
 
-    QString qtTranslatorFileName = QLatin1String("qt_") + language;
     auto qtTranslator = new QTranslator(&app);
 
-    if (qtTranslator->load(qtTranslatorFileName, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+    if (qtTranslator->load("qt_" + language, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
         QCoreApplication::installTranslator(qtTranslator);
     }
 
-    QString memoTranslatorFileName = QLatin1String("memo-") + language;
     auto memoTranslator = new QTranslator(&app);
 
-    if (memoTranslator->load(memoTranslatorFileName, ":/i18n")) {
+    if (memoTranslator->load("memo-" + language, ":/i18n")) {
         QCoreApplication::installTranslator(memoTranslator);
     }
 
