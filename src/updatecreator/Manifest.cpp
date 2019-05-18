@@ -1,5 +1,6 @@
 #include "Manifest.h"
 #include "UploadDialog.h"
+#include "Constants.h"
 #include <QtWidgets>
 
 Manifest::Manifest(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
@@ -82,9 +83,9 @@ void Manifest::populateUpdate(const ListModel::Update& update) {
     int channelIndex = channelComboBox->findText(update.channel);
     channelComboBox->setCurrentIndex(channelIndex);
 
-    sizeWindowsLabel->setText(update.size.contains("windows") ? QString::number(update.size["windows"]) : "");
-    sizeLinuxLabel->setText(update.size.contains("linux") ? QString::number(update.size["linux"]) : "");
-    sizeMacOSLabel->setText(update.size.contains("macos") ? QString::number(update.size["macos"]) : "");
+    sizeWindowsLabel->setText(update.size.contains(Constants::OS::Windows) ? QString::number(update.size[Constants::OS::Windows]) : "");
+    sizeLinuxLabel->setText(update.size.contains(Constants::OS::Linux) ? QString::number(update.size[Constants::OS::Linux]) : "");
+    sizeMacOSLabel->setText(update.size.contains(Constants::OS::MacOS) ? QString::number(update.size[Constants::OS::MacOS]) : "");
 
     descriptionTextEdit->setPlainText(update.description);
 }
@@ -96,15 +97,15 @@ ListModel::Update Manifest::getUpdate() const {
     update.channel = channelComboBox->currentText();
 
     if (!sizeWindowsLabel->text().isEmpty()) {
-        update.size["windows"] = sizeWindowsLabel->text().toInt();
+        update.size[Constants::OS::Windows] = sizeWindowsLabel->text().toInt();
     }
 
     if (!sizeLinuxLabel->text().isEmpty()) {
-        update.size["linux"] = sizeLinuxLabel->text().toInt();
+        update.size[Constants::OS::Linux] = sizeLinuxLabel->text().toInt();
     }
 
     if (!sizeMacOSLabel->text().isEmpty()) {
-        update.size["macos"] = sizeMacOSLabel->text().toInt();
+        update.size[Constants::OS::MacOS] = sizeMacOSLabel->text().toInt();
     }
 
     update.description = descriptionTextEdit->document()->toPlainText();
@@ -127,11 +128,11 @@ QString Manifest::getFileTemplate() const {
 void Manifest::setFileSize(const QString& os, qint64 size) {
     QString value = QString::number(size);
 
-    if (os == "windows") {
+    if (os == Constants::OS::Windows) {
         sizeWindowsLabel->setText(value);
-    } else if (os == "linux") {
+    } else if (os == Constants::OS::Linux) {
         sizeLinuxLabel->setText(value);
-    } else if (os == "macos") {
+    } else if (os == Constants::OS::MacOS) {
         sizeMacOSLabel->setText(value);
     }
 }

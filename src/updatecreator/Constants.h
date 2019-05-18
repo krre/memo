@@ -13,14 +13,21 @@ namespace Constants {
     constexpr auto FileTemplate = "memo-update-$version";
     constexpr int SystemRecentProjectsActions = 2;
     constexpr int MaxRecentProjects = 10;
+
     constexpr auto BuildDate = __DATE__;
     constexpr auto BuildTime = __TIME__;
 
+    namespace OS {
+        constexpr auto Windows = "windows";
+        constexpr auto Linux = "linux";
+        constexpr auto MacOS = "macos";
+    }
+
 #ifdef Q_OS_WIN
-    constexpr auto CurrentOS = "windows";
+    constexpr auto CurrentOS = OS::Windows;
 #elif defined (Q_OS_LINUX)
-    constexpr auto CurrentOS = "linux";
+    constexpr auto CurrentOS = OS::Linux;
 #elif defined (Q_OS_MACOS)
-    constexpr auto CurrentOS = "macos";
+    constexpr auto CurrentOS = OS::MacOS;
 #endif
 }
