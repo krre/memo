@@ -7,6 +7,7 @@ namespace Constants {
         constexpr auto Version = "1.2.0";
         constexpr auto Status = ""; // Release, Beta, Alpha
         constexpr auto URL = "https://github.com/krre/memo";
+        constexpr auto ReleasesUrl = "https://github.com/krre/memo/releases";
         constexpr auto DownloadUrl = "http://memo.inf.ua/download";
         constexpr auto CopyrightYear = "2019";
         constexpr auto BuildDate = __DATE__;

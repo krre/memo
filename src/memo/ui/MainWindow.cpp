@@ -162,7 +162,7 @@ void MainWindow::createActions() {
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Check for updates..."), updateChecker, &UpdateChecker::check);
     helpMenu->addAction(tr("Open download page"), [] {
-        QDesktopServices::openUrl(QUrl(App::downloadPageUrl()));
+        QDesktopServices::openUrl(QUrl(Constants::App::ReleasesUrl));
     });
     helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
 }
