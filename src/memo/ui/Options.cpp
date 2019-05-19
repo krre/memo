@@ -1,5 +1,6 @@
 #include "Options.h"
 #include "core/Constants.h"
+#include <memo/Constants.h>
 #include <QtWidgets>
 
 Options::Options(QWidget* parent) : QDialog (parent) {
@@ -62,6 +63,23 @@ Options::Options(QWidget* parent) : QDialog (parent) {
 
     layout->addWidget(groupBoxHotkey);
 
+    // Updates
+    auto updates = new QGroupBox(tr("Updates"));
+    auto updatesLayout = new QGridLayout;
+    updatesLayout->setColumnStretch(1, 1);
+    updates->setLayout(updatesLayout);
+
+    updatesLayout->addWidget(new QLabel(tr("Channel:")), 0, 0);
+    channelComboBox = new QComboBox;
+    channelComboBox->addItem(Memo::Constants::Channel::Release);
+    channelComboBox->addItem(Memo::Constants::Channel::Beta);
+    updatesLayout->addWidget(channelComboBox, 0, 1, Qt::AlignLeft);
+
+    checkStartupCheckBox = new QCheckBox(tr("Check on startup"));
+    updatesLayout->addWidget(checkStartupCheckBox, 1, 0, 1, -1);
+
+    layout->addWidget(updates);
+
     layout->addStretch(1);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -100,6 +118,7 @@ void Options::openFontDialog() {
 
 void Options::readSettings() {
     QSettings settings;
+
     QString language = settings.value("language").toString();
 
     if (!language.isEmpty()) {
@@ -115,8 +134,11 @@ void Options::readSettings() {
     fontFamilyLineEdit->setText(settings.value("Editor/fontFamily", font().family()).toString());
     fontSizeLineEdit->setText(settings.value("Editor/fontSize", font().pointSize()).toString());
 
-    hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Constants::Window::DefaultGlobalHotkey).toString());
+    hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
     groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
+
+    channelComboBox->setCurrentText(settings.value("Updates/channel", Constants::DefaultSettings::Channel).toString());
+    checkStartupCheckBox->setChecked(settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool());
 }
 
 bool Options::writeSettings() {
@@ -139,6 +161,9 @@ bool Options::writeSettings() {
 
     settings.setValue("GlobalHotkey/hotkey", hotkeyLineEdit->text());
     settings.setValue("GlobalHotkey/enabled", groupBoxHotkey->isChecked());
+
+    settings.setValue("Updates/channel", channelComboBox->currentText());
+    settings.setValue("Updates/checkOnStartup", checkStartupCheckBox->isChecked());
 
     return restartRequre;
 }

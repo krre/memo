@@ -29,4 +29,7 @@ private:
 
     QGroupBox* groupBoxHotkey;
     QLineEdit* hotkeyLineEdit;
+
+    QComboBox* channelComboBox;
+    QCheckBox* checkStartupCheckBox;
 };

@@ -15,7 +15,6 @@ namespace Constants {
     namespace Window {
         constexpr int MaxRecentFiles = 10;
         constexpr int SystemRecentFilesActions = 2;
-        constexpr auto DefaultGlobalHotkey = "Ctrl+Alt+M";
     }
 
     namespace Outliner {
@@ -24,5 +23,11 @@ namespace Constants {
 
     namespace Updater {
         constexpr auto ManifestUrl = "http://memo.inf.ua/download/update/manifest.json";
+    }
+
+    namespace DefaultSettings {
+        constexpr auto GlobalHotkey = "Ctrl+Alt+M";
+        constexpr bool CheckOnStartup = true;
+        constexpr auto Channel = "release";
     }
 }

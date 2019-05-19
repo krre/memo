@@ -93,7 +93,7 @@ void MainWindow::applyHotSettings() {
     trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
 
     if (settings.value("GlobalHotkey/enabled").toBool()) {
-        globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Constants::Window::DefaultGlobalHotkey).toString());
+        globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
     } else {
         globalHotkey->unsetShortcut();
     }
