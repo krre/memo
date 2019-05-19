@@ -301,6 +301,6 @@ void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& pre
         database->updateMetaValue("selected_id", id);
         emit noteChanged(id);
     } catch (const SqlQueryError& e) {
-        qCritical() << "Error update selected_id: " << e.text();
+        qCritical() << "Error update selected_id: " << e.error();
     }
 }

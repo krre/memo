@@ -3,15 +3,15 @@
 namespace MemoLib {
 
 const char* Exception::what() const noexcept {
-    return text().toStdString().c_str();
+    return error().toStdString().c_str();
 }
 
-RuntimeError::RuntimeError(const QString& error) : error(error) {
+RuntimeError::RuntimeError(const QString& error) : m_error(error) {
 
 }
 
-QString RuntimeError::text() const {
-    return error;
+QString RuntimeError::error() const {
+    return m_error;
 }
 
 } // MemoLib

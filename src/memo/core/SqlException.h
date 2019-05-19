@@ -7,17 +7,17 @@ class SqlDatabaseError : MemoLib::Exception {
 
 public:
     SqlDatabaseError(const QSqlError& error);
-    QString text() const override;
+    QString error() const override;
 
 private:
-    QSqlError error;
+    QSqlError m_error;
 };
 
 class SqlQueryError : MemoLib::Exception {
 
 public:
     SqlQueryError(const QSqlQuery& query);
-    QString text() const override;
+    QString error() const override;
 
 private:
     QSqlQuery query;

@@ -65,7 +65,7 @@ void NewProjectDialog::accept() {
 
         QDialog::accept();
     } catch (const MemoLib::RuntimeError& e) {
-        QMessageBox::critical(this, tr("Error"), e.text());
+        QMessageBox::critical(this, tr("Error"), e.error());
     }
 }
 
