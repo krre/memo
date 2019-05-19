@@ -3,7 +3,7 @@
 #include "ProjectSettings.h"
 #include "NetDialog.h"
 #include "ClearSizeDialog.h"
-#include "lib/ZipCompressor.h"
+#include <memo/ZipCompressor.h>
 #include <QtWidgets>
 
 Form::Form(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
@@ -310,7 +310,7 @@ void Form::build() {
 
     zipPath = zipDir + "/" + updateDirName + ".zip";
 
-    MemoLib::ZipCompressor::compress(zipPath, updateDirPath + "/");
+    Memo::ZipCompressor::compress(zipPath, updateDirPath + "/");
 
     QFileInfo fi(zipPath);
     setFileSize(Constants::CurrentOS, fi.size());

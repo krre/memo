@@ -1,14 +1,14 @@
 #include "ui/MainWindow.h"
 #include "core/Constants.h"
 #include "core/App.h"
-#include "lib/MessageHandler.h"
+#include <memo/MessageHandler.h>
 #include <QMessageBox>
 #include <QSettings>
 #include <QTranslator>
 #include <QLibraryInfo>
 
 int main(int argc, char* argv[]) {
-    qInstallMessageHandler(MemoLib::messageHandler);
+    qInstallMessageHandler(Memo::messageHandler);
 
     App app(argc, argv);
 

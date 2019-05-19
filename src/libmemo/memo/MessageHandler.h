@@ -1,7 +1,7 @@
 #pragma once
 #include <QString>
 
-namespace MemoLib {
+namespace Memo {
 
 void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
      QByteArray localMsg = msg.toLocal8Bit();
@@ -24,4 +24,4 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
     }
 }
 
-} // MemoLib
+} // Memo

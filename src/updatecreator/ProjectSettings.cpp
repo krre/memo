@@ -1,6 +1,6 @@
 #include "ProjectSettings.h"
 #include "Constants.h"
-#include "lib/Exception.h"
+#include <memo/Exception.h>
 #include <QtCore>
 
 ProjectSettings::ProjectSettings(QObject* parent) : QObject(parent) {
@@ -20,7 +20,7 @@ void ProjectSettings::open(const QString& path) {
     QFile file(filePath);
 
     if (!file.open(QIODevice::ReadOnly)) {
-        throw MemoLib::RuntimeError(tr("Failed to open project file for reading"));
+        throw Memo::RuntimeError(tr("Failed to open project file for reading"));
     }
 
     project = QJsonDocument::fromJson(file.readAll()).object();
@@ -32,7 +32,7 @@ void ProjectSettings::save() {
     QFile file(filePath);
 
     if (!file.open(QIODevice::WriteOnly)) {
-        throw MemoLib::RuntimeError(tr("Failed to open project file for writting"));
+        throw Memo::RuntimeError(tr("Failed to open project file for writting"));
     }
 
     file.write(QJsonDocument(project).toJson());

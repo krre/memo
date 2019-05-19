@@ -2,7 +2,7 @@
 #include <stdexcept>
 #include <QString>
 
-namespace MemoLib {
+namespace Memo {
 
 class Exception : std::exception {
 
@@ -22,4 +22,4 @@ private:
     QString m_error;
 };
 
-} // MemoLib
+} // Memo

@@ -188,7 +188,7 @@ void MainWindow::loadFile(const QString& filePath) {
         outliner->build();
         setCurrentFile(filePath);
         addRecentFile(filePath);
-    } catch (const MemoLib::Exception& e) {
+    } catch (const Memo::Exception& e) {
         showErrorDialog(e.error());
     }
 }
@@ -255,7 +255,7 @@ void MainWindow::newFile() {
     try {
         database->create(fileName);
         setCurrentFile(fileName);
-    } catch (const MemoLib::Exception& e) {
+    } catch (const Memo::Exception& e) {
         showErrorDialog(e.error());
     }
 }

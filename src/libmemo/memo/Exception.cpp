@@ -1,6 +1,6 @@
 #include "Exception.h"
 
-namespace MemoLib {
+namespace Memo {
 
 const char* Exception::what() const noexcept {
     return error().toStdString().c_str();
@@ -14,4 +14,4 @@ QString RuntimeError::error() const {
     return m_error;
 }
 
-} // MemoLib
+} // Memo

@@ -1,7 +1,7 @@
 #pragma once
 #include <QString>
 
-namespace MemoLib {
+namespace Memo {
 
 class ZipCompressor {
 
@@ -11,4 +11,4 @@ public:
     static void decompress(const QString& name, const QString& dstDir);
 };
 
-} // MemoLib
+} // Memo

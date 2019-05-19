@@ -1,6 +1,6 @@
 #include "NewProjectDialog.h"
 #include "Constants.h"
-#include "lib/Exception.h"
+#include <memo/Exception.h>
 #include <QtWidgets>
 
 NewProjectDialog::NewProjectDialog(QWidget* parent) : QDialog(parent) {
@@ -46,13 +46,13 @@ void NewProjectDialog::accept() {
         QString name = nameLineEdit->text();
 
         if (name.isEmpty()) {
-            throw MemoLib::RuntimeError(tr("Name is empty"));
+            throw Memo::RuntimeError(tr("Name is empty"));
         }
 
         QString directory = directoryLineEdit->text();
 
         if (directory.isEmpty() || !QDir(directory).exists()) {
-            throw MemoLib::RuntimeError(tr("Wrong directory path"));
+            throw Memo::RuntimeError(tr("Wrong directory path"));
         }
 
         projectDirPath = directory + "/" + name;
@@ -60,11 +60,11 @@ void NewProjectDialog::accept() {
         QDir dir;
 
         if (!dir.mkpath(projectDirPath)) {
-            throw MemoLib::RuntimeError(tr("Failed to create project directory"));
+            throw Memo::RuntimeError(tr("Failed to create project directory"));
         }
 
         QDialog::accept();
-    } catch (const MemoLib::RuntimeError& e) {
+    } catch (const Memo::RuntimeError& e) {
         QMessageBox::critical(this, tr("Error"), e.error());
     }
 }

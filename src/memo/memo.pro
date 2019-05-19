@@ -15,7 +15,7 @@ win32: RC_ICONS += images/icon.ico
 linux: LIBS += -lX11
 win32: LIBS += -luser32
 
-include(../memolib/memolib.pri)
+include(../libmemo/libmemo.pri)
 
 SOURCES += \
     main.cpp \

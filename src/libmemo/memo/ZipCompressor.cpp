@@ -6,7 +6,7 @@
 #include <QDirIterator>
 #include <QVector>
 
-namespace MemoLib {
+namespace Memo {
 
 ZipCompressor::ZipCompressor() {
 
@@ -67,4 +67,4 @@ void ZipCompressor::decompress(const QString& name, const QString& dstDir) {
     }
 }
 
-} // MemoLib
+} // Memo

@@ -1,11 +1,11 @@
 #include "MainWindow.h"
 #include "Constants.h"
-#include "lib/MessageHandler.h"
+#include <memo/MessageHandler.h>
 #include <QApplication>
 #include <QSettings>
 
 int main(int argc, char* argv[]) {
-    qInstallMessageHandler(MemoLib::messageHandler);
+    qInstallMessageHandler(Memo::messageHandler);
 
     QApplication app(argc, argv);
 

@@ -8,7 +8,7 @@ DEFINES += QT_MESSAGELOGCONTEXT
 
 CONFIG += c++17
 
-include(../memolib/memolib.pri)
+include(../libmemo/libmemo.pri)
 
 SOURCES += \
     ClearSizeDialog.cpp \

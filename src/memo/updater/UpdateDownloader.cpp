@@ -1,6 +1,6 @@
 #include "UpdateDownloader.h"
 #include "core/App.h"
-#include "lib/ZipCompressor.h"
+#include <memo/ZipCompressor.h>
 #include <QNetworkReply>
 #include <QFile>
 #include <QDirIterator>
@@ -118,7 +118,7 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
         return;
     }
 
-    MemoLib::ZipCompressor::decompress(filePath, dirPath);
+    Memo::ZipCompressor::decompress(filePath, dirPath);
     QFile::remove(filePath);
 
     updateDirs.append(filePath.remove(".zip"));
