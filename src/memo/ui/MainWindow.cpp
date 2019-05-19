@@ -35,8 +35,13 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     });
 
     readSettings();
-
     updateMenuState();
+
+    QSettings settings;
+
+    if (settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool()) {
+        updateChecker->check();
+    }
 }
 
 void MainWindow::readSettings() {
