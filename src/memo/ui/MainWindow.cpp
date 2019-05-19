@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSettings settings;
 
     if (settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool()) {
+        silentCheckUpdate = true;
         updateChecker->check();
     }
 }
@@ -303,7 +304,11 @@ void MainWindow::clearMenuRecentFiles() {
 
 void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates) {
     if (updates.isEmpty()) {
-        QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
+        if (!silentCheckUpdate) {
+            QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
+        } else {
+            silentCheckUpdate = false;
+        }
     } else {
         NewUpdates newUpdates(updates);
 

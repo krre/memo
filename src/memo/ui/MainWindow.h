@@ -64,4 +64,5 @@ private:
 
     Database* database = nullptr;
     QString currentFile;
+    bool silentCheckUpdate = false;
 };
