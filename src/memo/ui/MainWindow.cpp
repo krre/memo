@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "Editor.h"
 #include "Options.h"
+#include "core/App.h"
 #include "core/Constants.h"
 #include "core/SqlException.h"
 #include "outliner/Outliner.h"
@@ -160,6 +161,9 @@ void MainWindow::createActions() {
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Check for updates..."), updateChecker, &UpdateChecker::check);
+    helpMenu->addAction(tr("Open download page"), [] {
+        QDesktopServices::openUrl(QUrl(App::downloadPageUrl()));
+    });
     helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
 }
 
