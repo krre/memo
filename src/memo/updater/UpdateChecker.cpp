@@ -38,6 +38,12 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
         QJsonObject updateObj = value.toObject();
 
         Update update{};
+        update.channel = updateObj["channel"].toString();
+
+        QSettings settings;
+
+        if (!isChannelSuit(settings.value("Updates/channel", Constants::DefaultSettings::Channel).toString(), update.channel))  continue;
+
         update.version = updateObj["version"].toString();
 
         QVersionNumber updateAppVer = QVersionNumber::fromString(update.version);
@@ -58,7 +64,6 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
             update.size = size;
-            update.channel = updateObj["channel"].toString();
 
             updates.append(update);
         } else {
@@ -67,4 +72,12 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
     }
 
     emit checkResult(updates);
+}
+
+bool UpdateChecker::isChannelSuit(const QString& current, const QString& mapOn) {
+    if (mapOn == "alpha") return false;
+    if (mapOn == "release") return true;
+    if (mapOn == "beta" && current == "beta") return true;
+
+    return false;
 }

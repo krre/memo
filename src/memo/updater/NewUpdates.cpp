@@ -7,17 +7,15 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     resize(600, 300);
 
     QString description;
-    int totalSize = 0;
 
     for (const auto& update : updates) {
-        description += tr("Version: %1 - Date: %2 - Size: %3.\n").arg(update.version, update.date, sizeToMegabyte(update.size));
+        description += tr("Version: %1 (%2) - Date: %3\n").arg(update.version, update.channel, update.date);
         description += update.description;
         description += "\n\n";
-
-        totalSize += update.size;
-
-        urls.append(update.url);
     }
+
+    int size = updates.first().size;
+    url = updates.first().url;
 
     auto layout = new QVBoxLayout;
     setLayout(layout);
@@ -36,12 +34,12 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     gridLayout->addWidget(new QLabel(QString::number(updates.count())), 1, 1);
 
     gridLayout->addWidget(new QLabel(tr("Size:")), 2, 0);
-    gridLayout->addWidget(new QLabel(sizeToMegabyte(totalSize)), 2, 1);
+    gridLayout->addWidget(new QLabel(sizeToMegabyte(size)), 2, 1);
 
     layout->addLayout(gridLayout);
 
     progressBar = new QProgressBar;
-    progressBar->setMaximum(totalSize);
+    progressBar->setMaximum(size);
     layout->addWidget(progressBar);
 
     auto buttonBox = new QDialogButtonBox;
@@ -59,8 +57,8 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
 }
 
-QString NewUpdates::getUpdateDir() const {
-    return updateDir;
+QString NewUpdates::updateDir() const {
+    return m_updateDir;
 }
 
 void NewUpdates::reject() {
@@ -70,11 +68,11 @@ void NewUpdates::reject() {
 
 void NewUpdates::startUpdate() {
     updateButton->setEnabled(false);
-    updateDownloader->download(urls);
+    updateDownloader->download(url);
 }
 
 void NewUpdates::finishUpdate(const QString& updateDir) {
-    this->updateDir = updateDir;
+    m_updateDir = updateDir;
     accept();
 }
 

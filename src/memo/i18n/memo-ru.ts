@@ -137,34 +137,40 @@
         <translation>Доступны новые обновления</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="13"/>
         <source>Version: %1 - Date: %2 - Size: %3.
 </source>
-        <translation>Версия: %1 - Дата: %2 - Размер: %3.
+        <translation type="vanished">Версия: %1 - Дата: %2 - Размер: %3.
 </translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="32"/>
+        <location filename="../updater/NewUpdates.cpp" line="12"/>
+        <source>Version: %1 (%2) - Date: %3
+</source>
+        <translation>Версия: %1 (%2) - Дата: %3
+</translation>
+    </message>
+    <message>
+        <location filename="../updater/NewUpdates.cpp" line="31"/>
         <source>Channel:</source>
         <translation>Канал:</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="35"/>
+        <location filename="../updater/NewUpdates.cpp" line="34"/>
         <source>Count:</source>
         <translation>Количество:</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="38"/>
+        <location filename="../updater/NewUpdates.cpp" line="37"/>
         <source>Size:</source>
         <translation>Размер:</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="82"/>
+        <location filename="../updater/NewUpdates.cpp" line="81"/>
         <source>MB</source>
         <translation>МБ</translation>
     </message>
     <message>
-        <location filename="../updater/NewUpdates.cpp" line="48"/>
+        <location filename="../updater/NewUpdates.cpp" line="47"/>
         <source>Update</source>
         <translation>Обновить</translation>
     </message>

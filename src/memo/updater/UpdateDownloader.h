@@ -8,7 +8,7 @@ class UpdateDownloader : public QObject {
     Q_OBJECT
 public:
     UpdateDownloader(QObject* parent = nullptr);
-    void download(const QVector<QUrl>& urls);
+    void download(const QUrl& url);
     void cancel();
 
 signals:
@@ -17,11 +17,11 @@ signals:
     void abort();
 
 private:
-    void downloadFile();
+    void prepareUpdate();
     void saveFile(const QByteArray& data, const QString& fileName);
+    QString loaderName() const;
 
-    QVector<QUrl> urls;
-    QVector<QString> updateDirs;
-    qint64 totalSize = 0;
+    QUrl url;
+    QString updateDir;
     QTemporaryDir tmpDir;
 };

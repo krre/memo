@@ -299,7 +299,7 @@ void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& upda
         NewUpdates newUpdates(updates);
 
         if (newUpdates.exec() == QDialog::Accepted) {
-            QString updateDir = newUpdates.getUpdateDir();
+            QString updateDir = newUpdates.updateDir();
 
             if (!updateDir.isEmpty()) {
                 QString loaderPath = qApp->applicationDirPath() + "/loader";

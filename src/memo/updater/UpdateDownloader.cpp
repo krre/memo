@@ -10,99 +10,49 @@ UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
     tmpDir.setAutoRemove(false);
 }
 
-void UpdateDownloader::download(const QVector<QUrl>& urls) {
-    this->urls = urls;
-    totalSize = 0;
-    downloadFile();
+void UpdateDownloader::download(const QUrl& url) {
+    auto reply = App::networkAccessManager()->get(QNetworkRequest(url));
+
+    connect(reply, &QNetworkReply::finished, [reply, this] {
+        if (reply->isOpen()) {
+            saveFile(reply->readAll(), reply->url().fileName());
+            reply->close();
+            prepareUpdate();
+        }
+
+        reply->deleteLater();
+    });
+
+    connect(reply, &QNetworkReply::downloadProgress, [this] (qint64 bytesReceived, qint64 bytesTotal) {
+        Q_UNUSED(bytesTotal)
+        emit downloadProgress(bytesReceived);
+    });
+
+    connect(this, &UpdateDownloader::abort, reply, &QNetworkReply::abort);
+
+    connect(reply, qOverload<QNetworkReply::NetworkError>(&QNetworkReply::error), [reply] (QNetworkReply::NetworkError code) {
+       qCritical() << "Failed to download update. Error code:" << code;
+       reply->deleteLater();
+    });
 }
 
 void UpdateDownloader::cancel() {
     emit abort();
 }
 
-void UpdateDownloader::downloadFile() {
-    if (!urls.isEmpty()) {
-        QUrl url = urls.last();
-        urls.removeLast();
+void UpdateDownloader::prepareUpdate() {
+    // Update loader.
+    QString loaderSrcPath = updateDir + "/" + loaderName();
+    // Fix bug with unseting x-flag after decompressing zip on non-Windows OS.
+    QFile::setPermissions(loaderSrcPath, QFile::permissions(loaderSrcPath) | QFile::ExeOwner);
 
-        auto reply = App::networkAccessManager()->get(QNetworkRequest(url));
-
-        connect(reply, &QNetworkReply::finished, [reply, this] {
-            if (reply->isOpen()) {
-                saveFile(reply->readAll(), reply->url().fileName());
-                reply->close();
-                downloadFile();
-            }
-
-            reply->deleteLater();
-        });
-
-        connect(reply, &QNetworkReply::downloadProgress, [this] (qint64 bytesReceived, qint64 bytesTotal) {
-            emit downloadProgress(totalSize + bytesReceived);
-
-            if (bytesReceived == bytesTotal) {
-                totalSize += bytesTotal;
-            }
-        });
-
-        connect(this, &UpdateDownloader::abort, reply, &QNetworkReply::abort);
-
-        connect(reply, qOverload<QNetworkReply::NetworkError>(&QNetworkReply::error), [reply] (QNetworkReply::NetworkError code) {
-           qCritical() << "Failed to download update. Error code:" << code;
-           reply->deleteLater();
-        });
-    } else {
-        // Collect all updates into one directory
-        QString finalUpdateDir = tmpDir.path() + "/update";
-
-        QDir dir;
-        dir.mkpath(finalUpdateDir);
-
-        for (const auto& dirPath : updateDirs) {
-            QDirIterator it(dirPath, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
-
-            while (it.hasNext()) {
-                QString path = it.next();
-
-                if (it.fileInfo().isDir()) continue;
-
-                QString relativePath = path;
-                relativePath = relativePath.remove(dirPath);
-
-                QString finalPath = finalUpdateDir + relativePath;
-
-                if (QFile::exists(finalPath)) {
-                    QFile::remove(finalPath);
-                }
-
-                QFileInfo fi(finalPath);
-                QDir dir;
-                dir.mkpath(fi.absolutePath());
-
-                QFile::rename(path, finalPath);
-            }
-
-            QDir dir(dirPath);
-            dir.removeRecursively();
-        }
-
-        // Update loader.
-#ifdef Q_OS_WIN
-        QString loaderName = "loader.exe";
-#else
-        QString loaderName = "loader";
-#endif
-
-        QString loaderSrcPath = finalUpdateDir + "/" + loaderName;
-
-        if (QFile::exists(loaderSrcPath)) {
-            QString loaderDstPath = qApp->applicationDirPath() + "/" + loaderName;
-            QFile::remove(loaderDstPath);
-            QFile::rename(loaderSrcPath, loaderDstPath);
-        }
-
-        emit finished(finalUpdateDir);
+    if (QFile::exists(loaderSrcPath)) {
+        QString loaderDstPath = qApp->applicationDirPath() + "/" + loaderName();
+        QFile::remove(loaderDstPath);
+        QFile::rename(loaderSrcPath, loaderDstPath);
     }
+
+    emit finished(updateDir);
 }
 
 void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName) {
@@ -121,5 +71,13 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
     Memo::ZipCompressor::decompress(filePath, dirPath);
     QFile::remove(filePath);
 
-    updateDirs.append(filePath.remove(".zip"));
+    updateDir = filePath.remove(".zip");
+}
+
+QString UpdateDownloader::loaderName() const {
+#ifdef Q_OS_WIN
+    return "loader.exe";
+#else
+    return "loader";
+#endif
 }
