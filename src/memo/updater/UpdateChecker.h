@@ -9,6 +9,7 @@ public:
     struct Update {
         QUrl url;
         QString version;
+        QString baseVersion;
         QString description;
         QString date;
         int size;

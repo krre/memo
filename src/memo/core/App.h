@@ -8,6 +8,9 @@ class App : public QApplication {
 public:
     App(int& argc, char** argv);
 
+    static QString downloadPageUrl();
+    static QString installerUrl(const QString& version);
+
     static QNetworkAccessManager* networkAccessManager();
 
 private:

@@ -7,6 +7,7 @@ namespace Constants {
         constexpr auto Version = "1.2.0";
         constexpr auto Status = ""; // Release, Beta, Alpha
         constexpr auto URL = "https://github.com/krre/memo";
+        constexpr auto DownloadUrl = "http://memo.inf.ua/download";
         constexpr auto CopyrightYear = "2019";
         constexpr auto BuildDate = __DATE__;
         constexpr auto BuildTime = __TIME__;
@@ -19,10 +20,6 @@ namespace Constants {
 
     namespace Outliner {
         constexpr auto TreeItemMimeType = "application/x-treeitem";
-    }
-
-    namespace Updater {
-        constexpr auto ManifestUrl = "http://memo.inf.ua/download/update/manifest.json";
     }
 
     namespace DefaultSettings {

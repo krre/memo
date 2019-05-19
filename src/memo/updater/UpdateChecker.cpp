@@ -4,8 +4,8 @@
 #include <memo/Constants.h>
 #include <QtNetwork>
 
-UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent), manifestUrl(QUrl(Constants::Updater::ManifestUrl)) {
-
+UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent),
+    manifestUrl(QUrl(QString(Constants::App::DownloadUrl) + "/update/manifest.json")) {
 }
 
 void UpdateChecker::check() {
@@ -60,6 +60,7 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
             if (size <= 0) continue;
 
             QString urlTemplate = manifest["template"].toString();
+            update.baseVersion = updateObj["baseVersion"].toString();
             update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(Memo::Constants::CurrentOS, urlTemplate.replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();

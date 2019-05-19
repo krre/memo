@@ -1,10 +1,12 @@
 #include "NewUpdates.h"
 #include "UpdateDownloader.h"
+#include "../core/Constants.h"
+#include "../core/App.h"
 #include <QtWidgets>
 
 NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent) : QDialog(parent){
     setWindowTitle(tr("New Updates Available"));
-    resize(600, 300);
+    resize(600, 400);
 
     QString description;
 
@@ -16,6 +18,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     int size = updates.first().size;
     url = updates.first().url;
+    bool isValidUpdate = QVersionNumber::fromString(Constants::App::Version) >= QVersionNumber::fromString(updates.first().baseVersion);
 
     auto layout = new QVBoxLayout;
     setLayout(layout);
@@ -38,12 +41,22 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     layout->addLayout(gridLayout);
 
+    if (!isValidUpdate) {
+        auto warning = new QLabel(tr("Updating to this version is impossible!\nDownload installation of application by link below, reinstall it and try update again."));
+        warning->setStyleSheet("QLabel { color : red; }");
+        layout->addWidget(warning);
+        auto link = new QLabel(QString("<a href=%1>%1</a>").arg(App::installerUrl(updates.first().baseVersion)));
+        link->setOpenExternalLinks(true);
+        layout->addWidget(link);
+    }
+
     progressBar = new QProgressBar;
     progressBar->setMaximum(size);
     layout->addWidget(progressBar);
 
     auto buttonBox = new QDialogButtonBox;
     updateButton = new QPushButton(tr("Update"));
+    updateButton->setEnabled(isValidUpdate);
     buttonBox->addButton(updateButton, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(QDialogButtonBox::Cancel);
 
