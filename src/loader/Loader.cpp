@@ -61,6 +61,9 @@ void Loader::timerEvent(QTimerEvent* event) {
         quit();
     }
 
+    // Fix bug with unseting x-flag after decompressing zip on non-Windows OS.
+    QFile::setPermissions(program, QFile::permissions(program) | QFile::ExeOwner);
+
     qInfo() << "Start program:" << program;
     QProcess::startDetached(program);
 
