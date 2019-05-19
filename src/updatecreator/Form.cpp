@@ -1,9 +1,9 @@
 #include "Form.h"
-#include "Constants.h"
 #include "ProjectSettings.h"
 #include "NetDialog.h"
 #include "ClearSizeDialog.h"
 #include <memo/ZipCompressor.h>
+#include <memo/Constants.h>
 #include <QtWidgets>
 
 Form::Form(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projectSettings(settings) {
@@ -46,9 +46,9 @@ Form::Form(ProjectSettings* settings, QWidget* parent) : QWidget(parent), projec
 
     updateGridLayout->addWidget(new QLabel("Channel:"), 3, 0);
     channelComboBox = new QComboBox;
-    channelComboBox->addItem(Constants::Channel::Alpha);
-    channelComboBox->addItem(Constants::Channel::Beta);
-    channelComboBox->addItem(Constants::Channel::Release);
+    channelComboBox->addItem(Memo::Constants::Channel::Alpha);
+    channelComboBox->addItem(Memo::Constants::Channel::Beta);
+    channelComboBox->addItem(Memo::Constants::Channel::Release);
     updateGridLayout->addWidget(channelComboBox, 3, 1, Qt::AlignLeft);
 
     updateGridLayout->addWidget(new QLabel(tr("Size:")), 4, 0);
@@ -165,9 +165,9 @@ void Form::populateUpdate(const ListModel::Update& update) {
     int channelIndex = channelComboBox->findText(update.channel);
     channelComboBox->setCurrentIndex(channelIndex);
 
-    sizeWindowsLabel->setText(update.size.contains(Constants::OS::Windows) ? QString::number(update.size[Constants::OS::Windows]) : "");
-    sizeLinuxLabel->setText(update.size.contains(Constants::OS::Linux) ? QString::number(update.size[Constants::OS::Linux]) : "");
-    sizeMacOSLabel->setText(update.size.contains(Constants::OS::MacOS) ? QString::number(update.size[Constants::OS::MacOS]) : "");
+    sizeWindowsLabel->setText(update.size.contains(Memo::Constants::OS::Windows) ? QString::number(update.size[Memo::Constants::OS::Windows]) : "");
+    sizeLinuxLabel->setText(update.size.contains(Memo::Constants::OS::Linux) ? QString::number(update.size[Memo::Constants::OS::Linux]) : "");
+    sizeMacOSLabel->setText(update.size.contains(Memo::Constants::OS::MacOS) ? QString::number(update.size[Memo::Constants::OS::MacOS]) : "");
 
     descriptionTextEdit->setPlainText(update.description);
 }
@@ -180,15 +180,15 @@ ListModel::Update Form::update() const {
     update.channel = channelComboBox->currentText();
 
     if (!sizeWindowsLabel->text().isEmpty()) {
-        update.size[Constants::OS::Windows] = sizeWindowsLabel->text().toInt();
+        update.size[Memo::Constants::OS::Windows] = sizeWindowsLabel->text().toInt();
     }
 
     if (!sizeLinuxLabel->text().isEmpty()) {
-        update.size[Constants::OS::Linux] = sizeLinuxLabel->text().toInt();
+        update.size[Memo::Constants::OS::Linux] = sizeLinuxLabel->text().toInt();
     }
 
     if (!sizeMacOSLabel->text().isEmpty()) {
-        update.size[Constants::OS::MacOS] = sizeMacOSLabel->text().toInt();
+        update.size[Memo::Constants::OS::MacOS] = sizeMacOSLabel->text().toInt();
     }
 
     update.description = descriptionTextEdit->document()->toPlainText();
@@ -304,7 +304,7 @@ void Form::build() {
         QFile::copy(path, finalPath);
     }
 
-    QString zipDir = projectSettings->projectDir() + "/" + Constants::CurrentOS;
+    QString zipDir = projectSettings->projectDir() + "/" + Memo::Constants::CurrentOS;
     QDir dir;
     dir.mkpath(zipDir);
 
@@ -313,7 +313,7 @@ void Form::build() {
     Memo::ZipCompressor::compress(zipPath, updateDirPath + "/");
 
     QFileInfo fi(zipPath);
-    setFileSize(Constants::CurrentOS, fi.size());
+    setFileSize(Memo::Constants::CurrentOS, fi.size());
 
     QApplication::restoreOverrideCursor();
 
@@ -365,11 +365,11 @@ QWidget*Form::root(QWidget* child) {
 
 void Form::setFileSize(const QString& os, qint64 size) {
     QString value = QString::number(size);
-    if (os == Constants::OS::Windows) {
+    if (os == Memo::Constants::OS::Windows) {
         sizeWindowsLabel->setText(value);
-    } else if (os == Constants::OS::Linux) {
+    } else if (os == Memo::Constants::OS::Linux) {
         sizeLinuxLabel->setText(value);
-    } else if (os == Constants::OS::MacOS) {
+    } else if (os == Memo::Constants::OS::MacOS) {
         sizeMacOSLabel->setText(value);
     }
 }

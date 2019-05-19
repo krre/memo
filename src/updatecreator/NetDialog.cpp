@@ -1,6 +1,6 @@
 #include "NetDialog.h"
 #include "ProjectSettings.h"
-#include "Constants.h"
+#include <memo/Constants.h>
 #include <QtWidgets>
 #include <QtNetwork>
 
@@ -60,7 +60,7 @@ void NetDialog::accept() {
 
     QFileInfo fi(filePath);
 
-    QUrl url(urlLineEdit->text() + "/" + (fileType == FileType::Manifest ? "" : QString(Constants::CurrentOS) + "/") + fi.fileName());
+    QUrl url(urlLineEdit->text() + "/" + (fileType == FileType::Manifest ? "" : QString(Memo::Constants::CurrentOS) + "/") + fi.fileName());
     url.setUserName(loginLineEdit->text());
     url.setPassword(passwordLineEdit->text());
     url.setPort(21);

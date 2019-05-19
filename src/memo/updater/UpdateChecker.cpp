@@ -1,6 +1,7 @@
 #include "UpdateChecker.h"
 #include "core/App.h"
 #include "core/Constants.h"
+#include <memo/Constants.h>
 #include <QtNetwork>
 
 UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent), manifestUrl(QUrl(Constants::Updater::ManifestUrl)) {
@@ -30,14 +31,6 @@ void UpdateChecker::check() {
 }
 
 void UpdateChecker::findUpdates(const QJsonObject& manifest) {
-#if defined Q_OS_LINUX
-    QString currentOS = "linux";
-#elif defined Q_OS_WIN
-    QString currentOS = "windows";
-#elif defined Q_OS_MACOS
-    QString currentOS = "macos";
-#endif
-
     QVector<Update> updates;
     QVersionNumber currentAppVer = QVersionNumber::fromString(Constants::App::Version);
 
@@ -56,12 +49,12 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
         QJsonObject sizeObj = updateObj["size"].toObject();
 
         // Find valid OS update.
-        if (sizeObj.contains(currentOS)) {
-            int size = sizeObj[currentOS].toInt();
+        if (sizeObj.contains(Memo::Constants::CurrentOS)) {
+            int size = sizeObj[Memo::Constants::CurrentOS].toInt();
             if (size <= 0) continue;
 
             QString urlTemplate = manifest["template"].toString();
-            update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(currentOS, urlTemplate.replace("$version", update.version))));
+            update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(Memo::Constants::CurrentOS, urlTemplate.replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
             update.size = size;

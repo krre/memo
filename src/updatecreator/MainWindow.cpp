@@ -5,6 +5,7 @@
 #include "Outliner.h"
 #include "Form.h"
 #include "ListModel.h"
+#include <memo/Constants.h>
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -115,7 +116,7 @@ void MainWindow::addUpdate() {
     }
 
     update.date = QDate::currentDate().toString("dd.MM.yyyy");
-    update.channel = Constants::Channel::Release;
+    update.channel = Memo::Constants::Channel::Release;
 
     listModel->addUpdate(update);
     outliner->selectRow(0);

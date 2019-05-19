@@ -1,5 +1,5 @@
 #include "ClearSizeDialog.h"
-#include "Constants.h"
+#include <memo/Constants.h>
 #include <QtWidgets>
 
 ClearSizeDialog::ClearSizeDialog(QWidget* parent) : QDialog(parent) {
@@ -28,15 +28,15 @@ ClearSizeDialog::ClearSizeDialog(QWidget* parent) : QDialog(parent) {
 
 void ClearSizeDialog::accept() {
     if (windowsCheckBox->isChecked()) {
-        os.append(Constants::OS::Windows);
+        os.append(Memo::Constants::OS::Windows);
     }
 
     if (linuxCheckBox->isChecked()) {
-        os.append(Constants::OS::Linux);
+        os.append(Memo::Constants::OS::Linux);
     }
 
     if (macOSCheckBox->isChecked()) {
-        os.append(Constants::OS::MacOS);
+        os.append(Memo::Constants::OS::MacOS);
     }
 
     QDialog::accept();

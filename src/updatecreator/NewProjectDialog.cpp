@@ -1,5 +1,4 @@
 #include "NewProjectDialog.h"
-#include "Constants.h"
 #include <memo/Exception.h>
 #include <QtWidgets>
 

@@ -1,6 +1,6 @@
 #include "ProjectSettings.h"
-#include "Constants.h"
 #include <memo/Exception.h>
+#include <memo/Constants.h>
 #include <QtCore>
 
 ProjectSettings::ProjectSettings(QObject* parent) : QObject(parent) {
@@ -48,22 +48,22 @@ void ProjectSettings::close() {
 
 void ProjectSettings::setContentDir(const QString& path) {
     QJsonObject contentDir = project["contentDir"].toObject();
-    contentDir[Constants::CurrentOS] = path;
+    contentDir[Memo::Constants::CurrentOS] = path;
     project["contentDir"] = contentDir;
 }
 
 QString ProjectSettings::contentDir() const {
-    return project["contentDir"].toObject()[Constants::CurrentOS].toString();
+    return project["contentDir"].toObject()[Memo::Constants::CurrentOS].toString();
 }
 
 void ProjectSettings::setInstallerPath(const QString& path) {
     QJsonObject installerPath = project["installerPath"].toObject();
-    installerPath[Constants::CurrentOS] = path;
+    installerPath[Memo::Constants::CurrentOS] = path;
     project["installerPath"] = installerPath;
 }
 
 QString ProjectSettings::installerPath() const {
-    return project["installerPath"].toObject()[Constants::CurrentOS].toString();
+    return project["installerPath"].toObject()[Memo::Constants::CurrentOS].toString();
 }
 
 QString ProjectSettings::projectDir() const {
