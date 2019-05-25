@@ -76,9 +76,11 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 }
 
 bool UpdateChecker::isChannelSuit(const QString& current, const QString& mapOn) {
-    if (mapOn == "alpha") return false;
-    if (mapOn == "release") return true;
-    if (mapOn == "beta" && current == "beta") return true;
+    using namespace Memo::Constants::Channel;
+
+    if (mapOn == Alpha) return false;
+    if (mapOn == Release) return true;
+    if (mapOn == Beta && current == Beta) return true;
 
     return false;
 }
