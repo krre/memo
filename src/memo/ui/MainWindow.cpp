@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "Editor.h"
 #include "Options.h"
-#include "core/App.h"
+#include "core/Context.h"
 #include "core/Constants.h"
 #include "core/SqlException.h"
 #include "outliner/Outliner.h"

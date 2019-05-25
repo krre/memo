@@ -1,24 +1,25 @@
-#include "App.h"
+#include "Context.h"
 #include "Constants.h"
 #include <memo/Constants.h>
 #include <QtNetwork>
 
-App* App::instance = nullptr;
+Context* Context::instance = nullptr;
 
-App::App(int& argc, char** argv) : QApplication(argc, argv) {
+Context::Context(QObject* parent) : QObject (parent) {
+    Q_ASSERT(!instance);
     instance = this;
     nam = new QNetworkAccessManager(this);
 }
 
-QNetworkAccessManager* App::networkAccessManager() {
+QNetworkAccessManager* Context::networkAccessManager() {
     return instance->nam;
 }
 
-QString App::downloadPageUrl() {
+QString Context::downloadPageUrl() {
     return QString(Constants::App::DownloadUrl) + "/install/" + Memo::Constants::CurrentOS;
 }
 
-QString App::installerUrl(const QString& version) {
+QString Context::installerUrl(const QString& version) {
 #if defined Q_OS_LINUX
     QString installerName = QString("%1-%2.tar.gz").arg(qApp->applicationName(), version);
 #elif defined Q_OS_WIN

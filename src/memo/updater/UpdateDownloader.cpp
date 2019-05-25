@@ -1,9 +1,10 @@
 #include "UpdateDownloader.h"
-#include "core/App.h"
+#include "core/Context.h"
 #include <memo/ZipCompressor.h>
 #include <QNetworkReply>
 #include <QFile>
 #include <QDirIterator>
+#include <QApplication>
 #include <QDebug>
 
 UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
@@ -11,7 +12,7 @@ UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
 }
 
 void UpdateDownloader::download(const QUrl& url) {
-    auto reply = App::networkAccessManager()->get(QNetworkRequest(url));
+    auto reply = Context::networkAccessManager()->get(QNetworkRequest(url));
 
     connect(reply, &QNetworkReply::finished, [reply, this] {
         if (reply->isOpen()) {

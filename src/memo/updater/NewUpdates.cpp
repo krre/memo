@@ -1,7 +1,7 @@
 #include "NewUpdates.h"
 #include "UpdateDownloader.h"
 #include "../core/Constants.h"
-#include "../core/App.h"
+#include "../core/Context.h"
 #include <QtWidgets>
 
 NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* parent) : QDialog(parent){

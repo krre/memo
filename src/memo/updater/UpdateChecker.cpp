@@ -1,5 +1,5 @@
 #include "UpdateChecker.h"
-#include "core/App.h"
+#include "core/Context.h"
 #include "core/Constants.h"
 #include <memo/Constants.h>
 #include <QtNetwork>
@@ -9,7 +9,7 @@ UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent),
 }
 
 void UpdateChecker::check() {
-    QNetworkReply* manifestReply = App::networkAccessManager()->get(QNetworkRequest(manifestUrl));
+    QNetworkReply* manifestReply = Context::networkAccessManager()->get(QNetworkRequest(manifestUrl));
 
     connect(manifestReply, &QNetworkReply::finished, [manifestReply, this] () {
         QJsonParseError parseError{};

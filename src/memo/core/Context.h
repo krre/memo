@@ -1,12 +1,12 @@
 #pragma once
-#include <QApplication>
+#include <QObject>
 
 class QNetworkAccessManager;
 
-class App : public QApplication {
+class Context : public QObject {
     Q_OBJECT
 public:
-    App(int& argc, char** argv);
+    Context(QObject* parent = nullptr);
 
     static QString downloadPageUrl();
     static QString installerUrl(const QString& version);
@@ -14,7 +14,7 @@ public:
     static QNetworkAccessManager* networkAccessManager();
 
 private:
-    static App* instance;
+    static Context* instance;
 
     QNetworkAccessManager* nam;
 };

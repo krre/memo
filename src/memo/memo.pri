@@ -14,6 +14,7 @@ include(../libmemo/libmemo.pri)
 INCLUDEPATH += $$PWD
 
 SOURCES += \
+    $$PWD/core/Context.cpp \
     $$PWD/ui/MainWindow.cpp \
     $$PWD/ui/outliner/Outliner.cpp \
     $$PWD/ui/outliner/TreeModel.cpp \
@@ -24,7 +25,6 @@ SOURCES += \
     $$PWD/ui/hotkey/GlobalHotkey.cpp \
     $$PWD/ui/outliner/NoteProperties.cpp \
     $$PWD/updater/UpdateChecker.cpp \
-    $$PWD/core/App.cpp \
     $$PWD/updater/NewUpdates.cpp \
     $$PWD/updater/UpdateDownloader.cpp \
     $$PWD/core/SqlException.cpp
@@ -35,6 +35,7 @@ mac: SOURCES += $$PWD/ui/hotkey/NativeEventFilterMac.cpp
 
 HEADERS += \
     $$PWD/core/Constants.h \
+    $$PWD/core/Context.h \
     $$PWD/ui/MainWindow.h \
     $$PWD/ui/outliner/Outliner.h \
     $$PWD/ui/outliner/TreeModel.h \
@@ -46,7 +47,6 @@ HEADERS += \
     $$PWD/ui/hotkey/GlobalHotkey.h \
     $$PWD/ui/outliner/NoteProperties.h \
     $$PWD/updater/UpdateChecker.h \
-    $$PWD/core/App.h \
     $$PWD/updater/NewUpdates.h \
     $$PWD/updater/UpdateDownloader.h \
     $$PWD/core/SqlException.h

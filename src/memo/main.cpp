@@ -1,7 +1,8 @@
 #include "ui/MainWindow.h"
 #include "core/Constants.h"
-#include "core/App.h"
+#include "core/Context.h"
 #include <memo/MessageHandler.h>
+#include <QApplication>
 #include <QMessageBox>
 #include <QSettings>
 #include <QTranslator>
@@ -10,7 +11,7 @@
 int main(int argc, char* argv[]) {
     qInstallMessageHandler(Memo::messageHandler);
 
-    App app(argc, argv);
+    QApplication app(argc, argv);
 
     QCoreApplication::setOrganizationName(Constants::App::Organization);
     QCoreApplication::setApplicationName(Constants::App::Name);
@@ -20,6 +21,8 @@ int main(int argc, char* argv[]) {
                               QObject::tr("Absent any system tray on this system"));
         return EXIT_FAILURE;
     }
+
+    Context context(&app);
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);
