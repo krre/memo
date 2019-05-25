@@ -1,0 +1,2 @@
+QT += testlib
+CONFIG += testcase
