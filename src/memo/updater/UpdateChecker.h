@@ -30,3 +30,5 @@ private:
 
     const QUrl manifestUrl;
 };
+
+Q_DECLARE_METATYPE(UpdateChecker::Update)
