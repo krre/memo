@@ -2,4 +2,4 @@ QT += testlib
 CONFIG += testcase
 
 SOURCES += \
-    TestUpdateChecker.cpp
+    Test_UpdateChecker.cpp

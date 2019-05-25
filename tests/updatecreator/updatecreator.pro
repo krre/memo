@@ -2,4 +2,4 @@ QT += testlib
 CONFIG += testcase
 
 SOURCES += \
-    TestListModel.cpp
+    Test_ListModel.cpp

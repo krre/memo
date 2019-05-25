@@ -2,4 +2,4 @@ QT += testlib
 CONFIG += testcase
 
 SOURCES += \
-    TestLoader.cpp
+    Test_Loader.cpp
