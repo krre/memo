@@ -8,10 +8,10 @@ QString SqlDatabaseError::error() const {
     return QString("Database error: %1. %2").arg(m_error.databaseText(), m_error.driverText());
 }
 
-SqlQueryError::SqlQueryError(const QSqlQuery& query) : query(query) {
+SqlQueryError::SqlQueryError(const QSqlQuery& query) : m_query(query) {
 
 }
 
 QString SqlQueryError::error() const {
-    return QString("SQL query error: %1. %2. %3").arg(query.lastError().databaseText(), query.lastError().driverText(), query.lastQuery());
+    return QString("SQL query error: %1. %2. %3").arg(m_query.lastError().databaseText(), m_query.lastError().driverText(), m_query.lastQuery());
 }

@@ -2,45 +2,45 @@
 #include <QStringList>
 #include <QModelIndex>
 
-TreeItem::TreeItem(TreeItem* parent) : parentItem(parent) {
+TreeItem::TreeItem(TreeItem* parent) : m_parent(parent) {
 }
 
 TreeItem::~TreeItem() {
-    qDeleteAll(childItems);
+    qDeleteAll(m_childItems);
 }
 
 TreeItem* TreeItem::child(int number) {
-    return childItems.value(number);
+    return m_childItems.value(number);
 }
 
 int TreeItem::childCount() const {
-    return childItems.count();
+    return m_childItems.count();
 }
 
 int TreeItem::childNumber() const {
-    if (parentItem) {
-        return parentItem->childItems.indexOf(const_cast<TreeItem*>(this));
+    if (m_parent) {
+        return m_parent->m_childItems.indexOf(const_cast<TreeItem*>(this));
     }
 
     return 0;
 }
 
 QVariant TreeItem::data() const {
-    return itemData;
+    return m_data;
 }
 
 TreeItem* TreeItem::parent() {
-    return parentItem;
+    return m_parent;
 }
 
 void TreeItem::setParent(TreeItem* parent) {
-    parentItem = parent;
+    m_parent = parent;
 }
 
 TreeItem* TreeItem::find(int id) {
-    if (itemId == id) return this;
+    if (m_id == id) return this;
 
-    for (TreeItem* child : childItems) {
+    for (TreeItem* child : m_childItems) {
         TreeItem* item = child->find(id);
         if (item != nullptr) {
             return item;
@@ -53,29 +53,29 @@ TreeItem* TreeItem::find(int id) {
 bool TreeItem::insertChild(int position, TreeItem* item) {
     TreeItem* childItem = item ? item : new TreeItem;
     childItem->setParent(this);
-    childItems.insert(position, childItem);
+    m_childItems.insert(position, childItem);
 
     return true;
 }
 
 bool TreeItem::removeChild(int position) {
-    if (position < 0 || position > childItems.count() - 1) return false;
+    if (position < 0 || position > m_childItems.count() - 1) return false;
 
-    childItems.removeAt(position);
+    m_childItems.removeAt(position);
 
     return true;
 }
 
-void TreeItem::setData(const QVariant& value) {
-    itemData = value;
+void TreeItem::setData(const QVariant& data) {
+    m_data = data;
 }
 
 int TreeItem::id() const {
-    return itemId;
+    return m_id;
 }
 
 void TreeItem::setId(int id) {
-    itemId = id;
+    m_id = id;
 }
 
 int TreeItem::depth() {

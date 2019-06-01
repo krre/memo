@@ -8,7 +8,7 @@
 #include <QDebug>
 
 UpdateDownloader::UpdateDownloader(QObject* parent) : QObject(parent) {
-    tmpDir.setAutoRemove(false);
+    m_tmpDir.setAutoRemove(false);
 }
 
 void UpdateDownloader::download(const QUrl& url) {
@@ -43,7 +43,7 @@ void UpdateDownloader::cancel() {
 
 void UpdateDownloader::prepareUpdate() {
     // Update loader.
-    QString loaderSrcPath = updateDir + "/" + loaderName();
+    QString loaderSrcPath = m_updateDir + "/" + loaderName();
     // Fix bug with unseting x-flag after decompressing zip on non-Windows OS.
     QFile::setPermissions(loaderSrcPath, QFile::permissions(loaderSrcPath) | QFile::ExeOwner);
 
@@ -53,11 +53,11 @@ void UpdateDownloader::prepareUpdate() {
         QFile::rename(loaderSrcPath, loaderDstPath);
     }
 
-    emit finished(updateDir);
+    emit finished(m_updateDir);
 }
 
 void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName) {
-    QString dirPath = tmpDir.path();
+    QString dirPath = m_tmpDir.path();
     QString filePath = dirPath + "/" + fileName;
     QFile file(filePath);
 
@@ -72,7 +72,7 @@ void UpdateDownloader::saveFile(const QByteArray& data, const QString& fileName)
     Common::ZipCompressor::decompress(filePath, dirPath);
     QFile::remove(filePath);
 
-    updateDir = filePath.remove(".zip");
+    m_updateDir = filePath.remove(".zip");
 }
 
 QString UpdateDownloader::loaderName() const {

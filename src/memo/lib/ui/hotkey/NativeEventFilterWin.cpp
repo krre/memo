@@ -20,17 +20,17 @@ bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* mes
     return false;
 }
 
-void NativeEventFilter::setShortcut(int keycode, unsigned int modifiers) {
-    mods = 0;
+void NativeEventFilter::setShortcut(int key, uint mods) {
+    m_mods = 0;
 
-    if (modifiers & Qt::ShiftModifier) mods |= MOD_SHIFT;
-    if (modifiers & Qt::ControlModifier) mods |= MOD_CONTROL;
-    if (modifiers & Qt::AltModifier) mods |= MOD_ALT;
-    if (modifiers & Qt::MetaModifier) mods |= MOD_WIN;
+    if (mods & Qt::ShiftModifier) m_mods |= MOD_SHIFT;
+    if (mods & Qt::ControlModifier) m_mods |= MOD_CONTROL;
+    if (mods & Qt::AltModifier) m_mods |= MOD_ALT;
+    if (mods & Qt::MetaModifier) m_mods |= MOD_WIN;
 
-    key = LOBYTE(VkKeyScanW(keycode));
+    m_key = LOBYTE(VkKeyScanW(key));
 
-    BOOL ok = RegisterHotKey(nullptr, HKEY_ID(key, mods), mods, key);
+    BOOL ok = RegisterHotKey(nullptr, HKEY_ID(m_key, m_mods), m_mods, m_key);
 
     if (!ok) {
         qWarning() << "Failed to register hotkey";
@@ -38,7 +38,7 @@ void NativeEventFilter::setShortcut(int keycode, unsigned int modifiers) {
 }
 
 void NativeEventFilter::unsetShortcut() {
-    BOOL ok = UnregisterHotKey(nullptr, HKEY_ID(key, mods));
+    BOOL ok = UnregisterHotKey(nullptr, HKEY_ID(m_key, m_mods));
 
     if (!ok) {
         qWarning() << "Failed to unregister hotkey";

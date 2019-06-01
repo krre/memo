@@ -19,7 +19,7 @@ public:
     int childNumber() const;
 
     QVariant data() const;
-    void setData(const QVariant& value);
+    void setData(const QVariant& data);
 
     bool insertChild(int position, TreeItem* item = nullptr);
     bool removeChild(int position);
@@ -30,8 +30,8 @@ public:
     int depth();
 
 private:
-    QList<TreeItem*> childItems;
-    QVariant itemData;
-    TreeItem* parentItem = nullptr;
-    int itemId = 0;
+    QList<TreeItem*> m_childItems;
+    QVariant m_data;
+    TreeItem* m_parent = nullptr;
+    int m_id = 0;
 };

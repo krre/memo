@@ -18,5 +18,5 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private:
-    int noteId = 0;
+    int m_id = 0;
 };

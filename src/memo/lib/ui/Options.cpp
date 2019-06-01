@@ -15,25 +15,25 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     // Language
     gridLayoutUi->addWidget(new QLabel(tr("Language:")), 0, 0);
 
-    languageComboBox = new QComboBox;
-    languageComboBox->addItem(tr("<System>"));
-    languageComboBox->addItem("English", "en");
-    languageComboBox->addItem("Russian", "ru");
+    m_languageComboBox = new QComboBox;
+    m_languageComboBox->addItem(tr("<System>"));
+    m_languageComboBox->addItem("English", "en");
+    m_languageComboBox->addItem("Russian", "ru");
 
-    gridLayoutUi->addWidget(languageComboBox, 0, 1, Qt::AlignLeft);
+    gridLayoutUi->addWidget(m_languageComboBox, 0, 1, Qt::AlignLeft);
 
     // Font
     gridLayoutUi->addWidget(new QLabel(tr("Font:")), 1, 0);
     auto fontLayout = new QHBoxLayout;
 
-    fontFamilyLineEdit = new QLineEdit;
-    fontFamilyLineEdit->setReadOnly(true);
-    fontLayout->addWidget(fontFamilyLineEdit);
+    m_fontFamilyLineEdit = new QLineEdit;
+    m_fontFamilyLineEdit->setReadOnly(true);
+    fontLayout->addWidget(m_fontFamilyLineEdit);
 
-    fontSizeLineEdit = new QLineEdit;
-    fontSizeLineEdit->setMaximumWidth(50);
-    fontSizeLineEdit->setReadOnly(true);
-    fontLayout->addWidget(fontSizeLineEdit);
+    m_fontSizeLineEdit = new QLineEdit;
+    m_fontSizeLineEdit->setMaximumWidth(50);
+    m_fontSizeLineEdit->setReadOnly(true);
+    fontLayout->addWidget(m_fontSizeLineEdit);
 
     auto fontButton = new QPushButton(tr("Open..."));
     connect(fontButton, &QPushButton::clicked, this, &Options::openFontDialog);
@@ -42,26 +42,26 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     gridLayoutUi->addLayout(fontLayout, 1, 1);
 
     // Minimize to tray
-    minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
-    gridLayoutUi->addWidget(minimizeCheckBox, 2, 0, 1, -1);
+    m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
+    gridLayoutUi->addWidget(m_minimizeCheckBox, 2, 0, 1, -1);
 
     // Hide tray icon
-    hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
-    gridLayoutUi->addWidget(hideTrayCheckBox, 3, 0, 1, -1);
+    m_hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
+    gridLayoutUi->addWidget(m_hideTrayCheckBox, 3, 0, 1, -1);
 
     groupBoxUi->setLayout(gridLayoutUi);
 
     layout->addWidget(groupBoxUi);
 
     // Global hotkey
-    groupBoxHotkey = new QGroupBox(tr("Global Hotkey"));
-    groupBoxHotkey->setCheckable(true);
+    m_groupBoxHotkey = new QGroupBox(tr("Global Hotkey"));
+    m_groupBoxHotkey->setCheckable(true);
     auto layoutHotkey = new QVBoxLayout;
-    hotkeyLineEdit = new QLineEdit(groupBoxHotkey);
-    layoutHotkey->addWidget(hotkeyLineEdit);
-    groupBoxHotkey->setLayout(layoutHotkey);
+    m_hotkeyLineEdit = new QLineEdit(m_groupBoxHotkey);
+    layoutHotkey->addWidget(m_hotkeyLineEdit);
+    m_groupBoxHotkey->setLayout(layoutHotkey);
 
-    layout->addWidget(groupBoxHotkey);
+    layout->addWidget(m_groupBoxHotkey);
 
     // Updates
     auto updates = new QGroupBox(tr("Updates"));
@@ -70,13 +70,13 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     updates->setLayout(updatesLayout);
 
     updatesLayout->addWidget(new QLabel(tr("Channel:")), 0, 0);
-    channelComboBox = new QComboBox;
-    channelComboBox->addItem(Common::Constants::Channel::Release);
-    channelComboBox->addItem(Common::Constants::Channel::Beta);
-    updatesLayout->addWidget(channelComboBox, 0, 1, Qt::AlignLeft);
+    m_channelComboBox = new QComboBox;
+    m_channelComboBox->addItem(Common::Constants::Channel::Release);
+    m_channelComboBox->addItem(Common::Constants::Channel::Beta);
+    updatesLayout->addWidget(m_channelComboBox, 0, 1, Qt::AlignLeft);
 
-    checkStartupCheckBox = new QCheckBox(tr("Check on startup"));
-    updatesLayout->addWidget(checkStartupCheckBox, 1, 0, 1, -1);
+    m_checkStartupCheckBox = new QCheckBox(tr("Check on startup"));
+    updatesLayout->addWidget(m_checkStartupCheckBox, 1, 0, 1, -1);
 
     layout->addWidget(updates);
 
@@ -105,14 +105,14 @@ void Options::accept() {
 
 void Options::openFontDialog() {
     bool ok;
-    QFont currentFont = this->font();
-    currentFont.setFamily(fontFamilyLineEdit->text());
-    currentFont.setPointSize(fontSizeLineEdit->text().toInt());
+    QFont currentFont = font();
+    currentFont.setFamily(m_fontFamilyLineEdit->text());
+    currentFont.setPointSize(m_fontSizeLineEdit->text().toInt());
 
     QFont font = QFontDialog::getFont(&ok, currentFont, this, tr("Select Font"));
     if (ok) {
-        fontFamilyLineEdit->setText(font.family());
-        fontSizeLineEdit->setText(QString::number(font.pointSize()));
+        m_fontFamilyLineEdit->setText(font.family());
+        m_fontSizeLineEdit->setText(QString::number(font.pointSize()));
     }
 }
 
@@ -122,23 +122,23 @@ void Options::readSettings() {
     QString language = settings.value("language").toString();
 
     if (!language.isEmpty()) {
-        int index = languageComboBox->findData(language);
+        int index = m_languageComboBox->findData(language);
         if (index != -1) {
-            languageComboBox->setCurrentIndex(index);
+            m_languageComboBox->setCurrentIndex(index);
         }
     }
 
-    minimizeCheckBox->setChecked(settings.value("minimizeOnStartup").toBool());
-    hideTrayCheckBox->setChecked(settings.value("hideTrayIcon").toBool());
+    m_minimizeCheckBox->setChecked(settings.value("minimizeOnStartup").toBool());
+    m_hideTrayCheckBox->setChecked(settings.value("hideTrayIcon").toBool());
 
-    fontFamilyLineEdit->setText(settings.value("Editor/fontFamily", font().family()).toString());
-    fontSizeLineEdit->setText(settings.value("Editor/fontSize", font().pointSize()).toString());
+    m_fontFamilyLineEdit->setText(settings.value("Editor/fontFamily", font().family()).toString());
+    m_fontSizeLineEdit->setText(settings.value("Editor/fontSize", font().pointSize()).toString());
 
-    hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
-    groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
+    m_hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
+    m_groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
 
-    channelComboBox->setCurrentText(settings.value("Updates/channel", Constants::DefaultSettings::Channel).toString());
-    checkStartupCheckBox->setChecked(settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool());
+    m_channelComboBox->setCurrentText(settings.value("Updates/channel", Constants::DefaultSettings::Channel).toString());
+    m_checkStartupCheckBox->setChecked(settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool());
 }
 
 bool Options::writeSettings() {
@@ -146,24 +146,24 @@ bool Options::writeSettings() {
 
     QSettings settings;
 
-    QString language = languageComboBox->currentData().toString();
+    QString language = m_languageComboBox->currentData().toString();
 
     if (language != settings.value("language").toString()) {
         restartRequre = true;
     }
 
     settings.setValue("language", language);
-    settings.setValue("minimizeOnStartup", minimizeCheckBox->isChecked());
-    settings.setValue("hideTrayIcon", hideTrayCheckBox->isChecked());
+    settings.setValue("minimizeOnStartup", m_minimizeCheckBox->isChecked());
+    settings.setValue("hideTrayIcon", m_hideTrayCheckBox->isChecked());
 
-    settings.setValue("Editor/fontFamily", fontFamilyLineEdit->text());
-    settings.setValue("Editor/fontSize", fontSizeLineEdit->text());
+    settings.setValue("Editor/fontFamily", m_fontFamilyLineEdit->text());
+    settings.setValue("Editor/fontSize", m_fontSizeLineEdit->text());
 
-    settings.setValue("GlobalHotkey/hotkey", hotkeyLineEdit->text());
-    settings.setValue("GlobalHotkey/enabled", groupBoxHotkey->isChecked());
+    settings.setValue("GlobalHotkey/hotkey", m_hotkeyLineEdit->text());
+    settings.setValue("GlobalHotkey/enabled", m_groupBoxHotkey->isChecked());
 
-    settings.setValue("Updates/channel", channelComboBox->currentText());
-    settings.setValue("Updates/checkOnStartup", checkStartupCheckBox->isChecked());
+    settings.setValue("Updates/channel", m_channelComboBox->currentText());
+    settings.setValue("Updates/checkOnStartup", m_checkStartupCheckBox->isChecked());
 
     return restartRequre;
 }

@@ -21,7 +21,7 @@ private:
     void saveFile(const QByteArray& data, const QString& fileName);
     QString loaderName() const;
 
-    QUrl url;
-    QString updateDir;
-    QTemporaryDir tmpDir;
+    QUrl m_url;
+    QString m_updateDir;
+    QTemporaryDir m_tmpDir;
 };

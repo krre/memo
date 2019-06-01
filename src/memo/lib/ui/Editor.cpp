@@ -6,11 +6,11 @@ Editor::Editor(QWidget* parent) : QPlainTextEdit(parent) {
 }
 
 void Editor::setId(int id) {
-    noteId = id;
+    m_id = id;
 }
 
 int Editor::id() const {
-    return noteId;
+    return m_id;
 }
 
 void Editor::focusOutEvent(QFocusEvent* event) {

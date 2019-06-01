@@ -50,19 +50,19 @@ private:
 
     void showErrorDialog(const QString& message);
 
-    QSystemTrayIcon* trayIcon = nullptr;
-    QMenu* trayIconMenu = nullptr;
-    QMenu* recentFilesMenu = nullptr;
-    QAction* exportAction = nullptr;
-    QAction* closeAction = nullptr;
+    QSystemTrayIcon* m_trayIcon = nullptr;
+    QMenu* m_trayIconMenu = nullptr;
+    QMenu* m_recentFilesMenu = nullptr;
+    QAction* m_exportAction = nullptr;
+    QAction* m_closeAction = nullptr;
 
-    QSplitter* splitter = nullptr;
-    Outliner* outliner = nullptr;
-    Editor* editor = nullptr;
-    GlobalHotkey* globalHotkey = nullptr;
-    UpdateChecker* updateChecker = nullptr;
+    QSplitter* m_splitter = nullptr;
+    Outliner* m_outliner = nullptr;
+    Editor* m_editor = nullptr;
+    GlobalHotkey* m_globalHotkey = nullptr;
+    UpdateChecker* m_updateChecker = nullptr;
 
-    Database* database = nullptr;
-    QString currentFile;
-    bool silentCheckUpdate = false;
+    Database* m_database = nullptr;
+    QString m_currentFile;
+    bool m_silentCheckUpdate = false;
 };

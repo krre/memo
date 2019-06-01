@@ -3,7 +3,7 @@
 #include <QtSql>
 
 Database::Database(QObject* parent) : QObject(parent) {
-    db = QSqlDatabase::addDatabase("QSQLITE");
+    m_db = QSqlDatabase::addDatabase("QSQLITE");
 }
 
 Database::~Database() {
@@ -12,11 +12,11 @@ Database::~Database() {
 
 void Database::create(const QString& filepath) {
     qInfo().noquote() << "Create database:" << filepath;
-    db.close();
-    db.setDatabaseName(filepath);
+    m_db.close();
+    m_db.setDatabaseName(filepath);
 
-    if (!db.open()) {
-        throw SqlDatabaseError(db.lastError());
+    if (!m_db.open()) {
+        throw SqlDatabaseError(m_db.lastError());
     }
 
     QSqlQuery query;
@@ -45,22 +45,22 @@ void Database::create(const QString& filepath) {
 
 void Database::open(const QString& filepath) {
     qInfo().noquote() << "Open database:" << filepath;
-    db.setDatabaseName(filepath);
+    m_db.setDatabaseName(filepath);
 
-    if (!db.open()) {
-        throw SqlDatabaseError(db.lastError());
+    if (!m_db.open()) {
+        throw SqlDatabaseError(m_db.lastError());
     }
 }
 
 void Database::close() {
-    if (db.isOpen()) {
-        qInfo().noquote() << "Close database:" << db.databaseName();
-        db.close();
+    if (m_db.isOpen()) {
+        qInfo().noquote() << "Close database:" << m_db.databaseName();
+        m_db.close();
     }
 }
 
 bool Database::isOpen() const {
-    return db.isOpen();
+    return m_db.isOpen();
 }
 
 int Database::insertRecord(int parentId, int pos, int depth, const QString& title) {

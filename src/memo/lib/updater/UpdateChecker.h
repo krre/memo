@@ -28,7 +28,7 @@ private:
     void findUpdates(const QJsonObject& manifest);
     bool isChannelSuit(const QString& current, const QString& mapOn);
 
-    const QUrl manifestUrl;
+    const QUrl m_manifestUrl;
 };
 
 Q_DECLARE_METATYPE(UpdateChecker::Update)

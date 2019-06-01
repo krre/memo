@@ -15,25 +15,25 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Constants::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
-    splitter = new QSplitter;
-    setCentralWidget(splitter);
+    m_splitter = new QSplitter;
+    setCentralWidget(m_splitter);
 
-    database = new Database(this);
+    m_database = new Database(this);
 
-    updateChecker = new UpdateChecker(this);
-    connect(updateChecker, &UpdateChecker::checkResult, this, &MainWindow::onCheckUpdatesResult);
+    m_updateChecker = new UpdateChecker(this);
+    connect(m_updateChecker, &UpdateChecker::checkResult, this, &MainWindow::onCheckUpdatesResult);
 
-    globalHotkey = new GlobalHotkey(this);
-    connect(globalHotkey, &GlobalHotkey::activated, this, &MainWindow::showWindow);
+    m_globalHotkey = new GlobalHotkey(this);
+    connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::showWindow);
 
     createActions();
     createTrayIcon();
     setupSplitter();
 
-    connect(outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
-    connect(editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
-    connect(editor, &Editor::leave, [=] {
-       outliner->setFocus();
+    connect(m_outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
+    connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
+    connect(m_editor, &Editor::leave, [=] {
+       m_outliner->setFocus();
     });
 
     readSettings();
@@ -42,8 +42,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     QSettings settings;
 
     if (settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool()) {
-        silentCheckUpdate = true;
-        updateChecker->check();
+        m_silentCheckUpdate = true;
+        m_updateChecker->check();
     }
 }
 
@@ -62,7 +62,7 @@ void MainWindow::readSettings() {
         restoreGeometry(geometry);
     }
 
-    splitter->restoreState(settings.value("splitter").toByteArray());
+    m_splitter->restoreState(settings.value("splitter").toByteArray());
 
     int size = settings.beginReadArray("RecentFiles");
 
@@ -83,14 +83,14 @@ void MainWindow::readSettings() {
 void MainWindow::writeSettings() {
     QSettings settings;
     settings.setValue("geometry", saveGeometry());
-    settings.setValue("splitter", splitter->saveState());
-    settings.setValue("filePath", currentFile);
+    settings.setValue("splitter", m_splitter->saveState());
+    settings.setValue("filePath", m_currentFile);
 
     settings.beginWriteArray("RecentFiles");
 
-    for (int i = 0; i < recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
+    for (int i = 0; i < m_recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
         settings.setArrayIndex(i);
-        settings.setValue("path", recentFilesMenu->actions().at(i)->text());
+        settings.setValue("path", m_recentFilesMenu->actions().at(i)->text());
     }
 
     settings.endArray();
@@ -98,12 +98,12 @@ void MainWindow::writeSettings() {
 
 void MainWindow::applyHotSettings() {
     QSettings settings;
-    trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
+    m_trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
 
     if (settings.value("GlobalHotkey/enabled").toBool()) {
-        globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
+        m_globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
     } else {
-        globalHotkey->unsetShortcut();
+        m_globalHotkey->unsetShortcut();
     }
 
     QString fontFamily = settings.value("Editor/fontFamily").toString();
@@ -118,20 +118,20 @@ void MainWindow::applyHotSettings() {
             font.setPointSize(fontSize.toInt());
         }
 
-        editor->setFont(font);
+        m_editor->setFont(font);
     }
 }
 
 void MainWindow::setupSplitter() {
-    outliner = new Outliner(database);
-    editor = new Editor;
+    m_outliner = new Outliner(m_database);
+    m_editor = new Editor;
 
-    splitter->addWidget(outliner);
-    splitter->addWidget(editor);
+    m_splitter->addWidget(m_outliner);
+    m_splitter->addWidget(m_editor);
 
-    splitter->setHandleWidth(1);
-    splitter->setChildrenCollapsible(false);
-    splitter->setSizes(QList<int>() << 120 << 500);
+    m_splitter->setHandleWidth(1);
+    m_splitter->setChildrenCollapsible(false);
+    m_splitter->setSizes(QList<int>() << 120 << 500);
 }
 
 void MainWindow::createActions() {
@@ -139,13 +139,13 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
     fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
 
-    recentFilesMenu = new QMenu(tr("Recent Files"), this);
-    recentFilesMenu->addSeparator();
-    recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentFiles);
-    fileMenu->addAction(recentFilesMenu->menuAction());
+    m_recentFilesMenu = new QMenu(tr("Recent Files"), this);
+    m_recentFilesMenu->addSeparator();
+    m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentFiles);
+    fileMenu->addAction(m_recentFilesMenu->menuAction());
 
-    exportAction = fileMenu->addAction(tr("Export All..."), this, &MainWindow::exportFile, QKeySequence("Ctrl+E"));
-    closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
+    m_exportAction = fileMenu->addAction(tr("Export All..."), this, &MainWindow::exportFile, QKeySequence("Ctrl+E"));
+    m_closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
 
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence("Esc"));
@@ -162,7 +162,7 @@ void MainWindow::createActions() {
     });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("Check for updates..."), updateChecker, &UpdateChecker::check);
+    helpMenu->addAction(tr("Check for updates..."), m_updateChecker, &UpdateChecker::check);
     helpMenu->addAction(tr("Open download page"), [] {
         QDesktopServices::openUrl(QUrl(Constants::App::ReleasesUrl));
     });
@@ -170,33 +170,33 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::createTrayIcon() {
-    trayIconMenu = new QMenu(this);
+    m_trayIconMenu = new QMenu(this);
 
-    trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
-    trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
-    trayIconMenu->addSeparator();
-    trayIconMenu->addAction(tr("Exit"), this, &MainWindow::quit);
+    m_trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
+    m_trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
+    m_trayIconMenu->addSeparator();
+    m_trayIconMenu->addAction(tr("Exit"), this, &MainWindow::quit);
 
-    trayIcon = new QSystemTrayIcon(this);
-    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
-    trayIcon->setContextMenu(trayIconMenu);
-    trayIcon->setIcon(windowIcon());
-    trayIcon->show();
+    m_trayIcon = new QSystemTrayIcon(this);
+    connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
+    m_trayIcon->setContextMenu(m_trayIconMenu);
+    m_trayIcon->setIcon(windowIcon());
+    m_trayIcon->show();
 }
 
 void MainWindow::updateMenuState() {
-    bool isFileOpen = !currentFile.isEmpty();
+    bool isFileOpen = !m_currentFile.isEmpty();
 
-    exportAction->setEnabled(isFileOpen);
-    closeAction->setEnabled(isFileOpen);
+    m_exportAction->setEnabled(isFileOpen);
+    m_closeAction->setEnabled(isFileOpen);
 }
 
 void MainWindow::loadFile(const QString& filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     try {
-        database->open(filePath);
-        outliner->build();
+        m_database->open(filePath);
+        m_outliner->build();
         setCurrentFile(filePath);
         addRecentFile(filePath);
     } catch (const Common::Exception& e) {
@@ -213,16 +213,16 @@ void MainWindow::setCurrentFile(const QString& filePath) {
     }
 
     setWindowTitle(title);
-    currentFile = filePath;
+    m_currentFile = filePath;
     updateMenuState();
 }
 
 void MainWindow::addRecentFile(const QString& filePath) {
     if (!QFile::exists(filePath)) return;
 
-    for (QAction* action : recentFilesMenu->actions()) {
+    for (QAction* action : m_recentFilesMenu->actions()) {
         if (action->text() == filePath) {
-            recentFilesMenu->removeAction(action);
+            m_recentFilesMenu->removeAction(action);
         }
     }
 
@@ -231,10 +231,10 @@ void MainWindow::addRecentFile(const QString& filePath) {
         loadFile(filePath);
     });
 
-    recentFilesMenu->insertAction(recentFilesMenu->actions().first(), fileAction);
+    m_recentFilesMenu->insertAction(m_recentFilesMenu->actions().first(), fileAction);
 
-    if (recentFilesMenu->actions().size() > Constants::Window::MaxRecentFiles + Constants::Window::SystemRecentFilesActions) {
-        recentFilesMenu->removeAction(recentFilesMenu->actions().at(recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1));
+    if (m_recentFilesMenu->actions().size() > Constants::Window::MaxRecentFiles + Constants::Window::SystemRecentFilesActions) {
+        m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(m_recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1));
     }
 
     updateMenuState();
@@ -264,7 +264,7 @@ void MainWindow::newFile() {
     }
 
     try {
-        database->create(fileName);
+        m_database->create(fileName);
         setCurrentFile(fileName);
     } catch (const Common::Exception& e) {
         showErrorDialog(e.error());
@@ -284,20 +284,20 @@ void MainWindow::exportFile() {
     QString directory = QFileDialog::getExistingDirectory(this);
 
     if (!directory.isEmpty()) {
-        outliner->exportAllNotes(directory);
+        m_outliner->exportAllNotes(directory);
     }
 }
 
 void MainWindow::closeFile() {
-    database->close();
+    m_database->close();
     onNoteChanged(0);
-    outliner->clear();
+    m_outliner->clear();
     setCurrentFile();
 }
 
 void MainWindow::clearMenuRecentFiles() {
-    for (int i = recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
-        recentFilesMenu->removeAction(recentFilesMenu->actions().at(i));
+    for (int i = m_recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
+        m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(i));
     }
 
     updateMenuState();
@@ -305,10 +305,10 @@ void MainWindow::clearMenuRecentFiles() {
 
 void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates) {
     if (updates.isEmpty()) {
-        if (!silentCheckUpdate) {
+        if (!m_silentCheckUpdate) {
             QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
         } else {
-            silentCheckUpdate = false;
+            m_silentCheckUpdate = false;
         }
     } else {
         NewUpdates newUpdates(updates);
@@ -350,22 +350,22 @@ void MainWindow::quit() {
 }
 
 void MainWindow::onNoteChanged(int id) {
-    editor->setId(id);
-    editor->setEnabled(id > 0);
+    m_editor->setId(id);
+    m_editor->setEnabled(id > 0);
 
     if (id) {
-        QString note = database->value(id, "note").toString();
-        editor->setPlainText(note);
+        QString note = m_database->value(id, "note").toString();
+        m_editor->setPlainText(note);
     } else {
-        editor->clear();
+        m_editor->clear();
     }
 }
 
 void MainWindow::onEditorFocusLost() {
-    int lastId = editor->id();
+    int lastId = m_editor->id();
 
-    if (lastId && editor->document()->isModified()) {
-        database->updateValue(lastId, "note", editor->document()->toPlainText());
+    if (lastId && m_editor->document()->isModified()) {
+        m_database->updateValue(lastId, "note", m_editor->document()->toPlainText());
     }
 }
 

@@ -34,5 +34,5 @@ public:
     QVector<Title> titles();
 
 private:
-    QSqlDatabase db;
+    QSqlDatabase m_db;
 };

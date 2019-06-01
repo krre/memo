@@ -21,9 +21,9 @@ private slots:
 private:
     QString sizeToMegabyte(int size);
 
-    UpdateDownloader* updateDownloader = nullptr;
-    QPushButton* updateButton = nullptr;
-    QProgressBar* progressBar = nullptr;
-    QUrl url;
+    UpdateDownloader* m_updateDownloader = nullptr;
+    QPushButton* m_updateButton = nullptr;
+    QProgressBar* m_progressBar = nullptr;
+    QUrl m_url;
     QString m_updateDir;
 };

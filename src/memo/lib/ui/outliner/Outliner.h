@@ -43,13 +43,13 @@ private:
     void insertChild(const QString& title);
     int exportNote(int parentId, const QString& path);
 
-    QMenu* contextMenu = nullptr;
-    QAction* removeAction = nullptr;
-    QAction* renameAction = nullptr;
-    QAction* moveUpAction = nullptr;
-    QAction* moveDownAction = nullptr;
-    QAction* propertiesAction = nullptr;
-    TreeModel* model = nullptr;
-    Database* database = nullptr;
-    bool isInited = false;
+    QMenu* m_contextMenu = nullptr;
+    QAction* m_removeAction = nullptr;
+    QAction* m_renameAction = nullptr;
+    QAction* m_moveUpAction = nullptr;
+    QAction* m_moveDownAction = nullptr;
+    QAction* m_propertiesAction = nullptr;
+    TreeModel* m_model = nullptr;
+    Database* m_database = nullptr;
+    bool m_isInited = false;
 };

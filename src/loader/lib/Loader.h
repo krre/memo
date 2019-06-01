@@ -13,10 +13,10 @@ protected:
 private:
     void quit();
 
-    QString srcDir;
-    QString dstDir;
-    QString program;
+    QString m_srcDir;
+    QString m_dstDir;
+    QString m_program;
 
-    int counter = 1;
-    int logNum = 0;
+    int m_counter = 1;
+    int m_logNum = 0;
 };

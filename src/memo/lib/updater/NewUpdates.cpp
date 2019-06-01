@@ -17,7 +17,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
     }
 
     int size = updates.first().size;
-    url = updates.first().url;
+    m_url = updates.first().url;
     bool isValidUpdate = QVersionNumber::fromString(Constants::App::Version) >= QVersionNumber::fromString(updates.first().baseVersion);
 
     auto layout = new QVBoxLayout;
@@ -50,21 +50,21 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
         layout->addWidget(link);
     }
 
-    progressBar = new QProgressBar;
-    progressBar->setMaximum(size);
-    layout->addWidget(progressBar);
+    m_progressBar = new QProgressBar;
+    m_progressBar->setMaximum(size);
+    layout->addWidget(m_progressBar);
 
     auto buttonBox = new QDialogButtonBox;
-    updateButton = new QPushButton(tr("Update"));
-    updateButton->setEnabled(isValidUpdate);
-    buttonBox->addButton(updateButton, QDialogButtonBox::AcceptRole);
+    m_updateButton = new QPushButton(tr("Update"));
+    m_updateButton->setEnabled(isValidUpdate);
+    buttonBox->addButton(m_updateButton, QDialogButtonBox::AcceptRole);
     buttonBox->addButton(QDialogButtonBox::Cancel);
 
     layout->addWidget(buttonBox);
 
-    updateDownloader = new UpdateDownloader(this);
-    connect(updateDownloader, &UpdateDownloader::downloadProgress, progressBar, &QProgressBar::setValue);
-    connect(updateDownloader, &UpdateDownloader::finished, this, &NewUpdates::finishUpdate);
+    m_updateDownloader = new UpdateDownloader(this);
+    connect(m_updateDownloader, &UpdateDownloader::downloadProgress, m_progressBar, &QProgressBar::setValue);
+    connect(m_updateDownloader, &UpdateDownloader::finished, this, &NewUpdates::finishUpdate);
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &NewUpdates::startUpdate);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
@@ -75,13 +75,13 @@ QString NewUpdates::updateDir() const {
 }
 
 void NewUpdates::reject() {
-    updateDownloader->cancel();
+    m_updateDownloader->cancel();
     QDialog::reject();
 }
 
 void NewUpdates::startUpdate() {
-    updateButton->setEnabled(false);
-    updateDownloader->download(url);
+    m_updateButton->setEnabled(false);
+    m_updateDownloader->download(m_url);
 }
 
 void NewUpdates::finishUpdate(const QString& updateDir) {

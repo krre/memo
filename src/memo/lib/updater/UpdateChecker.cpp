@@ -5,11 +5,11 @@
 #include <QtNetwork>
 
 UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent),
-    manifestUrl(QUrl(QString(Constants::App::DownloadUrl) + "/update/manifest.json")) {
+    m_manifestUrl(QUrl(QString(Constants::App::DownloadUrl) + "/update/manifest.json")) {
 }
 
 void UpdateChecker::check() {
-    QNetworkReply* manifestReply = Context::networkAccessManager()->get(QNetworkRequest(manifestUrl));
+    QNetworkReply* manifestReply = Context::networkAccessManager()->get(QNetworkRequest(m_manifestUrl));
 
     connect(manifestReply, &QNetworkReply::finished, [manifestReply, this] () {
         QJsonParseError parseError{};
@@ -61,7 +61,7 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 
             QString urlTemplate = manifest["template"].toString();
             update.baseVersion = updateObj["baseVersion"].toString();
-            update.url = manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(Common::Constants::CurrentOS, urlTemplate.replace("$version", update.version))));
+            update.url = m_manifestUrl.resolved(QUrl(QString("./%1/%2.zip").arg(Common::Constants::CurrentOS, urlTemplate.replace("$version", update.version))));
             update.description = updateObj["description"].toString();
             update.date = updateObj["date"].toString();
             update.size = size;

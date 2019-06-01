@@ -8,7 +8,7 @@
 #include <QtWidgets>
 #include <QtSql>
 
-Outliner::Outliner(Database* database) : database(database) {
+Outliner::Outliner(Database* database) : m_database(database) {
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QTreeView::customContextMenuRequested, this, &Outliner::onCustomContextMenu);
     createContextMenu();
@@ -23,7 +23,7 @@ Outliner::Outliner(Database* database) : database(database) {
     clear();
 
     connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, [=] {
-        TreeItem* item = model->item(selectionModel()->currentIndex());
+        TreeItem* item = m_model->item(selectionModel()->currentIndex());
         database->updateValue(item->id(), "title", item->data());
     });
 }
@@ -49,53 +49,53 @@ void Outliner::updateActions() {
 
 void Outliner::build() {
     clear();
-    QVector<Database::Title> titles = database->titles();
-    int selectedId = database->metaValue("selected_id").toInt();
+    QVector<Database::Title> titles = m_database->titles();
+    int selectedId = m_database->metaValue("selected_id").toInt();
 
-    TreeItem* rootItem = model->root();
+    TreeItem* rootItem = m_model->root();
 
     for (const Database::Title& title : titles) {
         TreeItem* parentItem = rootItem->find(title.parentId);
-        QModelIndex parentIndex = model->index(parentItem);
-        model->insertRow(title.pos, parentIndex);
+        QModelIndex parentIndex = m_model->index(parentItem);
+        m_model->insertRow(title.pos, parentIndex);
 
-        QModelIndex index = model->index(title.pos, 0, parentIndex);
-        model->setData(index, QVariant(title.title), Qt::EditRole);
-        model->item(index)->setId(title.id);
+        QModelIndex index = m_model->index(title.pos, 0, parentIndex);
+        m_model->setData(index, QVariant(title.title), Qt::EditRole);
+        m_model->item(index)->setId(title.id);
     }
 
     if (selectedId == 0) {
         setCurrentIndex(QModelIndex());
     } else {
-        TreeItem* item = model->root()->find(selectedId);
-        QModelIndex index = model->index(item);
+        TreeItem* item = m_model->root()->find(selectedId);
+        QModelIndex index = m_model->index(item);
         setCurrentIndex(index);
 
         TreeItem* parent = item->parent();
 
         while (parent != rootItem) {
-            setExpanded(model->index(parent), true);
+            setExpanded(m_model->index(parent), true);
             parent = parent->parent();
         }
     }
 }
 
 void Outliner::clear() {
-    isInited = false;
+    m_isInited = false;
 
-    delete model;
+    delete m_model;
 
-    model = new TreeModel;
-    setModel(model);
-    connect(model, &TreeModel::itemDropped, this, &Outliner::moveTree);
+    m_model = new TreeModel;
+    setModel(m_model);
+    connect(m_model, &TreeModel::itemDropped, this, &Outliner::moveTree);
 
-    isInited = true;
+    m_isInited = true;
 }
 
 void Outliner::onCustomContextMenu(const QPoint& point) {
-    if (database->isOpen()) {
+    if (m_database->isOpen()) {
         updateContextMenu();
-        contextMenu->exec(mapToGlobal(point));
+        m_contextMenu->exec(mapToGlobal(point));
     }
 }
 
@@ -109,21 +109,21 @@ void Outliner::addNote() {
 
 void Outliner::removeNotes() {
     QModelIndex index = selectionModel()->currentIndex();
-    TreeItem* parentItem = model->item(index.parent());
+    TreeItem* parentItem = m_model->item(index.parent());
 
-    int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(model->data(index).toString()));
+    int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(m_model->data(index).toString()));
     if (result == QMessageBox::Yes) {
-        TreeItem* item = model->item(index);
-        QVector<int> ids = model->childIds(item);
-        model->removeRow(index.row(), index.parent());
+        TreeItem* item = m_model->item(index);
+        QVector<int> ids = m_model->childIds(item);
+        m_model->removeRow(index.row(), index.parent());
 
         for (int id : ids) {
-            database->removeRecord(id);
+            m_database->removeRecord(id);
         }
 
         for (int i = 0; i < parentItem->childCount(); i++) {
             int id = parentItem->child(i)->id();
-            database->updateValue(id, "pos", i);
+            m_database->updateValue(id, "pos", i);
         }
     }
 }
@@ -135,25 +135,25 @@ void Outliner::renameNote() {
 void Outliner::moveUp() {
     int row = currentIndex().row();
 
-    int id1 = model->item(currentIndex())->id();
-    int id2 = model->item(currentIndex().sibling(row - 1, 0))->id();
+    int id1 = m_model->item(currentIndex())->id();
+    int id2 = m_model->item(currentIndex().sibling(row - 1, 0))->id();
 
-    model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row - 1);
+    m_model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row - 1);
 
-    database->updateValue(id1, "pos", row - 1);
-    database->updateValue(id2, "pos", row);
+    m_database->updateValue(id1, "pos", row - 1);
+    m_database->updateValue(id2, "pos", row);
 }
 
 void Outliner::moveDown() {
     int row = currentIndex().row();
 
-    int id1 = model->item(currentIndex())->id();
-    int id2 = model->item(currentIndex().sibling(row + 1, 0))->id();
+    int id1 = m_model->item(currentIndex())->id();
+    int id2 = m_model->item(currentIndex().sibling(row + 1, 0))->id();
 
-    model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row + 2);
+    m_model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row + 2);
 
-    database->updateValue(id1, "pos", row + 1);
-    database->updateValue(id2, "pos", row);
+    m_database->updateValue(id1, "pos", row + 1);
+    m_database->updateValue(id2, "pos", row);
 }
 
 void Outliner::moveTree(const QModelIndex& index) {
@@ -161,40 +161,40 @@ void Outliner::moveTree(const QModelIndex& index) {
     expand(index.parent());
 
     // Move tree in database.
-    TreeItem* targetItem = model->item(index);
+    TreeItem* targetItem = m_model->item(index);
     int sourceId = targetItem->id();
-    int sourceParentId = database->value(sourceId, "parent_id").toInt();
+    int sourceParentId = m_database->value(sourceId, "parent_id").toInt();
     int destinationParentId = targetItem->parent()->id();
 
-    TreeItem* sourceParentItem = model->root()->find(sourceParentId);
+    TreeItem* sourceParentItem = m_model->root()->find(sourceParentId);
 
     // Rewrite note positions on source parent.
     for (int i = 0; i < sourceParentItem->childCount(); i++) {
-         database->updateValue(sourceParentItem->child(i)->id(), "pos", i);
+         m_database->updateValue(sourceParentItem->child(i)->id(), "pos", i);
     }
 
     if (sourceParentId != destinationParentId) {
-         database->updateValue(sourceId, "parent_id", destinationParentId);
+         m_database->updateValue(sourceId, "parent_id", destinationParentId);
 
-         TreeItem* destinationParentItem = model->root()->find(destinationParentId);
+         TreeItem* destinationParentItem = m_model->root()->find(destinationParentId);
 
          // Rewrite note positions on destination parent.
          for (int i = 0; i < destinationParentItem->childCount(); i++) {
-             database->updateValue(destinationParentItem->child(i)->id(), "pos", i);
+             m_database->updateValue(destinationParentItem->child(i)->id(), "pos", i);
          }
 
          // Rewrite depth in all children of target note.
-         QVector<int> childIds = model->childIds(targetItem);
+         QVector<int> childIds = m_model->childIds(targetItem);
          for (int id : childIds) {
              int depth = targetItem->find(id)->depth() - 1;
-             database->updateValue(id, "depth", depth);
+             m_database->updateValue(id, "depth", depth);
          }
     }
 }
 
 void Outliner::showProperties() {
-    int id = model->item(currentIndex())->id();
-    QSqlQuery query = database->record(id);
+    int id = m_model->item(currentIndex())->id();
+    QSqlQuery query = m_database->record(id);
 
     NoteProperties::Data data;
     data.title = query.value("title").toString();
@@ -206,46 +206,46 @@ void Outliner::showProperties() {
 }
 
 void Outliner::createContextMenu() {
-    contextMenu = new QMenu(this);
-    contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
-    removeAction = contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
-    renameAction = contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
-    contextMenu->addSeparator();
-    moveUpAction = contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
-    moveDownAction = contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
-    contextMenu->addSeparator();
-    propertiesAction = contextMenu->addAction(tr("Properties..."), this, &Outliner::showProperties);
+    m_contextMenu = new QMenu(this);
+    m_contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
+    m_removeAction = m_contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
+    m_renameAction = m_contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
+    m_contextMenu->addSeparator();
+    m_moveUpAction = m_contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
+    m_moveDownAction = m_contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
+    m_contextMenu->addSeparator();
+    m_propertiesAction = m_contextMenu->addAction(tr("Properties..."), this, &Outliner::showProperties);
 }
 
 void Outliner::updateContextMenu() {
     bool enabled = currentIndex().isValid();
-    removeAction->setEnabled(enabled);
-    renameAction->setEnabled(enabled);
+    m_removeAction->setEnabled(enabled);
+    m_renameAction->setEnabled(enabled);
 
-    moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
-    moveDownAction->setEnabled(enabled && currentIndex().row() < model->rowCount(currentIndex().parent()) - 1);
+    m_moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
+    m_moveDownAction->setEnabled(enabled && currentIndex().row() < m_model->rowCount(currentIndex().parent()) - 1);
 
-    propertiesAction->setEnabled(enabled);
+    m_propertiesAction->setEnabled(enabled);
 }
 
 void Outliner::insertChild(const QString& title) {
     QModelIndex currentIndex = selectionModel()->currentIndex();
-    TreeItem* currentItem = model->item(currentIndex);
+    TreeItem* currentItem = m_model->item(currentIndex);
 
     int currentId = currentItem->id();
     int childRow = currentItem->childCount();
     int childDepth = currentItem->depth();
-    int childId = database->insertRecord(currentId, childRow, childDepth, title);
+    int childId = m_database->insertRecord(currentId, childRow, childDepth, title);
 
-    if (!model->insertRow(childRow, currentIndex)) {
+    if (!m_model->insertRow(childRow, currentIndex)) {
         return;
     }
 
-    QModelIndex child = model->index(childRow, 0, currentIndex);
-    model->setData(child, QVariant(title), Qt::EditRole);
-    model->item(child)->setId(childId);
+    QModelIndex child = m_model->index(childRow, 0, currentIndex);
+    m_model->setData(child, QVariant(title), Qt::EditRole);
+    m_model->item(child)->setId(childId);
 
-    selectionModel()->setCurrentIndex(model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
+    selectionModel()->setCurrentIndex(m_model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
     setExpanded(currentIndex, true);
 
     updateActions();
@@ -256,12 +256,12 @@ int Outliner::exportNote(int parentId, const QString& path) {
     dir.mkdir(path);
 
     int count = 0;
-    TreeItem* parentItem = model->root()->find(parentId);
+    TreeItem* parentItem = m_model->root()->find(parentId);
 
     for (int i = 0; i < parentItem->childCount(); i++) {
         TreeItem* childItem = parentItem->child(i);
         QString title = childItem->data().toString();
-        QString note = database->value(childItem->id(), "note").toString();
+        QString note = m_database->value(childItem->id(), "note").toString();
         QString notePath = path + "/" + title;
 
         QString filename = notePath + ".txt";
@@ -294,11 +294,11 @@ void Outliner::mousePressEvent(QMouseEvent* event) {
 
 void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
     Q_UNUSED(previous)
-    if (!isInited) return;
+    if (!m_isInited) return;
 
     try {
-        int id = model->item(current)->id();
-        database->updateMetaValue("selected_id", id);
+        int id = m_model->item(current)->id();
+        m_database->updateMetaValue("selected_id", id);
         emit noteChanged(id);
     } catch (const SqlQueryError& e) {
         qCritical() << "Error update selected_id: " << e.error();
