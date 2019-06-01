@@ -21,15 +21,15 @@ private:
     void readSettings();
     bool writeSettings();
 
-    QComboBox* m_languageComboBox;
-    QLineEdit* m_fontFamilyLineEdit;
-    QLineEdit* m_fontSizeLineEdit;
-    QCheckBox* m_minimizeCheckBox;
-    QCheckBox* m_hideTrayCheckBox;
+    QComboBox* m_languageComboBox = nullptr;
+    QLineEdit* m_fontFamilyLineEdit = nullptr;
+    QLineEdit* m_fontSizeLineEdit = nullptr;
+    QCheckBox* m_minimizeCheckBox = nullptr;
+    QCheckBox* m_hideTrayCheckBox = nullptr;
 
-    QGroupBox* m_groupBoxHotkey;
-    QLineEdit* m_hotkeyLineEdit;
+    QGroupBox* m_groupBoxHotkey = nullptr;
+    QLineEdit* m_hotkeyLineEdit = nullptr;
 
-    QComboBox* m_channelComboBox;
-    QCheckBox* m_checkStartupCheckBox;
+    QComboBox* m_channelComboBox = nullptr;
+    QCheckBox* m_checkStartupCheckBox = nullptr;
 };

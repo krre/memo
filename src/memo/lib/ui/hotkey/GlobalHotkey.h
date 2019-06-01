@@ -15,5 +15,5 @@ signals:
     void activated();
 
 private:
-    NativeEventFilter* m_nativeEventFilter;
+    NativeEventFilter* m_nativeEventFilter = nullptr;
 };

@@ -38,5 +38,5 @@ signals:
     void itemDropped(const QModelIndex& index);
 
 private:
-    TreeItem* m_rootItem;
+    TreeItem* m_rootItem = nullptr;
 };

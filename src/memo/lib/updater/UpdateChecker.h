@@ -12,7 +12,7 @@ public:
         QString baseVersion;
         QString description;
         QString date;
-        int size;
+        int size = 0;
         QString channel;
     };
 

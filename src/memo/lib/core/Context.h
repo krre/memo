@@ -15,5 +15,5 @@ public:
 
 private:
     static Context* m_instance;
-    QNetworkAccessManager* m_manager;
+    QNetworkAccessManager* m_manager = nullptr;
 };

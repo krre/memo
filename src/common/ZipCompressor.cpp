@@ -8,10 +8,6 @@
 
 namespace Common {
 
-ZipCompressor::ZipCompressor() {
-
-}
-
 void ZipCompressor::compress(const QString& name, const QString& srcDir) {
     QZipWriter zipWriter(name);
 

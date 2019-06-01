@@ -16,7 +16,7 @@ class RuntimeError : Exception {
 
 public:
     RuntimeError(const QString& error);
-    virtual QString error() const override;
+    QString error() const override;
 
 private:
     QString m_error;
