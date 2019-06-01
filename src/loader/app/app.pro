@@ -1,6 +1,8 @@
 TEMPLATE = app
-TARGET = $$PWD/../../../bin/loader
 CONFIG += c++17
+
+!win32: TARGET = $$PWD/../../../bin/loader
+win32: TARGET = ../../../../bin/loader
 
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT

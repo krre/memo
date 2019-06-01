@@ -1,6 +1,8 @@
 QT += core gui widgets network
 TEMPLATE = app
-TARGET = $$PWD/../../../bin/updatecreator
+!win32: TARGET = $$PWD/../../../bin/updatecreator
+win32: TARGET = ../../../../bin/updatecreator
+
 CONFIG += c++17
 
 DEFINES += QT_DEPRECATED_WARNINGS

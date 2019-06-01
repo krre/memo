@@ -1,7 +1,11 @@
 QT += core gui widgets network
 
+CONFIG += c++17
+win32: CONFIG += static
+
 TEMPLATE = lib
-TARGET = $$PWD/../../../lib/updatecreator
+!win32: TARGET = $$PWD/../../../lib/updatecreator
+win32: TARGET = ../../../../lib/updatecreator
 
 INCLUDEPATH += $$PWD/../../
 

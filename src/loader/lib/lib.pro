@@ -1,5 +1,9 @@
+CONFIG += c++17
+win32: CONFIG += static
+
 TEMPLATE = lib
-TARGET = $$PWD/../../../lib/loader
+!win32: TARGET = $$PWD/../../../lib/loader
+win32: TARGET = ../../../../lib/loader
 
 INCLUDEPATH += $$PWD/../../
 
