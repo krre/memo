@@ -1,7 +1,9 @@
-QT += testlib
+QT += testlib network
 CONFIG += testcase
 
-include(../../src/memo/memo.pri)
+INCLUDEPATH += $$PWD/../../src
+
+LIBS += -L$$PWD/../../lib/ -lcommon -lmemo
 
 SOURCES += \
     Test_UpdateChecker.cpp

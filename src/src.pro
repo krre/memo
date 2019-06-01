@@ -1,2 +1,3 @@
 TEMPLATE = subdirs
-SUBDIRS = memo updatecreator loader
+CONFIG += ordered
+SUBDIRS = common memo updatecreator loader

@@ -1,5 +1,5 @@
 #include <QtTest>
-#include <Loader.h>
+#include <loader/lib/Loader.h>
 
 class Test_Loader : public QObject {
     Q_OBJECT

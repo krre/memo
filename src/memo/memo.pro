@@ -1,10 +1,3 @@
-TEMPLATE = app
-TARGET = memo
-
-DEFINES += QT_DEPRECATED_WARNINGS
-DEFINES += QT_MESSAGELOGCONTEXT
-
-include(memo.pri)
-
-SOURCES += \
-    main.cpp \
+TEMPLATE = subdirs
+CONFIG += ordered
+SUBDIRS += lib app

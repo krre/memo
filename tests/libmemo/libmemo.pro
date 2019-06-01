@@ -1,7 +1,9 @@
 QT += testlib
 CONFIG += testcase
 
-include(../../src/libmemo/libmemo.pri)
+INCLUDEPATH += $$PWD/../../src
+
+LIBS += -L$$PWD/../../lib/ -lcommon -lmemo
 
 SOURCES += \
     Test_ZipCompressor.cpp

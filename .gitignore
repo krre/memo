@@ -1,4 +1,6 @@
 # Qt Creator
+/bin
+/lib
 build-*
 *.user
 *.autosave

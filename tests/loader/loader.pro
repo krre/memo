@@ -1,7 +1,9 @@
 QT += testlib
 CONFIG += testcase
 
-include(../../src/loader/loader.pri)
+INCLUDEPATH += $$PWD/../../src
+
+LIBS += -L$$PWD/../../lib/ -lcommon -lloader
 
 SOURCES += \
     Test_Loader.cpp

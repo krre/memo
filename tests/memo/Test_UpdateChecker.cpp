@@ -1,6 +1,6 @@
 #include <QtTest>
-#include <core/Context.h>
-#include <updater/UpdateChecker.h>
+#include <memo/lib/core/Context.h>
+#include <memo/lib/updater/UpdateChecker.h>
 
 class Test_UpdateChecker : public QObject {
     Q_OBJECT

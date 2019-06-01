@@ -1,7 +1,9 @@
 QT += testlib
 CONFIG += testcase
 
-include(../../src/updatecreator/updatecreator.pri)
+INCLUDEPATH += $$PWD/../../src
+
+LIBS += -L$$PWD/../../lib/ -lcommon -lupdatecreator
 
 SOURCES += \
     Test_ListModel.cpp

@@ -1,5 +1,5 @@
 #include <QtTest>
-#include <memo/ZipCompressor.h>
+#include <common/ZipCompressor.h>
 
 class Test_ZipCompressor : public QObject {
     Q_OBJECT
@@ -8,7 +8,7 @@ private slots:
 };
 
 void Test_ZipCompressor::compressorRun() {
-    Memo::ZipCompressor zipCompressor;
+    Common::ZipCompressor zipCompressor;
 }
 
 QTEST_MAIN(Test_ZipCompressor)

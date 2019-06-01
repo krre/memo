@@ -1,5 +1,5 @@
 #include <QtTest>
-#include <ListModel.h>
+#include <updatecreator/lib/ListModel.h>
 
 class Test_ListModel : public QObject {
     Q_OBJECT

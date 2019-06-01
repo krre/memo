@@ -1,7 +1,3 @@
-TEMPLATE = app
-CONFIG += c++17
-
-include(loader.pri)
-
-SOURCES += \
-    main.cpp
+TEMPLATE = subdirs
+CONFIG += ordered
+SUBDIRS += lib app
