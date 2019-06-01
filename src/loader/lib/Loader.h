@@ -4,7 +4,7 @@
 class Loader : public QObject {
     Q_OBJECT
 public:
-    Loader(const QString srcDir, QString dstDir, QString program, QObject* parent = nullptr);
+    Loader(const QString& srcDir, QString& dstDir, QString& program, QObject* parent = nullptr);
     void start();
 
 protected:

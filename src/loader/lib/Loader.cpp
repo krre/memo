@@ -1,7 +1,7 @@
 #include "Loader.h"
 #include <QtCore>
 
-Loader::Loader(const QString srcDir, QString dstDir, QString program, QObject* parent) :
+Loader::Loader(const QString& srcDir, QString& dstDir, QString& program, QObject* parent) :
     QObject(parent), m_srcDir(srcDir), m_dstDir(dstDir), m_program(program) {
 }
 
