@@ -11,6 +11,7 @@
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+    Q_INIT_RESOURCE(resourceslib);
     setWindowTitle(Constants::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
