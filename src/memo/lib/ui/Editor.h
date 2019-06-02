@@ -1,13 +1,14 @@
 #pragma once
 #include <QPlainTextEdit>
+#include <core/Globals.h>
 
 class Editor : public QPlainTextEdit {
     Q_OBJECT
 public:
     explicit Editor(QWidget* parent = nullptr);
 
-    void setId(int id);
-    int id() const;
+    void setId(Id id);
+    Id id() const;
 
 signals:
     void focusLost();
@@ -18,5 +19,5 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private:
-    int m_id = 0;
+    Id m_id = 0;
 };

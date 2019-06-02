@@ -349,7 +349,7 @@ void MainWindow::quit() {
     QCoreApplication::quit();
 }
 
-void MainWindow::onNoteChanged(int id) {
+void MainWindow::onNoteChanged(Id id) {
     m_editor->setId(id);
     m_editor->setEnabled(id > 0);
 

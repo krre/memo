@@ -63,7 +63,7 @@ bool Database::isOpen() const {
     return m_db.isOpen();
 }
 
-int Database::insertRecord(int parentId, int pos, int depth, const QString& title) {
+int Database::insertRecord(Id parentId, int pos, int depth, const QString& title) {
     QSqlQuery query;
     query.prepare("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)");
     query.bindValue(":parent_id", parentId);
@@ -78,7 +78,7 @@ int Database::insertRecord(int parentId, int pos, int depth, const QString& titl
     return query.lastInsertId().toInt();
 }
 
-void Database::removeRecord(int id) {
+void Database::removeRecord(Id id) {
     QSqlQuery query;
     query.prepare("DELETE FROM notes WHERE id = :id");
     query.bindValue(":id", id);
@@ -88,7 +88,7 @@ void Database::removeRecord(int id) {
     }
 }
 
-QSqlQuery Database::record(int id) {
+QSqlQuery Database::record(Id id) {
     QSqlQuery query;
     query.prepare(QString("SELECT * FROM notes WHERE id = :id"));
     query.bindValue(":id", id);
@@ -102,7 +102,7 @@ QSqlQuery Database::record(int id) {
     return query;
 }
 
-void Database::updateValue(int id, const QString& name, const QVariant& value) {
+void Database::updateValue(Id id, const QString& name, const QVariant& value) {
     QSqlQuery query;
     QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";
     query.prepare(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate));
@@ -114,7 +114,7 @@ void Database::updateValue(int id, const QString& name, const QVariant& value) {
     }
 }
 
-QVariant Database::value(int id, const QString& name) {
+QVariant Database::value(Id id, const QString& name) {
     QSqlQuery query;
     query.prepare(QString("SELECT %1 FROM notes WHERE id = :id").arg(name));
     query.bindValue(":id", id);

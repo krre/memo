@@ -2,6 +2,7 @@
 #include <QMainWindow>
 #include <QSystemTrayIcon>
 #include "updater/UpdateChecker.h"
+#include <core/Globals.h>
 
 class QSplitter;
 class Outliner;
@@ -27,7 +28,7 @@ private slots:
     void about();
     void quit();
 
-    void onNoteChanged(int id);
+    void onNoteChanged(Id id);
     void onEditorFocusLost();
     void onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates);
 

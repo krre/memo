@@ -2,6 +2,7 @@
 #include <QList>
 #include <QVariant>
 #include <QVector>
+#include <core/Globals.h>
 
 class TreeItem {
 
@@ -12,7 +13,7 @@ public:
     TreeItem* parent();
     void setParent(TreeItem* parent);
 
-    TreeItem* find(int id);
+    TreeItem* find(Id id);
 
     TreeItem* child(int number);
     int childCount() const;
@@ -24,8 +25,8 @@ public:
     bool insertChild(int position, TreeItem* item = nullptr);
     bool removeChild(int position);
 
-    int id() const;
-    void setId(int id);
+    Id id() const;
+    void setId(Id id);
 
     int depth();
 
@@ -33,5 +34,5 @@ private:
     QList<TreeItem*> m_childItems;
     QVariant m_data;
     TreeItem* m_parent = nullptr;
-    int m_id = 0;
+    Id m_id = 0;
 };

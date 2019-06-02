@@ -117,12 +117,12 @@ void Outliner::removeNotes() {
         QVector<int> ids = m_model->childIds(item);
         m_model->removeRow(index.row(), index.parent());
 
-        for (int id : ids) {
+        for (Id id : ids) {
             m_database->removeRecord(id);
         }
 
         for (int i = 0; i < parentItem->childCount(); i++) {
-            int id = parentItem->child(i)->id();
+            Id id = parentItem->child(i)->id();
             m_database->updateValue(id, "pos", i);
         }
     }
@@ -135,8 +135,8 @@ void Outliner::renameNote() {
 void Outliner::moveUp() {
     int row = currentIndex().row();
 
-    int id1 = m_model->item(currentIndex())->id();
-    int id2 = m_model->item(currentIndex().sibling(row - 1, 0))->id();
+    Id id1 = m_model->item(currentIndex())->id();
+    Id id2 = m_model->item(currentIndex().sibling(row - 1, 0))->id();
 
     m_model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row - 1);
 
@@ -147,8 +147,8 @@ void Outliner::moveUp() {
 void Outliner::moveDown() {
     int row = currentIndex().row();
 
-    int id1 = m_model->item(currentIndex())->id();
-    int id2 = m_model->item(currentIndex().sibling(row + 1, 0))->id();
+    Id id1 = m_model->item(currentIndex())->id();
+    Id id2 = m_model->item(currentIndex().sibling(row + 1, 0))->id();
 
     m_model->moveRow(currentIndex().parent(), row, currentIndex().parent(), row + 2);
 
@@ -162,9 +162,9 @@ void Outliner::moveTree(const QModelIndex& index) {
 
     // Move tree in database.
     TreeItem* targetItem = m_model->item(index);
-    int sourceId = targetItem->id();
-    int sourceParentId = m_database->value(sourceId, "parent_id").toInt();
-    int destinationParentId = targetItem->parent()->id();
+    Id sourceId = targetItem->id();
+    Id sourceParentId = m_database->value(sourceId, "parent_id").toInt();
+    Id destinationParentId = targetItem->parent()->id();
 
     TreeItem* sourceParentItem = m_model->root()->find(sourceParentId);
 
@@ -185,7 +185,7 @@ void Outliner::moveTree(const QModelIndex& index) {
 
          // Rewrite depth in all children of target note.
          QVector<int> childIds = m_model->childIds(targetItem);
-         for (int id : childIds) {
+         for (Id id : childIds) {
              int depth = targetItem->find(id)->depth() - 1;
              m_database->updateValue(id, "depth", depth);
          }
@@ -193,7 +193,7 @@ void Outliner::moveTree(const QModelIndex& index) {
 }
 
 void Outliner::showProperties() {
-    int id = m_model->item(currentIndex())->id();
+    Id id = m_model->item(currentIndex())->id();
     QSqlQuery query = m_database->record(id);
 
     NoteProperties::Data data;
@@ -232,7 +232,7 @@ void Outliner::insertChild(const QString& title) {
     QModelIndex currentIndex = selectionModel()->currentIndex();
     TreeItem* currentItem = m_model->item(currentIndex);
 
-    int currentId = currentItem->id();
+    Id currentId = currentItem->id();
     int childRow = currentItem->childCount();
     int childDepth = currentItem->depth();
     int childId = m_database->insertRecord(currentId, childRow, childDepth, title);
@@ -251,7 +251,7 @@ void Outliner::insertChild(const QString& title) {
     updateActions();
 }
 
-int Outliner::exportNote(int parentId, const QString& path) {
+int Outliner::exportNote(Id parentId, const QString& path) {
     QDir dir;
     dir.mkdir(path);
 
@@ -297,7 +297,7 @@ void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& pre
     if (!m_isInited) return;
 
     try {
-        int id = m_model->item(current)->id();
+        Id id = m_model->item(current)->id();
         m_database->updateMetaValue("selected_id", id);
         emit noteChanged(id);
     } catch (const SqlQueryError& e) {

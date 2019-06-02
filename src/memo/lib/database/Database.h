@@ -1,13 +1,14 @@
 #pragma once
 #include <QObject>
 #include <QSqlDatabase>
+#include <core/Globals.h>
 
 class Database : public QObject {
     Q_OBJECT
 public:
     struct Title {
-        int id;
-        int parentId;
+        Id id;
+        Id parentId;
         int pos;
         int depth;
         QString title;
@@ -21,12 +22,12 @@ public:
     void close();
     bool isOpen() const;
 
-    int insertRecord(int parentId, int pos, int depth, const QString& title);
-    void removeRecord(int id);
-    QSqlQuery record(int id);
+    int insertRecord(Id parentId, int pos, int depth, const QString& title);
+    void removeRecord(Id id);
+    QSqlQuery record(Id id);
 
-    void updateValue(int id, const QString& name, const QVariant& value);
-    QVariant value(int id, const QString& name);
+    void updateValue(Id id, const QString& name, const QVariant& value);
+    QVariant value(Id id, const QString& name);
 
     void updateMetaValue(const QString& name, const QVariant& value);
     QVariant metaValue(const QString& name);

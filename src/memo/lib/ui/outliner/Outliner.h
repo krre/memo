@@ -1,5 +1,6 @@
 #pragma once
 #include <QTreeView>
+#include <core/Globals.h>
 
 class QMenu;
 class QAction;
@@ -19,7 +20,7 @@ public slots:
     void clear();
 
 signals:
-    void noteChanged(int id);
+    void noteChanged(Id id);
 
 protected:
     void mousePressEvent(QMouseEvent* event) override;
@@ -41,7 +42,7 @@ private:
     void createContextMenu();
     void updateContextMenu();
     void insertChild(const QString& title);
-    int exportNote(int parentId, const QString& path);
+    int exportNote(Id parentId, const QString& path);
 
     QMenu* m_contextMenu = nullptr;
     QAction* m_removeAction = nullptr;

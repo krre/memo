@@ -37,7 +37,7 @@ void TreeItem::setParent(TreeItem* parent) {
     m_parent = parent;
 }
 
-TreeItem* TreeItem::find(int id) {
+TreeItem* TreeItem::find(Id id) {
     if (m_id == id) return this;
 
     for (TreeItem* child : m_childItems) {
@@ -70,11 +70,11 @@ void TreeItem::setData(const QVariant& data) {
     m_data = data;
 }
 
-int TreeItem::id() const {
+Id TreeItem::id() const {
     return m_id;
 }
 
-void TreeItem::setId(int id) {
+void TreeItem::setId(Id id) {
     m_id = id;
 }
 

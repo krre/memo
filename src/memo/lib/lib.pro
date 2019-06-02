@@ -35,6 +35,7 @@ mac: SOURCES += ui/hotkey/NativeEventFilterMac.cpp
 HEADERS += \
     core/Constants.h \
     core/Context.h \
+    core/Globals.h \
     ui/MainWindow.h \
     ui/outliner/Outliner.h \
     ui/outliner/TreeModel.h \

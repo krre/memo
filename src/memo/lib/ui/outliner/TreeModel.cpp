@@ -110,7 +110,7 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
 
     QByteArray data = mimeData->data(Constants::Outliner::TreeItemMimeType);
     QDataStream stream(&data, QIODevice::ReadOnly);
-    int id;
+    Id id;
     stream >> id;
 
     TreeItem* sourceItem = m_rootItem->find(id);

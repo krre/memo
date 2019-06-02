@@ -5,11 +5,11 @@ Editor::Editor(QWidget* parent) : QPlainTextEdit(parent) {
     setEnabled(false);
 }
 
-void Editor::setId(int id) {
+void Editor::setId(Id id) {
     m_id = id;
 }
 
-int Editor::id() const {
+Id Editor::id() const {
     return m_id;
 }
 
