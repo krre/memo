@@ -362,7 +362,7 @@ void MainWindow::onNoteChanged(Id id) {
 }
 
 void MainWindow::onEditorFocusLost() {
-    int lastId = m_editor->id();
+    Id lastId = m_editor->id();
 
     if (lastId && m_editor->document()->isModified()) {
         m_database->updateValue(lastId, "note", m_editor->document()->toPlainText());
