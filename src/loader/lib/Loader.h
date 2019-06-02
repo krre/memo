@@ -8,7 +8,7 @@ public:
     void start();
 
 protected:
-    void timerEvent(QTimerEvent* event);
+    void timerEvent(QTimerEvent* event) override;
 
 private:
     void quit();
