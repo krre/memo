@@ -8,7 +8,10 @@ private slots:
 };
 
 void Test_Loader::loaderRun() {
-    Loader loader("", "", "");
+    QString srcDir;
+    QString dstDir;
+    QString program;
+    Loader loader(srcDir, dstDir, program);
 }
 
 QTEST_MAIN(Test_Loader)
