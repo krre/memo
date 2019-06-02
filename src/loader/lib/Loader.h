@@ -18,5 +18,4 @@ private:
     QString m_program;
 
     int m_counter = 1;
-    int m_logNum = 0;
 };
