@@ -10,6 +10,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
 
 win32: RC_ICONS += $$PWD/../lib/images/icon.ico
+macx: ICON = $$PWD/../lib/images/icon.icns
 
 INCLUDEPATH += $$PWD/../lib $$PWD/../..
 
