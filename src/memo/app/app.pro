@@ -3,8 +3,8 @@ QT += core gui widgets network sql
 CONFIG += c++17
 
 TEMPLATE = app
-!win32: TARGET = $$PWD/../../../bin/memo
-win32: TARGET = ../../../../bin/memo
+!win32: TARGET = $$PWD/../../../bin/Memo
+win32: TARGET = ../../../../bin/Memo
 
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
