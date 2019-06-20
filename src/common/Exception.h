@@ -21,4 +21,5 @@ public:
 private:
     QString m_error;
 };
+
 } // namespace Common

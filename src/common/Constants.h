@@ -22,5 +22,6 @@ namespace OS {
 #elif defined (Q_OS_MACOS)
     constexpr auto CurrentOS = OS::MacOS;
 #endif
+
 } // namespace Constants
 } // namespace Common

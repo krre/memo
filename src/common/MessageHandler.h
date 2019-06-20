@@ -23,4 +23,5 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
          break;
     }
 }
+
 } // namespace Common

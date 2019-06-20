@@ -5,7 +5,6 @@ class TreeItem;
 
 class TreeModel : public QAbstractItemModel {
     Q_OBJECT
-
 public:
     TreeModel(QObject* parent = nullptr);
     ~TreeModel() override;
