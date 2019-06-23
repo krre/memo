@@ -328,20 +328,15 @@ void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& upda
 }
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About %1").arg(Constants::App::Name),
+    using namespace Constants::App;
+
+    QMessageBox::about(this, tr("About %1").arg(Name),
         tr("<h3>%1 %2 %3</h3>\
            Outliner for quick notes<br><br> \
            Based on Qt %4<br> \
            Build on %5 %6<br><br> \
            <a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
-            .arg(Constants::App::Name,
-                 Constants::App::Version,
-                 Constants::App::Status,
-                 QT_VERSION_STR,
-                 Constants::App::BuildDate,
-                 Constants::App::BuildTime,
-                 Constants::App::URL,
-                 Constants::App::CopyrightYear));
+            .arg(Name, Version, Status, QT_VERSION_STR, BuildDate, BuildTime, URL, CopyrightYear));
 }
 
 void MainWindow::quit() {
