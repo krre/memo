@@ -87,19 +87,15 @@ void MainWindow::quit() {
 }
 
 void MainWindow::about() {
-    QMessageBox::about(this, tr("About %1").arg(Constants::WindowTitle),
+    using namespace Constants;
+
+    QMessageBox::about(this, tr("About %1").arg(WindowTitle),
         tr("<h3>%1 %2</h3>\
            Creator of updates for Memo<br><br> \
            Based on Qt %3<br> \
            Build on %4 %5<br><br> \
            <a href=%6>%6</a><br><br>Copyright © %7, Vladimir Zarypov")
-            .arg(Constants::WindowTitle,
-                 Constants::Version,
-                 QT_VERSION_STR,
-                 Constants::BuildDate,
-                 Constants::BuildTime,
-                 Constants::URL,
-                 Constants::CopyrightYear));
+            .arg(WindowTitle, Version, QT_VERSION_STR, BuildDate, BuildTime, URL, CopyrightYear));
 }
 
 void MainWindow::addUpdate() {
