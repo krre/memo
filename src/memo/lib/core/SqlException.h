@@ -3,10 +3,10 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-class SqlDatabaseError : Common::Exception {
+class DatabaseError : Common::Exception {
 
 public:
-    SqlDatabaseError(const QSqlError& error);
+    DatabaseError(const QSqlError& error);
     QString error() const override;
 
 private:

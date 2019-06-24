@@ -16,7 +16,7 @@ void Database::create(const QString& filepath) {
     m_db.setDatabaseName(filepath);
 
     if (!m_db.open()) {
-        throw SqlDatabaseError(m_db.lastError());
+        throw DatabaseError(m_db.lastError());
     }
 
     QSqlQuery query;
@@ -48,7 +48,7 @@ void Database::open(const QString& filepath) {
     m_db.setDatabaseName(filepath);
 
     if (!m_db.open()) {
-        throw SqlDatabaseError(m_db.lastError());
+        throw DatabaseError(m_db.lastError());
     }
 }
 

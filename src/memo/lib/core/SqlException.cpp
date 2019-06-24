@@ -1,10 +1,10 @@
 #include "SqlException.h"
 
-SqlDatabaseError::SqlDatabaseError(const QSqlError& error) : m_error(error) {
+DatabaseError::DatabaseError(const QSqlError& error) : m_error(error) {
 
 }
 
-QString SqlDatabaseError::error() const {
+QString DatabaseError::error() const {
     return QString("Database error: %1. %2").arg(m_error.databaseText(), m_error.driverText());
 }
 
