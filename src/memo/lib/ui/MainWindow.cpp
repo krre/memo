@@ -3,7 +3,7 @@
 #include "Options.h"
 #include "core/Context.h"
 #include "core/Constants.h"
-#include "core/SqlException.h"
+#include "core/DatabaseException.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"

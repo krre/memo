@@ -14,6 +14,7 @@ LIBS += -L$$PWD/../../../lib/ -lcommon
 
 SOURCES += \
     core/Context.cpp \
+    core/DatabaseException.cpp \
     ui/MainWindow.cpp \
     ui/outliner/Outliner.cpp \
     ui/outliner/TreeModel.cpp \
@@ -25,8 +26,7 @@ SOURCES += \
     ui/outliner/NoteProperties.cpp \
     updater/UpdateChecker.cpp \
     updater/NewUpdates.cpp \
-    updater/UpdateDownloader.cpp \
-    core/SqlException.cpp
+    updater/UpdateDownloader.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -35,6 +35,7 @@ mac: SOURCES += ui/hotkey/NativeEventFilterMac.cpp
 HEADERS += \
     core/Constants.h \
     core/Context.h \
+    core/DatabaseException.h \
     core/Globals.h \
     ui/MainWindow.h \
     ui/outliner/Outliner.h \
@@ -48,8 +49,7 @@ HEADERS += \
     ui/outliner/NoteProperties.h \
     updater/UpdateChecker.h \
     updater/NewUpdates.h \
-    updater/UpdateDownloader.h \
-    core/SqlException.h
+    updater/UpdateDownloader.h
 
 RESOURCES += \
     resourceslib.qrc

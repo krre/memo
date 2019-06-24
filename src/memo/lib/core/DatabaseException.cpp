@@ -1,4 +1,4 @@
-#include "SqlException.h"
+#include "DatabaseException.h"
 
 DatabaseError::DatabaseError(const QSqlError& error) : m_error(error) {
 
