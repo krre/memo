@@ -3,7 +3,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-class DatabaseError : Common::Exception {
+class DatabaseError : public Common::Exception {
 
 public:
     DatabaseError(const QSqlError& error);
@@ -13,7 +13,7 @@ private:
     QSqlError m_error;
 };
 
-class SqlQueryError : Common::Exception {
+class SqlQueryError : public Common::Exception {
 
 public:
     SqlQueryError(const QSqlQuery& query);

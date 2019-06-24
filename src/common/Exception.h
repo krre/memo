@@ -12,7 +12,7 @@ public:
     const char* what() const noexcept override;
 };
 
-class RuntimeError : Exception {
+class RuntimeError : public Exception {
 
 public:
     RuntimeError(const QString& error);
