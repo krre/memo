@@ -6,20 +6,20 @@ TreeItem::TreeItem(TreeItem* parent) : m_parent(parent) {
 }
 
 TreeItem::~TreeItem() {
-    qDeleteAll(m_childItems);
+    qDeleteAll(m_children);
 }
 
 TreeItem* TreeItem::child(int number) {
-    return m_childItems.value(number);
+    return m_children.value(number);
 }
 
 int TreeItem::childCount() const {
-    return m_childItems.count();
+    return m_children.count();
 }
 
 int TreeItem::childNumber() const {
     if (m_parent) {
-        return m_parent->m_childItems.indexOf(const_cast<TreeItem*>(this));
+        return m_parent->m_children.indexOf(const_cast<TreeItem*>(this));
     }
 
     return 0;
@@ -40,7 +40,7 @@ void TreeItem::setParent(TreeItem* parent) {
 TreeItem* TreeItem::find(Id id) {
     if (m_id == id) return this;
 
-    for (TreeItem* child : m_childItems) {
+    for (TreeItem* child : m_children) {
         TreeItem* item = child->find(id);
 
         if (item) {
@@ -54,15 +54,15 @@ TreeItem* TreeItem::find(Id id) {
 bool TreeItem::insertChild(int position, TreeItem* item) {
     TreeItem* childItem = item ? item : new TreeItem;
     childItem->setParent(this);
-    m_childItems.insert(position, childItem);
+    m_children.insert(position, childItem);
 
     return true;
 }
 
 bool TreeItem::removeChild(int position) {
-    if (position < 0 || position > m_childItems.count() - 1) return false;
+    if (position < 0 || position > m_children.count() - 1) return false;
 
-    m_childItems.removeAt(position);
+    m_children.removeAt(position);
 
     return true;
 }

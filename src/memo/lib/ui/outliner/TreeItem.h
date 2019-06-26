@@ -31,7 +31,7 @@ public:
     int depth();
 
 private:
-    QList<TreeItem*> m_childItems;
+    QList<TreeItem*> m_children;
     QVariant m_data;
     TreeItem* m_parent = nullptr;
     Id m_id = 0;
