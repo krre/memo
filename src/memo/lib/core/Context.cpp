@@ -3,16 +3,16 @@
 #include <common/Constants.h>
 #include <QtNetwork>
 
-Context* Context::m_instance = nullptr;
+Context* Context::s_instance = nullptr;
 
 Context::Context(QObject* parent) : QObject(parent) {
-    Q_ASSERT(!m_instance);
-    m_instance = this;
+    Q_ASSERT(!s_instance);
+    s_instance = this;
     m_manager = new QNetworkAccessManager(this);
 }
 
 QNetworkAccessManager* Context::networkAccessManager() {
-    return m_instance->m_manager;
+    return s_instance->m_manager;
 }
 
 QString Context::downloadPageUrl() {
