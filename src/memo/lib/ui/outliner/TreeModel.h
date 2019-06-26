@@ -1,5 +1,6 @@
 #pragma once
 #include <QAbstractItemModel>
+#include <core/Globals.h>
 
 class TreeItem;
 
@@ -31,7 +32,7 @@ public:
     TreeItem* root() const;
     TreeItem* item(const QModelIndex& index) const;
     QModelIndex index(TreeItem* item) const;
-    QVector<int> childIds(TreeItem* item);
+    QVector<Id> childIds(TreeItem* item);
 
 signals:
     void itemDropped(const QModelIndex& index);

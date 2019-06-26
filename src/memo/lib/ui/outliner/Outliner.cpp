@@ -114,7 +114,7 @@ void Outliner::removeNotes() {
     int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(m_model->data(index).toString()));
     if (result == QMessageBox::Yes) {
         TreeItem* item = m_model->item(index);
-        QVector<int> ids = m_model->childIds(item);
+        QVector<Id> ids = m_model->childIds(item);
         m_model->removeRow(index.row(), index.parent());
 
         for (Id id : ids) {
@@ -184,7 +184,7 @@ void Outliner::moveTree(const QModelIndex& index) {
          }
 
          // Rewrite depth in all children of target note.
-         QVector<int> childIds = m_model->childIds(targetItem);
+         QVector<Id> childIds = m_model->childIds(targetItem);
          for (Id id : childIds) {
              int depth = targetItem->find(id)->depth() - 1;
              m_database->updateValue(id, "depth", depth);
