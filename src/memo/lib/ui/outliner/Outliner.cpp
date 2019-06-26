@@ -266,6 +266,7 @@ int Outliner::exportNote(Id parentId, const QString& path) {
 
         QString filename = notePath + ".txt";
         QFile file(filename);
+
         if (file.open(QIODevice::ReadWrite)) {
             QTextStream stream(&file);
             stream.setCodec("UTF8");

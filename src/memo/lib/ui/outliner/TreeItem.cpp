@@ -42,7 +42,8 @@ TreeItem* TreeItem::find(Id id) {
 
     for (TreeItem* child : m_childItems) {
         TreeItem* item = child->find(id);
-        if (item != nullptr) {
+
+        if (item) {
             return item;
         }
     }

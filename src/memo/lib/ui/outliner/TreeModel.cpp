@@ -177,8 +177,6 @@ bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int cou
             } else {
                 success = sourceParentItem->removeChild(sourceRow);
             }
-        } else {
-
         }
     }
 
@@ -198,6 +196,7 @@ TreeItem* TreeModel::item(const QModelIndex& index) const {
             return item;
         }
     }
+
     return m_rootItem;
 }
 
