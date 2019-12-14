@@ -15,6 +15,7 @@ LIBS += -L$$PWD/../../../lib/ -lcommon
 SOURCES += \
     core/Context.cpp \
     core/DatabaseException.cpp \
+    database/Patcher.cpp \
     ui/MainWindow.cpp \
     ui/outliner/Outliner.cpp \
     ui/outliner/TreeModel.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     core/Context.h \
     core/DatabaseException.h \
     core/Globals.h \
+    database/Patcher.h \
     ui/MainWindow.h \
     ui/outliner/Outliner.h \
     ui/outliner/TreeModel.h \

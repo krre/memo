@@ -25,6 +25,7 @@ public:
     int insertRecord(Id parentId, int pos, int depth, const QString& title);
     void removeRecord(Id id);
     QSqlQuery record(Id id);
+    void exec(const QString& sql);
 
     void updateValue(Id id, const QString& name, const QVariant& value);
     QVariant value(Id id, const QString& name);

@@ -1,4 +1,5 @@
 #include "Database.h"
+#include "Patcher.h"
 #include "core/DatabaseException.h"
 #include <QtSql>
 
@@ -25,6 +26,7 @@ void Database::create(const QString& filepath) {
                     "parent_id INTEGER,"
                     "pos INTEGER,"
                     "depth INTEGER,"
+                    "line INTEGER,"
                     "title TEXT,"
                     "note TEXT,"
                     "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
@@ -50,6 +52,9 @@ void Database::open(const QString& filepath) {
     if (!m_db.open()) {
         throw DatabaseError(m_db.lastError());
     }
+
+    Patcher patcher(this);
+    patcher.run();
 }
 
 void Database::close() {
@@ -100,6 +105,14 @@ QSqlQuery Database::record(Id id) {
     }
 
     return query;
+}
+
+void Database::exec(const QString& sql) {
+    QSqlQuery query;
+
+    if (!query.exec(sql)) {
+        throw SqlQueryError(query);
+    }
 }
 
 void Database::updateValue(Id id, const QString& name, const QVariant& value) {
