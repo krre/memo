@@ -265,7 +265,7 @@ void MainWindow::newFile() {
 
     try {
         m_database->create(fileName);
-        setCurrentFile(fileName);
+        loadFile(fileName);
     } catch (const Common::Exception& e) {
         showErrorDialog(e.error());
     }

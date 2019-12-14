@@ -26,7 +26,6 @@ void Database::create(const QString& filepath) {
                     "parent_id INTEGER,"
                     "pos INTEGER,"
                     "depth INTEGER,"
-                    "line INTEGER,"
                     "title TEXT,"
                     "note TEXT,"
                     "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
