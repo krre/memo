@@ -8,6 +8,28 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 
+void loadLanguage() {
+    QSettings settings;
+
+    QString language = settings.value("language").toString();
+
+    if (language.isEmpty()) {
+        language = QLocale::system().name().split("_").first();
+    }
+
+    auto qtTranslator = new QTranslator(qApp);
+
+    if (qtTranslator->load("qt_" + language, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+        QCoreApplication::installTranslator(qtTranslator);
+    }
+
+    auto memoTranslator = new QTranslator(qApp);
+
+    if (memoTranslator->load("memo-" + language, ":/i18n")) {
+        QCoreApplication::installTranslator(memoTranslator);
+    }
+}
+
 int main(int argc, char* argv[]) {
     qInstallMessageHandler(Common::messageHandler);
 
@@ -29,27 +51,7 @@ int main(int argc, char* argv[]) {
 #endif
 
     QApplication::setQuitOnLastWindowClosed(false);
-
-    QSettings settings;
-
-    QString language = settings.value("language").toString();
-
-    if (language.isEmpty()) {
-        language = QLocale::system().name().split("_").first();
-    }
-
-    auto qtTranslator = new QTranslator(&app);
-
-    if (qtTranslator->load("qt_" + language, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
-        QCoreApplication::installTranslator(qtTranslator);
-    }
-
-    auto memoTranslator = new QTranslator(&app);
-
-    if (memoTranslator->load("memo-" + language, ":/i18n")) {
-        QCoreApplication::installTranslator(memoTranslator);
-    }
-
+    loadLanguage();
     MainWindow window;
 
     return QCoreApplication::exec();
