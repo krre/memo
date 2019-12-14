@@ -351,6 +351,12 @@ void MainWindow::onNoteChanged(Id id) {
     if (id) {
         QString note = m_database->value(id, "note").toString();
         m_editor->setPlainText(note);
+        m_editor->setFocus();
+
+        int line = m_database->value(id, "line").toInt();
+        QTextCursor cursor = m_editor->textCursor();
+        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
+        m_editor->setTextCursor(cursor);
     } else {
         m_editor->clear();
     }
@@ -359,9 +365,13 @@ void MainWindow::onNoteChanged(Id id) {
 void MainWindow::onEditorFocusLost() {
     Id lastId = m_editor->id();
 
-    if (lastId && m_editor->document()->isModified()) {
+    if (!lastId) return;
+
+    if (m_editor->document()->isModified()) {
         m_database->updateValue(lastId, "note", m_editor->document()->toPlainText());
     }
+
+    m_database->updateValue(lastId, "line", m_editor->textCursor().blockNumber());
 }
 
 void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
