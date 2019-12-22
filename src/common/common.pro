@@ -1,7 +1,6 @@
 QT += gui-private
-
 TEMPLATE = lib
-win32: CONFIG += static
+CONFIG += c++17 static
 
 !win32: TARGET = $$PWD/../../lib/common
 win32: TARGET = ../../../lib/common

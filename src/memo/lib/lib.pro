@@ -1,16 +1,13 @@
 QT += core gui widgets sql network
 linux: QT += x11extras
 
-CONFIG += c++17
-win32: CONFIG += static
-
+CONFIG += c++17 static
 TEMPLATE = lib
+
 !win32: TARGET = $$PWD/../../../lib/memo
 win32: TARGET = ../../../../lib/memo
 
 INCLUDEPATH += $$PWD/../../
-
-LIBS += -L$$PWD/../../../lib/ -lcommon
 
 SOURCES += \
     core/Context.cpp \

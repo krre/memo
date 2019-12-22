@@ -1,8 +1,9 @@
 QT += core gui widgets network sql
-
-CONFIG += c++17
+linux: QT += x11extras
 
 TEMPLATE = app
+CONFIG += c++17
+
 !win32: TARGET = $$PWD/../../../bin/Memo
 win32: TARGET = ../../../../bin/Memo
 
@@ -14,10 +15,13 @@ macx: ICON = $$PWD/../lib/images/icon.icns
 
 INCLUDEPATH += $$PWD/../lib $$PWD/../..
 
-LIBS += -L$$PWD/../../../lib/ -lcommon -lmemo
+LIBS += -L$$PWD/../../../lib/ -lmemo -lcommon
 
 linux: LIBS += -lX11
 win32: LIBS += -luser32
+
+unix: PRE_TARGETDEPS += $$PWD/../../../lib/libmemo.a
+unix: PRE_TARGETDEPS += $$PWD/../../../lib/libcommon.a
 
 SOURCES += \
     main.cpp

@@ -1,15 +1,11 @@
 QT += core gui widgets network
-
-CONFIG += c++17
-win32: CONFIG += static
-
+CONFIG += c++17 static
 TEMPLATE = lib
+
 !win32: TARGET = $$PWD/../../../lib/updatecreator
 win32: TARGET = ../../../../lib/updatecreator
 
 INCLUDEPATH += $$PWD/../../
-
-LIBS += -L$$PWD/../../../lib/ -lcommon
 
 SOURCES += \
     ClearSizeDialog.cpp \

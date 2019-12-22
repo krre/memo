@@ -10,7 +10,10 @@ DEFINES += QT_MESSAGELOGCONTEXT
 
 INCLUDEPATH += $$PWD/../lib $$PWD/../..
 
-LIBS += -L$$PWD/../../../lib/ -lcommon -lupdatecreator
+LIBS += -L$$PWD/../../../lib/ -lupdatecreator -lcommon
+
+unix: PRE_TARGETDEPS += $$PWD/../../../lib/libupdatecreator.a
+unix: PRE_TARGETDEPS += $$PWD/../../../lib/libcommon.a
 
 SOURCES += \
     main.cpp

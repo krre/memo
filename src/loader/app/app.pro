@@ -9,7 +9,9 @@ DEFINES += QT_MESSAGELOGCONTEXT
 
 INCLUDEPATH += $$PWD/../lib $$PWD/../..
 
-LIBS += -L$$PWD/../../../lib/ -lcommon -lloader
+LIBS += -L$$PWD/../../../lib/ -lloader
+
+unix: PRE_TARGETDEPS += $$PWD/../../../lib/libloader.a
 
 SOURCES += \
     main.cpp
