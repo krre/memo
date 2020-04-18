@@ -12,7 +12,7 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     Q_INIT_RESOURCE(resourceslib);
-    setWindowTitle(Constants::App::Name);
+    setWindowTitle(Const::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
     m_splitter = new QSplitter;
@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     QSettings settings;
 
-    if (settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool()) {
+    if (settings.value("Updates/checkOnStartup", Const::DefaultSettings::CheckOnStartup).toBool()) {
         m_silentCheckUpdate = true;
         m_updateChecker->check();
     }
@@ -88,7 +88,7 @@ void MainWindow::writeSettings() {
 
     settings.beginWriteArray("RecentFiles");
 
-    for (int i = 0; i < m_recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions; ++i) {
+    for (int i = 0; i < m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions; ++i) {
         settings.setArrayIndex(i);
         settings.setValue("path", m_recentFilesMenu->actions().at(i)->text());
     }
@@ -101,7 +101,7 @@ void MainWindow::applyHotSettings() {
     m_trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
 
     if (settings.value("GlobalHotkey/enabled").toBool()) {
-        m_globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
+        m_globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Const::DefaultSettings::GlobalHotkey).toString());
     } else {
         m_globalHotkey->unsetShortcut();
     }
@@ -164,9 +164,9 @@ void MainWindow::createActions() {
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Check for updates..."), m_updateChecker, &UpdateChecker::check);
     helpMenu->addAction(tr("Open download page"), [] {
-        QDesktopServices::openUrl(QUrl(Constants::App::ReleasesUrl));
+        QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
     });
-    helpMenu->addAction(tr("About %1...").arg(Constants::App::Name), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::about);
 }
 
 void MainWindow::createTrayIcon() {
@@ -233,8 +233,8 @@ void MainWindow::addRecentFile(const QString& filePath) {
 
     m_recentFilesMenu->insertAction(m_recentFilesMenu->actions().first(), fileAction);
 
-    if (m_recentFilesMenu->actions().size() > Constants::Window::MaxRecentFiles + Constants::Window::SystemRecentFilesActions) {
-        m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(m_recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1));
+    if (m_recentFilesMenu->actions().size() > Const::Window::MaxRecentFiles + Const::Window::SystemRecentFilesActions) {
+        m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1));
     }
 
     updateMenuState();
@@ -296,7 +296,7 @@ void MainWindow::closeFile() {
 }
 
 void MainWindow::clearMenuRecentFiles() {
-    for (int i = m_recentFilesMenu->actions().size() - Constants::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
+    for (int i = m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
         m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(i));
     }
 
@@ -306,7 +306,7 @@ void MainWindow::clearMenuRecentFiles() {
 void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates) {
     if (updates.isEmpty()) {
         if (!m_silentCheckUpdate) {
-            QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Constants::App::Name));
+            QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Const::App::Name));
         } else {
             m_silentCheckUpdate = false;
         }
@@ -328,7 +328,7 @@ void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& upda
 }
 
 void MainWindow::about() {
-    using namespace Constants::App;
+    using namespace Const::App;
 
     QMessageBox::about(this, tr("About %1").arg(Name),
         tr("<h3>%1 %2 %3</h3>\

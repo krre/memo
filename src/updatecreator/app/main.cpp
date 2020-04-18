@@ -9,8 +9,8 @@ int main(int argc, char* argv[]) {
 
     QApplication app(argc, argv);
 
-    QCoreApplication::setOrganizationName(Constants::Organization);
-    QCoreApplication::setApplicationName(Constants::ApplicationName);
+    QCoreApplication::setOrganizationName(Const::Organization);
+    QCoreApplication::setApplicationName(Const::ApplicationName);
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);

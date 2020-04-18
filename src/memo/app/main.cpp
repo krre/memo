@@ -35,8 +35,8 @@ int main(int argc, char* argv[]) {
 
     QApplication app(argc, argv);
 
-    QCoreApplication::setOrganizationName(Constants::App::Organization);
-    QCoreApplication::setApplicationName(Constants::App::Name);
+    QCoreApplication::setOrganizationName(Const::App::Organization);
+    QCoreApplication::setApplicationName(Const::App::Name);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, QObject::tr("Systray"),

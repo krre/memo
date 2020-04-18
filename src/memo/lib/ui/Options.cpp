@@ -134,11 +134,11 @@ void Options::readSettings() {
     m_fontFamilyLineEdit->setText(settings.value("Editor/fontFamily", font().family()).toString());
     m_fontSizeLineEdit->setText(settings.value("Editor/fontSize", font().pointSize()).toString());
 
-    m_hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Constants::DefaultSettings::GlobalHotkey).toString());
+    m_hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Const::DefaultSettings::GlobalHotkey).toString());
     m_groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
 
-    m_channelComboBox->setCurrentText(settings.value("Updates/channel", Constants::DefaultSettings::Channel).toString());
-    m_checkStartupCheckBox->setChecked(settings.value("Updates/checkOnStartup", Constants::DefaultSettings::CheckOnStartup).toBool());
+    m_channelComboBox->setCurrentText(settings.value("Updates/channel", Const::DefaultSettings::Channel).toString());
+    m_checkStartupCheckBox->setChecked(settings.value("Updates/checkOnStartup", Const::DefaultSettings::CheckOnStartup).toBool());
 }
 
 bool Options::writeSettings() {

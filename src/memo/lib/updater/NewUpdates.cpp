@@ -18,7 +18,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
 
     int size = updates.first().size;
     m_url = updates.first().url;
-    bool isValidUpdate = QVersionNumber::fromString(Constants::App::Version) >= QVersionNumber::fromString(updates.first().baseVersion);
+    bool isValidUpdate = QVersionNumber::fromString(Const::App::Version) >= QVersionNumber::fromString(updates.first().baseVersion);
 
     auto layout = new QVBoxLayout;
     setLayout(layout);
@@ -45,7 +45,7 @@ NewUpdates::NewUpdates(const QVector<UpdateChecker::Update>& updates, QWidget* p
         auto warning = new QLabel(tr("Updating to this version is impossible!\nDownload installation of application by link below, reinstall it and try update again."));
         warning->setStyleSheet("QLabel { color : red; }");
         layout->addWidget(warning);
-        auto link = new QLabel(QString("<a href=%1>%1</a>").arg(Constants::App::ReleasesUrl));
+        auto link = new QLabel(QString("<a href=%1>%1</a>").arg(Const::App::ReleasesUrl));
         link->setOpenExternalLinks(true);
         layout->addWidget(link);
     }

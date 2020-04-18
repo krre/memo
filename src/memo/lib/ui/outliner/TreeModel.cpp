@@ -80,7 +80,7 @@ Qt::DropActions TreeModel::supportedDragActions() const {
 }
 
 QStringList TreeModel::mimeTypes() const {
-    return QStringList() << Constants::Outliner::TreeItemMimeType;
+    return QStringList() << Const::Outliner::TreeItemMimeType;
 }
 
 QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
@@ -88,7 +88,7 @@ QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << item(indexes.first())->id();
-    mimeData->setData(Constants::Outliner::TreeItemMimeType, data);
+    mimeData->setData(Const::Outliner::TreeItemMimeType, data);
     return mimeData;
 }
 
@@ -98,7 +98,7 @@ bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action
     Q_UNUSED(parent);
 
     if (action != Qt::MoveAction) return false;
-    if (!mimeData->hasFormat(Constants::Outliner::TreeItemMimeType)) return false;
+    if (!mimeData->hasFormat(Const::Outliner::TreeItemMimeType)) return false;
 
     return true;
 }
@@ -108,7 +108,7 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
 
     if (!canDropMimeData(mimeData, action, row, column, parent)) return false;
 
-    QByteArray data = mimeData->data(Constants::Outliner::TreeItemMimeType);
+    QByteArray data = mimeData->data(Const::Outliner::TreeItemMimeType);
     QDataStream stream(&data, QIODevice::ReadOnly);
     Id id;
     stream >> id;

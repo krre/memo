@@ -5,7 +5,7 @@
 #include <QtNetwork>
 
 UpdateChecker::UpdateChecker(QObject* parent) : QObject(parent),
-    m_manifestUrl(QUrl(QString(Constants::App::DownloadUrl) + "/update/manifest.json")) {
+    m_manifestUrl(QUrl(QString(Const::App::DownloadUrl) + "/update/manifest.json")) {
 }
 
 void UpdateChecker::check() {
@@ -32,7 +32,7 @@ void UpdateChecker::check() {
 
 void UpdateChecker::findUpdates(const QJsonObject& manifest) {
     QVector<Update> updates;
-    QVersionNumber currentAppVer = QVersionNumber::fromString(Constants::App::Version);
+    QVersionNumber currentAppVer = QVersionNumber::fromString(Const::App::Version);
 
     for (const auto value : manifest["updates"].toArray()) {
         QJsonObject updateObj = value.toObject();
@@ -42,7 +42,7 @@ void UpdateChecker::findUpdates(const QJsonObject& manifest) {
 
         QSettings settings;
 
-        if (!isChannelSuit(settings.value("Updates/channel", Constants::DefaultSettings::Channel).toString(), update.channel))  continue;
+        if (!isChannelSuit(settings.value("Updates/channel", Const::DefaultSettings::Channel).toString(), update.channel))  continue;
 
         update.version = updateObj["version"].toString();
 

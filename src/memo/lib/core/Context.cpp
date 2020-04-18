@@ -16,7 +16,7 @@ QNetworkAccessManager* Context::networkAccessManager() {
 }
 
 QString Context::downloadPageUrl() {
-    return QString(Constants::App::DownloadUrl) + "/install/" + Common::Constants::CurrentOS;
+    return QString(Const::App::DownloadUrl) + "/install/" + Common::Constants::CurrentOS;
 }
 
 QString Context::installerUrl(const QString& version) {

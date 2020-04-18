@@ -1,7 +1,7 @@
 #pragma once
 #include <QtGlobal>
 
-namespace Constants {
+namespace Const {
     constexpr auto Organization = "Memo";
     constexpr auto ApplicationName = "UpdateCreator";
     constexpr auto WindowTitle = "Memo Update Creator";

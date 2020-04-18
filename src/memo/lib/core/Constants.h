@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Constants {
+namespace Const {
 namespace App {
     constexpr auto Organization = "Memo";
     constexpr auto Name = "Memo";

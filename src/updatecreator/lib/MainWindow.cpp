@@ -9,7 +9,7 @@
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    setWindowTitle(Constants::WindowTitle);
+    setWindowTitle(Const::WindowTitle);
 
     splitter = new QSplitter;
     setCentralWidget(splitter);
@@ -38,10 +38,10 @@ void MainWindow::newProject() {
         }
 
         QString projectDir = newProjectDialog.projectDir();
-        projectSettings->create(projectDir + "/" + Constants::ProjectName);
+        projectSettings->create(projectDir + "/" + Const::ProjectName);
         setProjectPath(projectDir);
         form->setManifestPath(manifestPath);
-        form->setFileTemplate(Constants::FileTemplate);
+        form->setFileTemplate(Const::FileTemplate);
         addUpdate();
         saveManifest();
         addRecentProject(projectDir);
@@ -53,7 +53,7 @@ void MainWindow::openProject() {
 
     if (path.isEmpty()) return;
 
-    if (!QFile::exists(path + "/" + Constants::ProjectName)) {
+    if (!QFile::exists(path + "/" + Const::ProjectName)) {
         QMessageBox::critical(this, tr("Error"), tr("Wrong project directory"));
         return;
     }
@@ -73,7 +73,7 @@ void MainWindow::closeProject() {
 }
 
 void MainWindow::clearMenuRecentProjects() {
-    for (int i = recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions - 1; i >= 0; i--) {
+    for (int i = recentProjectsMenu->actions().size() - Const::SystemRecentProjectsActions - 1; i >= 0; i--) {
         recentProjectsMenu->removeAction(recentProjectsMenu->actions().at(i));
     }
 
@@ -87,7 +87,7 @@ void MainWindow::quit() {
 }
 
 void MainWindow::about() {
-    using namespace Constants;
+    using namespace Const;
 
     QMessageBox::about(this, tr("About %1").arg(WindowTitle),
         tr("<h3>%1 %2</h3>\
@@ -168,7 +168,7 @@ void MainWindow::writeSettings() {
 
     settings.beginWriteArray("RecentProjects");
 
-    for (int i = 0; i < recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions; ++i) {
+    for (int i = 0; i < recentProjectsMenu->actions().size() - Const::SystemRecentProjectsActions; ++i) {
         settings.setArrayIndex(i);
         settings.setValue("path", recentProjectsMenu->actions().at(i)->text());
     }
@@ -276,7 +276,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("About %1...").arg(Constants::WindowTitle), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Const::WindowTitle), this, &MainWindow::about);
 }
 
 void MainWindow::updateActions() {
@@ -290,7 +290,7 @@ void MainWindow::setProjectPath(const QString& path) {
     projectPath = path;
 
     if (!path.isEmpty()) {
-        manifestPath = path + "/" + Constants::ManifestName;
+        manifestPath = path + "/" + Const::ManifestName;
     } else {
         manifestPath = QString();
     }
@@ -312,8 +312,8 @@ void MainWindow::addRecentProject(const QString& path) {
 
     recentProjectsMenu->insertAction(recentProjectsMenu->actions().first(), fileAction);
 
-    if (recentProjectsMenu->actions().size() > Constants::MaxRecentProjects + Constants::SystemRecentProjectsActions) {
-        recentProjectsMenu->removeAction(recentProjectsMenu->actions().at(recentProjectsMenu->actions().size() - Constants::SystemRecentProjectsActions - 1));
+    if (recentProjectsMenu->actions().size() > Const::MaxRecentProjects + Const::SystemRecentProjectsActions) {
+        recentProjectsMenu->removeAction(recentProjectsMenu->actions().at(recentProjectsMenu->actions().size() - Const::SystemRecentProjectsActions - 1));
     }
 
     updateActions();
@@ -325,7 +325,7 @@ void MainWindow::loadProject(const QString& path) {
     }
 
     setProjectPath(path);
-    projectSettings->open(path + "/" + Constants::ProjectName);
+    projectSettings->open(path + "/" + Const::ProjectName);
     form->setContentDir(projectSettings->contentDir());
     form->setInstallerPath(projectSettings->installerPath());
     openManifest();
