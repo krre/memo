@@ -1,7 +1,6 @@
 #include "ui/MainWindow.h"
 #include <core/Constants.h>
-#include <core/Context.h>
-#include <common/MessageHandler.h>
+#include <core/MessageHandler.h>
 #include <QApplication>
 #include <QMessageBox>
 #include <QSettings>
@@ -31,7 +30,7 @@ void loadLanguage() {
 }
 
 int main(int argc, char* argv[]) {
-    qInstallMessageHandler(Common::messageHandler);
+    qInstallMessageHandler(messageHandler);
 
     QApplication app(argc, argv);
 
@@ -43,8 +42,6 @@ int main(int argc, char* argv[]) {
                               QObject::tr("Absent any system tray on this system"));
         return EXIT_FAILURE;
     }
-
-    Context context(&app);
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);

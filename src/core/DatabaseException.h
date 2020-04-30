@@ -1,9 +1,9 @@
 #pragma once
-#include <common/Exception.h>
+#include "core/Exception.h"
 #include <QSqlError>
 #include <QSqlQuery>
 
-class DatabaseError : public Common::Exception {
+class DatabaseError : public Exception {
 
 public:
     DatabaseError(const QSqlError& error);
@@ -13,7 +13,7 @@ private:
     QSqlError m_error;
 };
 
-class SqlQueryError : public Common::Exception {
+class SqlQueryError : public Exception {
 
 public:
     SqlQueryError(const QSqlQuery& query);

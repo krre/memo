@@ -1,17 +1,21 @@
 QT += core gui widgets sql network
 linux: QT += x11extras
 
-CONFIG += c++17 static
-TEMPLATE = lib
+TEMPLATE = app
+CONFIG += c++17
 
-!win32: TARGET = $$PWD/../../../lib/memo
-win32: TARGET = ../../../../lib/memo
+DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_MESSAGELOGCONTEXT
 
-INCLUDEPATH += $$PWD/../../
+win32: RC_ICONS += $$PWD/images/icon.ico
+macx: ICON = $$PWD/images/icon.icns
+
+linux: LIBS += -lX11
+win32: LIBS += -luser32
 
 SOURCES += \
-    core/Context.cpp \
     core/DatabaseException.cpp \
+    core/Exception.cpp \
     database/Patcher.cpp \
     ui/MainWindow.cpp \
     ui/outliner/Outliner.cpp \
@@ -22,9 +26,7 @@ SOURCES += \
     ui/Options.cpp \
     ui/hotkey/GlobalHotkey.cpp \
     ui/outliner/NoteProperties.cpp \
-    updater/UpdateChecker.cpp \
-    updater/NewUpdates.cpp \
-    updater/UpdateDownloader.cpp
+    main.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -32,9 +34,10 @@ mac: SOURCES += ui/hotkey/NativeEventFilterMac.cpp
 
 HEADERS += \
     core/Constants.h \
-    core/Context.h \
     core/DatabaseException.h \
+    core/Exception.h \
     core/Globals.h \
+    core/MessageHandler.h \
     database/Patcher.h \
     ui/MainWindow.h \
     ui/outliner/Outliner.h \
@@ -45,10 +48,12 @@ HEADERS += \
     ui/Options.h \
     ui/hotkey/NativeEventFilter.h \
     ui/hotkey/GlobalHotkey.h \
-    ui/outliner/NoteProperties.h \
-    updater/UpdateChecker.h \
-    updater/NewUpdates.h \
-    updater/UpdateDownloader.h
+    ui/outliner/NoteProperties.h
+
+TRANSLATIONS = i18n/memo-ru.ts
 
 RESOURCES += \
-    resourceslib.qrc
+    resources.qrc
+
+DISTFILES += \
+    i18n/memo-ru.ts

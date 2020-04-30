@@ -1,6 +1,5 @@
 #include "Options.h"
 #include "core/Constants.h"
-#include <common/Constants.h>
 #include <QtWidgets>
 
 Options::Options(QWidget* parent) : QDialog (parent) {
@@ -62,24 +61,6 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     m_groupBoxHotkey->setLayout(layoutHotkey);
 
     layout->addWidget(m_groupBoxHotkey);
-
-    // Updates
-    auto updates = new QGroupBox(tr("Updates"));
-    auto updatesLayout = new QGridLayout;
-    updatesLayout->setColumnStretch(1, 1);
-    updates->setLayout(updatesLayout);
-
-    updatesLayout->addWidget(new QLabel(tr("Channel:")), 0, 0);
-    m_channelComboBox = new QComboBox;
-    m_channelComboBox->addItem(Common::Constants::Channel::Release);
-    m_channelComboBox->addItem(Common::Constants::Channel::Beta);
-    updatesLayout->addWidget(m_channelComboBox, 0, 1, Qt::AlignLeft);
-
-    m_checkStartupCheckBox = new QCheckBox(tr("Check on startup"));
-    updatesLayout->addWidget(m_checkStartupCheckBox, 1, 0, 1, -1);
-
-    layout->addWidget(updates);
-
     layout->addStretch(1);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -136,9 +117,6 @@ void Options::readSettings() {
 
     m_hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Const::DefaultSettings::GlobalHotkey).toString());
     m_groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
-
-    m_channelComboBox->setCurrentText(settings.value("Updates/channel", Const::DefaultSettings::Channel).toString());
-    m_checkStartupCheckBox->setChecked(settings.value("Updates/checkOnStartup", Const::DefaultSettings::CheckOnStartup).toBool());
 }
 
 bool Options::writeSettings() {
@@ -161,9 +139,6 @@ bool Options::writeSettings() {
 
     settings.setValue("GlobalHotkey/hotkey", m_hotkeyLineEdit->text());
     settings.setValue("GlobalHotkey/enabled", m_groupBoxHotkey->isChecked());
-
-    settings.setValue("Updates/channel", m_channelComboBox->currentText());
-    settings.setValue("Updates/checkOnStartup", m_checkStartupCheckBox->isChecked());
 
     return restartRequre;
 }

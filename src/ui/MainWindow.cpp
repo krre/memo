@@ -1,17 +1,14 @@
 #include "MainWindow.h"
 #include "Editor.h"
 #include "Options.h"
-#include "core/Context.h"
 #include "core/Constants.h"
 #include "core/DatabaseException.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
-#include "updater/NewUpdates.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    Q_INIT_RESOURCE(resourceslib);
     setWindowTitle(Const::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
@@ -19,9 +16,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setCentralWidget(m_splitter);
 
     m_database = new Database(this);
-
-    m_updateChecker = new UpdateChecker(this);
-    connect(m_updateChecker, &UpdateChecker::checkResult, this, &MainWindow::onCheckUpdatesResult);
 
     m_globalHotkey = new GlobalHotkey(this);
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::showWindow);
@@ -38,13 +32,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     readSettings();
     updateMenuState();
-
-    QSettings settings;
-
-    if (settings.value("Updates/checkOnStartup", Const::DefaultSettings::CheckOnStartup).toBool()) {
-        m_silentCheckUpdate = true;
-        m_updateChecker->check();
-    }
 }
 
 void MainWindow::readSettings() {
@@ -162,7 +149,6 @@ void MainWindow::createActions() {
     });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("Check for updates..."), m_updateChecker, &UpdateChecker::check);
     helpMenu->addAction(tr("Open download page"), [] {
         QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
     });
@@ -199,7 +185,7 @@ void MainWindow::loadFile(const QString& filePath) {
         m_outliner->build();
         setCurrentFile(filePath);
         addRecentFile(filePath);
-    } catch (const Common::Exception& e) {
+    } catch (const Exception& e) {
         showErrorDialog(e.error());
     }
 }
@@ -266,7 +252,7 @@ void MainWindow::newFile() {
     try {
         m_database->create(fileName);
         loadFile(fileName);
-    } catch (const Common::Exception& e) {
+    } catch (const Exception& e) {
         showErrorDialog(e.error());
     }
 }
@@ -301,30 +287,6 @@ void MainWindow::clearMenuRecentFiles() {
     }
 
     updateMenuState();
-}
-
-void MainWindow::onCheckUpdatesResult(const QVector<UpdateChecker::Update>& updates) {
-    if (updates.isEmpty()) {
-        if (!m_silentCheckUpdate) {
-            QMessageBox::information(this, tr("Check of updates"), tr("Latest version of %1 is installed").arg(Const::App::Name));
-        } else {
-            m_silentCheckUpdate = false;
-        }
-    } else {
-        NewUpdates newUpdates(updates);
-
-        if (newUpdates.exec() == QDialog::Accepted) {
-            QString updateDir = newUpdates.updateDir();
-
-            if (!updateDir.isEmpty()) {
-                QString loaderPath = qApp->applicationDirPath() + "/loader";
-                QProcess::startDetached(loaderPath, QStringList() << updateDir << qApp->applicationDirPath() << qApp->applicationFilePath());
-                quit();
-            } else {
-                qCritical() << "Failed to get update directory";
-            }
-        }
-    }
 }
 
 void MainWindow::about() {

@@ -29,7 +29,4 @@ private:
 
     QGroupBox* m_groupBoxHotkey = nullptr;
     QLineEdit* m_hotkeyLineEdit = nullptr;
-
-    QComboBox* m_channelComboBox = nullptr;
-    QCheckBox* m_checkStartupCheckBox = nullptr;
 };

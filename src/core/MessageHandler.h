@@ -1,8 +1,6 @@
 #pragma once
 #include <QString>
 
-namespace Common {
-
 void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
      QByteArray localMsg = msg.toLocal8Bit();
      switch (type) {
@@ -23,5 +21,3 @@ void messageHandler(QtMsgType type, const QMessageLogContext& context, const QSt
          break;
     }
 }
-
-} // namespace Common

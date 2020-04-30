@@ -2,8 +2,6 @@
 #include <stdexcept>
 #include <QString>
 
-namespace Common {
-
 class Exception : std::exception {
 
 public:
@@ -21,5 +19,3 @@ public:
 private:
     QString m_error;
 };
-
-} // namespace Common
