@@ -205,8 +205,9 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
 void MainWindow::addRecentFile(const QString& filePath) {
     if (!QFile::exists(filePath)) return;
+    const auto actions = m_recentFilesMenu->actions();
 
-    for (QAction* action : m_recentFilesMenu->actions()) {
+    for (QAction* action : actions) {
         if (action->text() == filePath) {
             m_recentFilesMenu->removeAction(action);
         }
