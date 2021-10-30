@@ -6,8 +6,7 @@ class NativeEventFilter : public QObject, public QAbstractNativeEventFilter {
     Q_OBJECT
 public:
     NativeEventFilter(QObject* parent = nullptr);
-
-    bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override;
+    bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) override;
 
     void setShortcut(int key, uint mods);
     void unsetShortcut();

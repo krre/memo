@@ -1,5 +1,4 @@
 QT += core gui widgets sql network
-linux: QT += x11extras
 
 TEMPLATE = app
 CONFIG += c++17
@@ -56,4 +55,5 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
+    ../README.md \
     i18n/memo-ru.ts

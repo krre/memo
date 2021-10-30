@@ -1,7 +1,7 @@
 #include "NativeEventFilter.h"
-#include <QtX11Extras/QX11Info>
 #include <QKeySequence>
 #include <QVector>
+#include <QGuiApplication>
 #include <xcb/xcb.h>
 #include <X11/Xutil.h>
 
@@ -13,11 +13,14 @@ namespace  {
 const QVector<quint32> maskModifiers = { 0, Mod2Mask, LockMask, (Mod2Mask | LockMask) };
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent) {
-    display = QX11Info::display();
+    const QNativeInterface::QX11Application *x11Interface = qGuiApp->nativeInterface<QNativeInterface::QX11Application>();
+    display = x11Interface->display();
     win = DefaultRootWindow(display);
+
+    qDebug() << display << win;
 }
 
-bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, long* result) {
+bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
     Q_UNUSED(result)
 
     if (eventType == "xcb_generic_event_t") {

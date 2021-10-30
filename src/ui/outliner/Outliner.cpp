@@ -269,7 +269,6 @@ int Outliner::exportNote(Id parentId, const QString& path) {
 
         if (file.open(QIODevice::ReadWrite)) {
             QTextStream stream(&file);
-            stream.setCodec("UTF8");
             stream << note;
             file.close();
         }
