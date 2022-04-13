@@ -2,7 +2,7 @@
 Outliner for my personal usage
 
 ## Dependencies
-- Qt 6.2.0
+- Qt 6.3
 
 ## Download
 https://github.com/krre/memo/releases
