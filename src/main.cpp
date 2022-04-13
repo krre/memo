@@ -18,7 +18,7 @@ void loadLanguage() {
 
     auto qtTranslator = new QTranslator(qApp);
 
-    if (qtTranslator->load("qt_" + language, QLibraryInfo::location(QLibraryInfo::TranslationsPath))) {
+    if (qtTranslator->load("qt_" + language, QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
         QCoreApplication::installTranslator(qtTranslator);
     }
 

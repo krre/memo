@@ -20,5 +20,5 @@ public:
     QString error() const override;
 
 private:
-    QSqlQuery m_query;
+    QString m_error;
 };

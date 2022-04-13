@@ -284,7 +284,7 @@ int Outliner::exportNote(Id parentId, const QString& path) {
 }
 
 void Outliner::mousePressEvent(QMouseEvent* event) {
-    if (event->button() == Qt::LeftButton && !indexAt(event->localPos().toPoint()).isValid()) {
+    if (event->button() == Qt::LeftButton && !indexAt(event->position().toPoint()).isValid()) {
         selectionModel()->clearSelection();
         setCurrentIndex(QModelIndex());
     } else {
