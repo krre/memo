@@ -1,6 +1,5 @@
 #include "NativeEventFilter.h"
 #include <QKeySequence>
-#include <QVector>
 #include <QGuiApplication>
 #include <xcb/xcb.h>
 #include <X11/Xutil.h>
@@ -13,8 +12,7 @@ namespace {
 const quint32 maskModifiers[] = { 0, Mod2Mask, LockMask, (Mod2Mask | LockMask) };
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent) {
-    const QNativeInterface::QX11Application *x11Interface = qGuiApp->nativeInterface<QNativeInterface::QX11Application>();
-    display = x11Interface->display();
+    display = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()->display();
     win = DefaultRootWindow(display);
 }
 
@@ -55,10 +53,14 @@ void NativeEventFilter::setShortcut(int keycode, unsigned int modifiers) {
     for (quint32 maskMods : maskModifiers) {
         XGrabKey(display, m_key, m_mods | maskMods, win, True, GrabModeAsync, GrabModeAsync);
     }
+
+    XSync(display, False);
 }
 
 void NativeEventFilter::unsetShortcut() {
     for(quint32 maskMods : maskModifiers) {
         XUngrabKey(display, m_key, m_mods | maskMods, win);
     }
+
+    XSync(display, False);
 }
