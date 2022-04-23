@@ -10,7 +10,7 @@ namespace  {
     Window win;
 }
 
-const QVector<quint32> maskModifiers = { 0, Mod2Mask, LockMask, (Mod2Mask | LockMask) };
+const quint32 maskModifiers[] = { 0, Mod2Mask, LockMask, (Mod2Mask | LockMask) };
 
 NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent) {
     const QNativeInterface::QX11Application *x11Interface = qGuiApp->nativeInterface<QNativeInterface::QX11Application>();
