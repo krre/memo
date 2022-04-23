@@ -5,7 +5,7 @@
 #include <xcb/xcb.h>
 #include <X11/Xutil.h>
 
-namespace  {
+namespace {
     Display* display;
     Window win;
 }
@@ -16,8 +16,6 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent) {
     const QNativeInterface::QX11Application *x11Interface = qGuiApp->nativeInterface<QNativeInterface::QX11Application>();
     display = x11Interface->display();
     win = DefaultRootWindow(display);
-
-    qDebug() << display << win;
 }
 
 bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
