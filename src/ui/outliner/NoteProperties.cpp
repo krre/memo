@@ -4,26 +4,18 @@
 NoteProperties::NoteProperties(const Data& data) {
     setWindowTitle(tr("Note Properties"));
 
-    auto layout = new QVBoxLayout;
-    setLayout(layout);
-
-    auto gridLayout = new QGridLayout;
-    gridLayout->setColumnStretch(1, 1);
-
-    gridLayout->addWidget(new QLabel(tr("Name:")), 0, 0);
-    gridLayout->addWidget(new QLabel(data.title), 0, 1);
-
-    gridLayout->addWidget(new QLabel(tr("Created at:")), 1, 0);
-    gridLayout->addWidget(new QLabel(data.createdAt), 1, 1);
-
-    gridLayout->addWidget(new QLabel(tr("Updated at:")), 2, 0);
-    gridLayout->addWidget(new QLabel(data.updatedAt), 2, 1);
-
-    layout->addLayout(gridLayout);
-    layout->addStretch(1);
+    auto formLayout = new QFormLayout;
+    formLayout->addRow(new QLabel(tr("Name:")), new QLabel(data.title));
+    formLayout->addRow(new QLabel(tr("Created at:")), new QLabel(data.createdAt));
+    formLayout->addRow(new QLabel(tr("Updated at:")), new QLabel(data.updatedAt));
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+
+    auto layout = new QVBoxLayout;
+    layout->addLayout(formLayout);
+    layout->addStretch(1);
     layout->addWidget(buttonBox);
 
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    setLayout(layout);
 }
