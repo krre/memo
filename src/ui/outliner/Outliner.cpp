@@ -3,7 +3,6 @@
 #include "TreeItem.h"
 #include "NoteProperties.h"
 #include "database/Database.h"
-#include "core/Constants.h"
 #include "core/DatabaseException.h"
 #include <QtWidgets>
 #include <QtSql>

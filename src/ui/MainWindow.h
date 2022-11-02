@@ -8,7 +8,6 @@ class Outliner;
 class Editor;
 class Database;
 class GlobalHotkey;
-class UpdateChecker;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -60,9 +59,7 @@ private:
     Outliner* m_outliner = nullptr;
     Editor* m_editor = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;
-    UpdateChecker* m_updateChecker = nullptr;
 
     Database* m_database = nullptr;
     QString m_currentFile;
-    bool m_silentCheckUpdate = false;
 };
