@@ -21,7 +21,7 @@ Outliner::Outliner(Database* database) : m_database(database) {
 
     clear();
 
-    connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, [=] {
+    connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, this, [=] {
         TreeItem* item = m_model->item(selectionModel()->currentIndex());
         database->updateValue(item->id(), "title", item->data());
     });

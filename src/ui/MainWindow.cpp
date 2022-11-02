@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     connect(m_outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
-    connect(m_editor, &Editor::leave, [=] {
+    connect(m_editor, &Editor::leave, this, [=] {
        m_outliner->setFocus();
     });
 
@@ -42,7 +42,7 @@ void MainWindow::readSettings() {
     const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
 
     if (geometry.isEmpty()) {
-        const QRect availableGeometry = QGuiApplication::screens().first()->availableGeometry();
+        const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     } else {
@@ -207,11 +207,11 @@ void MainWindow::addRecentFile(const QString& filePath) {
     }
 
     auto fileAction = new QAction(filePath);
-    connect(fileAction, &QAction::triggered, [=] {
+    connect(fileAction, &QAction::triggered, this, [=] {
         loadFile(filePath);
     });
 
-    m_recentFilesMenu->insertAction(m_recentFilesMenu->actions().first(), fileAction);
+    m_recentFilesMenu->insertAction(m_recentFilesMenu->actions().constFirst(), fileAction);
 
     if (m_recentFilesMenu->actions().size() > Const::Window::MaxRecentFiles + Const::Window::SystemRecentFilesActions) {
         m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1));
