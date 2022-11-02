@@ -27,4 +27,4 @@ namespace DefaultSettings {
     constexpr auto GlobalHotkey = "Ctrl+Alt+M";
 }
 
-} // namespace Constants
+}
