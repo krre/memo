@@ -123,21 +123,21 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), this, &MainWindow::newFile, QKeySequence("Ctrl+N"));
-    fileMenu->addAction(tr("Open..."), this, &MainWindow::openFile, QKeySequence("Ctrl+O"));
+    fileMenu->addAction(tr("New..."), QKeySequence("Ctrl+N"), this, &MainWindow::newFile);
+    fileMenu->addAction(tr("Open..."), QKeySequence("Ctrl+O"), this, &MainWindow::openFile);
 
     m_recentFilesMenu = new QMenu(tr("Recent Files"), this);
     m_recentFilesMenu->addSeparator();
     m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentFiles);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
-    m_exportAction = fileMenu->addAction(tr("Export All..."), this, &MainWindow::exportFile, QKeySequence("Ctrl+E"));
-    m_closeAction = fileMenu->addAction(tr("Close"), this, &MainWindow::closeFile, QKeySequence("Ctrl+W"));
+    m_exportAction = fileMenu->addAction(tr("Export All..."), QKeySequence("Ctrl+E"), this, &MainWindow::exportFile);
+    m_closeAction = fileMenu->addAction(tr("Close"), QKeySequence("Ctrl+W"), this, &MainWindow::closeFile);
 
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Hide"), this, &MainWindow::hide, QKeySequence("Esc"));
+    fileMenu->addAction(tr("Hide"), QKeySequence("Esc"), this, &MainWindow::hide);
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Exit"), this, &MainWindow::quit, QKeySequence("Ctrl+Q"));
+    fileMenu->addAction(tr("Exit"), QKeySequence("Ctrl+Q"), this, &MainWindow::quit);
 
     QMenu* toolsMenu = menuBar()->addMenu(tr("Tools"));
     toolsMenu->addAction(tr("Options..."), [this] {
