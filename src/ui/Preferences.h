@@ -6,10 +6,10 @@ class QLineEdit;
 class QCheckBox;
 class QGroupBox;
 
-class Options : public QDialog {
+class Preferences : public QDialog {
     Q_OBJECT
 public:
-    Options(QWidget* parent = nullptr);
+    Preferences(QWidget* parent = nullptr);
 
 public slots:
     void accept() override;

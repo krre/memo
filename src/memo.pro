@@ -17,12 +17,12 @@ SOURCES += \
     core/Exception.cpp \
     database/Patcher.cpp \
     ui/MainWindow.cpp \
+    ui/Preferences.cpp \
     ui/outliner/Outliner.cpp \
     ui/outliner/TreeModel.cpp \
     ui/outliner/TreeItem.cpp \
     database/Database.cpp \
     ui/Editor.cpp \
-    ui/Options.cpp \
     ui/hotkey/GlobalHotkey.cpp \
     ui/outliner/NoteProperties.cpp \
     main.cpp
@@ -39,12 +39,12 @@ HEADERS += \
     core/MessageHandler.h \
     database/Patcher.h \
     ui/MainWindow.h \
+    ui/Preferences.h \
     ui/outliner/Outliner.h \
     ui/outliner/TreeModel.h \
     ui/outliner/TreeItem.h \
     database/Database.h \
     ui/Editor.h \
-    ui/Options.h \
     ui/hotkey/NativeEventFilter.h \
     ui/hotkey/GlobalHotkey.h \
     ui/outliner/NoteProperties.h

@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 #include "Editor.h"
-#include "Options.h"
+#include "Preferences.h"
 #include "core/Constants.h"
 #include "core/DatabaseException.h"
 #include "outliner/Outliner.h"
@@ -135,18 +135,11 @@ void MainWindow::createActions() {
     m_closeAction = fileMenu->addAction(tr("Close"), QKeySequence("Ctrl+W"), this, &MainWindow::closeFile);
 
     fileMenu->addSeparator();
+    fileMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
+    fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), QKeySequence("Esc"), this, &MainWindow::hide);
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), QKeySequence("Ctrl+Q"), this, &MainWindow::quit);
-
-    QMenu* toolsMenu = menuBar()->addMenu(tr("Tools"));
-    toolsMenu->addAction(tr("Options..."), [this] {
-        Options options;
-
-        if (options.exec() == QDialog::Accepted) {
-            applyHotSettings();
-        }
-    });
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
@@ -288,6 +281,14 @@ void MainWindow::clearMenuRecentFiles() {
     }
 
     updateMenuState();
+}
+
+void MainWindow::showPreferences() {
+    Preferences preferences;
+
+    if (preferences.exec() == QDialog::Accepted) {
+        applyHotSettings();
+    }
 }
 
 void MainWindow::about() {

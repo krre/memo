@@ -1,9 +1,9 @@
-#include "Options.h"
+#include "Preferences.h"
 #include "core/Constants.h"
 #include <QtWidgets>
 
-Options::Options(QWidget* parent) : QDialog (parent) {
-    setWindowTitle(tr("Options"));
+Preferences::Preferences(QWidget* parent) : QDialog (parent) {
+    setWindowTitle(tr("Preferences"));
     auto layout = new QVBoxLayout;
 
     auto groupBoxUi = new QGroupBox(tr("User Interface"));
@@ -35,7 +35,7 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     fontLayout->addWidget(m_fontSizeLineEdit);
 
     auto fontButton = new QPushButton(tr("Open..."));
-    connect(fontButton, &QPushButton::clicked, this, &Options::openFontDialog);
+    connect(fontButton, &QPushButton::clicked, this, &Preferences::openFontDialog);
     fontLayout->addWidget(fontButton);
 
     gridLayoutUi->addLayout(fontLayout, 1, 1);
@@ -76,7 +76,7 @@ Options::Options(QWidget* parent) : QDialog (parent) {
     readSettings();
 }
 
-void Options::accept() {
+void Preferences::accept() {
     if (writeSettings()) {
         QMessageBox::information(this, tr("Restart requred"), tr("You must restart application"));
     }
@@ -84,7 +84,7 @@ void Options::accept() {
     QDialog::accept();
 }
 
-void Options::openFontDialog() {
+void Preferences::openFontDialog() {
     bool ok;
     QFont currentFont = font();
     currentFont.setFamily(m_fontFamilyLineEdit->text());
@@ -97,7 +97,7 @@ void Options::openFontDialog() {
     }
 }
 
-void Options::readSettings() {
+void Preferences::readSettings() {
     QSettings settings;
 
     QString language = settings.value("language").toString();
@@ -119,7 +119,7 @@ void Options::readSettings() {
     m_groupBoxHotkey->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
 }
 
-bool Options::writeSettings() {
+bool Preferences::writeSettings() {
     bool restartRequre = false;
 
     QSettings settings;

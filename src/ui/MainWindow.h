@@ -24,6 +24,7 @@ private slots:
     void exportFile();
     void closeFile();
     void clearMenuRecentFiles();
+    void showPreferences();
     void about();
     void quit();
 
