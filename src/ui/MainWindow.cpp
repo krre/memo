@@ -123,23 +123,23 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), QKeySequence("Ctrl+N"), this, &MainWindow::onNew);
-    fileMenu->addAction(tr("Open..."), QKeySequence("Ctrl+O"), this, &MainWindow::onOpen);
+    fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::onNew);
+    fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::onOpen);
 
     m_recentFilesMenu = new QMenu(tr("Recent Files"), this);
     m_recentFilesMenu->addSeparator();
     m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::onClearRecentFiles);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
-    m_exportAction = fileMenu->addAction(tr("Export All..."), QKeySequence("Ctrl+E"), this, &MainWindow::onExport);
-    m_closeAction = fileMenu->addAction(tr("Close"), QKeySequence("Ctrl+W"), this, &MainWindow::onClose);
+    m_exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
+    m_closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::onClose);
 
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Preferences..."), this, &MainWindow::onPreferences);
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Hide"), QKeySequence("Esc"), this, &MainWindow::hide);
+    fileMenu->addAction(tr("Hide"), Qt::Key_Escape, this, &MainWindow::hide);
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Exit"), QKeySequence("Ctrl+Q"), this, &MainWindow::onQuit);
+    fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::onQuit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
