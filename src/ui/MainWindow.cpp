@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     m_database = new Database(this);
 
     m_globalHotkey = new GlobalHotkey(this);
-    connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::showWindow);
+    connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);
 
     createActions();
     createTrayIcon();
@@ -123,29 +123,29 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     QMenu* fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), QKeySequence("Ctrl+N"), this, &MainWindow::newFile);
-    fileMenu->addAction(tr("Open..."), QKeySequence("Ctrl+O"), this, &MainWindow::openFile);
+    fileMenu->addAction(tr("New..."), QKeySequence("Ctrl+N"), this, &MainWindow::onNew);
+    fileMenu->addAction(tr("Open..."), QKeySequence("Ctrl+O"), this, &MainWindow::onOpen);
 
     m_recentFilesMenu = new QMenu(tr("Recent Files"), this);
     m_recentFilesMenu->addSeparator();
-    m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::clearMenuRecentFiles);
+    m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::onClearRecentFiles);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
-    m_exportAction = fileMenu->addAction(tr("Export All..."), QKeySequence("Ctrl+E"), this, &MainWindow::exportFile);
-    m_closeAction = fileMenu->addAction(tr("Close"), QKeySequence("Ctrl+W"), this, &MainWindow::closeFile);
+    m_exportAction = fileMenu->addAction(tr("Export All..."), QKeySequence("Ctrl+E"), this, &MainWindow::onExport);
+    m_closeAction = fileMenu->addAction(tr("Close"), QKeySequence("Ctrl+W"), this, &MainWindow::onClose);
 
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
+    fileMenu->addAction(tr("Preferences..."), this, &MainWindow::onPreferences);
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), QKeySequence("Esc"), this, &MainWindow::hide);
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Exit"), QKeySequence("Ctrl+Q"), this, &MainWindow::quit);
+    fileMenu->addAction(tr("Exit"), QKeySequence("Ctrl+Q"), this, &MainWindow::onQuit);
 
     QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
         QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
     });
-    helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::onAbout);
 }
 
 void MainWindow::createTrayIcon() {
@@ -154,10 +154,10 @@ void MainWindow::createTrayIcon() {
     m_trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
     m_trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
     m_trayIconMenu->addSeparator();
-    m_trayIconMenu->addAction(tr("Exit"), this, &MainWindow::quit);
+    m_trayIconMenu->addAction(tr("Exit"), this, &MainWindow::onQuit);
 
     m_trayIcon = new QSystemTrayIcon(this);
-    connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
+    connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::onTrayIconActivated);
     m_trayIcon->setContextMenu(m_trayIconMenu);
     m_trayIcon->setIcon(windowIcon());
     m_trayIcon->show();
@@ -229,13 +229,13 @@ void MainWindow::closeEvent(QCloseEvent* event) {
     event->accept();
 }
 
-void MainWindow::newFile() {
+void MainWindow::onNew() {
     QString fileName = QFileDialog::getSaveFileName(this, QString(), "notes.db",
                                                     tr("All Files (*);;Database Files (*.db)"));
 
     if (fileName.isEmpty()) return;
 
-    closeFile();
+    onClose();
 
     if (QFile::exists(fileName)) {
         if (!QFile::remove(fileName)) {
@@ -251,16 +251,16 @@ void MainWindow::newFile() {
     }
 }
 
-void MainWindow::openFile() {
+void MainWindow::onOpen() {
     QString fileName = QFileDialog::getOpenFileName(this, QString(), QString(),
                                                     tr("All Files (*);;Database Files (*.db)"));
     if (!fileName.isEmpty()) {
-        closeFile();
+        onClose();
         loadFile(fileName);
     }
 }
 
-void MainWindow::exportFile() {
+void MainWindow::onExport() {
     QString directory = QFileDialog::getExistingDirectory(this);
 
     if (!directory.isEmpty()) {
@@ -268,14 +268,14 @@ void MainWindow::exportFile() {
     }
 }
 
-void MainWindow::closeFile() {
+void MainWindow::onClose() {
     m_database->close();
     onNoteChanged(0);
     m_outliner->clear();
     setCurrentFile();
 }
 
-void MainWindow::clearMenuRecentFiles() {
+void MainWindow::onClearRecentFiles() {
     for (int i = m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
         m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(i));
     }
@@ -283,7 +283,7 @@ void MainWindow::clearMenuRecentFiles() {
     updateMenuState();
 }
 
-void MainWindow::showPreferences() {
+void MainWindow::onPreferences() {
     Preferences preferences;
 
     if (preferences.exec() == QDialog::Accepted) {
@@ -291,7 +291,7 @@ void MainWindow::showPreferences() {
     }
 }
 
-void MainWindow::about() {
+void MainWindow::onAbout() {
     using namespace Const::App;
 
     QMessageBox::about(this, tr("About %1").arg(Name),
@@ -303,7 +303,7 @@ void MainWindow::about() {
             .arg(Name, Version, Status, QT_VERSION_STR, BuildDate, BuildTime, URL, CopyrightYear));
 }
 
-void MainWindow::quit() {
+void MainWindow::onQuit() {
     writeSettings();
     QCoreApplication::quit();
 }
@@ -338,13 +338,13 @@ void MainWindow::onEditorFocusLost() {
     m_database->updateValue(lastId, "line", m_editor->textCursor().blockNumber());
 }
 
-void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
+void MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         setVisible(!isVisible());
     }
 }
 
-void MainWindow::showWindow() {
+void MainWindow::onGlobalActivated() {
     show();
     raise();
     activateWindow();

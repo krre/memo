@@ -18,20 +18,20 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    void newFile();
-    void openFile();
-    void exportFile();
-    void closeFile();
-    void clearMenuRecentFiles();
-    void showPreferences();
-    void about();
-    void quit();
+    void onNew();
+    void onOpen();
+    void onExport();
+    void onClose();
+    void onClearRecentFiles();
+    void onPreferences();
+    void onAbout();
+    void onQuit();
 
     void onNoteChanged(Id id);
     void onEditorFocusLost();
 
-    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
-    void showWindow();
+    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
+    void onGlobalActivated();
 
 private:
     void readSettings();
