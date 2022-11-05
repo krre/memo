@@ -262,7 +262,8 @@ void MainWindow::onOpen() {
 
 void MainWindow::onExport() {
     QDateTime dateTime = QDateTime::currentDateTime();
-    QString name = "/Memo-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss") + ".zip";
+    QFileInfo fi(m_currentFile);
+    QString name = "/" + fi.baseName() + "-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss") + ".zip";
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
