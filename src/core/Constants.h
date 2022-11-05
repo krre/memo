@@ -5,7 +5,7 @@ namespace Const {
 namespace App {
     constexpr auto Organization = "Memo";
     constexpr auto Name = "Memo";
-    constexpr auto Version = "1.4.0";
+    constexpr auto Version = "1.5.0";
     constexpr auto Status = ""; // Release, Beta, Alpha
     constexpr auto URL = "https://github.com/krre/memo";
     constexpr auto ReleasesUrl = "https://github.com/krre/memo/releases";
