@@ -237,7 +237,7 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 }
 
 void MainWindow::onNew() {
-    QString fileName = QFileDialog::getSaveFileName(this, QString(), "notes.db",
+    QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                                     tr("All Files (*);;Database Files (*.db)"));
 
     if (fileName.isEmpty()) return;
@@ -259,7 +259,7 @@ void MainWindow::onNew() {
 }
 
 void MainWindow::onOpen() {
-    QString fileName = QFileDialog::getOpenFileName(this, QString(), QString(),
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(),
                                                     tr("All Files (*);;Database Files (*.db)"));
     if (!fileName.isEmpty()) {
         onClose();

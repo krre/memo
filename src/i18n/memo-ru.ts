@@ -86,6 +86,11 @@
         <translation>Ошибка</translation>
     </message>
     <message>
+        <location filename="../ui/MainWindow.cpp" line="240"/>
+        <source>New File</source>
+        <translation>Новый файл</translation>
+    </message>
+    <message>
         <location filename="../ui/MainWindow.cpp" line="241"/>
         <location filename="../ui/MainWindow.cpp" line="263"/>
         <source>All Files (*);;Database Files (*.db)</source>
@@ -95,6 +100,11 @@
         <location filename="../ui/MainWindow.cpp" line="249"/>
         <source>Error rewriting old file</source>
         <translation>Ошибка перезаписи старого файла</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="262"/>
+        <source>Open File</source>
+        <translation>Открыть файл</translation>
     </message>
     <message>
         <location filename="../ui/MainWindow.cpp" line="273"/>
