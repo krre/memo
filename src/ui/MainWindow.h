@@ -21,6 +21,7 @@ private slots:
     void onNew();
     void onOpen();
     void onExport();
+    void onBackup();
     void onClose();
     void onClearRecentFiles();
     void onPreferences();
@@ -48,6 +49,7 @@ private:
     void addRecentFile(const QString& filePath);
 
     void showErrorDialog(const QString& message);
+    QString dateFileName(const QString& name);
 
     QSystemTrayIcon* m_trayIcon = nullptr;
     QMenu* m_trayIconMenu = nullptr;

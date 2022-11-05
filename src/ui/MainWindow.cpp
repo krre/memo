@@ -132,6 +132,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
     m_exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
+    m_exportAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::onBackup);
     m_closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::onClose);
 
     fileMenu->addSeparator();
@@ -224,6 +225,12 @@ void MainWindow::showErrorDialog(const QString& message) {
     QMessageBox::critical(this, tr("Error"), message, QMessageBox::Ok);
 }
 
+QString MainWindow::dateFileName(const QString& name) {
+    QDateTime dateTime = QDateTime::currentDateTime();
+    QFileInfo fi(name);
+    return fi.baseName() + "-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss") + "." + fi.completeSuffix();
+}
+
 void MainWindow::closeEvent(QCloseEvent* event) {
     writeSettings();
     event->accept();
@@ -261,13 +268,23 @@ void MainWindow::onOpen() {
 }
 
 void MainWindow::onExport() {
-    QDateTime dateTime = QDateTime::currentDateTime();
     QFileInfo fi(m_currentFile);
-    QString name = "/" + fi.baseName() + "-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss") + ".zip";
+    QString name = "/" + dateFileName(fi.baseName() + ".zip");
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
         m_outliner->exportAllNotes(filePath);
+    }
+}
+
+void MainWindow::onBackup() {
+    QFileInfo fi(m_currentFile);
+    QString name = dateFileName(fi.fileName());
+
+    QString backupFile = QFileDialog::getSaveFileName(this, tr("Create Backup"), name);
+
+    if (!backupFile.isEmpty()) {
+        QFile::copy(m_currentFile, backupFile);
     }
 }
 
