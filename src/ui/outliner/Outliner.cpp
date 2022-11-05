@@ -4,6 +4,7 @@
 #include "NoteProperties.h"
 #include "database/Database.h"
 #include "core/DatabaseException.h"
+#include <QtGui/private/qzipwriter_p.h>
 #include <QtWidgets>
 #include <QtSql>
 
@@ -27,13 +28,17 @@ Outliner::Outliner(Database* database) : m_database(database) {
     });
 }
 
-void Outliner::exportAllNotes(const QString& directory) {
-    QDateTime dateTime = QDateTime::currentDateTime();
-    QString path = directory + "/Memo-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss");
-    QDir dir;
-    dir.mkdir(path);
+void Outliner::exportAllNotes(const QString& filePath) {
+    QFileInfo fi(filePath);
+    QString dirPath = fi.absolutePath() + "/" + fi.baseName();
 
-    int count = exportNote(0, path);
+    auto sg = qScopeGuard([=] {
+        QDir dir(dirPath);
+        dir.removeRecursively();
+    });
+
+    int count = exportNote(0, dirPath);
+    compressDir(dirPath);
 
     QMessageBox::information(this, tr("Export Finished"), tr("Count of notes: %1").arg(count));
 }
@@ -280,6 +285,48 @@ int Outliner::exportNote(Id parentId, const QString& path) {
     }
 
     return count;
+}
+
+void Outliner::compressDir(const QString& dirPath) {
+    QZipWriter zipWriter(dirPath + ".zip");
+
+    switch (zipWriter.status()) {
+        case QZipWriter::FileWriteError: throw RuntimeError("Write file error");
+        case QZipWriter::FileOpenError: throw RuntimeError("Open file error");
+        case QZipWriter::FilePermissionsError: throw RuntimeError("Permissions file error");
+        case QZipWriter::FileError: throw RuntimeError("File error");
+        case QZipWriter::NoError: break;
+    }
+
+    zipWriter.setCompressionPolicy(QZipWriter::AutoCompress);
+    zipWriter.setCreationPermissions(QFile::permissions(dirPath));
+
+    QFileInfo fi(dirPath);
+    zipWriter.addDirectory(fi.fileName());
+
+    QDirIterator it(dirPath, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+
+    while (it.hasNext()) {
+        QString absoluteFilePath = it.next();
+        QString relativeFilePath = fi.fileName() + QString(absoluteFilePath).remove(dirPath);
+
+        if (it.fileInfo().isDir()) {
+            zipWriter.setCreationPermissions(QFile::permissions(absoluteFilePath));
+            zipWriter.addDirectory(relativeFilePath);
+        } else if (it.fileInfo().isFile()) {
+            QFile file(absoluteFilePath);
+            if (!file.open(QIODevice::ReadOnly)) continue;
+
+            QByteArray data = file.readAll();
+
+            if (!data.isEmpty()) {
+                zipWriter.setCreationPermissions(QFile::permissions(absoluteFilePath));
+                zipWriter.addFile(relativeFilePath, data);
+            }
+        }
+    }
+
+    zipWriter.close();
 }
 
 void Outliner::mousePressEvent(QMouseEvent* event) {

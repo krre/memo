@@ -261,10 +261,12 @@ void MainWindow::onOpen() {
 }
 
 void MainWindow::onExport() {
-    QString directory = QFileDialog::getExistingDirectory(this);
+    QDateTime dateTime = QDateTime::currentDateTime();
+    QString name = "/Memo-" + dateTime.date().toString("yyyy-MM-dd") + "_" + dateTime.time().toString("HH-mm-ss") + ".zip";
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
-    if (!directory.isEmpty()) {
-        m_outliner->exportAllNotes(directory);
+    if (!filePath.isEmpty()) {
+        m_outliner->exportAllNotes(filePath);
     }
 }
 

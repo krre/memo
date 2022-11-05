@@ -1,4 +1,4 @@
-QT += core gui widgets sql network
+QT += core gui widgets sql network gui-private
 
 TEMPLATE = app
 CONFIG += c++17
