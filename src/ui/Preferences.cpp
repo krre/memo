@@ -52,8 +52,8 @@ void Preferences::onBackupsBrowseButtonClicked() {
 QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox = new QComboBox;
     m_languageComboBox->addItem(tr("<System>"));
-    m_languageComboBox->addItem("English", "en");
-    m_languageComboBox->addItem("Russian", "ru");
+    m_languageComboBox->addItem(tr("English"), "en");
+    m_languageComboBox->addItem(tr("Russian"), "ru");
 
     m_fontFamilyLineEdit = new QLineEdit;
     m_fontFamilyLineEdit->setReadOnly(true);

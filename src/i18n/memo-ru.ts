@@ -221,7 +221,7 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="80"/>
+        <location filename="../ui/Preferences.cpp" line="81"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
@@ -236,7 +236,7 @@
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="78"/>
+        <location filename="../ui/Preferences.cpp" line="79"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
@@ -251,6 +251,16 @@
         <translation>Выберите директорию</translation>
     </message>
     <message>
+        <location filename="../ui/Preferences.cpp" line="55"/>
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
+    <message>
+        <location filename="../ui/Preferences.cpp" line="56"/>
+        <source>Russian</source>
+        <translation>Русский</translation>
+    </message>
+    <message>
         <location filename="../ui/Preferences.cpp" line="73"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
@@ -261,22 +271,22 @@
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="90"/>
+        <location filename="../ui/Preferences.cpp" line="91"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="102"/>
+        <location filename="../ui/Preferences.cpp" line="103"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="105"/>
+        <location filename="../ui/Preferences.cpp" line="106"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="108"/>
+        <location filename="../ui/Preferences.cpp" line="109"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
