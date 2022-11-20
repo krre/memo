@@ -15,7 +15,7 @@ public slots:
     void accept() override;
 
 private slots:
-    void openFontDialog();
+    void onFontButtonClicked();
     void onBackupsBrowseButtonClicked();
 
 private:

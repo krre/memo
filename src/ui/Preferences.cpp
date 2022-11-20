@@ -28,13 +28,14 @@ void Preferences::accept() {
     QDialog::accept();
 }
 
-void Preferences::openFontDialog() {
-    bool ok;
+void Preferences::onFontButtonClicked() {
     QFont currentFont = font();
     currentFont.setFamily(m_fontFamilyLineEdit->text());
     currentFont.setPointSize(m_fontSizeLineEdit->text().toInt());
 
+    bool ok;
     QFont font = QFontDialog::getFont(&ok, currentFont, this, tr("Select Font"));
+
     if (ok) {
         m_fontFamilyLineEdit->setText(font.family());
         m_fontSizeLineEdit->setText(QString::number(font.pointSize()));
@@ -63,7 +64,7 @@ QGroupBox* Preferences::createUiGroupBox() {
     m_fontSizeLineEdit->setReadOnly(true);
 
     auto fontButton = new QPushButton(tr("Open..."));
-    connect(fontButton, &QPushButton::clicked, this, &Preferences::openFontDialog);
+    connect(fontButton, &QPushButton::clicked, this, &Preferences::onFontButtonClicked);
 
     auto fontLayout = new QHBoxLayout;
     fontLayout->addWidget(m_fontFamilyLineEdit);
