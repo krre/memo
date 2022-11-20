@@ -16,10 +16,12 @@ public slots:
 
 private slots:
     void openFontDialog();
+    void onBackupsBrowseButtonClicked();
 
 private:
     QGroupBox* createUiGroupBox();
     QGroupBox* createHotkeyGroupBox();
+    QGroupBox* createBackupsGroupBox();
 
     void readSettings();
     bool writeSettings();
@@ -32,4 +34,6 @@ private:
 
     QGroupBox* m_hotkeyGroupBox = nullptr;
     QLineEdit* m_hotkeyLineEdit = nullptr;
+
+    QLineEdit* m_backupsLineEdit = nullptr;
 };

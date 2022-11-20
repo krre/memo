@@ -221,57 +221,77 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="9"/>
+        <location filename="../ui/Preferences.cpp" line="80"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="15"/>
+        <location filename="../ui/Preferences.cpp" line="77"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="18"/>
+        <location filename="../ui/Preferences.cpp" line="54"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="25"/>
+        <location filename="../ui/Preferences.cpp" line="78"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="37"/>
+        <location filename="../ui/Preferences.cpp" line="65"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="44"/>
+        <location filename="../ui/Preferences.cpp" line="45"/>
+        <source>Select Directory</source>
+        <translation>Выберите директорию</translation>
+    </message>
+    <message>
+        <location filename="../ui/Preferences.cpp" line="73"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="48"/>
+        <location filename="../ui/Preferences.cpp" line="74"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="56"/>
+        <location filename="../ui/Preferences.cpp" line="90"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="81"/>
+        <location filename="../ui/Preferences.cpp" line="102"/>
+        <source>Directory:</source>
+        <translation>Директория:</translation>
+    </message>
+    <message>
+        <location filename="../ui/Preferences.cpp" line="105"/>
+        <source>Browse...</source>
+        <translation>Обзор...</translation>
+    </message>
+    <message>
+        <location filename="../ui/Preferences.cpp" line="108"/>
+        <source>Backups</source>
+        <translation>Резервные копии</translation>
+    </message>
+    <message>
+        <location filename="../ui/Preferences.cpp" line="25"/>
         <source>Restart requred</source>
         <translation>Требуется перезапуск</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="81"/>
+        <location filename="../ui/Preferences.cpp" line="25"/>
         <source>You must restart application</source>
         <translation>Вы должны перезапустить приложение</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="93"/>
+        <location filename="../ui/Preferences.cpp" line="37"/>
         <source>Select Font</source>
         <translation>Выбрать шрифт</translation>
     </message>

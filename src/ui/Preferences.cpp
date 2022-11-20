@@ -8,6 +8,7 @@ Preferences::Preferences(QWidget* parent) : QDialog (parent) {
     auto layout = new QVBoxLayout(this);
     layout->addWidget(createUiGroupBox());
     layout->addWidget(createHotkeyGroupBox());
+    layout->addWidget(createBackupsGroupBox());
     layout->addStretch(1);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -37,6 +38,14 @@ void Preferences::openFontDialog() {
     if (ok) {
         m_fontFamilyLineEdit->setText(font.family());
         m_fontSizeLineEdit->setText(QString::number(font.pointSize()));
+    }
+}
+
+void Preferences::onBackupsBrowseButtonClicked() {
+    QString dirPath = QFileDialog::getExistingDirectory(nullptr, tr("Select Directory"), m_backupsLineEdit->text());
+
+    if (!dirPath.isEmpty()) {
+        m_backupsLineEdit->setText(dirPath);
     }
 }
 
@@ -89,6 +98,21 @@ QGroupBox* Preferences::createHotkeyGroupBox() {
     return m_hotkeyGroupBox;
 }
 
+QGroupBox* Preferences::createBackupsGroupBox() {
+    auto label = new QLabel(tr("Directory:"));
+    m_backupsLineEdit = new QLineEdit;
+
+    auto browseButton = new QPushButton(tr("Browse..."));
+    connect(browseButton, &QPushButton::clicked, this, &Preferences::onBackupsBrowseButtonClicked);
+
+    auto result = new QGroupBox(tr("Backups"));
+    auto horizontalLayout = new QHBoxLayout(result);
+    horizontalLayout->addWidget(label);
+    horizontalLayout->addWidget(m_backupsLineEdit);
+    horizontalLayout->addWidget(browseButton);
+    return result;
+}
+
 void Preferences::readSettings() {
     QSettings settings;
 
@@ -109,6 +133,8 @@ void Preferences::readSettings() {
 
     m_hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Const::DefaultSettings::GlobalHotkey).toString());
     m_hotkeyGroupBox->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
+
+    m_backupsLineEdit->setText(settings.value("Backups/directory").toString());
 }
 
 bool Preferences::writeSettings() {
@@ -131,6 +157,8 @@ bool Preferences::writeSettings() {
 
     settings.setValue("GlobalHotkey/hotkey", m_hotkeyLineEdit->text());
     settings.setValue("GlobalHotkey/enabled", m_hotkeyGroupBox->isChecked());
+
+    settings.setValue("Backups/directory", m_backupsLineEdit->text());
 
     return restartRequre;
 }
