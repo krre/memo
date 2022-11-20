@@ -41,56 +41,51 @@ void Preferences::openFontDialog() {
 }
 
 QGroupBox* Preferences::createUiGroupBox() {
-    auto uiLayout = new QGridLayout;
-    uiLayout->setColumnStretch(1, 1);
-
-    // Language
-    uiLayout->addWidget(new QLabel(tr("Language:")), 0, 0);
-
     m_languageComboBox = new QComboBox;
     m_languageComboBox->addItem(tr("<System>"));
     m_languageComboBox->addItem("English", "en");
     m_languageComboBox->addItem("Russian", "ru");
 
-    uiLayout->addWidget(m_languageComboBox, 0, 1, Qt::AlignLeft);
-
-    // Font
-    uiLayout->addWidget(new QLabel(tr("Font:")), 1, 0);
-    auto fontLayout = new QHBoxLayout;
-
     m_fontFamilyLineEdit = new QLineEdit;
     m_fontFamilyLineEdit->setReadOnly(true);
-    fontLayout->addWidget(m_fontFamilyLineEdit);
 
     m_fontSizeLineEdit = new QLineEdit;
     m_fontSizeLineEdit->setMaximumWidth(50);
     m_fontSizeLineEdit->setReadOnly(true);
-    fontLayout->addWidget(m_fontSizeLineEdit);
 
     auto fontButton = new QPushButton(tr("Open..."));
     connect(fontButton, &QPushButton::clicked, this, &Preferences::openFontDialog);
+
+    auto fontLayout = new QHBoxLayout;
+    fontLayout->addWidget(m_fontFamilyLineEdit);
+    fontLayout->addWidget(m_fontSizeLineEdit);
     fontLayout->addWidget(fontButton);
 
-    uiLayout->addLayout(fontLayout, 1, 1);
-
     m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
-    uiLayout->addWidget(m_minimizeCheckBox, 2, 0, 1, -1);
-
     m_hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
-    uiLayout->addWidget(m_hideTrayCheckBox, 3, 0, 1, -1);
+
+    auto formLayout = new QFormLayout;
+    formLayout->addRow(tr("Language:"), m_languageComboBox);
+    formLayout->addRow(tr("Font:"), fontLayout);
 
     auto result = new QGroupBox(tr("User Interface"));
-    result->setLayout(uiLayout);
+    auto verticalLayout = new QVBoxLayout(result);
+    verticalLayout->addLayout(formLayout);
+    verticalLayout->addWidget(m_minimizeCheckBox);
+    verticalLayout->addWidget(m_hideTrayCheckBox);
+
     return result;
 }
 
 QGroupBox* Preferences::createHotkeyGroupBox() {
     m_hotkeyGroupBox = new QGroupBox(tr("Global Hotkey"));
     m_hotkeyGroupBox->setCheckable(true);
-    auto layoutHotkey = new QVBoxLayout;
-    m_hotkeyLineEdit = new QLineEdit(m_hotkeyGroupBox);
-    layoutHotkey->addWidget(m_hotkeyLineEdit);
-    m_hotkeyGroupBox->setLayout(layoutHotkey);
+
+    m_hotkeyLineEdit = new QLineEdit;
+
+    auto hotkeyLayout = new QVBoxLayout(m_hotkeyGroupBox);
+    hotkeyLayout->addWidget(m_hotkeyLineEdit);
+
     return m_hotkeyGroupBox;
 }
 
