@@ -18,6 +18,9 @@ private slots:
     void openFontDialog();
 
 private:
+    QGroupBox* createUiGroupBox();
+    QGroupBox* createHotkeyGroupBox();
+
     void readSettings();
     bool writeSettings();
 
@@ -27,6 +30,6 @@ private:
     QCheckBox* m_minimizeCheckBox = nullptr;
     QCheckBox* m_hideTrayCheckBox = nullptr;
 
-    QGroupBox* m_groupBoxHotkey = nullptr;
+    QGroupBox* m_hotkeyGroupBox = nullptr;
     QLineEdit* m_hotkeyLineEdit = nullptr;
 };
