@@ -16,7 +16,7 @@ Preferences::Preferences(QWidget* parent) : QDialog (parent) {
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
     layout->addWidget(buttonBox);
 
-    resize(500, 300);
+    resize(600, 300);
     readSettings();
 }
 
