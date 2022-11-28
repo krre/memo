@@ -7,8 +7,8 @@ namespace App {
     constexpr auto Name = "Memo";
     constexpr auto Version = "1.5.0";
     constexpr auto Status = ""; // Release, Beta, Alpha
-    constexpr auto URL = "https://github.com/krre/memo";
-    constexpr auto ReleasesUrl = "https://github.com/krre/memo/releases";
+    constexpr auto URL = "https://github.com/krre/memo-desktop";
+    constexpr auto ReleasesUrl = "https://github.com/krre/memo-desktop/releases";
     constexpr auto CopyrightYear = "2019-2022";
     constexpr auto BuildDate = __DATE__;
     constexpr auto BuildTime = __TIME__;
