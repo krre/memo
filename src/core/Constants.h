@@ -19,7 +19,7 @@ namespace Window {
     constexpr int SystemRecentFilesActions = 2;
 }
 
-namespace Outliner {
+namespace NoteTaking {
     constexpr auto TreeItemMimeType = "application/x-treeitem";
 }
 

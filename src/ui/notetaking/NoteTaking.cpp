@@ -1,4 +1,4 @@
-#include "Outliner.h"
+#include "NoteTaking.h"
 #include "TreeModel.h"
 #include "TreeItem.h"
 #include "NoteProperties.h"
@@ -8,9 +8,9 @@
 #include <QtWidgets>
 #include <QtSql>
 
-Outliner::Outliner(Database* database) : m_database(database) {
+NoteTaking::NoteTaking(Database* database) : m_database(database) {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, &QTreeView::customContextMenuRequested, this, &Outliner::onCustomContextMenu);
+    connect(this, &QTreeView::customContextMenuRequested, this, &NoteTaking::onCustomContextMenu);
     createContextMenu();
     header()->setVisible(false);
 
@@ -28,7 +28,7 @@ Outliner::Outliner(Database* database) : m_database(database) {
     });
 }
 
-void Outliner::exportAllNotes(const QString& filePath) {
+void NoteTaking::exportAllNotes(const QString& filePath) {
     QFileInfo fi(filePath);
     QString dirPath = fi.absolutePath() + "/" + fi.baseName();
 
@@ -43,7 +43,7 @@ void Outliner::exportAllNotes(const QString& filePath) {
     QMessageBox::information(this, tr("Export Finished"), tr("Count of notes: %1").arg(count));
 }
 
-void Outliner::updateActions() {
+void NoteTaking::updateActions() {
     bool hasCurrent = selectionModel()->currentIndex().isValid();
 
     if (hasCurrent) {
@@ -51,7 +51,7 @@ void Outliner::updateActions() {
     }
 }
 
-void Outliner::build() {
+void NoteTaking::build() {
     clear();
     QVector<Database::Title> titles = m_database->titles();
     int selectedId = m_database->metaValue("selected_id").toInt();
@@ -84,26 +84,26 @@ void Outliner::build() {
     }
 }
 
-void Outliner::clear() {
+void NoteTaking::clear() {
     m_isInited = false;
 
     delete m_model;
 
     m_model = new TreeModel;
     setModel(m_model);
-    connect(m_model, &TreeModel::itemDropped, this, &Outliner::moveTree);
+    connect(m_model, &TreeModel::itemDropped, this, &NoteTaking::moveTree);
 
     m_isInited = true;
 }
 
-void Outliner::onCustomContextMenu(const QPoint& point) {
+void NoteTaking::onCustomContextMenu(const QPoint& point) {
     if (m_database->isOpen()) {
         updateContextMenu();
         m_contextMenu->exec(mapToGlobal(point));
     }
 }
 
-void Outliner::addNote() {
+void NoteTaking::addNote() {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Add Note"), tr("Name:"), QLineEdit::Normal, "", &ok);
     if (ok && !text.isEmpty()) {
@@ -111,7 +111,7 @@ void Outliner::addNote() {
     }
 }
 
-void Outliner::removeNotes() {
+void NoteTaking::removeNotes() {
     QModelIndex index = selectionModel()->currentIndex();
     TreeItem* parentItem = m_model->item(index.parent());
 
@@ -132,11 +132,11 @@ void Outliner::removeNotes() {
     }
 }
 
-void Outliner::renameNote() {
+void NoteTaking::renameNote() {
     edit(selectionModel()->currentIndex());
 }
 
-void Outliner::moveUp() {
+void NoteTaking::moveUp() {
     int row = currentIndex().row();
 
     Id id1 = m_model->item(currentIndex())->id();
@@ -148,7 +148,7 @@ void Outliner::moveUp() {
     m_database->updateValue(id2, "pos", row);
 }
 
-void Outliner::moveDown() {
+void NoteTaking::moveDown() {
     int row = currentIndex().row();
 
     Id id1 = m_model->item(currentIndex())->id();
@@ -160,7 +160,7 @@ void Outliner::moveDown() {
     m_database->updateValue(id2, "pos", row);
 }
 
-void Outliner::moveTree(const QModelIndex& index) {
+void NoteTaking::moveTree(const QModelIndex& index) {
     selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
     expand(index.parent());
 
@@ -196,7 +196,7 @@ void Outliner::moveTree(const QModelIndex& index) {
     }
 }
 
-void Outliner::showProperties() {
+void NoteTaking::showProperties() {
     Id id = m_model->item(currentIndex())->id();
     QSqlQuery query = m_database->record(id);
 
@@ -209,19 +209,19 @@ void Outliner::showProperties() {
     props.exec();
 }
 
-void Outliner::createContextMenu() {
+void NoteTaking::createContextMenu() {
     m_contextMenu = new QMenu(this);
-    m_contextMenu->addAction(tr("Add..."), this, &Outliner::addNote);
-    m_removeAction = m_contextMenu->addAction(tr("Remove..."), this, &Outliner::removeNotes);
-    m_renameAction = m_contextMenu->addAction(tr("Rename"), this, &Outliner::renameNote);
+    m_contextMenu->addAction(tr("Add..."), this, &NoteTaking::addNote);
+    m_removeAction = m_contextMenu->addAction(tr("Remove..."), this, &NoteTaking::removeNotes);
+    m_renameAction = m_contextMenu->addAction(tr("Rename"), this, &NoteTaking::renameNote);
     m_contextMenu->addSeparator();
-    m_moveUpAction = m_contextMenu->addAction(tr("Move Up"), this, &Outliner::moveUp);
-    m_moveDownAction = m_contextMenu->addAction(tr("Move Down"), this, &Outliner::moveDown);
+    m_moveUpAction = m_contextMenu->addAction(tr("Move Up"), this, &NoteTaking::moveUp);
+    m_moveDownAction = m_contextMenu->addAction(tr("Move Down"), this, &NoteTaking::moveDown);
     m_contextMenu->addSeparator();
-    m_propertiesAction = m_contextMenu->addAction(tr("Properties..."), this, &Outliner::showProperties);
+    m_propertiesAction = m_contextMenu->addAction(tr("Properties..."), this, &NoteTaking::showProperties);
 }
 
-void Outliner::updateContextMenu() {
+void NoteTaking::updateContextMenu() {
     bool enabled = currentIndex().isValid();
     m_removeAction->setEnabled(enabled);
     m_renameAction->setEnabled(enabled);
@@ -232,7 +232,7 @@ void Outliner::updateContextMenu() {
     m_propertiesAction->setEnabled(enabled);
 }
 
-void Outliner::insertChild(const QString& title) {
+void NoteTaking::insertChild(const QString& title) {
     QModelIndex currentIndex = selectionModel()->currentIndex();
     TreeItem* currentItem = m_model->item(currentIndex);
 
@@ -255,7 +255,7 @@ void Outliner::insertChild(const QString& title) {
     updateActions();
 }
 
-int Outliner::exportNote(Id parentId, const QString& path) {
+int NoteTaking::exportNote(Id parentId, const QString& path) {
     QDir dir;
     dir.mkdir(path);
 
@@ -287,7 +287,7 @@ int Outliner::exportNote(Id parentId, const QString& path) {
     return count;
 }
 
-void Outliner::compressDir(const QString& dirPath) {
+void NoteTaking::compressDir(const QString& dirPath) {
     QZipWriter zipWriter(dirPath + ".zip");
 
     switch (zipWriter.status()) {
@@ -329,7 +329,7 @@ void Outliner::compressDir(const QString& dirPath) {
     zipWriter.close();
 }
 
-void Outliner::mousePressEvent(QMouseEvent* event) {
+void NoteTaking::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && !indexAt(event->position().toPoint()).isValid()) {
         selectionModel()->clearSelection();
         setCurrentIndex(QModelIndex());
@@ -338,7 +338,7 @@ void Outliner::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
+void NoteTaking::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
     Q_UNUSED(previous)
     if (!m_isInited) return;
 

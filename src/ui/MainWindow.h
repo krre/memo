@@ -4,7 +4,7 @@
 #include <core/Globals.h>
 
 class QSplitter;
-class Outliner;
+class NoteTaking;
 class Editor;
 class Database;
 class GlobalHotkey;
@@ -58,7 +58,7 @@ private:
     QAction* m_closeAction = nullptr;
 
     QSplitter* m_splitter = nullptr;
-    Outliner* m_outliner = nullptr;
+    NoteTaking* m_notetaking = nullptr;
     Editor* m_editor = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;
 

@@ -3,7 +3,7 @@
 #include "Preferences.h"
 #include "core/Constants.h"
 #include "core/Exception.h"
-#include "outliner/Outliner.h"
+#include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
 #include <QtWidgets>
@@ -24,10 +24,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     createTrayIcon();
     setupSplitter();
 
-    connect(m_outliner, &Outliner::noteChanged, this, &MainWindow::onNoteChanged);
+    connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::onNoteChanged);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
     connect(m_editor, &Editor::leave, this, [=] {
-       m_outliner->setFocus();
+       m_notetaking->setFocus();
     });
 
     readSettings();
@@ -110,10 +110,10 @@ void MainWindow::applyHotSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    m_outliner = new Outliner(m_database);
+    m_notetaking = new NoteTaking(m_database);
     m_editor = new Editor;
 
-    m_splitter->addWidget(m_outliner);
+    m_splitter->addWidget(m_notetaking);
     m_splitter->addWidget(m_editor);
 
     m_splitter->setHandleWidth(1);
@@ -176,7 +176,7 @@ void MainWindow::loadFile(const QString& filePath) {
 
     try {
         m_database->open(filePath);
-        m_outliner->build();
+        m_notetaking->build();
         setCurrentFile(filePath);
         addRecentFile(filePath);
     } catch (const Exception& e) {
@@ -276,7 +276,7 @@ void MainWindow::onExport() {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
-        m_outliner->exportAllNotes(filePath);
+        m_notetaking->exportAllNotes(filePath);
     }
 }
 
@@ -297,7 +297,7 @@ void MainWindow::onBackup() {
 void MainWindow::onClose() {
     m_database->close();
     onNoteChanged(0);
-    m_outliner->clear();
+    m_notetaking->clear();
     setCurrentFile();
 }
 
@@ -321,11 +321,11 @@ void MainWindow::onAbout() {
     using namespace Const::App;
 
     QMessageBox::about(this, tr("About %1").arg(Name),
-        tr("<h3>%1 %2 %3</h3>\
-           Note-taking for quick notes<br><br> \
-           Based on Qt %4<br> \
-           Build on %5 %6<br><br> \
-           <a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
+        tr("<h3>%1 %2 %3</h3>"
+           "Note-taking for quick notes<br><br>"
+           "Based on Qt %4<br>"
+           "Build on %5 %6<br><br>"
+           "<a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
             .arg(Name, Version, Status, QT_VERSION_STR, BuildDate, BuildTime, URL, CopyrightYear));
 }
 

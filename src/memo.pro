@@ -18,13 +18,13 @@ SOURCES += \
     database/Patcher.cpp \
     ui/MainWindow.cpp \
     ui/Preferences.cpp \
-    ui/outliner/Outliner.cpp \
-    ui/outliner/TreeModel.cpp \
-    ui/outliner/TreeItem.cpp \
+    ui/notetaking/NoteTaking.cpp \
+    ui/notetaking/TreeModel.cpp \
+    ui/notetaking/TreeItem.cpp \
     database/Database.cpp \
     ui/Editor.cpp \
     ui/hotkey/GlobalHotkey.cpp \
-    ui/outliner/NoteProperties.cpp \
+    ui/notetaking/NoteProperties.cpp \
     main.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
@@ -40,14 +40,14 @@ HEADERS += \
     database/Patcher.h \
     ui/MainWindow.h \
     ui/Preferences.h \
-    ui/outliner/Outliner.h \
-    ui/outliner/TreeModel.h \
-    ui/outliner/TreeItem.h \
+    ui/notetaking/NoteTaking.h \
+    ui/notetaking/TreeModel.h \
+    ui/notetaking/TreeItem.h \
     database/Database.h \
     ui/Editor.h \
     ui/hotkey/NativeEventFilter.h \
     ui/hotkey/GlobalHotkey.h \
-    ui/outliner/NoteProperties.h
+    ui/notetaking/NoteProperties.h
 
 TRANSLATIONS = i18n/memo-ru.ts
 

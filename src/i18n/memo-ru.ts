@@ -107,108 +107,108 @@
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="273"/>
+        <location filename="../ui/MainWindow.cpp" line="276"/>
         <source>Export notes to ZIP archive</source>
         <translation>Экспортировать заметки в ZIP архив</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="284"/>
+        <location filename="../ui/MainWindow.cpp" line="290"/>
         <source>Create Backup</source>
         <translation>Создать резервную копию</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="317"/>
+        <location filename="../ui/MainWindow.cpp" line="323"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="318"/>
-        <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Outliner for quick notes&lt;br&gt;&lt;br&gt;            Based on Qt %4&lt;br&gt;            Build on %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
-        <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;           Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;            Основано на Qt %4&lt;br&gt;            Собрано %5 %6&lt;br&gt;&lt;br&gt;            &lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;© %8, Владимир Зарыпов</translation>
+        <location filename="../ui/MainWindow.cpp" line="324"/>
+        <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Note-taking for quick notes&lt;br&gt;&lt;br&gt;Based on Qt %4&lt;br&gt;Build on %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
+        <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;Основано на Qt %4&lt;br&gt;Собрано %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Владимир Зарыпов</translation>
     </message>
 </context>
 <context>
     <name>NoteProperties</name>
     <message>
-        <location filename="../ui/outliner/NoteProperties.cpp" line="5"/>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
         <source>Note Properties</source>
         <translation>Свойства заметки</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/NoteProperties.cpp" line="8"/>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/NoteProperties.cpp" line="9"/>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
         <source>Created at:</source>
         <translation>Создано:</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/NoteProperties.cpp" line="10"/>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
         <source>Updated at:</source>
         <translation>Обновлено:</translation>
     </message>
 </context>
 <context>
-    <name>Outliner</name>
+    <name>NoteTaking</name>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="43"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
         <source>Export Finished</source>
         <translation>Экспорт завершён</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="43"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
         <source>Count of notes: %1</source>
         <translation>Количество заметок: %1</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="108"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="108"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="118"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
         <source>Remove Notes</source>
         <translation>Удалить заметки</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="118"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="214"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
         <source>Add...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="215"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
         <source>Remove...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="216"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="216"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="218"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="219"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="219"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../ui/outliner/Outliner.cpp" line="221"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="221"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
@@ -221,72 +221,72 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="81"/>
+        <location filename="../ui/Preferences.cpp" line="82"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="77"/>
+        <location filename="../ui/Preferences.cpp" line="78"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="54"/>
+        <location filename="../ui/Preferences.cpp" line="55"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="79"/>
+        <location filename="../ui/Preferences.cpp" line="80"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="65"/>
+        <location filename="../ui/Preferences.cpp" line="66"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="45"/>
+        <location filename="../ui/Preferences.cpp" line="46"/>
         <source>Select Directory</source>
         <translation>Выберите директорию</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="55"/>
+        <location filename="../ui/Preferences.cpp" line="56"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="56"/>
+        <location filename="../ui/Preferences.cpp" line="57"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="73"/>
+        <location filename="../ui/Preferences.cpp" line="74"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="74"/>
+        <location filename="../ui/Preferences.cpp" line="75"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="91"/>
+        <location filename="../ui/Preferences.cpp" line="92"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="103"/>
+        <location filename="../ui/Preferences.cpp" line="104"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="106"/>
+        <location filename="../ui/Preferences.cpp" line="107"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="109"/>
+        <location filename="../ui/Preferences.cpp" line="110"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>

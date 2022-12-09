@@ -7,10 +7,10 @@ class QAction;
 class TreeModel;
 class Database;
 
-class Outliner : public QTreeView {
+class NoteTaking : public QTreeView {
     Q_OBJECT
 public:
-    Outliner(Database* database);
+    NoteTaking(Database* database);
 
     void exportAllNotes(const QString& filePath);
 
