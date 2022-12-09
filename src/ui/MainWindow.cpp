@@ -322,7 +322,7 @@ void MainWindow::onAbout() {
 
     QMessageBox::about(this, tr("About %1").arg(Name),
         tr("<h3>%1 %2 %3</h3>\
-           Outliner for quick notes<br><br> \
+           Note-taking for quick notes<br><br> \
            Based on Qt %4<br> \
            Build on %5 %6<br><br> \
            <a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
