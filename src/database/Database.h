@@ -22,9 +22,9 @@ public:
     void close();
     bool isOpen() const;
 
-    int insertRecord(Id parentId, int pos, int depth, const QString& title);
-    void removeRecord(Id id);
-    QSqlQuery record(Id id);
+    int insertNote(Id parentId, int pos, int depth, const QString& title);
+    void removeNote(Id id);
+    QSqlQuery note(Id id);
     void exec(const QString& sql);
 
     void updateValue(Id id, const QString& name, const QVariant& value);

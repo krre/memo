@@ -67,7 +67,7 @@ bool Database::isOpen() const {
     return m_db.isOpen();
 }
 
-int Database::insertRecord(Id parentId, int pos, int depth, const QString& title) {
+int Database::insertNote(Id parentId, int pos, int depth, const QString& title) {
     QSqlQuery query;
     query.prepare("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)");
     query.bindValue(":parent_id", parentId);
@@ -82,7 +82,7 @@ int Database::insertRecord(Id parentId, int pos, int depth, const QString& title
     return query.lastInsertId().toInt();
 }
 
-void Database::removeRecord(Id id) {
+void Database::removeNote(Id id) {
     QSqlQuery query;
     query.prepare("DELETE FROM notes WHERE id = :id");
     query.bindValue(":id", id);
@@ -92,7 +92,7 @@ void Database::removeRecord(Id id) {
     }
 }
 
-QSqlQuery Database::record(Id id) {
+QSqlQuery Database::note(Id id) {
     QSqlQuery query;
     query.prepare(QString("SELECT * FROM notes WHERE id = :id"));
     query.bindValue(":id", id);

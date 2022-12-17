@@ -122,7 +122,7 @@ void NoteTaking::removeNotes() {
         m_model->removeRow(index.row(), index.parent());
 
         for (Id id : ids) {
-            m_database->removeRecord(id);
+            m_database->removeNote(id);
         }
 
         for (int i = 0; i < parentItem->childCount(); i++) {
@@ -198,7 +198,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
 
 void NoteTaking::showProperties() {
     Id id = m_model->item(currentIndex())->id();
-    QSqlQuery query = m_database->record(id);
+    QSqlQuery query = m_database->note(id);
 
     NoteProperties::Data data;
     data.title = query.value("title").toString();
@@ -239,7 +239,7 @@ void NoteTaking::insertChild(const QString& title) {
     Id currentId = currentItem->id();
     int childRow = currentItem->childCount();
     int childDepth = currentItem->depth();
-    int childId = m_database->insertRecord(currentId, childRow, childDepth, title);
+    int childId = m_database->insertNote(currentId, childRow, childDepth, title);
 
     if (!m_model->insertRow(childRow, currentIndex)) {
         return;
