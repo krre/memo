@@ -21,21 +21,21 @@ void Database::create(const QString& filepath) {
     }
 
     QSqlQuery query;
-    if (!query.exec("CREATE TABLE notes("
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    "parent_id INTEGER,"
-                    "pos INTEGER,"
-                    "depth INTEGER,"
-                    "title TEXT,"
-                    "note TEXT,"
-                    "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
-                    "updated_at TIMESTAMP DEFAULT (datetime('now', 'localtime')))")) {
+    if (!query.exec(
+        "CREATE TABLE notes("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "parent_id INTEGER,"
+            "pos INTEGER,"
+            "depth INTEGER,"
+            "title TEXT,"
+            "note TEXT,"
+            "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
+            "updated_at TIMESTAMP DEFAULT (datetime('now', 'localtime'))"
+        ")")) {
         throw SqlQueryError(query);
     }
 
-    if (!query.exec("CREATE TABLE meta("
-                    "version INTEGER,"
-                    "selected_id INTEGER)")) {
+    if (!query.exec("CREATE TABLE meta(version INTEGER, selected_id INTEGER)")) {
         throw SqlQueryError(query);
     }
 
