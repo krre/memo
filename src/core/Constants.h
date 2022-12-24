@@ -25,6 +25,7 @@ namespace NoteTaking {
 
 namespace DefaultSettings {
     constexpr auto GlobalHotkey = "Ctrl+Alt+M";
+    constexpr auto Port = 3128;
 }
 
 }

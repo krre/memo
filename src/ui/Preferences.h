@@ -22,6 +22,7 @@ private:
     QGroupBox* createUiGroupBox();
     QGroupBox* createHotkeyGroupBox();
     QGroupBox* createBackupsGroupBox();
+    QGroupBox* createServerGroupBox();
 
     void readSettings();
     bool writeSettings();
@@ -36,4 +37,7 @@ private:
     QLineEdit* m_hotkeyLineEdit = nullptr;
 
     QLineEdit* m_backupsLineEdit = nullptr;
+
+    QGroupBox* m_serverGroupBox = nullptr;
+    QLineEdit* m_portLineEdit = nullptr;
 };

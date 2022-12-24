@@ -1,6 +1,7 @@
 #include "Preferences.h"
 #include "core/Constants.h"
 #include <QtWidgets>
+#include <QtNetwork>
 
 Preferences::Preferences(QWidget* parent) : QDialog (parent) {
     setWindowTitle(tr("Preferences"));
@@ -9,6 +10,7 @@ Preferences::Preferences(QWidget* parent) : QDialog (parent) {
     layout->addWidget(createUiGroupBox());
     layout->addWidget(createHotkeyGroupBox());
     layout->addWidget(createBackupsGroupBox());
+    layout->addWidget(createServerGroupBox());
     layout->addStretch(1);
 
     auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -115,6 +117,29 @@ QGroupBox* Preferences::createBackupsGroupBox() {
     return result;
 }
 
+QGroupBox* Preferences::createServerGroupBox() {
+    auto addressTextEdit = new QPlainTextEdit;
+    addressTextEdit->setReadOnly(true);
+
+    for (const QHostAddress& address: QNetworkInterface::allAddresses()) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isGlobal()) {
+            addressTextEdit->appendPlainText(address.toString());
+        }
+    }
+
+    m_portLineEdit = new QLineEdit;
+
+    auto formLayout = new QFormLayout;
+    formLayout->addRow(tr("IP Address:"), addressTextEdit);
+    formLayout->addRow(tr("Port:"), m_portLineEdit);
+
+    m_serverGroupBox = new QGroupBox(tr("Server"));
+    m_serverGroupBox->setCheckable(true);
+    m_serverGroupBox->setLayout(formLayout);
+
+    return m_serverGroupBox;
+}
+
 void Preferences::readSettings() {
     QSettings settings;
 
@@ -137,6 +162,9 @@ void Preferences::readSettings() {
     m_hotkeyGroupBox->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
 
     m_backupsLineEdit->setText(settings.value("Backups/directory").toString());
+
+    m_serverGroupBox->setChecked(settings.value("Server/enabled", false).toBool());
+    m_portLineEdit->setText(settings.value("Server/port", Const::DefaultSettings::Port).toString());
 }
 
 bool Preferences::writeSettings() {
@@ -161,6 +189,9 @@ bool Preferences::writeSettings() {
     settings.setValue("GlobalHotkey/enabled", m_hotkeyGroupBox->isChecked());
 
     settings.setValue("Backups/directory", m_backupsLineEdit->text());
+
+    settings.setValue("Server/enabled", m_serverGroupBox->isChecked());
+    settings.setValue("Server/port", m_portLineEdit->text());
 
     return restartRequre;
 }
