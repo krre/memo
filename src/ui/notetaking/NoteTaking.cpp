@@ -53,19 +53,19 @@ void NoteTaking::updateActions() {
 
 void NoteTaking::build() {
     clear();
-    QVector<Database::Title> titles = m_database->titles();
+    QVector<Database::Note> notes = m_database->notes();
     int selectedId = m_database->metaValue("selected_id").toInt();
 
     TreeItem* rootItem = m_model->root();
 
-    for (const Database::Title& title : titles) {
-        TreeItem* parentItem = rootItem->find(title.parentId);
+    for (const Database::Note& note : notes) {
+        TreeItem* parentItem = rootItem->find(note.parentId);
         QModelIndex parentIndex = m_model->index(parentItem);
-        m_model->insertRow(title.pos, parentIndex);
+        m_model->insertRow(note.pos, parentIndex);
 
-        QModelIndex index = m_model->index(title.pos, 0, parentIndex);
-        m_model->setData(index, QVariant(title.title), Qt::EditRole);
-        m_model->item(index)->setId(title.id);
+        QModelIndex index = m_model->index(note.pos, 0, parentIndex);
+        m_model->setData(index, QVariant(note.title), Qt::EditRole);
+        m_model->item(index)->setId(note.id);
     }
 
     if (selectedId == 0) {

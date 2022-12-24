@@ -167,21 +167,22 @@ QVariant Database::metaValue(const QString& name) {
     return QVariant();
 }
 
-QVector<Database::Title> Database::titles() {
-    QVector<Title> list;
+QVector<Database::Note> Database::notes() {
+    QVector<Note> result;
 
-    QSqlQuery query("SELECT id, parent_id, pos, depth, title FROM notes ORDER BY depth, pos");
+    QSqlQuery query("SELECT id, parent_id, pos, depth, title, note FROM notes ORDER BY depth, pos");
 
     while (query.next()) {
-        Title title;
-        title.id = query.value("id").toInt();
-        title.parentId = query.value("parent_id").toInt();
-        title.pos = query.value("pos").toInt();
-        title.depth = query.value("depth").toInt();
-        title.title = query.value("title").toString();
+        Note note;
+        note.id = query.value("id").toInt();
+        note.parentId = query.value("parent_id").toInt();
+        note.pos = query.value("pos").toInt();
+        note.depth = query.value("depth").toInt();
+        note.title = query.value("title").toString();
+        note.note = query.value("note").toString();
 
-        list.append(title);
+        result.append(note);
     }
 
-    return list;
+    return result;
 }

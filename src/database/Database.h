@@ -6,12 +6,13 @@
 class Database : public QObject {
     Q_OBJECT
 public:
-    struct Title {
+    struct Note {
         Id id;
         Id parentId;
         int pos;
         int depth;
         QString title;
+        QString note;
     };
 
     explicit Database(QObject* parent = nullptr);
@@ -33,7 +34,7 @@ public:
     void updateMetaValue(const QString& name, const QVariant& value);
     QVariant metaValue(const QString& name);
 
-    QVector<Title> titles();
+    QVector<Note> notes();
 
 private:
     QSqlDatabase m_db;
