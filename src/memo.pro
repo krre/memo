@@ -1,4 +1,4 @@
-QT += core gui widgets sql network gui-private
+QT += core gui widgets sql network httpserver gui-private
 
 TEMPLATE = app
 CONFIG += c++17
@@ -16,6 +16,7 @@ SOURCES += \
     core/DatabaseException.cpp \
     core/Exception.cpp \
     database/Patcher.cpp \
+    server/HttpServer.cpp \
     ui/MainWindow.cpp \
     ui/Preferences.cpp \
     ui/notetaking/NoteTaking.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     core/Globals.h \
     core/MessageHandler.h \
     database/Patcher.h \
+    server/HttpServer.h \
     ui/MainWindow.h \
     ui/Preferences.h \
     ui/notetaking/NoteTaking.h \

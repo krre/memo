@@ -6,6 +6,7 @@
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
+#include "server/HttpServer.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -16,6 +17,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setCentralWidget(m_splitter);
 
     m_database = new Database(this);
+    m_server = new HttpServer(this);
 
     m_globalHotkey = new GlobalHotkey(this);
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);
@@ -106,6 +108,12 @@ void MainWindow::applyHotSettings() {
         }
 
         m_editor->setFont(font);
+    }
+
+    if (settings.value("Server/enabled").toBool()) {
+        m_server->start(settings.value("Server/port", Const::DefaultSettings::Port).toInt());
+    } else {
+        m_server->stop();
     }
 }
 
