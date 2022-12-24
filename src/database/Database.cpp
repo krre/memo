@@ -186,3 +186,8 @@ QVector<Database::Note> Database::notes() {
 
     return result;
 }
+
+QString Database::name() const {
+    QFileInfo fi(m_db.databaseName());
+    return fi.baseName();
+}

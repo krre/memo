@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setCentralWidget(m_splitter);
 
     m_database = new Database(this);
-    m_server = new HttpServer(this);
+    m_server = new HttpServer(m_database, this);
 
     m_globalHotkey = new GlobalHotkey(this);
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);

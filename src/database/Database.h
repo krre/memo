@@ -35,6 +35,7 @@ public:
     QVariant metaValue(const QString& name);
 
     QVector<Note> notes();
+    QString name() const;
 
 private:
     QSqlDatabase m_db;
