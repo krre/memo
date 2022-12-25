@@ -53,8 +53,8 @@ QByteArray HttpServer::handleNotes() const {
         obj["parentId"] = note.parentId;
         obj["pos"] = note.pos;
         obj["depth"] = note.depth;
-        obj["title"] = note.title;
-        obj["note"] = note.note;
+        obj["title"] = QJsonValue::fromVariant(QByteArray(note.title.toUtf8()).toBase64());;
+        obj["note"] = QJsonValue::fromVariant(QByteArray(note.note.toUtf8()).toBase64());
 
         result.append(obj);
     }
