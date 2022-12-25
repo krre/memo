@@ -8,8 +8,11 @@ HttpServer::HttpServer(Database* database, QObject* parent) : QObject(parent), m
 
 }
 
-void HttpServer::start(quint16 port) {
+void HttpServer::start(quint16 port, const QString& key) {
+    stop();
     m_httpServer = new QHttpServer(this);
+
+    qDebug() << key;
 
     m_httpServer->route("/name", [=] () {
         return handleName();
@@ -29,6 +32,9 @@ void HttpServer::start(quint16 port) {
 }
 
 void HttpServer::stop() {
+    if (!m_httpServer) return;
+
+    delete m_httpServer;
     m_httpServer = nullptr;
     qInfo().noquote() << "Server stopped";
 }

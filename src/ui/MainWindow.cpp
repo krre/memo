@@ -111,7 +111,14 @@ void MainWindow::applyHotSettings() {
     }
 
     if (settings.value("Server/enabled").toBool()) {
-        m_server->start(settings.value("Server/port", Const::DefaultSettings::Port).toInt());
+        QString key = settings.value("Server/key").toString();
+
+        if (key.isEmpty()) {
+            qCritical().noquote() << "Server key is empty";
+            m_server->stop();
+        } else {
+            m_server->start(settings.value("Server/port", Const::DefaultSettings::Port).toInt(), key);
+        }
     } else {
         m_server->stop();
     }
