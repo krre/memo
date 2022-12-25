@@ -15,5 +15,5 @@ private:
     QHttpServer* m_httpServer = nullptr;
 
     QString handleName() const;
-    QString handleNotes() const;
+    QByteArray handleNotes() const;
 };

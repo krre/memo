@@ -43,7 +43,7 @@ QString HttpServer::handleName() const {
     return m_database->name();
 }
 
-QString HttpServer::handleNotes() const {
+QByteArray HttpServer::handleNotes() const {
     QVector<Database::Note> notes = m_database->notes();
     QJsonArray result;
 
@@ -59,5 +59,5 @@ QString HttpServer::handleNotes() const {
         result.append(obj);
     }
 
-    return QString(QJsonDocument(result).toJson(QJsonDocument::Compact));
+    return QJsonDocument(result).toJson(QJsonDocument::Compact);
 }
