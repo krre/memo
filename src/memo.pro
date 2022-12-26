@@ -15,6 +15,7 @@ win32: LIBS += -luser32
 SOURCES += \
     core/DatabaseException.cpp \
     core/Exception.cpp \
+    core/Settings.cpp \
     database/Patcher.cpp \
     server/HttpServer.cpp \
     ui/MainWindow.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     core/Exception.h \
     core/Globals.h \
     core/MessageHandler.h \
+    core/Settings.h \
     database/Patcher.h \
     server/HttpServer.h \
     ui/MainWindow.h \

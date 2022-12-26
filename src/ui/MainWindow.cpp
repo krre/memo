@@ -3,6 +3,7 @@
 #include "Preferences.h"
 #include "core/Constants.h"
 #include "core/Exception.h"
+#include "core/Settings.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -39,11 +40,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 void MainWindow::readSettings() {
     applyHotSettings();
 
-    QSettings settings;
-
-    const QByteArray geometry = settings.value("geometry", QByteArray()).toByteArray();
-
-    if (geometry.isEmpty()) {
+    if (QByteArray geometry = Settings::General::geometry(); geometry.isEmpty()) {
         const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
@@ -51,73 +48,59 @@ void MainWindow::readSettings() {
         restoreGeometry(geometry);
     }
 
-    m_splitter->restoreState(settings.value("splitter").toByteArray());
+    m_splitter->restoreState(Settings::General::splitter());
 
-    int size = settings.beginReadArray("RecentFiles");
-
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        addRecentFile(settings.value("path").toString());
+    for (const QString& filePath : Settings::RecentFiles::pathes()) {
+        addRecentFile(filePath);
     }
 
-    settings.endArray();
+    loadFile(Settings::General::filePath());
 
-    loadFile(settings.value("filePath").toString());
-
-    if (!settings.value("minimizeOnStartup", false).toBool()) {
+    if (!Settings::General::minimizeOnStartup()) {
         show();
     }
 }
 
 void MainWindow::writeSettings() {
-    QSettings settings;
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("splitter", m_splitter->saveState());
-    settings.setValue("filePath", m_currentFile);
+    Settings::General::setGeometry(saveGeometry());
+    Settings::General::setSplitter(m_splitter->saveState());
+    Settings::General::setFilePath(m_currentFile);
 
-    settings.beginWriteArray("RecentFiles");
+    QStringList pathes;
 
     for (int i = 0; i < m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions; ++i) {
-        settings.setArrayIndex(i);
-        settings.setValue("path", m_recentFilesMenu->actions().at(i)->text());
+        pathes.append(m_recentFilesMenu->actions().at(i)->text());
     }
 
-    settings.endArray();
+    Settings::RecentFiles::setPathes(pathes);
 }
 
 void MainWindow::applyHotSettings() {
-    QSettings settings;
-    m_trayIcon->setVisible(!settings.value("hideTrayIcon").toBool());
+    m_trayIcon->setVisible(!Settings::General::hideTrayIcon());
 
-    if (settings.value("GlobalHotkey/enabled").toBool()) {
-        m_globalHotkey->setShortcut(settings.value("GlobalHotkey/hotkey", Const::DefaultSettings::GlobalHotkey).toString());
+    if (Settings::GlobalHotkey::enabled()) {
+        m_globalHotkey->setShortcut(Settings::GlobalHotkey::hotkey());
     } else {
         m_globalHotkey->unsetShortcut();
     }
 
-    QString fontFamily = settings.value("Editor/fontFamily").toString();
-
-    if (!fontFamily.isEmpty()) {
+    if (QString fontFamily = Settings::Editor::fontFamily(); !fontFamily.isEmpty()) {
         QFont font;
         font.setFamily(fontFamily);
 
-        QString fontSize = settings.value("Editor/fontSize").toString();
-
-        if (!fontSize.isEmpty()) {
-            font.setPointSize(fontSize.toInt());
+        if (int fontSize = Settings::Editor::fontSize(); fontSize) {
+            font.setPointSize(fontSize);
         }
 
         m_editor->setFont(font);
     }
 
-    if (settings.value("Server/enabled").toBool()) {
-        QString key = settings.value("Server/key").toString();
-
-        if (key.isEmpty()) {
+    if (Settings::Server::enabled()) {
+        if (QString key = Settings::Server::key(); key.isEmpty()) {
             qCritical().noquote() << "Server key is empty";
             m_server->stop();
         } else {
-            m_server->start(settings.value("Server/port", Const::DefaultSettings::Port).toInt(), key);
+            m_server->start(Settings::Server::port(), key);
         }
     } else {
         m_server->stop();
@@ -283,8 +266,7 @@ void MainWindow::onOpen() {
 }
 
 void MainWindow::onExport() {
-    QSettings settings;
-    QString directory = settings.value("Backups/directory").toString();
+    QString directory = Settings::Backups::directory();
 
     QFileInfo fi(m_currentFile);
     QString name = directory + "/" + dateFileName(fi.baseName() + ".zip");
@@ -296,8 +278,7 @@ void MainWindow::onExport() {
 }
 
 void MainWindow::onBackup() {
-    QSettings settings;
-    QString directory = settings.value("Backups/directory").toString();
+    QString directory = Settings::Backups::directory();
 
     QFileInfo fi(m_currentFile);
     QString name = directory + "/" + dateFileName(fi.fileName());

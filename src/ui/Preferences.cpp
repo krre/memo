@@ -1,5 +1,5 @@
 #include "Preferences.h"
-#include "core/Constants.h"
+#include "core/Settings.h"
 #include <QtWidgets>
 #include <QtNetwork>
 
@@ -143,59 +143,53 @@ QGroupBox* Preferences::createServerGroupBox() {
 }
 
 void Preferences::readSettings() {
-    QSettings settings;
-
-    QString language = settings.value("language").toString();
-
-    if (!language.isEmpty()) {
+    if (QString language = Settings::General::language(); !language.isEmpty()) {
         int index = m_languageComboBox->findData(language);
         if (index != -1) {
             m_languageComboBox->setCurrentIndex(index);
         }
     }
 
-    m_minimizeCheckBox->setChecked(settings.value("minimizeOnStartup").toBool());
-    m_hideTrayCheckBox->setChecked(settings.value("hideTrayIcon").toBool());
+    m_minimizeCheckBox->setChecked(Settings::General::minimizeOnStartup());
+    m_hideTrayCheckBox->setChecked(Settings::General::hideTrayIcon());
 
-    m_fontFamilyLineEdit->setText(settings.value("Editor/fontFamily", font().family()).toString());
-    m_fontSizeLineEdit->setText(settings.value("Editor/fontSize", font().pointSize()).toString());
+    m_fontFamilyLineEdit->setText(Settings::Editor::fontFamily(font().family()));
+    m_fontSizeLineEdit->setText(QString::number(Settings::Editor::fontSize(font().pointSize())));
 
-    m_hotkeyLineEdit->setText(settings.value("GlobalHotkey/hotkey", Const::DefaultSettings::GlobalHotkey).toString());
-    m_hotkeyGroupBox->setChecked(settings.value("GlobalHotkey/enabled", true).toBool());
+    m_hotkeyLineEdit->setText(Settings::GlobalHotkey::hotkey());
+    m_hotkeyGroupBox->setChecked(Settings::GlobalHotkey::enabled());
 
-    m_backupsLineEdit->setText(settings.value("Backups/directory").toString());
+    m_backupsLineEdit->setText(Settings::Backups::directory());
 
-    m_serverGroupBox->setChecked(settings.value("Server/enabled", false).toBool());
-    m_portLineEdit->setText(settings.value("Server/port", Const::DefaultSettings::Port).toString());
-    m_keyLineEdit->setText(settings.value("Server/key").toString());
+    m_serverGroupBox->setChecked(Settings::Server::enabled());
+    m_portLineEdit->setText(QString::number(Settings::Server::port()));
+    m_keyLineEdit->setText(Settings::Server::key());
 }
 
 bool Preferences::writeSettings() {
     bool restartRequre = false;
 
-    QSettings settings;
-
     QString language = m_languageComboBox->currentData().toString();
 
-    if (language != settings.value("language").toString()) {
+    if (language != Settings::General::language()) {
         restartRequre = true;
     }
 
-    settings.setValue("language", language);
-    settings.setValue("minimizeOnStartup", m_minimizeCheckBox->isChecked());
-    settings.setValue("hideTrayIcon", m_hideTrayCheckBox->isChecked());
+    Settings::General::setLanguage(language);
+    Settings::General::setMinimizeOnStartup(m_minimizeCheckBox->isChecked());
+    Settings::General::setHideTrayIcon(m_hideTrayCheckBox->isChecked());
 
-    settings.setValue("Editor/fontFamily", m_fontFamilyLineEdit->text());
-    settings.setValue("Editor/fontSize", m_fontSizeLineEdit->text());
+    Settings::Editor::setFontFamily(m_fontFamilyLineEdit->text());
+    Settings::Editor::setFontSize(m_fontSizeLineEdit->text().toInt());
 
-    settings.setValue("GlobalHotkey/hotkey", m_hotkeyLineEdit->text());
-    settings.setValue("GlobalHotkey/enabled", m_hotkeyGroupBox->isChecked());
+    Settings::GlobalHotkey::setHotkey(m_hotkeyLineEdit->text());
+    Settings::GlobalHotkey::setEnabled(m_hotkeyGroupBox->isChecked());
 
-    settings.setValue("Backups/directory", m_backupsLineEdit->text());
+    Settings::Backups::setDirectory(m_backupsLineEdit->text());
 
-    settings.setValue("Server/enabled", m_serverGroupBox->isChecked());
-    settings.setValue("Server/port", m_portLineEdit->text());
-    settings.setValue("Server/key", m_keyLineEdit->text());
+    Settings::Server::setEnabled(m_serverGroupBox->isChecked());
+    Settings::Server::setPort(m_portLineEdit->text().toInt());
+    Settings::Server::setKey(m_keyLineEdit->text());
 
     return restartRequre;
 }

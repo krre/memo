@@ -23,9 +23,4 @@ namespace NoteTaking {
     constexpr auto TreeItemMimeType = "application/x-treeitem";
 }
 
-namespace DefaultSettings {
-    constexpr auto GlobalHotkey = "Ctrl+Alt+M";
-    constexpr auto Port = 3128;
-}
-
 }
