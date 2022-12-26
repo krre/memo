@@ -12,8 +12,6 @@ void HttpServer::start(quint16 port, const QString& key) {
     stop();
     m_httpServer = new QHttpServer(this);
 
-    qDebug() << key;
-
     m_httpServer->route("/name", [=] () {
         return handleName();
     });
