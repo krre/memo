@@ -3,32 +3,6 @@
 
 namespace Settings {
 
-namespace Name {
-    constexpr auto Geometry = "geometry";
-    constexpr auto Splitter = "splitter";
-    constexpr auto FilePath = "filePath";
-    constexpr auto MinimizeOnStartup = "minimizeOnStartup";
-    constexpr auto HideTrayIcon = "hideTrayIcon";
-    constexpr auto Language = "language";
-
-    constexpr auto RecentFiles = "RecentFiles";
-    constexpr auto Path = "path";
-
-    constexpr auto GlobalHotkeyEnabled = "GlobalHotkey/enabled";
-    constexpr auto GlobalHotkeyHotkey = "GlobalHotkey/hotkey";
-
-    constexpr auto EditorFontFamily = "Editor/fontFamily";
-    constexpr auto EditorFontSize = "Editor/fontSize";
-
-    constexpr auto ServerEnabled = "Server/enabled";
-    constexpr auto ServerKey = "Server/key";
-    constexpr auto ServerPort = "Server/port";
-
-    constexpr auto BackupsDirectory = "Backups/directory";
-}
-
-using namespace Name;
-
 void setValue(const QString& key, const QVariant& value) {
     QSettings settings;
     settings.setValue(key, value);
@@ -40,6 +14,13 @@ QVariant value(const QString& key, const QVariant& defaultValue) {
 }
 
 namespace General {
+
+constexpr auto Geometry = "geometry";
+constexpr auto Splitter = "splitter";
+constexpr auto FilePath = "filePath";
+constexpr auto MinimizeOnStartup = "minimizeOnStartup";
+constexpr auto HideTrayIcon = "hideTrayIcon";
+constexpr auto Language = "language";
 
 QByteArray geometry() {
     return value(Geometry).toByteArray();
@@ -93,9 +74,12 @@ void setLanguage(const QString& language) {
 
 namespace RecentFiles {
 
+constexpr auto RecentFilesName = "RecentFiles";
+constexpr auto Path = "path";
+
 QStringList pathes() {
     QSettings settings;
-    int size = settings.beginReadArray(Name::RecentFiles);
+    int size = settings.beginReadArray(RecentFilesName);
     QStringList result;
 
     for (int i = 0; i < size; i++) {
@@ -108,12 +92,12 @@ QStringList pathes() {
 
 void setPathes(const QStringList& pathes) {
     if (pathes.isEmpty()) {
-        remove(Name::RecentFiles);
+        remove(RecentFilesName);
         return;
     }
 
     QSettings settings;
-    settings.beginWriteArray(Name::RecentFiles);
+    settings.beginWriteArray(RecentFilesName);
 
     for (int i = 0; i < pathes.count(); i++) {
         settings.setArrayIndex(i);
@@ -127,80 +111,92 @@ void setPathes(const QStringList& pathes) {
 
 namespace GlobalHotkey {
 
+constexpr auto Enabled = "GlobalHotkey/enabled";
+constexpr auto Hotkey = "GlobalHotkey/hotkey";
+
 bool enabled() {
-    return value(GlobalHotkeyEnabled, true).toBool();
+    return value(Enabled, true).toBool();
 }
 
 void setEnabled(bool enabled) {
-    setValue(GlobalHotkeyEnabled, enabled);
+    setValue(Enabled, enabled);
 }
 
 QString hotkey() {
-    return value(GlobalHotkeyHotkey, "Ctrl+Alt+M").toString();
+    return value(Hotkey, "Ctrl+Alt+M").toString();
 }
 
 void setHotkey(const QString& hotkey) {
-    setValue(GlobalHotkeyHotkey, hotkey);
+    setValue(Hotkey, hotkey);
 }
 
 }
 
 namespace Editor {
 
+constexpr auto FontFamily = "Editor/fontFamily";
+constexpr auto FontSize = "Editor/fontSize";
+
 QString fontFamily(const QString& defaultFamily) {
-    return value(EditorFontFamily, defaultFamily).toString();
+    return value(FontFamily, defaultFamily).toString();
 }
 
 void setFontFamily(const QString& fontFamily) {
-    setValue(EditorFontFamily, fontFamily);
+    setValue(FontFamily, fontFamily);
 }
 
 int fontSize(int defaultSize) {
-    return value(EditorFontSize, defaultSize).toInt();
+    return value(FontSize, defaultSize).toInt();
 }
 
 void setFontSize(int fontSize) {
-    setValue(EditorFontSize, fontSize);
+    setValue(FontSize, fontSize);
 }
 
 }
 
 namespace Server {
 
+constexpr auto Enabled = "Server/enabled";
+constexpr auto Key = "Server/key";
+constexpr auto Port = "Server/port";
+
 bool enabled() {
-    return value(ServerEnabled).toBool();
+    return value(Enabled).toBool();
 }
 
 void setEnabled(bool enabled) {
-    setValue(ServerEnabled, enabled);
+    setValue(Enabled, enabled);
 }
 
 QString key() {
-    return value(ServerKey).toString();
+    return value(Key).toString();
 }
 
 void setKey(const QString& key) {
-    setValue(ServerKey, key);
+    setValue(Key, key);
 }
 
 int port() {
-    return value(ServerPort, 3128).toInt();
+    return value(Port, 3128).toInt();
 }
 
 void setPort(int port) {
-    setValue(ServerPort, port);
+    setValue(Port, port);
 }
 
 }
 
 namespace Backups {
 
+constexpr auto Directory = "Backups/directory";
+
 QString directory() {
-    return value(BackupsDirectory).toString();
+    return value(Directory).toString();
 }
 
 void setDirectory(const QString& directory) {
-    setValue(BackupsDirectory, directory);
+    setValue(Directory, directory);
 }
 
 }
