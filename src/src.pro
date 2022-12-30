@@ -1,16 +1,14 @@
-QT += core gui widgets sql network httpserver gui-private
+include(../defaults.pri)
 
-TEMPLATE = app
-CONFIG += c++17
+TEMPLATE = lib
+TARGET = memo
+CONFIG += staticlib
 
 DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES += QT_MESSAGELOGCONTEXT
 
 win32: RC_ICONS += $$PWD/images/icon.ico
 macx: ICON = $$PWD/images/icon.icns
-
-linux: LIBS += -lX11
-win32: LIBS += -luser32
 
 SOURCES += \
     core/DatabaseException.cpp \
@@ -26,8 +24,7 @@ SOURCES += \
     database/Database.cpp \
     ui/Editor.cpp \
     ui/hotkey/GlobalHotkey.cpp \
-    ui/notetaking/NoteProperties.cpp \
-    main.cpp
+    ui/notetaking/NoteProperties.cpp
 
 linux: SOURCES += ui/hotkey/NativeEventFilterX11.cpp
 win32: SOURCES += ui/hotkey/NativeEventFilterWin.cpp
@@ -54,9 +51,6 @@ HEADERS += \
     ui/notetaking/NoteProperties.h
 
 TRANSLATIONS = i18n/memo-ru.ts
-
-RESOURCES += \
-    resources.qrc
 
 DISTFILES += \
     ../README.md \
