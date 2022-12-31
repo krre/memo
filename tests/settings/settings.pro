@@ -1,5 +1,15 @@
+include(../../defaults.pri)
+
 QT += testlib
 TEMPLATE = app
 CONFIG += console
 
-SOURCES +=  tst_testsettings.cpp
+LIBS += -L../../src -lmemo
+
+unix: PRE_TARGETDEPS += $$OUT_PWD/../../src/libmemo.a
+
+SOURCES +=  \
+    tst_preferences.cpp
+
+HEADERS += \
+    MockSettings.h

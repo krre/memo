@@ -10,6 +10,7 @@ class QGroupBox;
 
 class Preferences : public QDialog {
     Q_OBJECT
+    friend class TestPreferences;
 public:
     Preferences(ISettings* settings, QWidget* parent = nullptr);
 

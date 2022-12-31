@@ -1,5 +1,3 @@
-include(../defaults.pri)
-
 TEMPLATE = subdirs
 
 SUBDIRS += \

@@ -145,6 +145,7 @@ QGroupBox* Preferences::createServerGroupBox() {
 void Preferences::readSettings() {
     if (!m_settings->general.language.isEmpty()) {
         int index = m_languageComboBox->findData(m_settings->general.language);
+
         if (index != -1) {
             m_languageComboBox->setCurrentIndex(index);
         }
