@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 void MainWindow::readSettings() {
-    m_settings->loadAll();
+    m_settings->load();
 
     applyHotSettings();
 
@@ -74,7 +74,7 @@ void MainWindow::writeSettings() {
         m_settings->recentFiles.path.append(m_recentFilesMenu->actions().at(i)->text());
     }
 
-    m_settings->saveAll();
+    m_settings->save();
 }
 
 void MainWindow::applyHotSettings() {

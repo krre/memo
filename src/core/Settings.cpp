@@ -40,7 +40,7 @@ Settings::Settings(QObject* parent) : QObject(parent) {
     m_settings = new QSettings(this);
 }
 
-void Settings::loadAll() {
+void Settings::load() {
     loadGeneral();
     loadBackups();
     loadEditor();
@@ -49,7 +49,7 @@ void Settings::loadAll() {
     loadServer();
 }
 
-void Settings::saveAll() {
+void Settings::save() {
     saveGeneral();
     saveBackups();
     saveEditor();

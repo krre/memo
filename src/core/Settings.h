@@ -8,8 +8,8 @@ class Settings : public QObject, public ISettings {
 public:
     Settings(QObject* parent = nullptr);
 
-    void loadAll();
-    void saveAll();
+    void load();
+    void save();
 
 private:
     void loadGeneral();
