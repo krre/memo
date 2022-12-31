@@ -4,4 +4,3 @@ CONFIG += c++17
 INCLUDEPATH += $$PWD/src
 SRC_DIR = $$PWD
 
-LIBS += -L../src -lmemo

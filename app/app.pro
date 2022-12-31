@@ -3,6 +3,8 @@ include(../defaults.pri)
 TEMPLATE = app
 TARGET = memo
 
+LIBS += -L../src -lmemo
+
 linux: LIBS += -lX11
 win32: LIBS += -luser32
 
