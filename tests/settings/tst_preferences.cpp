@@ -1,5 +1,5 @@
-#include "MockSettings.h"
 #include <ui/Preferences.h>
+#include <core/ISettings.h>
 #include <QTest>
 #include <QComboBox>
 #include <QLineEdit>
@@ -26,7 +26,7 @@ TestPreferences::~TestPreferences() {
 }
 
 void TestPreferences::readOptions() {
-    MockSettings settings;
+    ISettings settings;
     settings.general.language = "ru";
     settings.editor.fontFamily = "Ubuntu";
     settings.editor.fontSize = 10;
@@ -55,7 +55,7 @@ void TestPreferences::readOptions() {
 }
 
 void TestPreferences::setOptions() {
-    MockSettings settings;
+    ISettings settings;
     settings.general.language = "ru"; // To prevent opening the need restart dialog
     Preferences preferences(&settings);
 

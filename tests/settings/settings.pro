@@ -11,5 +11,4 @@ unix: PRE_TARGETDEPS += $$OUT_PWD/../../src/libmemo.a
 SOURCES +=  \
     tst_preferences.cpp
 
-HEADERS += \
-    MockSettings.h
+HEADERS +=
