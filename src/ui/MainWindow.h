@@ -4,6 +4,8 @@
 #include <core/Globals.h>
 
 class QSplitter;
+
+class Settings;
 class NoteTaking;
 class Editor;
 class Database;
@@ -52,18 +54,19 @@ private:
     void showErrorDialog(const QString& message);
     QString dateFileName(const QString& name);
 
+    QString m_currentFile;
     QSystemTrayIcon* m_trayIcon = nullptr;
     QMenu* m_trayIconMenu = nullptr;
     QMenu* m_recentFilesMenu = nullptr;
     QAction* m_exportAction = nullptr;
     QAction* m_closeAction = nullptr;
-
     QSplitter* m_splitter = nullptr;
+
+    Settings* m_settings = nullptr;
     NoteTaking* m_notetaking = nullptr;
     Editor* m_editor = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;
-
     Database* m_database = nullptr;
     HttpServer* m_server = nullptr;
-    QString m_currentFile;
+
 };

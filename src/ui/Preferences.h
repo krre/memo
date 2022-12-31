@@ -1,6 +1,8 @@
 #pragma once
 #include <QDialog>
 
+class ISettings;
+
 class QComboBox;
 class QLineEdit;
 class QCheckBox;
@@ -9,7 +11,7 @@ class QGroupBox;
 class Preferences : public QDialog {
     Q_OBJECT
 public:
-    Preferences(QWidget* parent = nullptr);
+    Preferences(ISettings* settings, QWidget* parent = nullptr);
 
 public slots:
     void accept() override;
@@ -26,6 +28,8 @@ private:
 
     void readSettings();
     bool writeSettings();
+
+    ISettings* m_settings = nullptr;
 
     QComboBox* m_languageComboBox = nullptr;
     QLineEdit* m_fontFamilyLineEdit = nullptr;

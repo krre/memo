@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Const::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
+    m_settings = new Settings(this);
+
     m_splitter = new QSplitter;
     setCentralWidget(m_splitter);
 
@@ -38,69 +40,69 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 }
 
 void MainWindow::readSettings() {
+    m_settings->loadAll();
+
     applyHotSettings();
 
-    if (QByteArray geometry = Settings::General::geometry(); geometry.isEmpty()) {
+    if (m_settings->general.geometry.isEmpty()) {
         const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     } else {
-        restoreGeometry(geometry);
+        restoreGeometry(m_settings->general.geometry);
     }
 
-    m_splitter->restoreState(Settings::General::splitter());
+    m_splitter->restoreState(m_settings->general.splitter);
 
-    for (const QString& filePath : Settings::RecentFiles::pathes()) {
+    for (const QString& filePath : m_settings->recentFiles.path) {
         addRecentFile(filePath);
     }
 
-    loadFile(Settings::General::filePath());
+    loadFile(m_settings->general.filePath);
 
-    if (!Settings::General::minimizeOnStartup()) {
+    if (!m_settings->general.minimizeOnStartup) {
         show();
     }
 }
 
 void MainWindow::writeSettings() {
-    Settings::General::setGeometry(saveGeometry());
-    Settings::General::setSplitter(m_splitter->saveState());
-    Settings::General::setFilePath(m_currentFile);
-
-    QStringList pathes;
+    m_settings->general.geometry = saveGeometry();
+    m_settings->general.splitter = m_splitter->saveState();
+    m_settings->general.filePath = m_currentFile;
 
     for (int i = 0; i < m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions; ++i) {
-        pathes.append(m_recentFilesMenu->actions().at(i)->text());
+        m_settings->recentFiles.path.append(m_recentFilesMenu->actions().at(i)->text());
     }
 
-    Settings::RecentFiles::setPathes(pathes);
+    m_settings->saveAll();
 }
 
 void MainWindow::applyHotSettings() {
-    m_trayIcon->setVisible(!Settings::General::hideTrayIcon());
+    m_trayIcon->setVisible(!m_settings->general.hideTrayIcon);
 
-    if (Settings::GlobalHotkey::enabled()) {
-        m_globalHotkey->setShortcut(Settings::GlobalHotkey::hotkey());
+    if (m_settings->globalHotKey.enabled) {
+        m_globalHotkey->setShortcut(m_settings->globalHotKey.hotKey);
     } else {
         m_globalHotkey->unsetShortcut();
     }
 
-    if (QString fontFamily = Settings::Editor::fontFamily(); !fontFamily.isEmpty()) {
+    if (!m_settings->editor.fontFamily.isEmpty()) {
         QFont font;
-        font.setFamily(fontFamily);
+        font.setFamily(m_settings->editor.fontFamily);
 
-        if (int fontSize = Settings::Editor::fontSize(); fontSize) {
-            font.setPointSize(fontSize);
+        if (m_settings->editor.fontSize) {
+            font.setPointSize(m_settings->editor.fontSize);
         }
 
         m_editor->setFont(font);
     }
 
-    if (Settings::Server::enabled()) {
-        if (QString key = Settings::Server::key(); key.isEmpty()) {
+    if (m_settings->server.enabled) {
+        if (m_settings->server.key.isEmpty()) {
             qCritical().noquote() << "Server key is empty";
             m_server->stop();
         } else {
-            m_server->start(Settings::Server::port(), key);
+            m_server->start(m_settings->server.port, m_settings->server.key);
         }
     } else {
         m_server->stop();
@@ -266,10 +268,8 @@ void MainWindow::onOpen() {
 }
 
 void MainWindow::onExport() {
-    QString directory = Settings::Backups::directory();
-
     QFileInfo fi(m_currentFile);
-    QString name = directory + "/" + dateFileName(fi.baseName() + ".zip");
+    QString name = m_settings->backups.directory + "/" + dateFileName(fi.baseName() + ".zip");
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
@@ -278,10 +278,8 @@ void MainWindow::onExport() {
 }
 
 void MainWindow::onBackup() {
-    QString directory = Settings::Backups::directory();
-
     QFileInfo fi(m_currentFile);
-    QString name = directory + "/" + dateFileName(fi.fileName());
+    QString name = m_settings->backups.directory + "/" + dateFileName(fi.fileName());
 
     QString backupFile = QFileDialog::getSaveFileName(this, tr("Create Backup"), name);
 
@@ -306,7 +304,7 @@ void MainWindow::onClearRecentFiles() {
 }
 
 void MainWindow::onPreferences() {
-    Preferences preferences;
+    Preferences preferences(m_settings);
 
     if (preferences.exec() == QDialog::Accepted) {
         applyHotSettings();

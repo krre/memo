@@ -1,65 +1,27 @@
 #pragma once
-#include <QVariant>
+#include <QObject>
+#include "ISettings.h"
 
-namespace Settings {
-    void setValue(const QString& key, const QVariant& value);
-    QVariant value(const QString& key, const QVariant& defaultValue = QVariant());
+class QSettings;
 
-namespace General {
-    QByteArray geometry();
-    void setGeometry(const QByteArray& geometry);
+class Settings : public QObject, public ISettings {
+public:
+    Settings(QObject* parent = nullptr);
 
-    QByteArray splitter();
-    void setSplitter(const QByteArray& splitter);
+    void loadGeneral() override;
+    void loadBackups() override;
+    void loadEditor() override;
+    void loadGlobalHotKey() override;
+    void loadRecentFilas() override;
+    void loadServer() override;
 
-    QString filePath();
-    void setFilePath(const QString& filePath);
+    void saveGeneral() override;
+    void saveBackups() override;
+    void saveEditor() override;
+    void saveGlobalHotKey() override;
+    void saveRecentFilas() override;
+    void saveServer() override;
 
-    bool minimizeOnStartup();
-    void setMinimizeOnStartup(bool minimizeOnStartup);
-
-    bool hideTrayIcon();
-    void setHideTrayIcon(bool hideTrayIcon);
-
-    QString language();
-    void setLanguage(const QString& language);
-}
-
-namespace RecentFiles {
-    QStringList pathes();
-    void setPathes(const QStringList& pathes);
-}
-
-namespace GlobalHotkey {
-    bool enabled();
-    void setEnabled(bool enabled);
-
-    QString hotkey();
-    void setHotkey(const QString& hotkey);
-}
-
-namespace Editor {
-    QString fontFamily(const QString& defaultFamily = QString());
-    void setFontFamily(const QString& fontFamily);
-
-    int fontSize(int defaultSize = 0);
-    void setFontSize(int fontSize);
-}
-
-namespace Server {
-    bool enabled();
-    void setEnabled(bool enabled);
-
-    QString key();
-    void setKey(const QString& key);
-
-    int port();
-    void setPort(int port);
-}
-
-namespace Backups {
-    QString directory();
-    void setDirectory(const QString& directory);
-}
-
-}
+private:
+    QSettings* m_settings = nullptr;
+};

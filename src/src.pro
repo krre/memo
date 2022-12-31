@@ -35,6 +35,7 @@ HEADERS += \
     core/DatabaseException.h \
     core/Exception.h \
     core/Globals.h \
+    core/ISettings.h \
     core/MessageHandler.h \
     core/Settings.h \
     database/Patcher.h \

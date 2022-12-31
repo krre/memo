@@ -1,9 +1,9 @@
 #include "Preferences.h"
-#include "core/Settings.h"
+#include "core/ISettings.h"
 #include <QtWidgets>
 #include <QtNetwork>
 
-Preferences::Preferences(QWidget* parent) : QDialog (parent) {
+Preferences::Preferences(ISettings* settings, QWidget* parent) : QDialog (parent), m_settings(settings) {
     setWindowTitle(tr("Preferences"));
 
     auto layout = new QVBoxLayout(this);
@@ -143,27 +143,27 @@ QGroupBox* Preferences::createServerGroupBox() {
 }
 
 void Preferences::readSettings() {
-    if (QString language = Settings::General::language(); !language.isEmpty()) {
-        int index = m_languageComboBox->findData(language);
+    if (!m_settings->general.language.isEmpty()) {
+        int index = m_languageComboBox->findData(m_settings->general.language);
         if (index != -1) {
             m_languageComboBox->setCurrentIndex(index);
         }
     }
 
-    m_minimizeCheckBox->setChecked(Settings::General::minimizeOnStartup());
-    m_hideTrayCheckBox->setChecked(Settings::General::hideTrayIcon());
+    m_minimizeCheckBox->setChecked(m_settings->general.minimizeOnStartup);
+    m_hideTrayCheckBox->setChecked(m_settings->general.hideTrayIcon);
 
-    m_fontFamilyLineEdit->setText(Settings::Editor::fontFamily(font().family()));
-    m_fontSizeLineEdit->setText(QString::number(Settings::Editor::fontSize(font().pointSize())));
+    m_fontFamilyLineEdit->setText(m_settings->editor.fontFamily);
+    m_fontSizeLineEdit->setText(QString::number(m_settings->editor.fontSize));
 
-    m_hotkeyLineEdit->setText(Settings::GlobalHotkey::hotkey());
-    m_hotkeyGroupBox->setChecked(Settings::GlobalHotkey::enabled());
+    m_hotkeyLineEdit->setText(m_settings->globalHotKey.hotKey);
+    m_hotkeyGroupBox->setChecked(m_settings->globalHotKey.enabled);
 
-    m_backupsLineEdit->setText(Settings::Backups::directory());
+    m_backupsLineEdit->setText(m_settings->backups.directory);
 
-    m_serverGroupBox->setChecked(Settings::Server::enabled());
-    m_portLineEdit->setText(QString::number(Settings::Server::port()));
-    m_keyLineEdit->setText(Settings::Server::key());
+    m_serverGroupBox->setChecked(m_settings->server.enabled);
+    m_portLineEdit->setText(QString::number(m_settings->server.port));
+    m_keyLineEdit->setText(m_settings->server.key);
 }
 
 bool Preferences::writeSettings() {
@@ -171,25 +171,25 @@ bool Preferences::writeSettings() {
 
     QString language = m_languageComboBox->currentData().toString();
 
-    if (language != Settings::General::language()) {
+    if (language != m_settings->general.language) {
         restartRequre = true;
     }
 
-    Settings::General::setLanguage(language);
-    Settings::General::setMinimizeOnStartup(m_minimizeCheckBox->isChecked());
-    Settings::General::setHideTrayIcon(m_hideTrayCheckBox->isChecked());
+    m_settings->general.language = language;
+    m_settings->general.minimizeOnStartup = m_minimizeCheckBox->isChecked();
+    m_settings->general.hideTrayIcon = m_hideTrayCheckBox->isChecked();
 
-    Settings::Editor::setFontFamily(m_fontFamilyLineEdit->text());
-    Settings::Editor::setFontSize(m_fontSizeLineEdit->text().toInt());
+    m_settings->editor.fontFamily = m_fontFamilyLineEdit->text();
+    m_settings->editor.fontSize = m_fontSizeLineEdit->text().toInt();
 
-    Settings::GlobalHotkey::setHotkey(m_hotkeyLineEdit->text());
-    Settings::GlobalHotkey::setEnabled(m_hotkeyGroupBox->isChecked());
+    m_settings->globalHotKey.hotKey = m_hotkeyLineEdit->text();
+    m_settings->globalHotKey.enabled = m_hotkeyGroupBox->isChecked();
 
-    Settings::Backups::setDirectory(m_backupsLineEdit->text());
+    m_settings->backups.directory = m_backupsLineEdit->text();
 
-    Settings::Server::setEnabled(m_serverGroupBox->isChecked());
-    Settings::Server::setPort(m_portLineEdit->text().toInt());
-    Settings::Server::setKey(m_keyLineEdit->text());
+    m_settings->server.enabled = m_serverGroupBox->isChecked();
+    m_settings->server.port = m_portLineEdit->text().toInt();
+    m_settings->server.key = m_keyLineEdit->text();
 
     return restartRequre;
 }
