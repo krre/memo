@@ -40,6 +40,24 @@ Settings::Settings(QObject* parent) : QObject(parent) {
     m_settings = new QSettings(this);
 }
 
+void Settings::loadAll() {
+    loadGeneral();
+    loadBackups();
+    loadEditor();
+    loadGlobalHotKey();
+    loadRecentFilas();
+    loadServer();
+}
+
+void Settings::saveAll() {
+    saveGeneral();
+    saveBackups();
+    saveEditor();
+    saveGlobalHotKey();
+    saveRecentFilas();
+    saveServer();
+}
+
 void Settings::loadGeneral() {
     using namespace ::General;
 

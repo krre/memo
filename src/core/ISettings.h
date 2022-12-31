@@ -36,36 +36,4 @@ public:
         QString key;
         int port;
     } server;
-
-    virtual void loadGeneral() {}
-    virtual void loadBackups() {}
-    virtual void loadEditor() {}
-    virtual void loadGlobalHotKey() {}
-    virtual void loadRecentFilas() {}
-    virtual void loadServer() {}
-
-    void loadAll() {
-        loadGeneral();
-        loadBackups();
-        loadEditor();
-        loadGlobalHotKey();
-        loadRecentFilas();
-        loadServer();
-    }
-
-    virtual void saveGeneral() {}
-    virtual void saveBackups() {}
-    virtual void saveEditor() {}
-    virtual void saveGlobalHotKey() {}
-    virtual void saveRecentFilas() {}
-    virtual void saveServer() {}
-
-    void saveAll() {
-        saveGeneral();
-        saveBackups();
-        saveEditor();
-        saveGlobalHotKey();
-        saveRecentFilas();
-        saveServer();
-    }
 };

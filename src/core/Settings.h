@@ -8,20 +8,23 @@ class Settings : public QObject, public ISettings {
 public:
     Settings(QObject* parent = nullptr);
 
-    void loadGeneral() override;
-    void loadBackups() override;
-    void loadEditor() override;
-    void loadGlobalHotKey() override;
-    void loadRecentFilas() override;
-    void loadServer() override;
-
-    void saveGeneral() override;
-    void saveBackups() override;
-    void saveEditor() override;
-    void saveGlobalHotKey() override;
-    void saveRecentFilas() override;
-    void saveServer() override;
+    void loadAll();
+    void saveAll();
 
 private:
+    void loadGeneral();
+    void loadBackups();
+    void loadEditor();
+    void loadGlobalHotKey();
+    void loadRecentFilas();
+    void loadServer();
+
+    void saveGeneral();
+    void saveBackups();
+    void saveEditor();
+    void saveGlobalHotKey();
+    void saveRecentFilas();
+    void saveServer();
+
     QSettings* m_settings = nullptr;
 };
