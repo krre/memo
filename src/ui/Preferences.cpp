@@ -1,9 +1,9 @@
 #include "Preferences.h"
-#include "core/ISettings.h"
+#include "core/Settings.h"
 #include <QtWidgets>
 #include <QtNetwork>
 
-Preferences::Preferences(ISettings* settings, QWidget* parent) : QDialog (parent), m_settings(settings) {
+Preferences::Preferences(Settings* settings, QWidget* parent) : QDialog (parent), m_settings(settings) {
     setWindowTitle(tr("Preferences"));
 
     auto layout = new QVBoxLayout(this);

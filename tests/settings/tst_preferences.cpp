@@ -1,5 +1,5 @@
 #include <ui/Preferences.h>
-#include <core/ISettings.h>
+#include <core/Settings.h>
 #include <QTest>
 #include <QComboBox>
 #include <QLineEdit>
@@ -26,7 +26,7 @@ TestPreferences::~TestPreferences() {
 }
 
 void TestPreferences::readOptions() {
-    ISettings settings;
+    Settings settings;
     settings.general.language = "ru";
     settings.editor.fontFamily = "Ubuntu";
     settings.editor.fontSize = 10;
@@ -55,7 +55,7 @@ void TestPreferences::readOptions() {
 }
 
 void TestPreferences::setOptions() {
-    ISettings settings;
+    Settings settings;
     settings.general.language = "ru"; // To prevent opening the need restart dialog
     Preferences preferences(&settings);
 

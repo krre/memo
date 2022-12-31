@@ -1,7 +1,7 @@
 #pragma once
 #include <QDialog>
 
-class ISettings;
+class Settings;
 
 class QComboBox;
 class QLineEdit;
@@ -12,7 +12,7 @@ class Preferences : public QDialog {
     Q_OBJECT
     friend class TestPreferences;
 public:
-    Preferences(ISettings* settings, QWidget* parent = nullptr);
+    Preferences(Settings* settings, QWidget* parent = nullptr);
 
 public slots:
     void accept() override;
@@ -30,7 +30,7 @@ private:
     void readSettings();
     bool writeSettings();
 
-    ISettings* m_settings = nullptr;
+    Settings* m_settings = nullptr;
 
     QComboBox* m_languageComboBox = nullptr;
     QLineEdit* m_fontFamilyLineEdit = nullptr;
