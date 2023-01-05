@@ -1,7 +1,7 @@
 #pragma once
+#include "core/Globals.h"
 #include <QMainWindow>
 #include <QSystemTrayIcon>
-#include <core/Globals.h>
 
 class QSplitter;
 
