@@ -29,4 +29,6 @@ qt_generate_deploy_app_script(
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
 
+qt_finalize_target(memo)
+
 install(SCRIPT ${deploy_script})
