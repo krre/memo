@@ -18,6 +18,10 @@ target_link_libraries(memo PRIVATE
     memo1
     Qt6::Widgets)
 
+target_link_libraries(test_settings PRIVATE
+    memo1
+    Qt6::Widgets)
+
 install(TARGETS memo
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
