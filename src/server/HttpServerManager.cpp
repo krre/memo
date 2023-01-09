@@ -1,14 +1,14 @@
-#include "HttpServer.h"
+#include "HttpServerManager.h"
 #include "database/Database.h"
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 
-HttpServer::HttpServer(Database* database, QObject* parent) : QObject(parent), m_database(database) {
+HttpServerManager::HttpServerManager(Database* database, QObject* parent) : QObject(parent), m_database(database) {
 
 }
 
-void HttpServer::start(quint16 port, const QString& key) {
+void HttpServerManager::start(quint16 port, const QString& key) {
     stop();
     m_httpServer = new QHttpServer(this);
 
@@ -29,7 +29,7 @@ void HttpServer::start(quint16 port, const QString& key) {
     }
 }
 
-void HttpServer::stop() {
+void HttpServerManager::stop() {
     if (!m_httpServer) return;
 
     delete m_httpServer;
@@ -37,11 +37,11 @@ void HttpServer::stop() {
     qInfo().noquote() << "Server stopped";
 }
 
-QString HttpServer::handleName() const {
+QString HttpServerManager::handleName() const {
     return m_database->name();
 }
 
-QByteArray HttpServer::handleNotes() const {
+QByteArray HttpServerManager::handleNotes() const {
     QVector<Database::Note> notes = m_database->notes();
     QJsonArray result;
 

@@ -3,9 +3,9 @@
 
 class Database;
 
-class HttpServer : public QObject {
+class HttpServerManager : public QObject {
 public:
-    HttpServer(Database* database, QObject* parent = nullptr);
+    HttpServerManager(Database* database, QObject* parent = nullptr);
 
     void start(quint16 port, const QString& key);
     void stop();

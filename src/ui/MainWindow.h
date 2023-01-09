@@ -10,7 +10,7 @@ class NoteTaking;
 class Editor;
 class Database;
 class GlobalHotkey;
-class HttpServer;
+class HttpServerManager;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -67,6 +67,6 @@ private:
     Editor* m_editor = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;
     Database* m_database = nullptr;
-    HttpServer* m_server = nullptr;
+    HttpServerManager* m_serverManager = nullptr;
 
 };

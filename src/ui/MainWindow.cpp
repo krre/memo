@@ -7,7 +7,7 @@
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
-#include "server/HttpServer.h"
+#include "server/HttpServerManager.h"
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setCentralWidget(m_splitter);
 
     m_database = new Database(this);
-    m_server = new HttpServer(m_database, this);
+    m_serverManager = new HttpServerManager(m_database, this);
 
     m_globalHotkey = new GlobalHotkey(this);
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);
@@ -100,12 +100,12 @@ void MainWindow::applyHotSettings() {
     if (m_settings->server.enabled) {
         if (m_settings->server.key.isEmpty()) {
             qCritical().noquote() << "Server key is empty";
-            m_server->stop();
+            m_serverManager->stop();
         } else {
-            m_server->start(m_settings->server.port, m_settings->server.key);
+            m_serverManager->start(m_settings->server.port, m_settings->server.key);
         }
     } else {
-        m_server->stop();
+        m_serverManager->stop();
     }
 }
 
