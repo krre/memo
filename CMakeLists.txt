@@ -15,11 +15,11 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 target_link_libraries(memo PRIVATE
-    memo1
+    memo-common
     Qt6::Widgets)
 
 target_link_libraries(test_settings PRIVATE
-    memo1
+    memo-common
     Qt6::Widgets)
 
 install(TARGETS memo
