@@ -22,6 +22,9 @@ add_library(memo-common STATIC
     database/Database.h database/Database.cpp
     database/Patcher.h database/Patcher.cpp
     server/HttpServerManager.h server/HttpServerManager.cpp
+    server/handler/Handler.h server/handler/Handler.cpp
+    server/handler/NameHandler.h server/handler/NameHandler.cpp
+    server/handler/NotesHandler.h server/handler/NotesHandler.cpp
     ui/MainWindow.h ui/MainWindow.cpp
     ui/Editor.h ui/Editor.cpp
     ui/Preferences.h ui/Preferences.cpp

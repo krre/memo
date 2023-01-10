@@ -13,7 +13,4 @@ public:
 private:
     Database* m_database = nullptr;
     QHttpServer* m_httpServer = nullptr;
-
-    QString handleName() const;
-    QByteArray handleNotes() const;
 };
