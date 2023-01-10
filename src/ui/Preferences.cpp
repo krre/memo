@@ -118,20 +118,24 @@ QGroupBox* Preferences::createBackupsGroupBox() {
 }
 
 QGroupBox* Preferences::createServerGroupBox() {
-    auto addressTextEdit = new QPlainTextEdit;
-    addressTextEdit->setReadOnly(true);
+    QString addresses;
 
     for (const QHostAddress& address: QNetworkInterface::allAddresses()) {
         if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isGlobal()) {
-            addressTextEdit->appendPlainText(address.toString());
+            addresses += address.toString() + ";";
         }
     }
+
+    addresses.chop(1);
+
+    auto addressLineEdit = new QLineEdit(addresses);
+    addressLineEdit->setReadOnly(true);
 
     m_portLineEdit = new QLineEdit;
     m_keyLineEdit = new QLineEdit;
 
     auto formLayout = new QFormLayout;
-    formLayout->addRow(tr("IP Address:"), addressTextEdit);
+    formLayout->addRow(tr("IP Address:"), addressLineEdit);
     formLayout->addRow(tr("Port:"), m_portLineEdit);
     formLayout->addRow(tr("Key:"), m_keyLineEdit);
 
