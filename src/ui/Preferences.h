@@ -45,5 +45,5 @@ private:
 
     QGroupBox* m_serverGroupBox = nullptr;
     QLineEdit* m_portLineEdit = nullptr;
-    QLineEdit* m_keyLineEdit = nullptr;
+    QLineEdit* m_tokenLineEdit = nullptr;
 };

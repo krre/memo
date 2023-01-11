@@ -7,7 +7,7 @@ class HttpServerManager : public QObject {
 public:
     HttpServerManager(Database* database, QObject* parent = nullptr);
 
-    void start(quint16 port, const QString& key);
+    void start(quint16 port, const QString& token);
     void stop();
 
 private:

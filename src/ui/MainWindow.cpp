@@ -98,11 +98,11 @@ void MainWindow::applyHotSettings() {
     }
 
     if (m_settings->server.enabled) {
-        if (m_settings->server.key.isEmpty()) {
+        if (m_settings->server.token.isEmpty()) {
             qCritical().noquote() << "Server key is empty";
             m_serverManager->stop();
         } else {
-            m_serverManager->start(m_settings->server.port, m_settings->server.key);
+            m_serverManager->start(m_settings->server.port, m_settings->server.token);
         }
     } else {
         m_serverManager->stop();

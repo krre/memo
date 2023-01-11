@@ -36,7 +36,7 @@ void TestPreferences::readOptions() {
     settings.globalHotKey.hotKey = "Ctrl+Alt+M";
     settings.backups.directory = "/home/user/backups";
     settings.server.enabled = true;
-    settings.server.key = "123456";
+    settings.server.token = "123456";
     settings.server.port = 80;
 
     Preferences preferences(&settings);
@@ -50,7 +50,7 @@ void TestPreferences::readOptions() {
     QCOMPARE(preferences.m_hotkeyLineEdit->text(), settings.globalHotKey.hotKey);
     QCOMPARE(preferences.m_backupsLineEdit->text(), settings.backups.directory);
     QCOMPARE(preferences.m_serverGroupBox->isChecked(), settings.server.enabled);
-    QCOMPARE(preferences.m_keyLineEdit->text(), settings.server.key);
+    QCOMPARE(preferences.m_tokenLineEdit->text(), settings.server.token);
     QCOMPARE(preferences.m_portLineEdit->text().toInt(), settings.server.port);
 }
 
@@ -69,7 +69,7 @@ void TestPreferences::setOptions() {
     preferences.m_hotkeyLineEdit->setText("Ctrl+Alt+M");
     preferences.m_backupsLineEdit->setText("/home/user/backups");
     preferences.m_serverGroupBox->setChecked(true);
-    preferences.m_keyLineEdit->setText("123456");
+    preferences.m_tokenLineEdit->setText("123456");
     preferences.m_portLineEdit->setText("80");
     preferences.accept();
 
@@ -83,7 +83,7 @@ void TestPreferences::setOptions() {
     QCOMPARE(preferences.m_hotkeyLineEdit->text(), settings.globalHotKey.hotKey);
     QCOMPARE(preferences.m_backupsLineEdit->text(), settings.backups.directory);
     QCOMPARE(preferences.m_serverGroupBox->isChecked(), settings.server.enabled);
-    QCOMPARE(preferences.m_keyLineEdit->text(), settings.server.key);
+    QCOMPARE(preferences.m_tokenLineEdit->text(), settings.server.token);
     QCOMPARE(preferences.m_portLineEdit->text().toInt(), settings.server.port);
 }
 

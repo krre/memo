@@ -6,12 +6,12 @@ Handler::Handler(Database* database) : m_database(database) {
 
 }
 
-QHttpServerResponse Handler::exec(const QHttpServerRequest& request, const QString& key) {
+QHttpServerResponse Handler::exec(const QHttpServerRequest& request, const QString& token) {
     bool accessOk = false;
     auto headers = request.headers();
 
     for (auto it = headers.cbegin(); it != headers.cend(); it++) {
-        if (it->first.toLower() == "token" && it->second == key) {
+        if (it->first.toLower() == "token" && it->second == token) {
             accessOk = true;
             break;
         }

@@ -132,12 +132,12 @@ QGroupBox* Preferences::createServerGroupBox() {
     addressLineEdit->setReadOnly(true);
 
     m_portLineEdit = new QLineEdit;
-    m_keyLineEdit = new QLineEdit;
+    m_tokenLineEdit = new QLineEdit;
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("IP Address:"), addressLineEdit);
     formLayout->addRow(tr("Port:"), m_portLineEdit);
-    formLayout->addRow(tr("Key:"), m_keyLineEdit);
+    formLayout->addRow(tr("Token:"), m_tokenLineEdit);
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
     m_serverGroupBox->setCheckable(true);
@@ -168,7 +168,7 @@ void Preferences::readSettings() {
 
     m_serverGroupBox->setChecked(m_settings->server.enabled);
     m_portLineEdit->setText(QString::number(m_settings->server.port));
-    m_keyLineEdit->setText(m_settings->server.key);
+    m_tokenLineEdit->setText(m_settings->server.token);
 }
 
 bool Preferences::writeSettings() {
@@ -194,7 +194,7 @@ bool Preferences::writeSettings() {
 
     m_settings->server.enabled = m_serverGroupBox->isChecked();
     m_settings->server.port = m_portLineEdit->text().toInt();
-    m_settings->server.key = m_keyLineEdit->text();
+    m_settings->server.token = m_tokenLineEdit->text();
 
     return restartRequre;
 }

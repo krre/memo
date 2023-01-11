@@ -34,7 +34,7 @@ public:
 
     struct Server {
         bool enabled;
-        QString key;
+        QString token;
         int port;
     } server;
 

@@ -9,7 +9,7 @@ class Database;
 class Handler {
 public:
     Handler(Database* database);
-    QHttpServerResponse exec(const QHttpServerRequest& request, const QString& key);
+    QHttpServerResponse exec(const QHttpServerRequest& request, const QString& token);
 
 protected:
     virtual QHttpServerResponse buildResponse() = 0;

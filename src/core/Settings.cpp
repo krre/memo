@@ -105,7 +105,7 @@ void Settings::loadServer() {
     using namespace ::Server;
 
     server.enabled = m_settings->value(Enabled).toBool();
-    server.key = m_settings->value(Key).toString();
+    server.token = m_settings->value(Key).toString();
     server.port = m_settings->value(Port).toInt();
 }
 
@@ -160,6 +160,6 @@ void Settings::saveServer() {
     using namespace ::Server;
 
     m_settings->setValue(Enabled, server.enabled);
-    m_settings->setValue(Key, server.key);
+    m_settings->setValue(Key, server.token);
     m_settings->setValue(Port, server.port);
 }

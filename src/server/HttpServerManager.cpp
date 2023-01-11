@@ -10,18 +10,18 @@ HttpServerManager::HttpServerManager(Database* database, QObject* parent) : QObj
 
 }
 
-void HttpServerManager::start(quint16 port, const QString& key) {
+void HttpServerManager::start(quint16 port, const QString& token) {
     stop();
     m_httpServer = new QHttpServer(this);
 
     m_httpServer->route("/name", [=] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
         NameHandler handler(m_database);
-        responder.sendResponse(handler.exec(request, key));
+        responder.sendResponse(handler.exec(request, token));
     });
 
     m_httpServer->route("/notes", [=] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
         NotesHandler handler(m_database);
-        responder.sendResponse(handler.exec(request, key));
+        responder.sendResponse(handler.exec(request, token));
     });
 
     int result = m_httpServer->listen(QHostAddress::Any, port);
