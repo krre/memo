@@ -1,12 +1,14 @@
 #include "NameHandler.h"
 #include "database/Database.h"
 #include <QHttpServerResponse>
+#include <QJsonObject>
 
 NameHandler::NameHandler(Database* database) : Handler(database) {
 
 }
 
-
 QHttpServerResponse NameHandler::buildResponse() {
-    return QHttpServerResponse(database()->name());
+    QJsonObject obj;
+    obj["name"] = database()->name();
+    return QHttpServerResponse(obj);
 }

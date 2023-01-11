@@ -19,11 +19,11 @@ QHttpServerResponse NotesHandler::buildResponse() {
         obj["parentId"] = note.parentId;
         obj["pos"] = note.pos;
         obj["depth"] = note.depth;
-        obj["title"] = QJsonValue::fromVariant(QByteArray(note.title.toUtf8()).toBase64());;
-        obj["note"] = QJsonValue::fromVariant(QByteArray(note.note.toUtf8()).toBase64());
+        obj["title"] = note.title;
+        obj["note"] = note.note;
 
         array.append(obj);
     }
 
-    return QHttpServerResponse(QJsonDocument(array).toJson(QJsonDocument::Compact));
+    return QHttpServerResponse(array);
 }
