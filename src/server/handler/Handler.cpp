@@ -10,7 +10,7 @@ QHttpServerResponse Handler::exec(const QHttpServerRequest& request, const QStri
     bool accessOk = false;
 
     for (auto it = request.headers().cbegin(); it != request.headers().cend(); it++) {
-        if (it->first == "Token" && it->second == key) {
+        if (it->first.toLower() == "token" && it->second == key) {
             accessOk = true;
             break;
         }
