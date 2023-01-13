@@ -15,6 +15,7 @@ if(APPLE)
 endif()
 
 set(SRC
+    core/Application.h core/Application.cpp
     core/Constants.h
     core/Globals.h
     core/DatabaseException.h core/DatabaseException.cpp
