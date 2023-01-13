@@ -1,3 +1,5 @@
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
+
 if(WIN32)
     set(PLATFORM_SRC ui/hotkey/NativeEventFilterWin.cpp)
 endif()
@@ -12,7 +14,7 @@ if(APPLE)
     set(PLATFORM_SRC ui/hotkey/NativeEventFilterMac.cpp)
 endif()
 
-add_library(memo-common STATIC
+set(SRC
     core/Constants.h
     core/Globals.h
     core/DatabaseException.h core/DatabaseException.cpp
@@ -34,8 +36,13 @@ add_library(memo-common STATIC
     ui/notetaking/NoteTaking.h ui/notetaking/NoteTaking.cpp
     ui/notetaking/TreeItem.h ui/notetaking/TreeItem.cpp
     ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
+    i18n/memo-ru.ts
     ${PLATFORM_SRC}
 )
+
+add_library(memo-common STATIC ${SRC})
+
+qt_add_translations(memo-common TS_FILES i18n/memo-ru.ts SOURCES ${SRC})
 
 target_link_libraries(memo-common PRIVATE Qt6::Widgets Qt6::Sql Qt6::HttpServer ${PLATFORM_LIBS})
 target_include_directories(memo-common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
