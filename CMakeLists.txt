@@ -5,8 +5,6 @@ project(memo VERSION 1.5.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_INSTALL_RPATH $ORIGIN:$ORIGIN/../lib)
-
 find_package(Qt6 REQUIRED COMPONENTS Widgets Sql HttpServer)
 qt_standard_project_setup()
 
