@@ -32,7 +32,7 @@ namespace RecentFiles {
 
 namespace Server {
     constexpr auto Enabled = "Server/enabled";
-    constexpr auto Key = "Server/key";
+    constexpr auto Token = "Server/token";
     constexpr auto Port = "Server/port";
 }
 
@@ -105,7 +105,7 @@ void Settings::loadServer() {
     using namespace ::Server;
 
     server.enabled = m_settings->value(Enabled).toBool();
-    server.token = m_settings->value(Key).toString();
+    server.token = m_settings->value(Token).toString();
     server.port = m_settings->value(Port).toInt();
 }
 
@@ -160,6 +160,6 @@ void Settings::saveServer() {
     using namespace ::Server;
 
     m_settings->setValue(Enabled, server.enabled);
-    m_settings->setValue(Key, server.token);
+    m_settings->setValue(Token, server.token);
     m_settings->setValue(Port, server.port);
 }
