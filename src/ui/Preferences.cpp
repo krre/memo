@@ -52,6 +52,22 @@ void Preferences::onBackupsBrowseButtonClicked() {
     }
 }
 
+void Preferences::onCertificateBrowseButtonClicked() {
+    QString filePath = QFileDialog::getOpenFileName(nullptr, tr("Select SSL Certificate"), m_certificateLineEdit->text());
+
+    if (!filePath.isEmpty()) {
+        m_certificateLineEdit->setText(filePath);
+    }
+}
+
+void Preferences::onPrivateKeyBrowseButtonClicked() {
+    QString filePath = QFileDialog::getOpenFileName(nullptr, tr("Select SSL Private Key"), m_privateKeyEdit->text());
+
+    if (!filePath.isEmpty()) {
+        m_privateKeyEdit->setText(filePath);
+    }
+}
+
 QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox = new QComboBox;
     m_languageComboBox->addItem(tr("<System>"));
@@ -134,10 +150,28 @@ QGroupBox* Preferences::createServerGroupBox() {
     m_portLineEdit = new QLineEdit;
     m_tokenLineEdit = new QLineEdit;
 
+    m_certificateLineEdit = new QLineEdit;
+    auto certificateBrowseButton = new QPushButton(tr("Browse..."));
+    connect(certificateBrowseButton, &QPushButton::clicked, this, &Preferences::onCertificateBrowseButtonClicked);
+
+    m_privateKeyEdit = new QLineEdit;
+    auto privateKeyBrowseButton = new QPushButton(tr("Browse..."));
+    connect(privateKeyBrowseButton, &QPushButton::clicked, this, &Preferences::onPrivateKeyBrowseButtonClicked);
+
+    auto certificateLayout = new QHBoxLayout;
+    certificateLayout->addWidget(m_certificateLineEdit);
+    certificateLayout->addWidget(certificateBrowseButton);
+
+    auto privateKeyLayout = new QHBoxLayout;
+    privateKeyLayout->addWidget(m_privateKeyEdit);
+    privateKeyLayout->addWidget(privateKeyBrowseButton);
+
     auto formLayout = new QFormLayout;
-    formLayout->addRow(tr("IP Address:"), addressLineEdit);
+    formLayout->addRow(tr("IP address:"), addressLineEdit);
     formLayout->addRow(tr("Port:"), m_portLineEdit);
     formLayout->addRow(tr("Token:"), m_tokenLineEdit);
+    formLayout->addRow(tr("SSL certificate:"), certificateLayout);
+    formLayout->addRow(tr("SSL private key:"), privateKeyLayout);
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
     m_serverGroupBox->setCheckable(true);
@@ -169,6 +203,8 @@ void Preferences::readSettings() {
     m_serverGroupBox->setChecked(m_settings->server.enabled);
     m_portLineEdit->setText(QString::number(m_settings->server.port));
     m_tokenLineEdit->setText(m_settings->server.token);
+    m_certificateLineEdit->setText(m_settings->server.certificate);
+    m_privateKeyEdit->setText(m_settings->server.privateKey);
 }
 
 bool Preferences::writeSettings() {
@@ -195,6 +231,8 @@ bool Preferences::writeSettings() {
     m_settings->server.enabled = m_serverGroupBox->isChecked();
     m_settings->server.port = m_portLineEdit->text().toInt();
     m_settings->server.token = m_tokenLineEdit->text();
+    m_settings->server.certificate = m_certificateLineEdit->text();
+    m_settings->server.privateKey = m_privateKeyEdit->text();
 
     return restartRequre;
 }

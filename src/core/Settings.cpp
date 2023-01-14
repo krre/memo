@@ -34,6 +34,8 @@ namespace Server {
     constexpr auto Enabled = "Server/enabled";
     constexpr auto Token = "Server/token";
     constexpr auto Port = "Server/port";
+    constexpr auto Certificate = "Server/certificate";
+    constexpr auto PrivateKey = "Server/privateKey";
 }
 
 Settings::Settings(QObject* parent) : QObject(parent) {
@@ -107,6 +109,8 @@ void Settings::loadServer() {
     server.enabled = m_settings->value(Enabled).toBool();
     server.token = m_settings->value(Token).toString();
     server.port = m_settings->value(Port).toInt();
+    server.certificate = m_settings->value(Certificate).toString();
+    server.privateKey = m_settings->value(PrivateKey).toString();
 }
 
 void Settings::saveGeneral() {
@@ -162,4 +166,6 @@ void Settings::saveServer() {
     m_settings->setValue(Enabled, server.enabled);
     m_settings->setValue(Token, server.token);
     m_settings->setValue(Port, server.port);
+    m_settings->setValue(Certificate, server.certificate);
+    m_settings->setValue(PrivateKey, server.privateKey);
 }

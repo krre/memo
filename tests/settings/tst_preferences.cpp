@@ -38,6 +38,8 @@ void TestPreferences::readOptions() {
     settings.server.enabled = true;
     settings.server.token = "123456";
     settings.server.port = 80;
+    settings.server.certificate = "certificate";
+    settings.server.privateKey = "privateKey";
 
     Preferences preferences(&settings);
 
@@ -52,6 +54,8 @@ void TestPreferences::readOptions() {
     QCOMPARE(preferences.m_serverGroupBox->isChecked(), settings.server.enabled);
     QCOMPARE(preferences.m_tokenLineEdit->text(), settings.server.token);
     QCOMPARE(preferences.m_portLineEdit->text().toInt(), settings.server.port);
+    QCOMPARE(preferences.m_certificateLineEdit->text(), settings.server.certificate);
+    QCOMPARE(preferences.m_privateKeyEdit->text(), settings.server.privateKey);
 }
 
 void TestPreferences::setOptions() {
@@ -71,6 +75,8 @@ void TestPreferences::setOptions() {
     preferences.m_serverGroupBox->setChecked(true);
     preferences.m_tokenLineEdit->setText("123456");
     preferences.m_portLineEdit->setText("80");
+    preferences.m_certificateLineEdit->setText("certificate");
+    preferences.m_privateKeyEdit->setText("privateKey");
     preferences.accept();
 
     QCOMPARE(preferences.m_languageComboBox->currentData().toString(), settings.general.language);
@@ -85,6 +91,8 @@ void TestPreferences::setOptions() {
     QCOMPARE(preferences.m_serverGroupBox->isChecked(), settings.server.enabled);
     QCOMPARE(preferences.m_tokenLineEdit->text(), settings.server.token);
     QCOMPARE(preferences.m_portLineEdit->text().toInt(), settings.server.port);
+    QCOMPARE(preferences.m_certificateLineEdit->text(), settings.server.certificate);
+    QCOMPARE(preferences.m_privateKeyEdit->text(), settings.server.privateKey);
 }
 
 QTEST_MAIN(TestPreferences)

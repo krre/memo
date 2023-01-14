@@ -36,6 +36,8 @@ public:
         bool enabled;
         QString token;
         int port;
+        QString certificate;
+        QString privateKey;
     } server;
 
     Settings(QObject* parent = nullptr);

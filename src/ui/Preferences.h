@@ -20,6 +20,8 @@ public slots:
 private slots:
     void onFontButtonClicked();
     void onBackupsBrowseButtonClicked();
+    void onCertificateBrowseButtonClicked();
+    void onPrivateKeyBrowseButtonClicked();
 
 private:
     QGroupBox* createUiGroupBox();
@@ -46,4 +48,6 @@ private:
     QGroupBox* m_serverGroupBox = nullptr;
     QLineEdit* m_portLineEdit = nullptr;
     QLineEdit* m_tokenLineEdit = nullptr;
+    QLineEdit* m_certificateLineEdit = nullptr;
+    QLineEdit* m_privateKeyEdit = nullptr;
 };
