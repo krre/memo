@@ -5,14 +5,48 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QFile>
+#include <QSslKey>
 
 HttpServerManager::HttpServerManager(Database* database, QObject* parent) : QObject(parent), m_database(database) {
 
 }
 
-void HttpServerManager::start(quint16 port, const QString& token) {
+void HttpServerManager::start(quint16 port, const QString& token, const QString& certificatePath, const QString& privateKeyPath) {
     stop();
+
+    if (!port) {
+        qCritical().noquote() << "Server port is zero";
+        return;
+    }
+
+    if (token.isEmpty()) {
+        qCritical().noquote() << "Server token is empty";
+        return;
+    }
+
+    if (certificatePath.isEmpty()) {
+        qCritical().noquote() << "Server SSL certificate path is empty";
+        return;
+    }
+
+    if (privateKeyPath.isEmpty()) {
+        qCritical().noquote() << "Server SSL private key is empty";
+        return;
+    }
+
+    QFile certFile(certificatePath);
+    certFile.open(QIODevice::ReadOnly);
+    QSslCertificate certificate(&certFile, QSsl::Pem);
+    certFile.close();
+
+    QFile keyFile(privateKeyPath);
+    keyFile.open(QIODevice::ReadOnly);
+    QSslKey privateKey(&keyFile, QSsl::Rsa, QSsl::Pem);
+    keyFile.close();
+
     m_httpServer = new QHttpServer(this);
+    m_httpServer->sslSetup(certificate, privateKey);
 
     m_httpServer->route("/name", [=] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
         NameHandler handler(m_database);
