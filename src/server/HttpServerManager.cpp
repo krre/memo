@@ -1,5 +1,6 @@
 #include "HttpServerManager.h"
 #include "database/Database.h"
+#include "core/SolidString.h"
 #include "handler/NameHandler.h"
 #include "handler/NotesHandler.h"
 #include <QJsonDocument>
@@ -12,26 +13,11 @@ HttpServerManager::HttpServerManager(Database* database, QObject* parent) : QObj
 
 }
 
-void HttpServerManager::start(quint16 port, const QString& token, const QString& certificatePath, const QString& privateKeyPath) {
+void HttpServerManager::start(quint16 port, const SolidString& token, const SolidString& certificatePath, const SolidString& privateKeyPath) {
     stop();
 
     if (!port) {
         qCritical().noquote() << "Server port is zero";
-        return;
-    }
-
-    if (token.isEmpty()) {
-        qCritical().noquote() << "Server token is empty";
-        return;
-    }
-
-    if (certificatePath.isEmpty()) {
-        qCritical().noquote() << "Server SSL certificate path is empty";
-        return;
-    }
-
-    if (privateKeyPath.isEmpty()) {
-        qCritical().noquote() << "Server SSL private key is empty";
         return;
     }
 

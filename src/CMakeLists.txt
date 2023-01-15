@@ -22,6 +22,7 @@ set(SRC
     core/Exception.h core/Exception.cpp
     core/MessageHandler.h
     core/Settings.h core/Settings.cpp
+    core/SolidString.h core/SolidString.cpp
     database/Database.h database/Database.cpp
     database/Patcher.h database/Patcher.cpp
     server/HttpServerManager.h server/HttpServerManager.cpp

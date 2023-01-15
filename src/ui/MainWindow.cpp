@@ -4,6 +4,7 @@
 #include "core/Constants.h"
 #include "core/Exception.h"
 #include "core/Settings.h"
+#include "core/SolidString.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -97,11 +98,31 @@ void MainWindow::applyHotSettings() {
         m_editor->setFont(font);
     }
 
-    if (m_settings->server.enabled) {
-        m_serverManager->start(m_settings->server.port, m_settings->server.token, m_settings->server.certificate, m_settings->server.privateKey);
-    } else {
-        m_serverManager->stop();
+    m_serverManager->stop();
+
+    if (!m_settings->server.enabled) {
+        return;
     }
+
+    if (m_settings->server.token.isEmpty()) {
+        qCritical().noquote() << "Server token is empty";
+        return;
+    }
+
+    if (m_settings->server.certificate.isEmpty()) {
+        qCritical().noquote() << "Server SSL certificate path is empty";
+        return;
+    }
+
+    if (m_settings->server.privateKey.isEmpty()) {
+        qCritical().noquote() << "Server SSL private key is empty";
+        return;
+    }
+
+    m_serverManager->start(m_settings->server.port,
+                           SolidString(m_settings->server.token),
+                           SolidString(m_settings->server.certificate),
+                           SolidString(m_settings->server.privateKey));
 }
 
 void MainWindow::setupSplitter() {
