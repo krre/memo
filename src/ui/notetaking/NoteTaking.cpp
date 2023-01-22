@@ -106,6 +106,7 @@ void NoteTaking::onCustomContextMenu(const QPoint& point) {
 void NoteTaking::addNote() {
     bool ok;
     QString text = QInputDialog::getText(this, tr("Add Note"), tr("Name:"), QLineEdit::Normal, "", &ok);
+
     if (ok && !text.isEmpty()) {
         insertChild(text);
     }
@@ -116,6 +117,7 @@ void NoteTaking::removeNotes() {
     TreeItem* parentItem = m_model->item(index.parent());
 
     int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(m_model->data(index).toString()));
+
     if (result == QMessageBox::Yes) {
         TreeItem* item = m_model->item(index);
         QVector<Id> ids = m_model->childIds(item);
