@@ -80,7 +80,7 @@ Qt::DropActions TreeModel::supportedDragActions() const {
 }
 
 QStringList TreeModel::mimeTypes() const {
-    return QStringList() << Const::NoteTaking::TreeItemMimeType;
+    return QStringList(Const::NoteTaking::TreeItemMimeType);
 }
 
 QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
