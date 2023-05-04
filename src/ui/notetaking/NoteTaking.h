@@ -51,7 +51,7 @@ private:
     QAction* m_moveUpAction = nullptr;
     QAction* m_moveDownAction = nullptr;
     QAction* m_propertiesAction = nullptr;
-    TreeModel* m_model = nullptr;
+    QScopedPointer<TreeModel> m_model;
     Database* m_database = nullptr;
     bool m_isInited = false;
 };

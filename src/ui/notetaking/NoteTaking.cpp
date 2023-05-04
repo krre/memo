@@ -86,12 +86,9 @@ void NoteTaking::build() {
 
 void NoteTaking::clear() {
     m_isInited = false;
-
-    delete m_model;
-
-    m_model = new TreeModel;
-    setModel(m_model);
-    connect(m_model, &TreeModel::itemDropped, this, &NoteTaking::moveTree);
+    m_model.reset(new TreeModel);
+    setModel(m_model.data());
+    connect(m_model.data(), &TreeModel::itemDropped, this, &NoteTaking::moveTree);
 
     m_isInited = true;
 }
