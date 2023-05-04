@@ -3,7 +3,7 @@
 #include "TreeItem.h"
 #include "NoteProperties.h"
 #include "database/Database.h"
-#include "core/DatabaseException.h"
+#include "database/DatabaseException.h"
 #include <QtGui/private/qzipwriter_p.h>
 #include <QtWidgets>
 #include <QtSql>

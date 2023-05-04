@@ -1,6 +1,6 @@
 #include "Database.h"
 #include "Patcher.h"
-#include "core/DatabaseException.h"
+#include "DatabaseException.h"
 #include <QtSql>
 
 Database::Database(QObject* parent) : QObject(parent) {

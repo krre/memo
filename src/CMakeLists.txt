@@ -18,13 +18,13 @@ set(SRC
     core/Application.h core/Application.cpp
     core/Constants.h
     core/Globals.h
-    core/DatabaseException.h core/DatabaseException.cpp
     core/Exception.h core/Exception.cpp
     core/MessageHandler.h
     core/Settings.h core/Settings.cpp
     core/SolidString.h core/SolidString.cpp
     database/Database.h database/Database.cpp
     database/Patcher.h database/Patcher.cpp
+    database/DatabaseException.h database/DatabaseException.cpp
     server/HttpServerManager.h server/HttpServerManager.cpp
     server/handler/Handler.h server/handler/Handler.cpp
     server/handler/NameHandler.h server/handler/NameHandler.cpp
