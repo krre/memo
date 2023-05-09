@@ -1,6 +1,7 @@
 #pragma once
-#include <QHttpServer>
+#include <QObject>
 
+class QHttpServer;
 class Database;
 class SolidString;
 

@@ -3,6 +3,7 @@
 #include "core/SolidString.h"
 #include "handler/NameHandler.h"
 #include "handler/NotesHandler.h"
+#include <QHttpServer>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>

@@ -1,7 +1,5 @@
 #pragma once
-#include <QSqlDatabase>
 #include <QHash>
-#include <functional>
 
 class Database;
 

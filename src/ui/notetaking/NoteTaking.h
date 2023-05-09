@@ -1,6 +1,6 @@
 #pragma once
 #include <QTreeView>
-#include <core/Globals.h>
+#include "core/Globals.h"
 
 class QMenu;
 class QAction;

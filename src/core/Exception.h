@@ -1,5 +1,4 @@
 #pragma once
-#include <stdexcept>
 #include <QString>
 
 class Exception : std::exception {

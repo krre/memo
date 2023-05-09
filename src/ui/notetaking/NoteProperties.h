@@ -1,6 +1,5 @@
 #pragma once
 #include <QDialog>
-#include <QDateTime>
 
 class NoteProperties : public QDialog {
     Q_OBJECT

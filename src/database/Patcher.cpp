@@ -1,7 +1,6 @@
 #include "Patcher.h"
 #include "Database.h"
 #include <QVariant>
-#include <QDebug>
 
 const int currentVersion = 2;
 

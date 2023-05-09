@@ -1,7 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QSqlDatabase>
-#include <core/Globals.h>
+#include "core/Globals.h"
 
 class Database : public QObject {
     Q_OBJECT
