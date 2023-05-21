@@ -22,7 +22,7 @@ NoteTaking::NoteTaking(Database* database) : m_database(database) {
 
     clear();
 
-    connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, this, [=] {
+    connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, this, [=, this] {
         TreeItem* item = m_model->item(selectionModel()->currentIndex());
         database->updateValue(item->id(), "title", item->data());
     });

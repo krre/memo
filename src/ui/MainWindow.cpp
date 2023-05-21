@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
 
     connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::onNoteChanged);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
-    connect(m_editor, &Editor::leave, this, [=] {
+    connect(m_editor, &Editor::leave, this, [this] {
        m_notetaking->setFocus();
     });
 
@@ -224,7 +224,7 @@ void MainWindow::addRecentFile(const QString& filePath) {
     }
 
     auto fileAction = new QAction(filePath);
-    connect(fileAction, &QAction::triggered, this, [=] {
+    connect(fileAction, &QAction::triggered, this, [=, this] {
         loadFile(filePath);
     });
 

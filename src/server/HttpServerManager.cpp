@@ -35,12 +35,12 @@ void HttpServerManager::start(quint16 port, const SolidString& token, const Soli
     m_httpServer = new QHttpServer(this);
     m_httpServer->sslSetup(certificate, privateKey);
 
-    m_httpServer->route("/name", [=] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
+    m_httpServer->route("/name", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
         NameHandler handler(m_database);
         responder.sendResponse(handler.exec(request, token));
     });
 
-    m_httpServer->route("/notes", [=] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
+    m_httpServer->route("/notes", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
         NotesHandler handler(m_database);
         responder.sendResponse(handler.exec(request, token));
     });

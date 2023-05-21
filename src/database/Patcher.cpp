@@ -5,7 +5,7 @@
 const int currentVersion = 2;
 
 Patcher::Patcher(Database* db) : m_db(db) {
-    patches[2] = [=] { patch2(); };
+    patches[2] = [this] { patch2(); };
 }
 
 void Patcher::run() {
