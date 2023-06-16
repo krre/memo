@@ -17,6 +17,9 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget* parent = nullptr);
 
+signals:
+    void isOpened(bool opened);
+
 protected:
     void closeEvent(QCloseEvent* event) override;
 

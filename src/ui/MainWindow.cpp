@@ -26,9 +26,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     m_globalHotkey = new GlobalHotkey(this);
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);
 
-    createActions();
     createTrayIcon();
     setupSplitter();
+    createActions();
 
     connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::onNoteChanged);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
@@ -138,7 +138,7 @@ void MainWindow::setupSplitter() {
 }
 
 void MainWindow::createActions() {
-    QMenu* fileMenu = menuBar()->addMenu(tr("File"));
+    auto fileMenu = menuBar()->addMenu(tr("File"));
     fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::onNew);
     fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::onOpen);
 
@@ -158,7 +158,32 @@ void MainWindow::createActions() {
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::onQuit);
 
-    QMenu* helpMenu = menuBar()->addMenu(tr("Help"));
+    auto editMenu = menuBar()->addMenu(tr("Edit"));
+    auto undoAction = editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
+    auto redoAction = editMenu->addAction(tr("Redo"), QKeySequence::Redo, m_editor, &Editor::redo);
+    editMenu->addSeparator();
+    auto cutAction = editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
+    auto copyAction = editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
+    auto pasteAction = editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
+    editMenu->addSeparator();
+    auto selectAllAction = editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
+
+    undoAction->setEnabled(false);
+    redoAction->setEnabled(false);
+    cutAction->setEnabled(false);
+    copyAction->setEnabled(false);
+    selectAllAction->setEnabled(false);
+
+    connect(m_editor, &QPlainTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
+    connect(m_editor, &QPlainTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
+    connect(m_editor, &QPlainTextEdit::copyAvailable, cutAction, &QAction::setEnabled);
+    connect(m_editor, &QPlainTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
+    connect(m_editor, &QPlainTextEdit::textChanged, this, [=, this] {
+        selectAllAction->setEnabled(!m_editor->document()->isEmpty());
+    });
+    connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);
+
+    auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
         QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
     });
@@ -212,6 +237,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
     setWindowTitle(title);
     m_currentFile = filePath;
     updateMenuState();
+    emit isOpened(!filePath.isEmpty());
 }
 
 void MainWindow::addRecentFile(const QString& filePath) {
