@@ -48,7 +48,6 @@ private:
     void setupSplitter();
     void createActions();
     void createTrayIcon();
-    void updateMenuState();
 
     void loadFile(const QString& filePath);
     void setCurrentFile(const QString& filePath = QString());
@@ -61,9 +60,6 @@ private:
     QSystemTrayIcon* m_trayIcon = nullptr;
     QMenu* m_trayIconMenu = nullptr;
     QMenu* m_recentFilesMenu = nullptr;
-    QAction* m_exportAction = nullptr;
-    QAction* m_createBackupAction = nullptr;
-    QAction* m_closeAction = nullptr;
     QSplitter* m_splitter = nullptr;
 
     Settings* m_settings = nullptr;

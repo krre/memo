@@ -37,7 +37,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     });
 
     readSettings();
-    updateMenuState();
 }
 
 void MainWindow::readSettings() {
@@ -147,9 +146,17 @@ void MainWindow::createActions() {
     m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::onClearRecentFiles);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
-    m_exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
-    m_createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::onBackup);
-    m_closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::onClose);
+    auto exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
+    auto createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::onBackup);
+    auto closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::onClose);
+
+    exportAction->setEnabled(false);
+    createBackupAction->setEnabled(false);
+    closeAction->setEnabled(false);
+
+    connect(this, &MainWindow::isOpened, exportAction, &QAction::setEnabled);
+    connect(this, &MainWindow::isOpened, createBackupAction, &QAction::setEnabled);
+    connect(this, &MainWindow::isOpened, closeAction, &QAction::setEnabled);
 
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Preferences..."), this, &MainWindow::onPreferences);
@@ -205,14 +212,6 @@ void MainWindow::createTrayIcon() {
     m_trayIcon->show();
 }
 
-void MainWindow::updateMenuState() {
-    bool isFileOpen = !m_currentFile.isEmpty();
-
-    m_exportAction->setEnabled(isFileOpen);
-    m_createBackupAction->setEnabled(isFileOpen);
-    m_closeAction->setEnabled(isFileOpen);
-}
-
 void MainWindow::loadFile(const QString& filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
@@ -236,7 +235,6 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
     setWindowTitle(title);
     m_currentFile = filePath;
-    updateMenuState();
     emit isOpened(!filePath.isEmpty());
 }
 
@@ -260,8 +258,6 @@ void MainWindow::addRecentFile(const QString& filePath) {
     if (m_recentFilesMenu->actions().size() > Const::Window::MaxRecentFiles + Const::Window::SystemRecentFilesActions) {
         m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1));
     }
-
-    updateMenuState();
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
@@ -342,8 +338,6 @@ void MainWindow::onClearRecentFiles() {
     for (int i = m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
         m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(i));
     }
-
-    updateMenuState();
 }
 
 void MainWindow::onPreferences() {
