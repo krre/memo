@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Editor.h"
+#include "FindText.h"
 #include "Preferences.h"
 #include "core/Constants.h"
 #include "core/Exception.h"
@@ -174,12 +175,19 @@ void MainWindow::createActions() {
     auto pasteAction = editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
     editMenu->addSeparator();
     auto selectAllAction = editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
+    editMenu->addSeparator();
+    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::onFind);
+    m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::onFindNext);
+    m_findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::onFindPrevious);
 
     undoAction->setEnabled(false);
     redoAction->setEnabled(false);
     cutAction->setEnabled(false);
     copyAction->setEnabled(false);
     selectAllAction->setEnabled(false);
+    findAction->setEnabled(false);
+    m_findNextAction->setEnabled(false);
+    m_findPreviousAction->setEnabled(false);
 
     connect(m_editor, &QPlainTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
     connect(m_editor, &QPlainTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
@@ -189,6 +197,7 @@ void MainWindow::createActions() {
         selectAllAction->setEnabled(!m_editor->document()->isEmpty());
     });
     connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);
+    connect(this, &MainWindow::isOpened, findAction, &QAction::setEnabled);
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
@@ -348,6 +357,36 @@ void MainWindow::onPreferences() {
     }
 }
 
+void MainWindow::onFind() {
+    FindText findText;
+    if (findText.exec() == QDialog::Rejected) return;
+
+    m_findText = findText.text();
+
+    QTextCursor cursor = m_editor->textCursor();
+    QTextCursor savedCursor = cursor;
+
+    cursor.movePosition(QTextCursor::Start);\
+    m_editor->setTextCursor(cursor);
+
+    if (!m_editor->find(m_findText)) {
+        QMessageBox::warning(this, Const::App::Name, tr("Text not found"));
+        m_editor->setTextCursor(savedCursor);
+        return;
+    }
+
+    m_findNextAction->setEnabled(true);
+    m_findPreviousAction->setEnabled(true);
+}
+
+void MainWindow::onFindNext() {
+    m_editor->find(m_findText);
+}
+
+void MainWindow::onFindPrevious() {
+    m_editor->find(m_findText, QTextDocument::FindBackward);
+}
+
 void MainWindow::onAbout() {
     using namespace Const::App;
 
@@ -368,6 +407,9 @@ void MainWindow::onQuit() {
 void MainWindow::onNoteChanged(Id id) {
     m_editor->setId(id);
     m_editor->setEnabled(id > 0);
+
+    m_findNextAction->setEnabled(false);
+    m_findPreviousAction->setEnabled(false);
 
     if (id) {
         QString note = m_database->value(id, "note").toString();

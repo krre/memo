@@ -31,6 +31,7 @@ set(SRC
     server/handler/NotesHandler.h server/handler/NotesHandler.cpp
     ui/MainWindow.h ui/MainWindow.cpp
     ui/Editor.h ui/Editor.cpp
+    ui/FindText.h ui/FindText.cpp
     ui/Preferences.h ui/Preferences.cpp
     ui/hotkey/GlobalHotkey.h ui/hotkey/GlobalHotkey.cpp
     ui/hotkey/NativeEventFilter.h

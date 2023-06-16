@@ -31,6 +31,9 @@ private slots:
     void onClose();
     void onClearRecentFiles();
     void onPreferences();
+    void onFind();
+    void onFindNext();
+    void onFindPrevious();
     void onAbout();
     void onQuit();
 
@@ -68,5 +71,9 @@ private:
     GlobalHotkey* m_globalHotkey = nullptr;
     Database* m_database = nullptr;
     HttpServerManager* m_serverManager = nullptr;
+    QString m_findText;
+
+    QAction* m_findNextAction = nullptr;
+    QAction* m_findPreviousAction = nullptr;
 
 };
