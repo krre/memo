@@ -59,6 +59,7 @@ private:
     QMenu* m_trayIconMenu = nullptr;
     QMenu* m_recentFilesMenu = nullptr;
     QAction* m_exportAction = nullptr;
+    QAction* m_createBackupAction = nullptr;
     QAction* m_closeAction = nullptr;
     QSplitter* m_splitter = nullptr;
 

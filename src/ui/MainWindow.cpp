@@ -148,7 +148,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
     m_exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
-    m_exportAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::onBackup);
+    m_createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::onBackup);
     m_closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::onClose);
 
     fileMenu->addSeparator();
@@ -184,6 +184,7 @@ void MainWindow::updateMenuState() {
     bool isFileOpen = !m_currentFile.isEmpty();
 
     m_exportAction->setEnabled(isFileOpen);
+    m_createBackupAction->setEnabled(isFileOpen);
     m_closeAction->setEnabled(isFileOpen);
 }
 
