@@ -71,6 +71,8 @@ void MainWindow::writeSettings() {
     m_settings->general.splitter = m_splitter->saveState();
     m_settings->general.filePath = m_currentFile;
 
+    m_settings->recentFiles.path.clear();
+
     for (int i = 0; i < m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions; ++i) {
         m_settings->recentFiles.path.append(m_recentFilesMenu->actions().at(i)->text());
     }

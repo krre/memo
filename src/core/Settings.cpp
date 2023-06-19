@@ -145,11 +145,7 @@ void Settings::saveGlobalHotKey() {
 void Settings::saveRecentFilas() {
     using namespace ::RecentFiles;
 
-    if (recentFiles.path.isEmpty()) {
-        m_settings->remove(RecentFilesName);
-        return;
-    }
-
+    m_settings->remove(RecentFilesName);
     m_settings->beginWriteArray(RecentFilesName);
 
     for (int i = 0; i < recentFiles.path.count(); i++) {
