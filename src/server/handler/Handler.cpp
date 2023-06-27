@@ -10,8 +10,8 @@ QHttpServerResponse Handler::exec(const QHttpServerRequest& request, const QStri
     bool accessOk = false;
     auto headers = request.headers();
 
-    for (auto it = headers.cbegin(); it != headers.cend(); it++) {
-        if (it->first.toLower() == "token" && it->second == token) {
+    for (auto& [ first, second ] : headers) {
+        if (first.toLower() == "token" && second == token) {
             accessOk = true;
             break;
         }
