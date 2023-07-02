@@ -17,8 +17,6 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Const::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
-    m_settings = new Settings(this);
-
     m_splitter = new QSplitter;
     setCentralWidget(m_splitter);
 
@@ -48,60 +46,64 @@ void MainWindow::quit() {
 }
 
 void MainWindow::readSettings() {
-    m_settings->load();
+    using namespace SettingsKey;
 
     applyHotSettings();
 
-    if (m_settings->general.geometry.isEmpty()) {
+    if (Settings::contains<General::Geometry>()) {
+        restoreGeometry(Settings::value<General::Geometry>());
+    } else {
         const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
-    } else {
-        restoreGeometry(m_settings->general.geometry);
     }
 
-    m_splitter->restoreState(m_settings->general.splitter);
+    m_splitter->restoreState(Settings::value<General::Splitter>());
 
-    for (const QString& filePath : m_settings->recentFiles.path) {
+    for (const QString& filePath : Settings::value<RecentFiles::Name>()) {
         addRecentFile(filePath);
     }
 
-    loadFile(m_settings->general.filePath);
+    loadFile(Settings::value<General::FilePath>());
 
-    if (!m_settings->general.minimizeOnStartup) {
+    if (!Settings::value<General::MinimizeOnStartup>()) {
         show();
     }
 }
 
 void MainWindow::writeSettings() {
-    m_settings->general.geometry = saveGeometry();
-    m_settings->general.splitter = m_splitter->saveState();
-    m_settings->general.filePath = m_currentFile;
+    using namespace SettingsKey;
 
-    m_settings->recentFiles.path.clear();
+    Settings::setValue<General::Geometry>(saveGeometry());
+    Settings::setValue<General::Splitter>(m_splitter->saveState());
+    Settings::setValue<General::FilePath>(m_currentFile);
+
+    QStringList recentFiles;
 
     for (int i = 0; i < m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions; ++i) {
-        m_settings->recentFiles.path.append(m_recentFilesMenu->actions().at(i)->text());
+        recentFiles.append(m_recentFilesMenu->actions().at(i)->text());
     }
 
-    m_settings->save();
+    Settings::setValue<RecentFiles::Name>(recentFiles);
 }
 
 void MainWindow::applyHotSettings() {
-    m_trayIcon->setVisible(!m_settings->general.hideTrayIcon);
+    using namespace SettingsKey;
 
-    if (m_settings->globalHotKey.enabled) {
-        m_globalHotkey->setShortcut(m_settings->globalHotKey.hotKey);
+    m_trayIcon->setVisible(!Settings::value<General::HideTrayIcon>());
+
+    if (Settings::value<SettingsKey::GlobalHotkey::Enabled>()) {
+        m_globalHotkey->setShortcut(Settings::value<SettingsKey::GlobalHotkey::Hotkey>());
     } else {
         m_globalHotkey->unsetShortcut();
     }
 
-    if (!m_settings->editor.fontFamily.isEmpty()) {
+    if (!Settings::value<SettingsKey::Editor::FontFamily>().isEmpty()) {
         QFont font;
-        font.setFamily(m_settings->editor.fontFamily);
+        font.setFamily(Settings::value<SettingsKey::Editor::FontFamily>());
 
-        if (m_settings->editor.fontSize) {
-            font.setPointSize(m_settings->editor.fontSize);
+        if (Settings::value<SettingsKey::Editor::FontSize>()) {
+            font.setPointSize(Settings::value<SettingsKey::Editor::FontSize>());
         }
 
         m_editor->setFont(font);
@@ -109,29 +111,34 @@ void MainWindow::applyHotSettings() {
 
     m_serverManager->stop();
 
-    if (!m_settings->server.enabled) {
+    if (!Settings::value<Server::Enabled>()) {
         return;
     }
 
-    if (m_settings->server.token.isEmpty()) {
+    QString token = Settings::value<Server::Token>();
+
+    if (token.isEmpty()) {
         qCritical().noquote() << "Server token is empty";
         return;
     }
 
-    if (m_settings->server.certificate.isEmpty()) {
+    QString certificate = Settings::value<Server::Certificate>();
+
+    if (certificate.isEmpty()) {
         qCritical().noquote() << "Server SSL certificate path is empty";
         return;
     }
 
-    if (m_settings->server.privateKey.isEmpty()) {
+    QString privateKey = Settings::value<Server::PrivateKey>();
+
+    if (privateKey.isEmpty()) {
         qCritical().noquote() << "Server SSL private key is empty";
         return;
     }
 
-    m_serverManager->start(m_settings->server.port,
-                           SolidString(m_settings->server.token),
-                           SolidString(m_settings->server.certificate),
-                           SolidString(m_settings->server.privateKey));
+    int port = Settings::value<Server::Port>();
+
+    m_serverManager->start(port, SolidString(token), SolidString(certificate), SolidString(privateKey));
 }
 
 void MainWindow::setupSplitter() {
@@ -311,7 +318,7 @@ void MainWindow::onOpen() {
 
 void MainWindow::onExport() {
     QFileInfo fi(m_currentFile);
-    QString name = m_settings->backups.directory + "/" + dateFileName(fi.baseName() + ".zip");
+    QString name = Settings::value<SettingsKey::Backups::Directory>() + "/" + dateFileName(fi.baseName() + ".zip");
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
@@ -321,7 +328,7 @@ void MainWindow::onExport() {
 
 void MainWindow::onBackup() {
     QFileInfo fi(m_currentFile);
-    QString name = m_settings->backups.directory + "/" + dateFileName(fi.fileName());
+    QString name = Settings::value<SettingsKey::Backups::Directory>() + "/" + dateFileName(fi.fileName());
 
     QString backupFile = QFileDialog::getSaveFileName(this, tr("Create Backup"), name);
 
@@ -344,47 +351,49 @@ void MainWindow::onClearRecentFiles() {
 }
 
 void MainWindow::onPreferences() {
+    using namespace SettingsKey;
+
     Preferences::Data data;
-    data.language = m_settings->general.language;
-    data.backupsDirectory = m_settings->backups.directory;
+    data.language = Settings::value<General::Language>();
+    data.backupsDirectory = Settings::value<Backups::Directory>();
 
-    data.fontFamily = m_settings->editor.fontFamily;
-    data.fontSize = m_settings->editor.fontSize;
+    data.fontFamily = Settings::value<SettingsKey::Editor::FontFamily>();
+    data.fontSize = Settings::value<SettingsKey::Editor::FontSize>();
 
-    data.hideTrayIcon = m_settings->general.hideTrayIcon;
-    data.minimizeOnStartup = m_settings->general.minimizeOnStartup;
+    data.hideTrayIcon = Settings::value<General::HideTrayIcon>();
+    data.minimizeOnStartup = Settings::value<General::MinimizeOnStartup>();
 
-    data.hotKeyEnabled = m_settings->globalHotKey.enabled;
-    data.hotKey = m_settings->globalHotKey.hotKey;
+    data.hotKeyEnabled = Settings::value<SettingsKey::GlobalHotkey::Enabled>();
+    data.hotKey = Settings::value<SettingsKey::GlobalHotkey::Hotkey>();
 
-    data.serverEnabled = m_settings->server.enabled;
-    data.token = m_settings->server.token;
-    data.port = m_settings->server.port;
-    data.certificate = m_settings->server.certificate;
-    data.privateKey = m_settings->server.privateKey;
+    data.serverEnabled = Settings::value<Server::Enabled>();
+    data.token = Settings::value<Server::Token>();
+    data.port = Settings::value<Server::Port>();
+    data.certificate = Settings::value<Server::Certificate>();
+    data.privateKey = Settings::value<Server::PrivateKey>();
 
     Preferences preferences(data);
 
     if (preferences.exec() == QDialog::Accepted) {
         Preferences::Data data = preferences.data();
 
-        m_settings->general.language = data.language;
-        m_settings->backups.directory = data.backupsDirectory;
+        Settings::setValue<General::Language>(data.language);
+        Settings::setValue<Backups::Directory>(data.backupsDirectory);
 
-        m_settings->editor.fontFamily = data.fontFamily;
-        m_settings->editor.fontSize = data.fontSize;
+        Settings::setValue<SettingsKey::Editor::FontFamily>(data.fontFamily);
+        Settings::setValue<SettingsKey::Editor::FontSize>(data.fontSize);
 
-        m_settings->general.hideTrayIcon = data.hideTrayIcon;
-        m_settings->general.minimizeOnStartup = data.minimizeOnStartup;
+        Settings::setValue<General::HideTrayIcon>(data.hideTrayIcon);
+        Settings::setValue<General::MinimizeOnStartup>(data.minimizeOnStartup);
 
-        m_settings->globalHotKey.enabled = data.hotKeyEnabled;
-        m_settings->globalHotKey.hotKey = data.hotKey;
+        Settings::setValue<SettingsKey::GlobalHotkey::Enabled>(data.hotKeyEnabled);
+        Settings::setValue<SettingsKey::GlobalHotkey::Hotkey>(data.hotKey);
 
-        m_settings->server.enabled = data.serverEnabled;
-        m_settings->server.token = data.token;
-        m_settings->server.port = data.port;
-        m_settings->server.certificate = data.certificate;
-        m_settings->server.privateKey = data.privateKey;
+        Settings::setValue<Server::Enabled>(data.serverEnabled);
+        Settings::setValue<Server::Token>(data.token);
+        Settings::setValue<Server::Port>(data.port);
+        Settings::setValue<Server::Certificate>(data.certificate);
+        Settings::setValue<Server::PrivateKey>(data.privateKey);
 
         applyHotSettings();
     }

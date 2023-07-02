@@ -4,7 +4,6 @@
 
 class QSplitter;
 
-class Settings;
 class NoteTaking;
 class TrayIcon;
 class Editor;
@@ -64,7 +63,6 @@ private:
     QMenu* m_recentFilesMenu = nullptr;
     QSplitter* m_splitter = nullptr;
 
-    Settings* m_settings = nullptr;
     NoteTaking* m_notetaking = nullptr;
     Editor* m_editor = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;

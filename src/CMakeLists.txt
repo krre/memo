@@ -20,7 +20,7 @@ set(SRC
     core/Globals.h
     core/Exception.h core/Exception.cpp
     core/MessageHandler.h
-    core/Settings.h core/Settings.cpp
+    core/Settings.h
     core/SolidString.h core/SolidString.cpp
     database/Database.h database/Database.cpp
     database/Patcher.h database/Patcher.cpp
