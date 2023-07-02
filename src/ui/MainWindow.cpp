@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "Editor.h"
+#include "TrayIcon.h"
 #include "FindText.h"
 #include "Preferences.h"
 #include "core/Constants.h"
@@ -27,7 +28,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     m_globalHotkey = new GlobalHotkey(this);
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);
 
-    createTrayIcon();
+    m_trayIcon = new TrayIcon(this);
+
     setupSplitter();
     createActions();
 
@@ -38,6 +40,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     });
 
     readSettings();
+}
+
+void MainWindow::quit() {
+    writeSettings();
+    QCoreApplication::quit();
 }
 
 void MainWindow::readSettings() {
@@ -166,7 +173,7 @@ void MainWindow::createActions() {
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), Qt::Key_Escape, this, &MainWindow::hide);
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::onQuit);
+    fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::quit);
 
     auto editMenu = menuBar()->addMenu(tr("Edit"));
     auto undoAction = editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
@@ -206,21 +213,6 @@ void MainWindow::createActions() {
         QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
     });
     helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::onAbout);
-}
-
-void MainWindow::createTrayIcon() {
-    m_trayIconMenu = new QMenu(this);
-
-    m_trayIconMenu->addAction(tr("Show"), this, &QMainWindow::showNormal);
-    m_trayIconMenu->addAction(tr("Hide"), this, &QMainWindow::hide);
-    m_trayIconMenu->addSeparator();
-    m_trayIconMenu->addAction(tr("Exit"), this, &MainWindow::onQuit);
-
-    m_trayIcon = new QSystemTrayIcon(this);
-    connect(m_trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::onTrayIconActivated);
-    m_trayIcon->setContextMenu(m_trayIconMenu);
-    m_trayIcon->setIcon(windowIcon());
-    m_trayIcon->show();
 }
 
 void MainWindow::loadFile(const QString& filePath) {
@@ -401,11 +393,6 @@ void MainWindow::onAbout() {
             .arg(Name, Version, Status, QT_VERSION_STR, BuildDate, BuildTime, URL, CopyrightYear));
 }
 
-void MainWindow::onQuit() {
-    writeSettings();
-    QCoreApplication::quit();
-}
-
 void MainWindow::onNoteChanged(Id id) {
     m_editor->setId(id);
     m_editor->setEnabled(id > 0);
@@ -437,12 +424,6 @@ void MainWindow::onEditorFocusLost() {
     }
 
     m_database->updateValue(lastId, "line", m_editor->textCursor().blockNumber());
-}
-
-void MainWindow::onTrayIconActivated(QSystemTrayIcon::ActivationReason reason) {
-    if (reason == QSystemTrayIcon::Trigger) {
-        setVisible(!isVisible());
-    }
 }
 
 void MainWindow::onGlobalActivated() {

@@ -1,12 +1,12 @@
 #pragma once
 #include "core/Globals.h"
 #include <QMainWindow>
-#include <QSystemTrayIcon>
 
 class QSplitter;
 
 class Settings;
 class NoteTaking;
+class TrayIcon;
 class Editor;
 class Database;
 class GlobalHotkey;
@@ -19,6 +19,9 @@ public:
 
 signals:
     void isOpened(bool opened);
+
+public slots:
+    void quit();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -35,12 +38,10 @@ private slots:
     void onFindNext();
     void onFindPrevious();
     void onAbout();
-    void onQuit();
 
     void onNoteChanged(Id id);
     void onEditorFocusLost();
 
-    void onTrayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onGlobalActivated();
 
 private:
@@ -50,7 +51,6 @@ private:
 
     void setupSplitter();
     void createActions();
-    void createTrayIcon();
 
     void loadFile(const QString& filePath);
     void setCurrentFile(const QString& filePath = QString());
@@ -60,8 +60,7 @@ private:
     QString dateFileName(const QString& name);
 
     QString m_currentFile;
-    QSystemTrayIcon* m_trayIcon = nullptr;
-    QMenu* m_trayIconMenu = nullptr;
+    TrayIcon* m_trayIcon = nullptr;
     QMenu* m_recentFilesMenu = nullptr;
     QSplitter* m_splitter = nullptr;
 
