@@ -12,8 +12,8 @@ add_subdirectory(app)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-target_link_libraries(memo PRIVATE memo-common)
-target_link_libraries(test_settings PRIVATE memo-common)
+target_link_libraries(memo PRIVATE common)
+target_link_libraries(test_settings PRIVATE common)
 
 install(TARGETS memo
     BUNDLE  DESTINATION .

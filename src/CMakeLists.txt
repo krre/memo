@@ -44,9 +44,9 @@ set(SRC
     ${PLATFORM_SRC}
 )
 
-add_library(memo-common STATIC ${SRC})
+add_library(common STATIC ${SRC})
 
-qt_add_translations(memo-common TS_FILES i18n/memo-ru.ts SOURCES ${SRC})
+qt_add_translations(common TS_FILES i18n/memo-ru.ts SOURCES ${SRC})
 
-target_link_libraries(memo-common PRIVATE Qt6::Widgets Qt6::Sql Qt6::HttpServer ${PLATFORM_LIBS})
-target_include_directories(memo-common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
+target_link_libraries(common PRIVATE Qt6::Widgets Qt6::Sql Qt6::HttpServer ${PLATFORM_LIBS})
+target_include_directories(common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
