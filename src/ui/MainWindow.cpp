@@ -344,9 +344,48 @@ void MainWindow::onClearRecentFiles() {
 }
 
 void MainWindow::onPreferences() {
-    Preferences preferences(m_settings);
+    Preferences::Data data;
+    data.language = m_settings->general.language;
+    data.backupsDirectory = m_settings->backups.directory;
+
+    data.fontFamily = m_settings->editor.fontFamily;
+    data.fontSize = m_settings->editor.fontSize;
+
+    data.hideTrayIcon = m_settings->general.hideTrayIcon;
+    data.minimizeOnStartup = m_settings->general.minimizeOnStartup;
+
+    data.hotKeyEnabled = m_settings->globalHotKey.enabled;
+    data.hotKey = m_settings->globalHotKey.hotKey;
+
+    data.serverEnabled = m_settings->server.enabled;
+    data.token = m_settings->server.token;
+    data.port = m_settings->server.port;
+    data.certificate = m_settings->server.certificate;
+    data.privateKey = m_settings->server.privateKey;
+
+    Preferences preferences(data);
 
     if (preferences.exec() == QDialog::Accepted) {
+        Preferences::Data data = preferences.data();
+
+        m_settings->general.language = data.language;
+        m_settings->backups.directory = data.backupsDirectory;
+
+        m_settings->editor.fontFamily = data.fontFamily;
+        m_settings->editor.fontSize = data.fontSize;
+
+        m_settings->general.hideTrayIcon = data.hideTrayIcon;
+        m_settings->general.minimizeOnStartup = data.minimizeOnStartup;
+
+        m_settings->globalHotKey.enabled = data.hotKeyEnabled;
+        m_settings->globalHotKey.hotKey = data.hotKey;
+
+        m_settings->server.enabled = data.serverEnabled;
+        m_settings->server.token = data.token;
+        m_settings->server.port = data.port;
+        m_settings->server.certificate = data.certificate;
+        m_settings->server.privateKey = data.privateKey;
+
         applyHotSettings();
     }
 }

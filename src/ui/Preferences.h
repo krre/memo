@@ -12,7 +12,28 @@ class Preferences : public QDialog {
     Q_OBJECT
     friend class TestPreferences;
 public:
-    Preferences(Settings* settings, QWidget* parent = nullptr);
+    struct Data {
+        QString language;
+        QString backupsDirectory;
+
+        QString fontFamily;
+        int fontSize;
+
+        bool hideTrayIcon;
+        bool minimizeOnStartup;
+
+        bool hotKeyEnabled;
+        QString hotKey;
+
+        bool serverEnabled;
+        QString token;
+        int port;
+        QString certificate;
+        QString privateKey;
+    };
+
+    Preferences(const Data& data, QWidget* parent = nullptr);
+    Data data() const;
 
 public slots:
     void accept() override;
@@ -24,15 +45,12 @@ private slots:
     void onPrivateKeyBrowseButtonClicked();
 
 private:
-    QGroupBox* createUiGroupBox();
-    QGroupBox* createHotkeyGroupBox();
-    QGroupBox* createBackupsGroupBox();
-    QGroupBox* createServerGroupBox();
+    QGroupBox* createUiGroupBox(const Data& data);
+    QGroupBox* createHotkeyGroupBox(const Data& data);
+    QGroupBox* createBackupsGroupBox(const Data& data);
+    QGroupBox* createServerGroupBox(const Data& data);
 
-    void readSettings();
-    bool writeSettings();
-
-    Settings* m_settings = nullptr;
+    QString m_language;
 
     QComboBox* m_languageComboBox = nullptr;
     QLineEdit* m_fontFamilyLineEdit = nullptr;

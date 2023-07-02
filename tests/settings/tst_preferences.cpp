@@ -26,42 +26,43 @@ TestPreferences::~TestPreferences() {
 }
 
 void TestPreferences::readOptions() {
-    Settings settings;
-    settings.general.language = "ru";
-    settings.editor.fontFamily = "Ubuntu";
-    settings.editor.fontSize = 10;
-    settings.general.minimizeOnStartup = true;
-    settings.general.hideTrayIcon = true;
-    settings.globalHotKey.enabled = true;
-    settings.globalHotKey.hotKey = "Ctrl+Alt+M";
-    settings.backups.directory = "/home/user/backups";
-    settings.server.enabled = true;
-    settings.server.token = "123456";
-    settings.server.port = 80;
-    settings.server.certificate = "certificate";
-    settings.server.privateKey = "privateKey";
+    Preferences::Data data;
+    data.language = "ru";
+    data.fontFamily = "Ubuntu";
+    data.fontSize = 10;
+    data.minimizeOnStartup = true;
+    data.hideTrayIcon = true;
+    data.hotKeyEnabled = true;
+    data.hotKey = "Ctrl+Alt+M";
+    data.backupsDirectory = "/home/user/backups";
+    data.serverEnabled = true;
+    data.token = "123456";
+    data.port = 80;
+    data.certificate = "certificate";
+    data.privateKey = "privateKey";
 
-    Preferences preferences(&settings);
+    Preferences preferences(data);
 
-    QCOMPARE(preferences.m_languageComboBox->currentData().toString(), settings.general.language);
-    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), settings.editor.fontFamily);
-    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), settings.editor.fontSize);
-    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), settings.general.minimizeOnStartup);
-    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), settings.general.hideTrayIcon);
-    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), settings.globalHotKey.enabled);
-    QCOMPARE(preferences.m_hotkeyLineEdit->text(), settings.globalHotKey.hotKey);
-    QCOMPARE(preferences.m_backupsLineEdit->text(), settings.backups.directory);
-    QCOMPARE(preferences.m_serverGroupBox->isChecked(), settings.server.enabled);
-    QCOMPARE(preferences.m_tokenLineEdit->text(), settings.server.token);
-    QCOMPARE(preferences.m_portLineEdit->text().toInt(), settings.server.port);
-    QCOMPARE(preferences.m_certificateLineEdit->text(), settings.server.certificate);
-    QCOMPARE(preferences.m_privateKeyEdit->text(), settings.server.privateKey);
+    QCOMPARE(preferences.m_languageComboBox->currentData().toString(), data.language);
+    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), data.fontFamily);
+    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), data.fontSize);
+    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), data.minimizeOnStartup);
+    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), data.hideTrayIcon);
+    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), data.hotKeyEnabled);
+    QCOMPARE(preferences.m_hotkeyLineEdit->text(), data.hotKey);
+    QCOMPARE(preferences.m_backupsLineEdit->text(), data.backupsDirectory);
+    QCOMPARE(preferences.m_serverGroupBox->isChecked(), data.serverEnabled);
+    QCOMPARE(preferences.m_tokenLineEdit->text(), data.token);
+    QCOMPARE(preferences.m_portLineEdit->text().toInt(), data.port);
+    QCOMPARE(preferences.m_certificateLineEdit->text(), data.certificate);
+    QCOMPARE(preferences.m_privateKeyEdit->text(), data.privateKey);
 }
 
 void TestPreferences::setOptions() {
-    Settings settings;
-    settings.general.language = "ru"; // To prevent opening the need restart dialog
-    Preferences preferences(&settings);
+    Preferences::Data inputData;
+    inputData.language = "ru"; // To prevent opening the need restart dialog
+
+    Preferences preferences(inputData);
 
     int index = preferences.m_languageComboBox->findData("ru");
     preferences.m_languageComboBox->setCurrentIndex(index);
@@ -79,20 +80,21 @@ void TestPreferences::setOptions() {
     preferences.m_privateKeyEdit->setText("privateKey");
     preferences.accept();
 
-    QCOMPARE(preferences.m_languageComboBox->currentData().toString(), settings.general.language);
-    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), settings.editor.fontFamily);
-    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), settings.editor.fontSize);
-    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), settings.general.minimizeOnStartup);
-    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), settings.general.hideTrayIcon);
-    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), settings.globalHotKey.enabled);
-    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), settings.globalHotKey.enabled);
-    QCOMPARE(preferences.m_hotkeyLineEdit->text(), settings.globalHotKey.hotKey);
-    QCOMPARE(preferences.m_backupsLineEdit->text(), settings.backups.directory);
-    QCOMPARE(preferences.m_serverGroupBox->isChecked(), settings.server.enabled);
-    QCOMPARE(preferences.m_tokenLineEdit->text(), settings.server.token);
-    QCOMPARE(preferences.m_portLineEdit->text().toInt(), settings.server.port);
-    QCOMPARE(preferences.m_certificateLineEdit->text(), settings.server.certificate);
-    QCOMPARE(preferences.m_privateKeyEdit->text(), settings.server.privateKey);
+    Preferences::Data outputData = preferences.data();
+
+    QCOMPARE(preferences.m_languageComboBox->currentData().toString(), outputData.language);
+    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), outputData.fontFamily);
+    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), outputData.fontSize);
+    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), outputData.minimizeOnStartup);
+    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), outputData.hideTrayIcon);
+    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), outputData.hotKeyEnabled);
+    QCOMPARE(preferences.m_hotkeyLineEdit->text(), outputData.hotKey);
+    QCOMPARE(preferences.m_backupsLineEdit->text(), outputData.backupsDirectory);
+    QCOMPARE(preferences.m_serverGroupBox->isChecked(), outputData.serverEnabled);
+    QCOMPARE(preferences.m_tokenLineEdit->text(), outputData.token);
+    QCOMPARE(preferences.m_portLineEdit->text().toInt(), outputData.port);
+    QCOMPARE(preferences.m_certificateLineEdit->text(), outputData.certificate);
+    QCOMPARE(preferences.m_privateKeyEdit->text(), outputData.privateKey);
 }
 
 QTEST_MAIN(TestPreferences)
