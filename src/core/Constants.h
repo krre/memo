@@ -14,11 +14,6 @@ namespace App {
     constexpr auto BuildTime = __TIME__;
 }
 
-namespace Window {
-    constexpr int MaxRecentFiles = 10;
-    constexpr int SystemRecentFilesActions = 2;
-}
-
 namespace NoteTaking {
     constexpr auto TreeItemMimeType = "application/x-treeitem";
 }

@@ -4,6 +4,7 @@
 
 class QSplitter;
 
+class RecentFilesMenu;
 class NoteTaking;
 class TrayIcon;
 class Editor;
@@ -31,7 +32,6 @@ private slots:
     void onExport();
     void onBackup();
     void onClose();
-    void onClearRecentFiles();
     void onPreferences();
     void onFind();
     void onFindNext();
@@ -43,6 +43,9 @@ private slots:
 
     void onGlobalActivated();
 
+private slots:
+    void loadFile(const QString& filePath);
+
 private:
     void readSettings();
     void writeSettings();
@@ -51,16 +54,14 @@ private:
     void setupSplitter();
     void createActions();
 
-    void loadFile(const QString& filePath);
     void setCurrentFile(const QString& filePath = QString());
-    void addRecentFile(const QString& filePath);
 
     void showErrorDialog(const QString& message);
     QString dateFileName(const QString& name);
 
     QString m_currentFile;
     TrayIcon* m_trayIcon = nullptr;
-    QMenu* m_recentFilesMenu = nullptr;
+    RecentFilesMenu* m_recentFilesMenu = nullptr;
     QSplitter* m_splitter = nullptr;
 
     NoteTaking* m_notetaking = nullptr;

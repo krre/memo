@@ -30,6 +30,7 @@ set(SRC
     server/handler/NameHandler.h server/handler/NameHandler.cpp
     server/handler/NotesHandler.h server/handler/NotesHandler.cpp
     ui/MainWindow.h ui/MainWindow.cpp
+    ui/RecentFilesMenu.h ui/RecentFilesMenu.cpp
     ui/TrayIcon.h ui/TrayIcon.cpp
     ui/Editor.h ui/Editor.cpp
     ui/FindText.h ui/FindText.cpp

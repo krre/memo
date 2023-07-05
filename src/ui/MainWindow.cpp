@@ -1,4 +1,5 @@
 #include "MainWindow.h"
+#include "RecentFilesMenu.h"
 #include "Editor.h"
 #include "TrayIcon.h"
 #include "FindText.h"
@@ -60,10 +61,6 @@ void MainWindow::readSettings() {
 
     m_splitter->restoreState(Settings::value<General::Splitter>());
 
-    for (const QString& filePath : Settings::value<RecentFiles::Name>()) {
-        addRecentFile(filePath);
-    }
-
     loadFile(Settings::value<General::FilePath>());
 
     if (!Settings::value<General::MinimizeOnStartup>()) {
@@ -77,14 +74,6 @@ void MainWindow::writeSettings() {
     Settings::setValue<General::Geometry>(saveGeometry());
     Settings::setValue<General::Splitter>(m_splitter->saveState());
     Settings::setValue<General::FilePath>(m_currentFile);
-
-    QStringList recentFiles;
-
-    for (int i = 0; i < m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions; ++i) {
-        recentFiles.append(m_recentFilesMenu->actions().at(i)->text());
-    }
-
-    Settings::setValue<RecentFiles::Name>(recentFiles);
 }
 
 void MainWindow::applyHotSettings() {
@@ -158,9 +147,8 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::onNew);
     fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::onOpen);
 
-    m_recentFilesMenu = new QMenu(tr("Recent Files"), this);
-    m_recentFilesMenu->addSeparator();
-    m_recentFilesMenu->addAction(tr("Clear"), this, &MainWindow::onClearRecentFiles);
+    m_recentFilesMenu = new RecentFilesMenu(tr("Recent Files"), this);
+    connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::loadFile);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
     auto exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
@@ -229,7 +217,7 @@ void MainWindow::loadFile(const QString& filePath) {
         m_database->open(filePath);
         m_notetaking->build();
         setCurrentFile(filePath);
-        addRecentFile(filePath);
+        m_recentFilesMenu->addPath(filePath);
     } catch (const Exception& e) {
         showErrorDialog(e.error());
     }
@@ -246,28 +234,6 @@ void MainWindow::setCurrentFile(const QString& filePath) {
     setWindowTitle(title);
     m_currentFile = filePath;
     emit isOpened(!filePath.isEmpty());
-}
-
-void MainWindow::addRecentFile(const QString& filePath) {
-    if (!QFile::exists(filePath)) return;
-    const auto actions = m_recentFilesMenu->actions();
-
-    for (QAction* action : actions) {
-        if (action->text() == filePath) {
-            m_recentFilesMenu->removeAction(action);
-        }
-    }
-
-    auto fileAction = new QAction(filePath);
-    connect(fileAction, &QAction::triggered, this, [=, this] {
-        loadFile(filePath);
-    });
-
-    m_recentFilesMenu->insertAction(m_recentFilesMenu->actions().constFirst(), fileAction);
-
-    if (m_recentFilesMenu->actions().size() > Const::Window::MaxRecentFiles + Const::Window::SystemRecentFilesActions) {
-        m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1));
-    }
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
@@ -342,12 +308,6 @@ void MainWindow::onClose() {
     onNoteChanged(0);
     m_notetaking->clear();
     setCurrentFile();
-}
-
-void MainWindow::onClearRecentFiles() {
-    for (int i = m_recentFilesMenu->actions().size() - Const::Window::SystemRecentFilesActions - 1; i >= 0; i--) {
-        m_recentFilesMenu->removeAction(m_recentFilesMenu->actions().at(i));
-    }
 }
 
 void MainWindow::onPreferences() {
