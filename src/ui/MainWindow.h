@@ -27,20 +27,19 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    void onNew();
-    void onOpen();
-    void onExport();
-    void onBackup();
-    void onClose();
-    void onPreferences();
-    void onFind();
-    void onFindNext();
-    void onFindPrevious();
-    void onAbout();
+    void createFile();
+    void open();
+    void exportAll();
+    void backup();
+    void closeFile();
+    void showPreferences();
+    void find();
+    void findNext();
+    void findPrevious();
+    void about();
 
     void onNoteChanged(Id id);
     void onEditorFocusLost();
-
     void onGlobalActivated();
 
 private slots:

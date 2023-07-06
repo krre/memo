@@ -144,16 +144,16 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     auto fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::onNew);
-    fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::onOpen);
+    fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::createFile);
+    fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::open);
 
     m_recentFilesMenu = new RecentFilesMenu(tr("Recent Files"), this);
     connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::loadFile);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
-    auto exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::onExport);
-    auto createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::onBackup);
-    auto closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::onClose);
+    auto exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::exportAll);
+    auto createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::backup);
+    auto closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::closeFile);
 
     exportAction->setEnabled(false);
     createBackupAction->setEnabled(false);
@@ -164,7 +164,7 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isOpened, closeAction, &QAction::setEnabled);
 
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Preferences..."), this, &MainWindow::onPreferences);
+    fileMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), Qt::Key_Escape, this, &MainWindow::hide);
     fileMenu->addSeparator();
@@ -180,9 +180,9 @@ void MainWindow::createActions() {
     editMenu->addSeparator();
     auto selectAllAction = editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
     editMenu->addSeparator();
-    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::onFind);
-    m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::onFindNext);
-    m_findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::onFindPrevious);
+    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
+    m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
+    m_findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
 
     undoAction->setEnabled(false);
     redoAction->setEnabled(false);
@@ -207,7 +207,7 @@ void MainWindow::createActions() {
     helpMenu->addAction(tr("Open download page"), [] {
         QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
     });
-    helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::onAbout);
+    helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::about);
 }
 
 void MainWindow::loadFile(const QString& filePath) {
@@ -251,13 +251,13 @@ void MainWindow::closeEvent(QCloseEvent* event) {
     event->accept();
 }
 
-void MainWindow::onNew() {
+void MainWindow::createFile() {
     QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                                     tr("All Files (*);;Database Files (*.db)"));
 
     if (fileName.isEmpty()) return;
 
-    onClose();
+    closeFile();
 
     if (QFile::exists(fileName)) {
         if (!QFile::remove(fileName)) {
@@ -273,16 +273,16 @@ void MainWindow::onNew() {
     }
 }
 
-void MainWindow::onOpen() {
+void MainWindow::open() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(),
                                                     tr("All Files (*);;Database Files (*.db)"));
     if (!fileName.isEmpty()) {
-        onClose();
+        closeFile();
         loadFile(fileName);
     }
 }
 
-void MainWindow::onExport() {
+void MainWindow::exportAll() {
     QFileInfo fi(m_currentFile);
     QString name = Settings::value<SettingsKey::Backups::Directory>() + "/" + dateFileName(fi.baseName() + ".zip");
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
@@ -292,7 +292,7 @@ void MainWindow::onExport() {
     }
 }
 
-void MainWindow::onBackup() {
+void MainWindow::backup() {
     QFileInfo fi(m_currentFile);
     QString name = Settings::value<SettingsKey::Backups::Directory>() + "/" + dateFileName(fi.fileName());
 
@@ -303,14 +303,14 @@ void MainWindow::onBackup() {
     }
 }
 
-void MainWindow::onClose() {
+void MainWindow::closeFile() {
     m_database->close();
     onNoteChanged(0);
     m_notetaking->clear();
     setCurrentFile();
 }
 
-void MainWindow::onPreferences() {
+void MainWindow::showPreferences() {
     using namespace SettingsKey;
 
     Preferences::Data data;
@@ -359,7 +359,7 @@ void MainWindow::onPreferences() {
     }
 }
 
-void MainWindow::onFind() {
+void MainWindow::find() {
     FindText findText;
     if (findText.exec() == QDialog::Rejected) return;
 
@@ -381,15 +381,15 @@ void MainWindow::onFind() {
     m_findPreviousAction->setEnabled(true);
 }
 
-void MainWindow::onFindNext() {
+void MainWindow::findNext() {
     m_editor->find(m_findText);
 }
 
-void MainWindow::onFindPrevious() {
+void MainWindow::findPrevious() {
     m_editor->find(m_findText, QTextDocument::FindBackward);
 }
 
-void MainWindow::onAbout() {
+void MainWindow::about() {
     using namespace Const::App;
 
     QMessageBox::about(this, tr("About %1").arg(Name),
