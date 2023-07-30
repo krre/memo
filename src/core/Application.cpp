@@ -1,8 +1,8 @@
 #include "Application.h"
 #include "core/Constants.h"
 #include "core/MessageHandler.h"
+#include "core/Settings.h"
 #include <QMessageBox>
-#include <QSettings>
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QSystemTrayIcon>
@@ -32,9 +32,7 @@ bool Application::setup() {
 }
 
 void Application::installTranslators() {
-    QSettings settings;
-
-    QString language = settings.value("language").toString();
+    QString language = Settings::value<SettingsKey::General::Language>();
 
     if (language.isEmpty()) {
         language = QLocale::system().name().split("_").first();
