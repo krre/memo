@@ -1,10 +1,11 @@
 #pragma once
+#include <QApplication>
 
-class Application {
+class Application : public QApplication {
 public:
-    Application();
-    static bool setup();
+    Application(int& argc, char* argv[]);
+    bool setup();
 
 private:
-    static void loadLanguage();
+    void installTranslators();
 };

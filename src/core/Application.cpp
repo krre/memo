@@ -1,22 +1,26 @@
 #include "Application.h"
 #include "core/Constants.h"
 #include "core/MessageHandler.h"
-#include <QApplication>
 #include <QMessageBox>
 #include <QSettings>
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QSystemTrayIcon>
 
-Application::Application() {
+Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
+    setOrganizationName(Const::App::Organization);
+    setApplicationName(Const::App::Name);
 
+#ifdef Q_OS_WIN
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+#endif
+
+    qInstallMessageHandler(messageHandler);
+    installTranslators();
 }
 
 bool Application::setup() {
-    QCoreApplication::setOrganizationName(Const::App::Organization);
-    QCoreApplication::setApplicationName(Const::App::Name);
-
-    QApplication::setQuitOnLastWindowClosed(false);
+    setQuitOnLastWindowClosed(false);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
         QMessageBox::critical(nullptr, QObject::tr("Systray"),
@@ -24,17 +28,10 @@ bool Application::setup() {
         return false;
     }
 
-#ifdef Q_OS_WIN
-    QSettings::setDefaultFormat(QSettings::IniFormat);
-#endif
-
-    qInstallMessageHandler(messageHandler);
-    loadLanguage();
-
     return true;
 }
 
-void Application::loadLanguage() {
+void Application::installTranslators() {
     QSettings settings;
 
     QString language = settings.value("language").toString();
@@ -46,12 +43,12 @@ void Application::loadLanguage() {
     auto qtTranslator = new QTranslator(qApp);
 
     if (qtTranslator->load("qt_" + language, QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
-        QCoreApplication::installTranslator(qtTranslator);
+        installTranslator(qtTranslator);
     }
 
     auto memoTranslator = new QTranslator(qApp);
 
     if (memoTranslator->load("memo-" + language, ":/i18n")) {
-        QCoreApplication::installTranslator(memoTranslator);
+        installTranslator(memoTranslator);
     }
 }
