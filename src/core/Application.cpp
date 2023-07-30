@@ -11,9 +11,7 @@ Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
     setOrganizationName(Const::App::Organization);
     setApplicationName(Const::App::Name);
 
-#ifdef Q_OS_WIN
-    QSettings::setDefaultFormat(QSettings::IniFormat);
-#endif
+    Settings::init();
 
     qInstallMessageHandler(messageHandler);
     installTranslators();
