@@ -132,8 +132,9 @@ QGroupBox* Preferences::createUiGroupBox(const Data& data) {
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Language:"), m_languageComboBox);
-    formLayout->itemAt(0, QFormLayout::FieldRole)->setAlignment(Qt::AlignLeft);
     formLayout->addRow(tr("Font:"), fontLayout);
+
+    formLayout->itemAt(formLayout->indexOf(m_languageComboBox))->setAlignment(Qt::AlignLeft);
 
     auto result = new QGroupBox(tr("User Interface"));
     auto verticalLayout = new QVBoxLayout(result);
