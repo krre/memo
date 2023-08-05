@@ -8,7 +8,7 @@ Patcher::Patcher(Database* db) : m_db(db) {
     patches[2] = [this] { patch2(); };
 }
 
-void Patcher::run() {
+void Patcher::run() const {
     int version = m_db->metaValue("version").toInt();
 
     if (version == currentVersion) return;
@@ -21,6 +21,6 @@ void Patcher::run() {
     m_db->updateMetaValue("version", currentVersion);
 }
 
-void Patcher::patch2() {
+void Patcher::patch2() const {
     m_db->exec("ALTER TABLE notes ADD COLUMN line INTEGER");
 }
