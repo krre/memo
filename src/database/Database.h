@@ -4,7 +4,7 @@
 #include "core/Globals.h"
 
 class Database : public QObject {
-    Q_OBJECT
+
 public:
     struct Note {
         Id id;
