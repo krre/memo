@@ -60,7 +60,7 @@ bool Database::isOpen() const {
     return m_db.isOpen();
 }
 
-int Database::insertNote(Id parentId, int pos, int depth, const QString& title) const {
+Id Database::insertNote(Id parentId, int pos, int depth, const QString& title) const {
     QVariantMap params = {
         { "parent_id", parentId },
         { "pos", pos },
@@ -69,7 +69,7 @@ int Database::insertNote(Id parentId, int pos, int depth, const QString& title) 
     };
 
     QSqlQuery query = exec("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)", params);
-    return query.lastInsertId().toInt();
+    return query.lastInsertId().toLongLong();
 }
 
 void Database::removeNote(Id id) const {
@@ -139,7 +139,7 @@ QString Database::name() const {
 
 Database::Note Database::queryToNote(const QSqlQuery& query) const {
     Note result;
-    result.id = query.value("id").toInt();
+    result.id = query.value("id").toLongLong();
     result.parentId = query.value("parent_id").toInt();
     result.pos = query.value("pos").toInt();
     result.depth = query.value("depth").toInt();

@@ -25,7 +25,7 @@ public:
     void close();
     bool isOpen() const;
 
-    int insertNote(Id parentId, int pos, int depth, const QString& title) const;
+    Id insertNote(Id parentId, int pos, int depth, const QString& title) const;
     void removeNote(Id id) const;
     Note note(Id id) const;
     QSqlQuery exec(const QString& sql, const QVariantMap& params = QVariantMap()) const;

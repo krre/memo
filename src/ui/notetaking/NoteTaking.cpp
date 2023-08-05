@@ -238,7 +238,7 @@ void NoteTaking::insertChild(const QString& title) {
     Id currentId = currentItem->id();
     int childRow = currentItem->childCount();
     int childDepth = currentItem->depth();
-    int childId = m_database->insertNote(currentId, childRow, childDepth, title);
+    Id childId = m_database->insertNote(currentId, childRow, childDepth, title);
 
     if (!m_model->insertRow(childRow, currentIndex)) {
         return;
