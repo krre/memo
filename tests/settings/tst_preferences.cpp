@@ -6,6 +6,20 @@
 #include <QCheckBox>
 #include <QGroupBox>
 
+constexpr auto language = "ru";
+constexpr auto fontFamily = "Ubuntu";
+constexpr auto fontSize = 10;
+constexpr auto minimizeOnStartup = true;
+constexpr auto hideTrayIcon = true;
+constexpr auto hotKeyEnabled = true;
+constexpr auto hotKey = "Ctrl+Alt+M";
+constexpr auto backupsDirectory = "/home/user/backups";
+constexpr auto serverEnabled = true;
+constexpr auto token = "123456";
+constexpr auto port = 80;
+constexpr auto certificate = "certificate";
+constexpr auto privateKey = "privateKey";
+
 class TestPreferences : public QObject {
     Q_OBJECT
 public:
@@ -27,19 +41,19 @@ TestPreferences::~TestPreferences() {
 
 void TestPreferences::readOptions() {
     Preferences::Data data;
-    data.language = "ru";
-    data.fontFamily = "Ubuntu";
-    data.fontSize = 10;
-    data.minimizeOnStartup = true;
-    data.hideTrayIcon = true;
-    data.hotKeyEnabled = true;
-    data.hotKey = "Ctrl+Alt+M";
-    data.backupsDirectory = "/home/user/backups";
-    data.serverEnabled = true;
-    data.token = "123456";
-    data.port = 80;
-    data.certificate = "certificate";
-    data.privateKey = "privateKey";
+    data.language = language;
+    data.fontFamily = fontFamily;
+    data.fontSize = fontSize;
+    data.minimizeOnStartup = minimizeOnStartup;
+    data.hideTrayIcon = hideTrayIcon;
+    data.hotKeyEnabled = hotKeyEnabled;
+    data.hotKey = hotKey;
+    data.backupsDirectory = backupsDirectory;
+    data.serverEnabled = serverEnabled;
+    data.token = token;
+    data.port = port;
+    data.certificate = certificate;
+    data.privateKey = privateKey;
 
     Preferences preferences(data);
 
@@ -60,24 +74,24 @@ void TestPreferences::readOptions() {
 
 void TestPreferences::setOptions() {
     Preferences::Data inputData;
-    inputData.language = "ru"; // To prevent opening the need restart dialog
+    inputData.language = language; // To prevent opening the need restart dialog
 
     Preferences preferences(inputData);
 
-    int index = preferences.m_languageComboBox->findData("ru");
+    int index = preferences.m_languageComboBox->findData(language);
     preferences.m_languageComboBox->setCurrentIndex(index);
-    preferences.m_fontFamilyLineEdit->setText("Ubuntu");
-    preferences.m_fontSizeLineEdit->setText("10");
-    preferences.m_minimizeCheckBox->setChecked(true);
-    preferences.m_hideTrayCheckBox->setChecked(true);
-    preferences.m_hotkeyGroupBox->setChecked(true);
-    preferences.m_hotkeyLineEdit->setText("Ctrl+Alt+M");
-    preferences.m_backupsLineEdit->setText("/home/user/backups");
-    preferences.m_serverGroupBox->setChecked(true);
-    preferences.m_tokenLineEdit->setText("123456");
-    preferences.m_portLineEdit->setText("80");
-    preferences.m_certificateLineEdit->setText("certificate");
-    preferences.m_privateKeyEdit->setText("privateKey");
+    preferences.m_fontFamilyLineEdit->setText(fontFamily);
+    preferences.m_fontSizeLineEdit->setText(QString::number(fontSize));
+    preferences.m_minimizeCheckBox->setChecked(minimizeOnStartup);
+    preferences.m_hideTrayCheckBox->setChecked(hideTrayIcon);
+    preferences.m_hotkeyGroupBox->setChecked(hotKeyEnabled);
+    preferences.m_hotkeyLineEdit->setText(hotKey);
+    preferences.m_backupsLineEdit->setText(backupsDirectory);
+    preferences.m_serverGroupBox->setChecked(serverEnabled);
+    preferences.m_tokenLineEdit->setText(token);
+    preferences.m_portLineEdit->setText(QString::number(port));
+    preferences.m_certificateLineEdit->setText(certificate);
+    preferences.m_privateKeyEdit->setText(privateKey);
     preferences.accept();
 
     Preferences::Data outputData = preferences.data();
