@@ -20,8 +20,7 @@ void Database::create(const QString& filepath) {
         throw DatabaseError(m_db.lastError());
     }
 
-    QSqlQuery query;
-    if (!query.exec(
+    exec(
         "CREATE TABLE notes("
             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "parent_id INTEGER,"
@@ -31,17 +30,11 @@ void Database::create(const QString& filepath) {
             "note TEXT,"
             "created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),"
             "updated_at TIMESTAMP DEFAULT (datetime('now', 'localtime'))"
-        ")")) {
-        throw SqlQueryError(query);
-    }
+        ")"
+    );
 
-    if (!query.exec("CREATE TABLE meta(version INTEGER, selected_id INTEGER)")) {
-        throw SqlQueryError(query);
-    }
-
-    if (!query.exec("INSERT INTO meta (version, selected_id) VALUES (1, 0)")) {
-        throw SqlQueryError(query);
-    }
+    exec("CREATE TABLE meta(version INTEGER, selected_id INTEGER)");
+    exec("INSERT INTO meta (version, selected_id) VALUES (1, 0)");
 }
 
 void Database::open(const QString& filepath) {
@@ -68,109 +61,69 @@ bool Database::isOpen() const {
 }
 
 int Database::insertNote(Id parentId, int pos, int depth, const QString& title) {
-    QSqlQuery query;
-    query.prepare("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)");
-    query.bindValue(":parent_id", parentId);
-    query.bindValue(":pos", pos);
-    query.bindValue(":depth", depth);
-    query.bindValue(":title", title);
+    QVariantMap params = {
+        { "parent_id", parentId },
+        { "pos", pos },
+        { "depth", depth },
+        { "title", title }
+    };
 
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
-
+    QSqlQuery query = exec("INSERT INTO notes (parent_id, pos, depth, title) VALUES (:parent_id, :pos, :depth, :title)", params);
     return query.lastInsertId().toInt();
 }
 
 void Database::removeNote(Id id) {
-    QSqlQuery query;
-    query.prepare("DELETE FROM notes WHERE id = :id");
-    query.bindValue(":id", id);
-
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
+    exec("DELETE FROM notes WHERE id = :id", { { "id", id } });
 }
 
 QSqlQuery Database::note(Id id) {
+    QSqlQuery query = exec("SELECT * FROM notes WHERE id = :id", { { "id", id } });
+    query.next();
+    return query;
+}
+
+QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) {
     QSqlQuery query;
-    query.prepare(QString("SELECT * FROM notes WHERE id = :id"));
-    query.bindValue(":id", id);
+    query.prepare(sql);
+
+    for (auto it = params.cbegin(); it != params.cend(); it++) {
+        query.bindValue(":" + it.key(), it.value());
+    }
 
     if (!query.exec()) {
         throw SqlQueryError(query);
-    } else {
-        query.next();
     }
 
     return query;
 }
 
-void Database::exec(const QString& sql) {
-    QSqlQuery query;
-
-    if (!query.exec(sql)) {
-        throw SqlQueryError(query);
-    }
-}
-
 void Database::updateValue(Id id, const QString& name, const QVariant& value) {
-    QSqlQuery query;
-    QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";
-    query.prepare(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate));
-    query.bindValue(":id", id);
-    query.bindValue(":value", value);
+    QVariantMap params = {
+        { "id", id },
+        { "value", value },
+    };
 
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
+    QString updateDate = name == "note" ? ", updated_at = datetime('now', 'localtime')" : "";
+    exec(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate), params);
 }
 
 QVariant Database::value(Id id, const QString& name) {
-    QSqlQuery query;
-    query.prepare(QString("SELECT %1 FROM notes WHERE id = :id").arg(name));
-    query.bindValue(":id", id);
-
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
-
-    if (query.first()) {
-        return query.value(name);
-    }
-
-    return QVariant();
+    QSqlQuery query = exec(QString("SELECT %1 FROM notes WHERE id = :id").arg(name), { { "id", id } });
+    return query.first() ? query.value(name) : QVariant();
 }
 
 void Database::updateMetaValue(const QString& name, const QVariant& value) {
-    QSqlQuery query;
-    query.prepare(QString("UPDATE meta SET %1 = :value").arg(name));
-    query.bindValue(":value", value);
-
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
+    exec(QString("UPDATE meta SET %1 = :value").arg(name), { { "value", value } });
 }
 
 QVariant Database::metaValue(const QString& name) {
-    QSqlQuery query;
-    query.prepare(QString("SELECT %1 FROM meta").arg(name));
-
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
-
-    if (query.first()) {
-        return query.value(name);
-    }
-
-    return QVariant();
+    QSqlQuery query = exec(QString("SELECT %1 FROM meta").arg(name));
+    return query.first() ? query.value(name) : QVariant();
 }
 
 QVector<Database::Note> Database::notes() {
     QVector<Note> result;
-
-    QSqlQuery query("SELECT id, parent_id, pos, depth, title, note FROM notes ORDER BY depth, pos");
+    QSqlQuery query = exec("SELECT id, parent_id, pos, depth, title, note FROM notes ORDER BY depth, pos");
 
     while (query.next()) {
         Note note;

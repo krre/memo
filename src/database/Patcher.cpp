@@ -1,6 +1,6 @@
 #include "Patcher.h"
 #include "Database.h"
-#include <QVariant>
+#include <QSqlQuery>
 
 const int currentVersion = 2;
 

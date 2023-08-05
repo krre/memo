@@ -1,5 +1,5 @@
 #pragma once
-#include <QObject>
+#include <QVariantMap>
 #include <QSqlDatabase>
 #include "core/Globals.h"
 
@@ -26,7 +26,7 @@ public:
     int insertNote(Id parentId, int pos, int depth, const QString& title);
     void removeNote(Id id);
     QSqlQuery note(Id id);
-    void exec(const QString& sql);
+    QSqlQuery exec(const QString& sql, const QVariantMap& params = QVariantMap());
 
     void updateValue(Id id, const QString& name, const QVariant& value);
     QVariant value(Id id, const QString& name);
