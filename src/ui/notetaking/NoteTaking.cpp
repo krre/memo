@@ -197,12 +197,12 @@ void NoteTaking::moveTree(const QModelIndex& index) {
 
 void NoteTaking::showProperties() {
     Id id = m_model->item(currentIndex())->id();
-    QSqlQuery query = m_database->note(id);
+    Database::Note note = m_database->note(id);
 
     NoteProperties::Data data;
-    data.title = query.value("title").toString();
-    data.createdAt = query.value("created_at").toString();
-    data.updatedAt = query.value("updated_at").toString();
+    data.title = note.title;
+    data.createdAt = note.createdAt;
+    data.updatedAt = note.updatedAt;
 
     NoteProperties props(data);
     props.exec();

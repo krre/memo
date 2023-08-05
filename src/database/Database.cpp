@@ -76,10 +76,10 @@ void Database::removeNote(Id id) {
     exec("DELETE FROM notes WHERE id = :id", { { "id", id } });
 }
 
-QSqlQuery Database::note(Id id) {
+Database::Note Database::note(Id id) {
     QSqlQuery query = exec("SELECT * FROM notes WHERE id = :id", { { "id", id } });
     query.next();
-    return query;
+    return queryToNote(query);
 }
 
 QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) {
@@ -123,18 +123,10 @@ QVariant Database::metaValue(const QString& name) {
 
 QVector<Database::Note> Database::notes() {
     QVector<Note> result;
-    QSqlQuery query = exec("SELECT id, parent_id, pos, depth, title, note FROM notes ORDER BY depth, pos");
+    QSqlQuery query = exec("SELECT * FROM notes ORDER BY depth, pos");
 
     while (query.next()) {
-        Note note;
-        note.id = query.value("id").toInt();
-        note.parentId = query.value("parent_id").toInt();
-        note.pos = query.value("pos").toInt();
-        note.depth = query.value("depth").toInt();
-        note.title = query.value("title").toString();
-        note.note = query.value("note").toString();
-
-        result.append(note);
+        result.append(queryToNote(query));
     }
 
     return result;
@@ -143,4 +135,18 @@ QVector<Database::Note> Database::notes() {
 QString Database::name() const {
     QFileInfo fi(m_db.databaseName());
     return fi.baseName();
+}
+
+Database::Note Database::queryToNote(const QSqlQuery& query) const {
+    Note result;
+    result.id = query.value("id").toInt();
+    result.parentId = query.value("parent_id").toInt();
+    result.pos = query.value("pos").toInt();
+    result.depth = query.value("depth").toInt();
+    result.title = query.value("title").toString();
+    result.note = query.value("note").toString();
+    result.createdAt = query.value("created_at").toString();
+    result.updatedAt = query.value("updated_at").toString();
+
+    return result;
 }
