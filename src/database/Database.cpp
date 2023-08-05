@@ -60,7 +60,7 @@ bool Database::isOpen() const {
     return m_db.isOpen();
 }
 
-int Database::insertNote(Id parentId, int pos, int depth, const QString& title) {
+int Database::insertNote(Id parentId, int pos, int depth, const QString& title) const {
     QVariantMap params = {
         { "parent_id", parentId },
         { "pos", pos },
@@ -72,17 +72,17 @@ int Database::insertNote(Id parentId, int pos, int depth, const QString& title) 
     return query.lastInsertId().toInt();
 }
 
-void Database::removeNote(Id id) {
+void Database::removeNote(Id id) const {
     exec("DELETE FROM notes WHERE id = :id", { { "id", id } });
 }
 
-Database::Note Database::note(Id id) {
+Database::Note Database::note(Id id) const {
     QSqlQuery query = exec("SELECT * FROM notes WHERE id = :id", { { "id", id } });
     query.next();
     return queryToNote(query);
 }
 
-QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) {
+QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) const {
     QSqlQuery query;
     query.prepare(sql);
 
@@ -97,7 +97,7 @@ QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) {
     return query;
 }
 
-void Database::updateValue(Id id, const QString& name, const QVariant& value) {
+void Database::updateValue(Id id, const QString& name, const QVariant& value) const {
     QVariantMap params = {
         { "id", id },
         { "value", value },
@@ -107,21 +107,21 @@ void Database::updateValue(Id id, const QString& name, const QVariant& value) {
     exec(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate), params);
 }
 
-QVariant Database::value(Id id, const QString& name) {
+QVariant Database::value(Id id, const QString& name) const {
     QSqlQuery query = exec(QString("SELECT %1 FROM notes WHERE id = :id").arg(name), { { "id", id } });
     return query.first() ? query.value(name) : QVariant();
 }
 
-void Database::updateMetaValue(const QString& name, const QVariant& value) {
+void Database::updateMetaValue(const QString& name, const QVariant& value) const {
     exec(QString("UPDATE meta SET %1 = :value").arg(name), { { "value", value } });
 }
 
-QVariant Database::metaValue(const QString& name) {
+QVariant Database::metaValue(const QString& name) const {
     QSqlQuery query = exec(QString("SELECT %1 FROM meta").arg(name));
     return query.first() ? query.value(name) : QVariant();
 }
 
-QVector<Database::Note> Database::notes() {
+QVector<Database::Note> Database::notes() const {
     QVector<Note> result;
     QSqlQuery query = exec("SELECT * FROM notes ORDER BY depth, pos");
 

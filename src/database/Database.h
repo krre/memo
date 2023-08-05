@@ -25,18 +25,18 @@ public:
     void close();
     bool isOpen() const;
 
-    int insertNote(Id parentId, int pos, int depth, const QString& title);
-    void removeNote(Id id);
-    Note note(Id id);
-    QSqlQuery exec(const QString& sql, const QVariantMap& params = QVariantMap());
+    int insertNote(Id parentId, int pos, int depth, const QString& title) const;
+    void removeNote(Id id) const;
+    Note note(Id id) const;
+    QSqlQuery exec(const QString& sql, const QVariantMap& params = QVariantMap()) const;
 
-    void updateValue(Id id, const QString& name, const QVariant& value);
-    QVariant value(Id id, const QString& name);
+    void updateValue(Id id, const QString& name, const QVariant& value) const;
+    QVariant value(Id id, const QString& name) const;
 
-    void updateMetaValue(const QString& name, const QVariant& value);
-    QVariant metaValue(const QString& name);
+    void updateMetaValue(const QString& name, const QVariant& value) const;
+    QVariant metaValue(const QString& name) const;
 
-    QVector<Note> notes();
+    QVector<Note> notes() const;
     QString name() const;
 
 private:
