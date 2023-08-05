@@ -1,7 +1,7 @@
 #pragma once
+#include "core/Globals.h"
 #include <QVariantMap>
 #include <QSqlDatabase>
-#include "core/Globals.h"
 
 class Database : public QObject {
 
