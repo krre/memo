@@ -1,7 +1,7 @@
 #pragma once
-#include <QDialog>
+#include "ui/StandardDialog.h"
 
-class NoteProperties : public QDialog {
+class NoteProperties : public StandardDialog {
     Q_OBJECT
 public:
     struct Data {

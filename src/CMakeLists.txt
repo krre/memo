@@ -45,7 +45,8 @@ set(SRC
     ${PLATFORM_SRC}
 )
 
-add_library(common STATIC ${SRC})
+add_library(common STATIC ${SRC}
+    ui/StandardDialog.h ui/StandardDialog.cpp)
 
 qt_add_translations(common TS_FILES i18n/memo-ru.ts SOURCES ${SRC})
 

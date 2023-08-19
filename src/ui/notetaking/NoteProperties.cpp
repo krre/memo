@@ -9,13 +9,6 @@ NoteProperties::NoteProperties(const Data& data) {
     formLayout->addRow(new QLabel(tr("Created at:")), new QLabel(data.createdAt));
     formLayout->addRow(new QLabel(tr("Updated at:")), new QLabel(data.updatedAt));
 
-    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Close);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-
-    auto layout = new QVBoxLayout;
-    layout->addLayout(formLayout);
-    layout->addStretch(1);
-    layout->addWidget(buttonBox);
-
-    setLayout(layout);
+    setContentLayout(formLayout);
+    buttonBox()->setStandardButtons(QDialogButtonBox::Close);
 }

@@ -2,22 +2,19 @@
 #include <QtWidgets>
 #include <QtNetwork>
 
-Preferences::Preferences(const Data& data, QWidget* parent) : QDialog (parent) {
+Preferences::Preferences(const Data& data, QWidget* parent) : StandardDialog(parent) {
     setWindowTitle(tr("Preferences"));
 
-    auto layout = new QVBoxLayout(this);
+    auto layout = new QVBoxLayout;
     layout->addWidget(createUiGroupBox(data));
     layout->addWidget(createHotkeyGroupBox(data));
     layout->addWidget(createBackupsGroupBox(data));
     layout->addWidget(createServerGroupBox(data));
     layout->addStretch(1);
 
-    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(buttonBox, &QDialogButtonBox::accepted, this, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
-    layout->addWidget(buttonBox);
+    setContentLayout(layout);
+    resizeToWidth(600);
 
-    resize(600, 300);
     m_language = data.language;
 }
 

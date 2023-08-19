@@ -1,5 +1,5 @@
 #pragma once
-#include <QDialog>
+#include "StandardDialog.h"
 
 class Settings;
 
@@ -8,7 +8,7 @@ class QLineEdit;
 class QCheckBox;
 class QGroupBox;
 
-class Preferences : public QDialog {
+class Preferences : public StandardDialog {
     Q_OBJECT
     friend class TestPreferences;
 public:

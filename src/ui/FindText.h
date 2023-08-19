@@ -1,9 +1,9 @@
 #pragma once
-#include <QDialog>
+#include "StandardDialog.h"
 
 class QLineEdit;
 
-class FindText : public QDialog {
+class FindText : public StandardDialog {
     Q_OBJECT
 public:
     FindText();
