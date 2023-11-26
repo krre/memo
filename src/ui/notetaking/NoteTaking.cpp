@@ -4,7 +4,7 @@
 #include "NoteProperties.h"
 #include "database/Database.h"
 #include "database/DatabaseException.h"
-#include <QtGui/private/qzipwriter_p.h>
+#include <QtCore/private/qzipwriter_p.h>
 #include <QtWidgets>
 #include <QtSql>
 
