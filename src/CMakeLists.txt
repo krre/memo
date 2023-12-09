@@ -14,7 +14,8 @@ if(APPLE)
     set(PLATFORM_SRC ui/hotkey/NativeEventFilterMac.cpp)
 endif()
 
-set(SRC
+add_library(common STATIC
+    ui/StandardDialog.h ui/StandardDialog.cpp
     core/Application.h core/Application.cpp
     core/Constants.h
     core/Globals.h
@@ -41,14 +42,11 @@ set(SRC
     ui/notetaking/NoteTaking.h ui/notetaking/NoteTaking.cpp
     ui/notetaking/TreeItem.h ui/notetaking/TreeItem.cpp
     ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
-    i18n/memo-ru.ts
     ${PLATFORM_SRC}
+    i18n/memo-ru.ts
 )
 
-add_library(common STATIC ${SRC}
-    ui/StandardDialog.h ui/StandardDialog.cpp)
-
-qt_add_translations(common TS_FILES i18n/memo-ru.ts SOURCES ${SRC})
+qt_add_translations(common TS_FILES i18n/memo-ru.ts)
 
 target_link_libraries(common PRIVATE Qt6::Widgets Qt6::Sql Qt6::HttpServer ${PLATFORM_LIBS})
 target_include_directories(common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
