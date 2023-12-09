@@ -6,19 +6,19 @@
 #include <QCheckBox>
 #include <QGroupBox>
 
-constexpr auto language = "ru";
-constexpr auto fontFamily = "Ubuntu";
-constexpr auto fontSize = 10;
-constexpr auto minimizeOnStartup = true;
-constexpr auto hideTrayIcon = true;
-constexpr auto hotKeyEnabled = true;
-constexpr auto hotKey = "Ctrl+Alt+M";
-constexpr auto backupsDirectory = "/home/user/backups";
-constexpr auto serverEnabled = true;
-constexpr auto token = "123456";
-constexpr auto port = 80;
-constexpr auto certificate = "certificate";
-constexpr auto privateKey = "privateKey";
+constexpr auto Language = "ru";
+constexpr auto FontFamily = "Ubuntu";
+constexpr auto FontSize = 10;
+constexpr auto MinimizeOnStartup = true;
+constexpr auto HideTrayIcon = true;
+constexpr auto HotKeyEnabled = true;
+constexpr auto HotKey = "Ctrl+Alt+M";
+constexpr auto BackupsDirectory = "/home/user/backups";
+constexpr auto ServerEnabled = true;
+constexpr auto Token = "123456";
+constexpr auto Port = 80;
+constexpr auto Certificate = "certificate";
+constexpr auto PrivateKey = "privateKey";
 
 class TestPreferences : public QObject {
     Q_OBJECT
@@ -41,74 +41,161 @@ TestPreferences::~TestPreferences() {
 
 void TestPreferences::readOptions() {
     Preferences::Data data;
-    data.language = language;
-    data.fontFamily = fontFamily;
-    data.fontSize = fontSize;
-    data.minimizeOnStartup = minimizeOnStartup;
-    data.hideTrayIcon = hideTrayIcon;
-    data.hotKeyEnabled = hotKeyEnabled;
-    data.hotKey = hotKey;
-    data.backupsDirectory = backupsDirectory;
-    data.serverEnabled = serverEnabled;
-    data.token = token;
-    data.port = port;
-    data.certificate = certificate;
-    data.privateKey = privateKey;
+    data.language = Language;
+    data.fontFamily = FontFamily;
+    data.fontSize = FontSize;
+    data.minimizeOnStartup = MinimizeOnStartup;
+    data.hideTrayIcon = HideTrayIcon;
+    data.hotKeyEnabled = HotKeyEnabled;
+    data.hotKey = HotKey;
+    data.backupsDirectory = BackupsDirectory;
+    data.serverEnabled = ServerEnabled;
+    data.token = Token;
+    data.port = Port;
+    data.certificate = Certificate;
+    data.privateKey = PrivateKey;
 
     Preferences preferences(data);
 
-    QCOMPARE(preferences.m_languageComboBox->currentData().toString(), data.language);
-    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), data.fontFamily);
-    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), data.fontSize);
-    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), data.minimizeOnStartup);
-    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), data.hideTrayIcon);
-    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), data.hotKeyEnabled);
-    QCOMPARE(preferences.m_hotkeyLineEdit->text(), data.hotKey);
-    QCOMPARE(preferences.m_backupsLineEdit->text(), data.backupsDirectory);
-    QCOMPARE(preferences.m_serverGroupBox->isChecked(), data.serverEnabled);
-    QCOMPARE(preferences.m_tokenLineEdit->text(), data.token);
-    QCOMPARE(preferences.m_portLineEdit->text().toInt(), data.port);
-    QCOMPARE(preferences.m_certificateLineEdit->text(), data.certificate);
-    QCOMPARE(preferences.m_privateKeyEdit->text(), data.privateKey);
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto languageComboBox = static_cast<QComboBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto fontFamilyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto fontSizeLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Open button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto minimizeCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto hideTrayCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto hotkeyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto backupsLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto serverGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // IP Address text
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto portLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto tokenLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto certificateLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto privateKeyEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+
+    QCOMPARE(languageComboBox->currentData(), Language);
+    QCOMPARE(fontFamilyLineEdit->text(), FontFamily);
+    QCOMPARE(fontSizeLineEdit->text().toInt(), FontSize);
+    QCOMPARE(minimizeCheckBox->isChecked(), MinimizeOnStartup);
+    QCOMPARE(hideTrayCheckBox->isChecked(), HideTrayIcon);
+    QCOMPARE(hotkeyGroupBox->isChecked(), HotKeyEnabled);
+    QCOMPARE(hotkeyLineEdit->text(), HotKey);
+    QCOMPARE(backupsLineEdit->text(), BackupsDirectory);
+    QCOMPARE(serverGroupBox->isChecked(), ServerEnabled);
+    QCOMPARE(portLineEdit->text().toInt(), Port);
+    QCOMPARE(tokenLineEdit->text(), Token);
+    QCOMPARE(certificateLineEdit->text(), Certificate);
+    QCOMPARE(privateKeyEdit->text(), PrivateKey);
 }
 
 void TestPreferences::setOptions() {
     Preferences::Data inputData;
-    inputData.language = language; // To prevent opening the need restart dialog
+    inputData.language = Language; // To prevent opening the need restart dialog
 
     Preferences preferences(inputData);
 
-    int index = preferences.m_languageComboBox->findData(language);
-    preferences.m_languageComboBox->setCurrentIndex(index);
-    preferences.m_fontFamilyLineEdit->setText(fontFamily);
-    preferences.m_fontSizeLineEdit->setText(QString::number(fontSize));
-    preferences.m_minimizeCheckBox->setChecked(minimizeOnStartup);
-    preferences.m_hideTrayCheckBox->setChecked(hideTrayIcon);
-    preferences.m_hotkeyGroupBox->setChecked(hotKeyEnabled);
-    preferences.m_hotkeyLineEdit->setText(hotKey);
-    preferences.m_backupsLineEdit->setText(backupsDirectory);
-    preferences.m_serverGroupBox->setChecked(serverEnabled);
-    preferences.m_tokenLineEdit->setText(token);
-    preferences.m_portLineEdit->setText(QString::number(port));
-    preferences.m_certificateLineEdit->setText(certificate);
-    preferences.m_privateKeyEdit->setText(privateKey);
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto languageComboBox = static_cast<QComboBox*>(preferences.focusWidget());
+    languageComboBox->setCurrentIndex(languageComboBox->findData(Language));
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto fontFamilyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    fontFamilyLineEdit->setText(FontFamily);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto fontSizeLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    fontSizeLineEdit->setText(QString::number(FontSize));
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Open button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto minimizeCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+    minimizeCheckBox->setChecked(MinimizeOnStartup);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto hideTrayCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+    hideTrayCheckBox->setChecked(HideTrayIcon);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
+    hotkeyGroupBox->setChecked(HotKeyEnabled);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto hotkeyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    hotkeyLineEdit->setText(HotKey);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto backupsLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    backupsLineEdit->setText(BackupsDirectory);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto serverGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
+    serverGroupBox->setChecked(ServerEnabled);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // IP Address text
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto portLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    portLineEdit->setText(QString::number(Port));
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto tokenLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    tokenLineEdit->setText(Token);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto certificateLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    certificateLineEdit->setText(Certificate);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto privateKeyEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    privateKeyEdit->setText(PrivateKey);
+
     preferences.accept();
 
     Preferences::Data outputData = preferences.data();
 
-    QCOMPARE(preferences.m_languageComboBox->currentData().toString(), outputData.language);
-    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), outputData.fontFamily);
-    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), outputData.fontSize);
-    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), outputData.minimizeOnStartup);
-    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), outputData.hideTrayIcon);
-    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), outputData.hotKeyEnabled);
-    QCOMPARE(preferences.m_hotkeyLineEdit->text(), outputData.hotKey);
-    QCOMPARE(preferences.m_backupsLineEdit->text(), outputData.backupsDirectory);
-    QCOMPARE(preferences.m_serverGroupBox->isChecked(), outputData.serverEnabled);
-    QCOMPARE(preferences.m_tokenLineEdit->text(), outputData.token);
-    QCOMPARE(preferences.m_portLineEdit->text().toInt(), outputData.port);
-    QCOMPARE(preferences.m_certificateLineEdit->text(), outputData.certificate);
-    QCOMPARE(preferences.m_privateKeyEdit->text(), outputData.privateKey);
+    QCOMPARE(outputData.language, Language);
+    QCOMPARE(outputData.fontFamily, FontFamily);
+    QCOMPARE(outputData.fontSize, FontSize);
+    QCOMPARE(outputData.minimizeOnStartup, MinimizeOnStartup);
+    QCOMPARE(outputData.hideTrayIcon, HideTrayIcon);
+    QCOMPARE(outputData.hotKeyEnabled, HotKeyEnabled);
+    QCOMPARE(outputData.hotKey, HotKey);
+    QCOMPARE(outputData.backupsDirectory, BackupsDirectory);
+    QCOMPARE(outputData.serverEnabled, ServerEnabled);
+    QCOMPARE(outputData.port, Port);
+    QCOMPARE(outputData.token, Token);
+    QCOMPARE(outputData.certificate, Certificate);
+    QCOMPARE(outputData.privateKey, PrivateKey);
 }
 
 QTEST_MAIN(TestPreferences)

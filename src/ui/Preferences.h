@@ -10,7 +10,6 @@ class QGroupBox;
 
 class Preferences : public StandardDialog {
     Q_OBJECT
-    friend class TestPreferences;
 public:
     struct Data {
         QString language;
