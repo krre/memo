@@ -36,13 +36,13 @@ private slots:
     void find();
     void findNext();
     void findPrevious();
+    void showBirthdays();
     void about();
 
     void onNoteChanged(Id id);
     void onEditorFocusLost();
     void onGlobalActivated();
 
-private slots:
     void loadFile(const QString& filePath);
 
 private:

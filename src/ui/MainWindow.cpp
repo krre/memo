@@ -8,6 +8,7 @@
 #include "core/Exception.h"
 #include "core/Settings.h"
 #include "core/SolidString.h"
+#include "birthdays/Birthdays.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -203,6 +204,9 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);
     connect(this, &MainWindow::isOpened, findAction, &QAction::setEnabled);
 
+    auto eventsMenu = menuBar()->addMenu(tr("Events"));
+    eventsMenu->addAction("Birthdays...", this, &MainWindow::showBirthdays);
+
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
         QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
@@ -387,6 +391,11 @@ void MainWindow::findNext() {
 
 void MainWindow::findPrevious() {
     m_editor->find(m_findText, QTextDocument::FindBackward);
+}
+
+void MainWindow::showBirthdays() {
+    auto birthdays = new Birthdays;
+    birthdays->show();
 }
 
 void MainWindow::about() {

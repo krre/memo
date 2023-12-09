@@ -15,6 +15,8 @@ if(APPLE)
 endif()
 
 add_library(common STATIC
+    i18n/memo-ru.ts
+    ${PLATFORM_SRC}
     ui/StandardDialog.h ui/StandardDialog.cpp
     core/Application.h core/Application.cpp
     core/Constants.h
@@ -42,8 +44,7 @@ add_library(common STATIC
     ui/notetaking/NoteTaking.h ui/notetaking/NoteTaking.cpp
     ui/notetaking/TreeItem.h ui/notetaking/TreeItem.cpp
     ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
-    ${PLATFORM_SRC}
-    i18n/memo-ru.ts
+    ui/birthdays/Birthdays.h ui/birthdays/Birthdays.cpp
 )
 
 qt_add_translations(common TS_FILES i18n/memo-ru.ts)
