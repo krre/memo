@@ -4,42 +4,42 @@
 <context>
     <name>Birthdays</name>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="5"/>
+        <location filename="../ui/Birthdays.cpp" line="5"/>
         <source>Birthdays</source>
         <translation>Дни рождения</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="26"/>
+        <location filename="../ui/Birthdays.cpp" line="26"/>
         <source>Delete Birthday</source>
         <translation>Удалить день рождения</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="26"/>
+        <location filename="../ui/Birthdays.cpp" line="26"/>
         <source>Are you want to delete your birthday?</source>
         <translation>Вы желаете удалить день рождения?</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="49"/>
+        <location filename="../ui/Birthdays.cpp" line="49"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="49"/>
+        <location filename="../ui/Birthdays.cpp" line="49"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="60"/>
+        <location filename="../ui/Birthdays.cpp" line="60"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="63"/>
+        <location filename="../ui/Birthdays.cpp" line="63"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../ui/birthdays/Birthdays.cpp" line="67"/>
+        <location filename="../ui/Birthdays.cpp" line="67"/>
         <source>Delete...</source>
         <translation>Удалить...</translation>
     </message>
