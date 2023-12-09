@@ -1,7 +1,10 @@
 #include "Birthdays.h"
+#include "database/Database.h"
 #include <QtWidgets>
 
-Birthdays::Birthdays() {
+constexpr auto BirthdayDateFormat = "dd.MM.yyyy";
+
+Birthdays::Birthdays(Database* database) : m_datebase(database) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -12,10 +15,19 @@ Birthdays::Birthdays() {
 
     setAttribute(Qt::WA_DeleteOnClose, true);
     resize(800, 400);
+
+    load();
 }
 
 void Birthdays::add() {
-    addRow(QDate::currentDate(), "");
+    Database::Birthday birthday;
+    birthday.date = QDate::currentDate();
+
+    Id id = m_datebase->insertBirthday(birthday);
+
+    const bool isBlocked = m_table->blockSignals(true);
+    addRow(id, birthday.date, "");
+    m_table->blockSignals(isBlocked);
 }
 
 void Birthdays::edit() {
@@ -24,7 +36,12 @@ void Birthdays::edit() {
 
 void Birthdays::deleteBirthday() {
     if (QMessageBox::question(this, tr("Delete Birthday"), tr("Are you want to delete your birthday?")) == QMessageBox::Yes) {
-        m_table->removeRow(m_table->currentRow());
+        int row = m_table->currentRow();
+        Id id = m_table->item(row, int(Column::Id))->text().toInt();
+
+        m_datebase->removeBirthday(id);
+        m_table->removeRow(row);
+
         m_table->setCurrentCell(-1, 0);
     }
 }
@@ -34,10 +51,32 @@ void Birthdays::updateButtonsState() {
     m_deleteButton->setEnabled(m_table->currentRow() >= 0);
 }
 
-void Birthdays::addRow(const QDate& date, const QString& name) {
+void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
+    Database::Birthday birthday;
+    birthday.id = m_table->item(row, int(Column::Id))->text().toInt();
+    birthday.date = QDate::fromString(m_table->item(row, int(Column::Date))->text(), BirthdayDateFormat);
+    birthday.name = m_table->item(row, int(Column::Name))->text();
+
+    m_datebase->updateBirthday(birthday);
+}
+
+void Birthdays::load() {
+    const bool isBlocked = m_table->blockSignals(true);
+
+    for (const auto& birthday : m_datebase->birthdays()) {
+        addRow(birthday.id, birthday.date, birthday.name);
+    }
+
+    m_table->blockSignals(isBlocked);
+}
+
+void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     m_table->insertRow(m_table->rowCount());
 
-    QTableWidgetItem* dateItem = new QTableWidgetItem(date.toString("dd.MM.yyyy"));
+    QTableWidgetItem* idItem = new QTableWidgetItem(QString::number(id));
+    m_table->setItem(m_table->rowCount() - 1, int(Column::Id), idItem);
+
+    QTableWidgetItem* dateItem = new QTableWidgetItem(date.toString(BirthdayDateFormat));
     m_table->setItem(m_table->rowCount() - 1, int(Column::Date), dateItem);
 
     QTableWidgetItem* nameItem = new QTableWidgetItem(name);
@@ -45,13 +84,15 @@ void Birthdays::addRow(const QDate& date, const QString& name) {
 }
 
 QTableWidget* Birthdays::createTable() {
-    m_table = new QTableWidget(0, 2);
-    m_table->setHorizontalHeaderLabels(QStringList(tr("Date")) << tr("Name"));
+    m_table = new QTableWidget(0, 3);
+    m_table->setHorizontalHeaderLabels({ "Id", tr("Date"), tr("Name") });
     m_table->setSelectionBehavior(QAbstractItemView::SelectItems);
-    m_table->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed|QAbstractItemView::AnyKeyPressed);
+    m_table->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed);
     m_table->horizontalHeader()->setStretchLastSection(true);
+    m_table->setColumnHidden(int(Column::Id), true);
 
     connect(m_table, &QTableWidget::currentCellChanged, this, &Birthdays::updateButtonsState);
+    connect(m_table, &QTableWidget::cellChanged, this, &Birthdays::onCellChanged);
 
     return m_table;
 }

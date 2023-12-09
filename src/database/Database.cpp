@@ -3,6 +3,8 @@
 #include "DatabaseException.h"
 #include <QtSql>
 
+constexpr auto BirthdayDateFormat = "yyyy-MM-dd";
+
 Database::Database(QObject* parent) : QObject(parent) {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
 }
@@ -97,6 +99,17 @@ Database::Note Database::note(Id id) const {
     return queryToNote(query);
 }
 
+QVector<Database::Note> Database::notes() const {
+    QVector<Note> result;
+    QSqlQuery query = exec("SELECT * FROM notes ORDER BY depth, pos");
+
+    while (query.next()) {
+        result.append(queryToNote(query));
+    }
+
+    return result;
+}
+
 void Database::updateNoteValue(Id id, const QString& name, const QVariant& value) const {
     QVariantMap params = {
         { "id", id },
@@ -112,6 +125,54 @@ QVariant Database::noteValue(Id id, const QString& name) const {
     return query.first() ? query.value(name) : QVariant();
 }
 
+Id Database::insertBirthday(const Birthday& birthday) const {
+    QVariantMap params = {
+        { "date", birthday.date.toString(BirthdayDateFormat) },
+        { "name", birthday.name }
+    };
+
+    QSqlQuery query = exec("INSERT INTO birthdays (date, name) VALUES (:date, :name)", params);
+    return query.lastInsertId().toLongLong();
+}
+
+void Database::updateBirthday(const Birthday& birthday) const {
+    QVariantMap params = {
+        { "id", birthday.id },
+        { "date", birthday.date.toString(BirthdayDateFormat) },
+        { "name", birthday.name }
+    };
+
+    exec(QString("UPDATE birthdays SET date = :date, name = :name WHERE id = :id"), params);
+}
+
+void Database::removeBirthday(Id id) const {
+    exec("DELETE FROM birthdays WHERE id = :id", { { "id", id } });
+}
+
+QVector<Database::Birthday> Database::birthdays(const QDate& date) const {
+    QVector<Birthday> result;
+    QVariantMap params;
+    QString where;
+
+    if (!date.isNull()) {
+        where = "WHERE date = :date";
+        params["date"] = date.toString(BirthdayDateFormat);
+    }
+
+    QSqlQuery query = exec(QString("SELECT * FROM birthdays %1 ORDER BY date ASC").arg(where), params);
+
+    while (query.next()) {
+        Birthday birthday;
+        birthday.id = query.value("id").toInt();
+        birthday.date = QDate::fromString(query.value("date").toString(), BirthdayDateFormat);
+        birthday.name = query.value("name").toString();
+
+        result.append(birthday);
+    }
+
+    return result;
+}
+
 void Database::updateMetaValue(const QString& name, const QVariant& value) const {
     exec(QString("UPDATE meta SET %1 = :value").arg(name), { { "value", value } });
 }
@@ -119,17 +180,6 @@ void Database::updateMetaValue(const QString& name, const QVariant& value) const
 QVariant Database::metaValue(const QString& name) const {
     QSqlQuery query = exec(QString("SELECT %1 FROM meta").arg(name));
     return query.first() ? query.value(name) : QVariant();
-}
-
-QVector<Database::Note> Database::notes() const {
-    QVector<Note> result;
-    QSqlQuery query = exec("SELECT * FROM notes ORDER BY depth, pos");
-
-    while (query.next()) {
-        result.append(queryToNote(query));
-    }
-
-    return result;
 }
 
 QString Database::name() const {

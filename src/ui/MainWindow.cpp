@@ -394,7 +394,7 @@ void MainWindow::findPrevious() {
 }
 
 void MainWindow::showBirthdays() {
-    auto birthdays = new Birthdays;
+    auto birthdays = new Birthdays(m_database);
     birthdays->show();
 }
 
