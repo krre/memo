@@ -11,7 +11,8 @@ public:
 
 private:
     void patch2() const; // 14.12.2019
+    void patch3() const; // 09.12.2023
 
-    Database* m_db;
+    Database* m_db = nullptr;
     QHash<int, std::function<void()>> patches;
 };

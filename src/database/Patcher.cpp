@@ -2,10 +2,11 @@
 #include "Database.h"
 #include <QSqlQuery>
 
-const int currentVersion = 2;
+const int currentVersion = 3;
 
 Patcher::Patcher(Database* db) : m_db(db) {
     patches[2] = [this] { patch2(); };
+    patches[3] = [this] { patch3(); };
 }
 
 void Patcher::run() const {
@@ -23,4 +24,14 @@ void Patcher::run() const {
 
 void Patcher::patch2() const {
     m_db->exec("ALTER TABLE notes ADD COLUMN line INTEGER");
+}
+
+void Patcher::patch3() const {
+    m_db->exec(
+        "CREATE TABLE birthdays("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "date DATE,"
+            "name TEXT"
+        ")"
+    );
 }
