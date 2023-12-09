@@ -2,21 +2,56 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="ru_RU">
 <context>
+    <name>Birthdays</name>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="5"/>
+        <source>Birthdays</source>
+        <translation>Дни рождения</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="26"/>
+        <source>Delete Birthday</source>
+        <translation>Удалить день рождения</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="26"/>
+        <source>Are you want to delete your birthday?</source>
+        <translation>Вы желаете удалить день рождения?</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="49"/>
+        <source>Date</source>
+        <translation>Дата</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="49"/>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="60"/>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="63"/>
+        <source>Edit</source>
+        <translation>Изменить</translation>
+    </message>
+    <message>
+        <location filename="../ui/birthdays/Birthdays.cpp" line="67"/>
+        <source>Delete...</source>
+        <translation>Удалить...</translation>
+    </message>
+</context>
+<context>
     <name>FindText</name>
     <message>
-        <location filename="../ui/FindText.cpp" line="5"/>
-        <location filename="../ui/FindText.cpp" line="5"/>
-        <location filename="../ui/FindText.cpp" line="5"/>
-        <location filename="../ui/FindText.cpp" line="5"/>
         <location filename="../ui/FindText.cpp" line="5"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="../ui/FindText.cpp" line="10"/>
-        <location filename="../ui/FindText.cpp" line="10"/>
-        <location filename="../ui/FindText.cpp" line="10"/>
-        <location filename="../ui/FindText.cpp" line="10"/>
         <location filename="../ui/FindText.cpp" line="10"/>
         <source>Text:</source>
         <translation>Текст:</translation>
@@ -25,401 +60,186 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="125"/>
-        <location filename="../ui/MainWindow.cpp" line="125"/>
-        <location filename="../ui/MainWindow.cpp" line="125"/>
-        <location filename="../ui/MainWindow.cpp" line="141"/>
-        <location filename="../ui/MainWindow.cpp" line="150"/>
-        <location filename="../ui/MainWindow.cpp" line="150"/>
-        <location filename="../ui/MainWindow.cpp" line="150"/>
-        <location filename="../ui/MainWindow.cpp" line="150"/>
+        <location filename="../ui/MainWindow.cpp" line="147"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="126"/>
-        <location filename="../ui/MainWindow.cpp" line="126"/>
-        <location filename="../ui/MainWindow.cpp" line="126"/>
-        <location filename="../ui/MainWindow.cpp" line="142"/>
-        <location filename="../ui/MainWindow.cpp" line="151"/>
-        <location filename="../ui/MainWindow.cpp" line="151"/>
-        <location filename="../ui/MainWindow.cpp" line="151"/>
-        <location filename="../ui/MainWindow.cpp" line="151"/>
+        <location filename="../ui/MainWindow.cpp" line="148"/>
         <source>New...</source>
         <translation>Создать...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="127"/>
-        <location filename="../ui/MainWindow.cpp" line="127"/>
-        <location filename="../ui/MainWindow.cpp" line="127"/>
-        <location filename="../ui/MainWindow.cpp" line="143"/>
-        <location filename="../ui/MainWindow.cpp" line="152"/>
-        <location filename="../ui/MainWindow.cpp" line="152"/>
-        <location filename="../ui/MainWindow.cpp" line="152"/>
-        <location filename="../ui/MainWindow.cpp" line="152"/>
+        <location filename="../ui/MainWindow.cpp" line="149"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="135"/>
-        <location filename="../ui/MainWindow.cpp" line="135"/>
-        <location filename="../ui/MainWindow.cpp" line="135"/>
-        <location filename="../ui/MainWindow.cpp" line="151"/>
-        <location filename="../ui/MainWindow.cpp" line="160"/>
-        <location filename="../ui/MainWindow.cpp" line="160"/>
-        <location filename="../ui/MainWindow.cpp" line="160"/>
-        <location filename="../ui/MainWindow.cpp" line="160"/>
+        <location filename="../ui/MainWindow.cpp" line="156"/>
         <source>Create Backup...</source>
         <translation>Создать резервную копию...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="136"/>
-        <location filename="../ui/MainWindow.cpp" line="136"/>
-        <location filename="../ui/MainWindow.cpp" line="136"/>
-        <location filename="../ui/MainWindow.cpp" line="152"/>
-        <location filename="../ui/MainWindow.cpp" line="161"/>
-        <location filename="../ui/MainWindow.cpp" line="161"/>
-        <location filename="../ui/MainWindow.cpp" line="161"/>
-        <location filename="../ui/MainWindow.cpp" line="161"/>
+        <location filename="../ui/MainWindow.cpp" line="157"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="129"/>
-        <location filename="../ui/MainWindow.cpp" line="129"/>
-        <location filename="../ui/MainWindow.cpp" line="129"/>
-        <location filename="../ui/MainWindow.cpp" line="145"/>
-        <location filename="../ui/MainWindow.cpp" line="154"/>
-        <location filename="../ui/MainWindow.cpp" line="154"/>
-        <location filename="../ui/MainWindow.cpp" line="154"/>
-        <location filename="../ui/MainWindow.cpp" line="154"/>
+        <location filename="../ui/MainWindow.cpp" line="151"/>
         <source>Recent Files</source>
         <translation>Недавние файлы</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="131"/>
-        <location filename="../ui/MainWindow.cpp" line="131"/>
-        <location filename="../ui/MainWindow.cpp" line="131"/>
-        <location filename="../ui/MainWindow.cpp" line="147"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
         <source>Clear</source>
-        <translation>Очистить</translation>
+        <translation type="vanished">Очистить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="134"/>
-        <location filename="../ui/MainWindow.cpp" line="134"/>
-        <location filename="../ui/MainWindow.cpp" line="134"/>
-        <location filename="../ui/MainWindow.cpp" line="150"/>
-        <location filename="../ui/MainWindow.cpp" line="159"/>
-        <location filename="../ui/MainWindow.cpp" line="159"/>
-        <location filename="../ui/MainWindow.cpp" line="159"/>
-        <location filename="../ui/MainWindow.cpp" line="159"/>
+        <location filename="../ui/MainWindow.cpp" line="155"/>
         <source>Export All...</source>
         <translation>Экспортировать всё...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="139"/>
-        <location filename="../ui/MainWindow.cpp" line="139"/>
-        <location filename="../ui/MainWindow.cpp" line="139"/>
-        <location filename="../ui/MainWindow.cpp" line="163"/>
-        <location filename="../ui/MainWindow.cpp" line="172"/>
-        <location filename="../ui/MainWindow.cpp" line="172"/>
-        <location filename="../ui/MainWindow.cpp" line="172"/>
-        <location filename="../ui/MainWindow.cpp" line="172"/>
+        <location filename="../ui/MainWindow.cpp" line="168"/>
         <source>Preferences...</source>
         <translation>Настройки...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="141"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
-        <location filename="../ui/MainWindow.cpp" line="141"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
-        <location filename="../ui/MainWindow.cpp" line="141"/>
-        <location filename="../ui/MainWindow.cpp" line="156"/>
-        <location filename="../ui/MainWindow.cpp" line="165"/>
-        <location filename="../ui/MainWindow.cpp" line="213"/>
-        <location filename="../ui/MainWindow.cpp" line="174"/>
-        <location filename="../ui/MainWindow.cpp" line="174"/>
-        <location filename="../ui/MainWindow.cpp" line="174"/>
-        <location filename="../ui/MainWindow.cpp" line="174"/>
+        <location filename="../ui/MainWindow.cpp" line="170"/>
         <source>Hide</source>
         <translation>Спрятать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="143"/>
-        <location filename="../ui/MainWindow.cpp" line="158"/>
-        <location filename="../ui/MainWindow.cpp" line="143"/>
-        <location filename="../ui/MainWindow.cpp" line="158"/>
-        <location filename="../ui/MainWindow.cpp" line="143"/>
-        <location filename="../ui/MainWindow.cpp" line="158"/>
-        <location filename="../ui/MainWindow.cpp" line="167"/>
-        <location filename="../ui/MainWindow.cpp" line="215"/>
-        <location filename="../ui/MainWindow.cpp" line="176"/>
-        <location filename="../ui/MainWindow.cpp" line="176"/>
-        <location filename="../ui/MainWindow.cpp" line="176"/>
-        <location filename="../ui/MainWindow.cpp" line="176"/>
+        <location filename="../ui/MainWindow.cpp" line="172"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="145"/>
-        <location filename="../ui/MainWindow.cpp" line="145"/>
-        <location filename="../ui/MainWindow.cpp" line="145"/>
-        <location filename="../ui/MainWindow.cpp" line="202"/>
-        <location filename="../ui/MainWindow.cpp" line="211"/>
-        <location filename="../ui/MainWindow.cpp" line="211"/>
-        <location filename="../ui/MainWindow.cpp" line="211"/>
-        <location filename="../ui/MainWindow.cpp" line="211"/>
+        <location filename="../ui/MainWindow.cpp" line="210"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="146"/>
-        <location filename="../ui/MainWindow.cpp" line="146"/>
-        <location filename="../ui/MainWindow.cpp" line="146"/>
-        <location filename="../ui/MainWindow.cpp" line="203"/>
-        <location filename="../ui/MainWindow.cpp" line="212"/>
-        <location filename="../ui/MainWindow.cpp" line="212"/>
-        <location filename="../ui/MainWindow.cpp" line="212"/>
-        <location filename="../ui/MainWindow.cpp" line="212"/>
+        <location filename="../ui/MainWindow.cpp" line="211"/>
         <source>Open download page</source>
         <translation>Открыть страницу загрузки</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="149"/>
-        <location filename="../ui/MainWindow.cpp" line="149"/>
-        <location filename="../ui/MainWindow.cpp" line="149"/>
-        <location filename="../ui/MainWindow.cpp" line="206"/>
-        <location filename="../ui/MainWindow.cpp" line="215"/>
-        <location filename="../ui/MainWindow.cpp" line="215"/>
-        <location filename="../ui/MainWindow.cpp" line="215"/>
-        <location filename="../ui/MainWindow.cpp" line="215"/>
+        <location filename="../ui/MainWindow.cpp" line="214"/>
         <source>About %1...</source>
         <translation>О программе %1...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="155"/>
-        <location filename="../ui/MainWindow.cpp" line="155"/>
-        <location filename="../ui/MainWindow.cpp" line="155"/>
-        <location filename="../ui/MainWindow.cpp" line="212"/>
         <source>Show</source>
-        <translation>Показать</translation>
+        <translation type="vanished">Показать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="225"/>
-        <location filename="../ui/MainWindow.cpp" line="225"/>
-        <location filename="../ui/MainWindow.cpp" line="225"/>
-        <location filename="../ui/MainWindow.cpp" line="273"/>
-        <location filename="../ui/MainWindow.cpp" line="267"/>
-        <location filename="../ui/MainWindow.cpp" line="267"/>
-        <location filename="../ui/MainWindow.cpp" line="267"/>
-        <location filename="../ui/MainWindow.cpp" line="267"/>
+        <location filename="../ui/MainWindow.cpp" line="244"/>
         <source>Error</source>
         <translation>Ошибка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="240"/>
-        <location filename="../ui/MainWindow.cpp" line="240"/>
-        <location filename="../ui/MainWindow.cpp" line="240"/>
-        <location filename="../ui/MainWindow.cpp" line="288"/>
-        <location filename="../ui/MainWindow.cpp" line="282"/>
-        <location filename="../ui/MainWindow.cpp" line="282"/>
-        <location filename="../ui/MainWindow.cpp" line="282"/>
-        <location filename="../ui/MainWindow.cpp" line="282"/>
+        <location filename="../ui/MainWindow.cpp" line="259"/>
         <source>New File</source>
         <translation>Новый файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="241"/>
-        <location filename="../ui/MainWindow.cpp" line="263"/>
-        <location filename="../ui/MainWindow.cpp" line="241"/>
-        <location filename="../ui/MainWindow.cpp" line="263"/>
-        <location filename="../ui/MainWindow.cpp" line="241"/>
-        <location filename="../ui/MainWindow.cpp" line="263"/>
-        <location filename="../ui/MainWindow.cpp" line="289"/>
-        <location filename="../ui/MainWindow.cpp" line="311"/>
-        <location filename="../ui/MainWindow.cpp" line="283"/>
-        <location filename="../ui/MainWindow.cpp" line="305"/>
-        <location filename="../ui/MainWindow.cpp" line="283"/>
-        <location filename="../ui/MainWindow.cpp" line="305"/>
-        <location filename="../ui/MainWindow.cpp" line="283"/>
-        <location filename="../ui/MainWindow.cpp" line="305"/>
-        <location filename="../ui/MainWindow.cpp" line="283"/>
-        <location filename="../ui/MainWindow.cpp" line="305"/>
+        <location filename="../ui/MainWindow.cpp" line="260"/>
+        <location filename="../ui/MainWindow.cpp" line="282"/>
         <source>All Files (*);;Database Files (*.db)</source>
         <translation>Все файлы (*);;Файлы баз данных (*.db)</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="249"/>
-        <location filename="../ui/MainWindow.cpp" line="249"/>
-        <location filename="../ui/MainWindow.cpp" line="249"/>
-        <location filename="../ui/MainWindow.cpp" line="297"/>
-        <location filename="../ui/MainWindow.cpp" line="291"/>
-        <location filename="../ui/MainWindow.cpp" line="291"/>
-        <location filename="../ui/MainWindow.cpp" line="291"/>
-        <location filename="../ui/MainWindow.cpp" line="291"/>
+        <location filename="../ui/MainWindow.cpp" line="268"/>
         <source>Error rewriting old file</source>
         <translation>Ошибка перезаписи старого файла</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="262"/>
-        <location filename="../ui/MainWindow.cpp" line="262"/>
-        <location filename="../ui/MainWindow.cpp" line="262"/>
-        <location filename="../ui/MainWindow.cpp" line="310"/>
-        <location filename="../ui/MainWindow.cpp" line="304"/>
-        <location filename="../ui/MainWindow.cpp" line="304"/>
-        <location filename="../ui/MainWindow.cpp" line="304"/>
-        <location filename="../ui/MainWindow.cpp" line="304"/>
+        <location filename="../ui/MainWindow.cpp" line="281"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="273"/>
-        <location filename="../ui/MainWindow.cpp" line="273"/>
-        <location filename="../ui/MainWindow.cpp" line="273"/>
-        <location filename="../ui/MainWindow.cpp" line="321"/>
-        <location filename="../ui/MainWindow.cpp" line="315"/>
-        <location filename="../ui/MainWindow.cpp" line="315"/>
-        <location filename="../ui/MainWindow.cpp" line="315"/>
-        <location filename="../ui/MainWindow.cpp" line="315"/>
+        <location filename="../ui/MainWindow.cpp" line="292"/>
         <source>Export notes to ZIP archive</source>
         <translation>Экспортировать заметки в ZIP архив</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="284"/>
-        <location filename="../ui/MainWindow.cpp" line="284"/>
-        <location filename="../ui/MainWindow.cpp" line="284"/>
-        <location filename="../ui/MainWindow.cpp" line="332"/>
-        <location filename="../ui/MainWindow.cpp" line="326"/>
-        <location filename="../ui/MainWindow.cpp" line="326"/>
-        <location filename="../ui/MainWindow.cpp" line="326"/>
-        <location filename="../ui/MainWindow.cpp" line="326"/>
+        <location filename="../ui/MainWindow.cpp" line="303"/>
         <source>Create Backup</source>
         <translation>Создать резервную копию</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="317"/>
-        <location filename="../ui/MainWindow.cpp" line="317"/>
-        <location filename="../ui/MainWindow.cpp" line="317"/>
-        <location filename="../ui/MainWindow.cpp" line="393"/>
-        <location filename="../ui/MainWindow.cpp" line="387"/>
-        <location filename="../ui/MainWindow.cpp" line="387"/>
-        <location filename="../ui/MainWindow.cpp" line="387"/>
-        <location filename="../ui/MainWindow.cpp" line="387"/>
+        <location filename="../ui/MainWindow.cpp" line="404"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="318"/>
-        <location filename="../ui/MainWindow.cpp" line="318"/>
-        <location filename="../ui/MainWindow.cpp" line="318"/>
-        <location filename="../ui/MainWindow.cpp" line="394"/>
-        <location filename="../ui/MainWindow.cpp" line="388"/>
-        <location filename="../ui/MainWindow.cpp" line="388"/>
-        <location filename="../ui/MainWindow.cpp" line="388"/>
-        <location filename="../ui/MainWindow.cpp" line="388"/>
+        <location filename="../ui/MainWindow.cpp" line="405"/>
         <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Note-taking for quick notes&lt;br&gt;&lt;br&gt;Based on Qt %4&lt;br&gt;Build on %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;Основано на Qt %4&lt;br&gt;Собрано %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Владимир Зарыпов</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="169"/>
-        <location filename="../ui/MainWindow.cpp" line="178"/>
-        <location filename="../ui/MainWindow.cpp" line="178"/>
-        <location filename="../ui/MainWindow.cpp" line="178"/>
-        <location filename="../ui/MainWindow.cpp" line="178"/>
+        <location filename="../ui/MainWindow.cpp" line="174"/>
         <source>Edit</source>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="170"/>
-        <location filename="../ui/MainWindow.cpp" line="179"/>
-        <location filename="../ui/MainWindow.cpp" line="179"/>
-        <location filename="../ui/MainWindow.cpp" line="179"/>
-        <location filename="../ui/MainWindow.cpp" line="179"/>
+        <location filename="../ui/MainWindow.cpp" line="175"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="171"/>
-        <location filename="../ui/MainWindow.cpp" line="180"/>
-        <location filename="../ui/MainWindow.cpp" line="180"/>
-        <location filename="../ui/MainWindow.cpp" line="180"/>
-        <location filename="../ui/MainWindow.cpp" line="180"/>
+        <location filename="../ui/MainWindow.cpp" line="176"/>
         <source>Redo</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="173"/>
-        <location filename="../ui/MainWindow.cpp" line="182"/>
-        <location filename="../ui/MainWindow.cpp" line="182"/>
-        <location filename="../ui/MainWindow.cpp" line="182"/>
-        <location filename="../ui/MainWindow.cpp" line="182"/>
+        <location filename="../ui/MainWindow.cpp" line="178"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="174"/>
-        <location filename="../ui/MainWindow.cpp" line="183"/>
-        <location filename="../ui/MainWindow.cpp" line="183"/>
-        <location filename="../ui/MainWindow.cpp" line="183"/>
-        <location filename="../ui/MainWindow.cpp" line="183"/>
+        <location filename="../ui/MainWindow.cpp" line="179"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="175"/>
-        <location filename="../ui/MainWindow.cpp" line="184"/>
-        <location filename="../ui/MainWindow.cpp" line="184"/>
-        <location filename="../ui/MainWindow.cpp" line="184"/>
-        <location filename="../ui/MainWindow.cpp" line="184"/>
+        <location filename="../ui/MainWindow.cpp" line="180"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="177"/>
-        <location filename="../ui/MainWindow.cpp" line="186"/>
-        <location filename="../ui/MainWindow.cpp" line="186"/>
-        <location filename="../ui/MainWindow.cpp" line="186"/>
-        <location filename="../ui/MainWindow.cpp" line="186"/>
+        <location filename="../ui/MainWindow.cpp" line="182"/>
         <source>Select All</source>
         <translation>Выделить всё</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="179"/>
-        <location filename="../ui/MainWindow.cpp" line="188"/>
-        <location filename="../ui/MainWindow.cpp" line="188"/>
-        <location filename="../ui/MainWindow.cpp" line="188"/>
-        <location filename="../ui/MainWindow.cpp" line="188"/>
+        <location filename="../ui/MainWindow.cpp" line="184"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="180"/>
-        <location filename="../ui/MainWindow.cpp" line="189"/>
-        <location filename="../ui/MainWindow.cpp" line="189"/>
-        <location filename="../ui/MainWindow.cpp" line="189"/>
-        <location filename="../ui/MainWindow.cpp" line="189"/>
+        <location filename="../ui/MainWindow.cpp" line="185"/>
         <source>Find Next</source>
         <translation>Найти далее</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="181"/>
-        <location filename="../ui/MainWindow.cpp" line="190"/>
-        <location filename="../ui/MainWindow.cpp" line="190"/>
-        <location filename="../ui/MainWindow.cpp" line="190"/>
-        <location filename="../ui/MainWindow.cpp" line="190"/>
+        <location filename="../ui/MainWindow.cpp" line="186"/>
         <source>Find Previous</source>
         <translation>Найти предыдущее</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="373"/>
-        <location filename="../ui/MainWindow.cpp" line="367"/>
-        <location filename="../ui/MainWindow.cpp" line="367"/>
-        <location filename="../ui/MainWindow.cpp" line="367"/>
-        <location filename="../ui/MainWindow.cpp" line="367"/>
+        <location filename="../ui/MainWindow.cpp" line="207"/>
+        <source>Events</source>
+        <translation>События</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="208"/>
+        <source>Birthdays...</source>
+        <translation>Дни рождения...</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="379"/>
         <source>Text not found</source>
         <translation>Текст не найден</translation>
     </message>
@@ -428,48 +248,20 @@
     <name>NoteProperties</name>
     <message>
         <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="5"/>
         <source>Note Properties</source>
         <translation>Свойства заметки</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
         <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
         <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
         <source>Created at:</source>
         <translation>Создано:</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
         <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
         <source>Updated at:</source>
         <translation>Обновлено:</translation>
@@ -479,144 +271,60 @@
     <name>NoteTaking</name>
     <message>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
         <source>Export Finished</source>
         <translation>Экспорт завершён</translation>
     </message>
     <message>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="43"/>
         <source>Count of notes: %1</source>
         <translation>Количество заметок: %1</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="105"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
         <source>Remove Notes</source>
         <translation>Удалить заметки</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="118"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="116"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="213"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="213"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="213"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="213"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="213"/>
         <source>Add...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="214"/>
         <source>Remove...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="216"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="216"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="216"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="215"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="217"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="217"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="217"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="217"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="217"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="219"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="219"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="219"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="218"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="221"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="221"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="221"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="220"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="220"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="220"/>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="220"/>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="220"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
@@ -625,326 +333,142 @@
 <context>
     <name>Preferences</name>
     <message>
-        <location filename="../ui/Preferences.cpp" line="7"/>
-        <location filename="../ui/Preferences.cpp" line="7"/>
-        <location filename="../ui/Preferences.cpp" line="7"/>
-        <location filename="../ui/Preferences.cpp" line="7"/>
-        <location filename="../ui/Preferences.cpp" line="7"/>
-        <location filename="../ui/Preferences.cpp" line="7"/>
-        <location filename="../ui/Preferences.cpp" line="7"/>
         <location filename="../ui/Preferences.cpp" line="6"/>
         <source>Preferences</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="100"/>
-        <location filename="../ui/Preferences.cpp" line="100"/>
-        <location filename="../ui/Preferences.cpp" line="100"/>
-        <location filename="../ui/Preferences.cpp" line="100"/>
-        <location filename="../ui/Preferences.cpp" line="100"/>
-        <location filename="../ui/Preferences.cpp" line="138"/>
+        <location filename="../ui/Preferences.cpp" line="136"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="80"/>
-        <location filename="../ui/Preferences.cpp" line="80"/>
-        <location filename="../ui/Preferences.cpp" line="96"/>
-        <location filename="../ui/Preferences.cpp" line="96"/>
-        <location filename="../ui/Preferences.cpp" line="96"/>
-        <location filename="../ui/Preferences.cpp" line="96"/>
-        <location filename="../ui/Preferences.cpp" line="96"/>
-        <location filename="../ui/Preferences.cpp" line="134"/>
+        <location filename="../ui/Preferences.cpp" line="131"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="57"/>
-        <location filename="../ui/Preferences.cpp" line="57"/>
-        <location filename="../ui/Preferences.cpp" line="73"/>
-        <location filename="../ui/Preferences.cpp" line="73"/>
-        <location filename="../ui/Preferences.cpp" line="73"/>
-        <location filename="../ui/Preferences.cpp" line="73"/>
-        <location filename="../ui/Preferences.cpp" line="73"/>
-        <location filename="../ui/Preferences.cpp" line="98"/>
+        <location filename="../ui/Preferences.cpp" line="95"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="82"/>
-        <location filename="../ui/Preferences.cpp" line="82"/>
-        <location filename="../ui/Preferences.cpp" line="98"/>
-        <location filename="../ui/Preferences.cpp" line="98"/>
-        <location filename="../ui/Preferences.cpp" line="98"/>
-        <location filename="../ui/Preferences.cpp" line="98"/>
-        <location filename="../ui/Preferences.cpp" line="98"/>
-        <location filename="../ui/Preferences.cpp" line="136"/>
+        <location filename="../ui/Preferences.cpp" line="132"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="68"/>
-        <location filename="../ui/Preferences.cpp" line="68"/>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="84"/>
-        <location filename="../ui/Preferences.cpp" line="119"/>
+        <location filename="../ui/Preferences.cpp" line="116"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="48"/>
-        <location filename="../ui/Preferences.cpp" line="73"/>
+        <location filename="../ui/Preferences.cpp" line="70"/>
         <source>Select Directory</source>
         <translation>Выберите директорию</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="58"/>
-        <location filename="../ui/Preferences.cpp" line="58"/>
-        <location filename="../ui/Preferences.cpp" line="74"/>
-        <location filename="../ui/Preferences.cpp" line="74"/>
-        <location filename="../ui/Preferences.cpp" line="74"/>
-        <location filename="../ui/Preferences.cpp" line="74"/>
-        <location filename="../ui/Preferences.cpp" line="74"/>
-        <location filename="../ui/Preferences.cpp" line="99"/>
+        <location filename="../ui/Preferences.cpp" line="96"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="59"/>
-        <location filename="../ui/Preferences.cpp" line="59"/>
-        <location filename="../ui/Preferences.cpp" line="75"/>
-        <location filename="../ui/Preferences.cpp" line="75"/>
-        <location filename="../ui/Preferences.cpp" line="75"/>
-        <location filename="../ui/Preferences.cpp" line="75"/>
-        <location filename="../ui/Preferences.cpp" line="75"/>
-        <location filename="../ui/Preferences.cpp" line="100"/>
+        <location filename="../ui/Preferences.cpp" line="97"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="76"/>
-        <location filename="../ui/Preferences.cpp" line="76"/>
-        <location filename="../ui/Preferences.cpp" line="92"/>
-        <location filename="../ui/Preferences.cpp" line="92"/>
-        <location filename="../ui/Preferences.cpp" line="92"/>
-        <location filename="../ui/Preferences.cpp" line="92"/>
-        <location filename="../ui/Preferences.cpp" line="92"/>
-        <location filename="../ui/Preferences.cpp" line="127"/>
+        <location filename="../ui/Preferences.cpp" line="124"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="77"/>
-        <location filename="../ui/Preferences.cpp" line="77"/>
-        <location filename="../ui/Preferences.cpp" line="93"/>
-        <location filename="../ui/Preferences.cpp" line="93"/>
-        <location filename="../ui/Preferences.cpp" line="93"/>
-        <location filename="../ui/Preferences.cpp" line="93"/>
-        <location filename="../ui/Preferences.cpp" line="93"/>
-        <location filename="../ui/Preferences.cpp" line="130"/>
+        <location filename="../ui/Preferences.cpp" line="127"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="94"/>
-        <location filename="../ui/Preferences.cpp" line="94"/>
-        <location filename="../ui/Preferences.cpp" line="110"/>
-        <location filename="../ui/Preferences.cpp" line="110"/>
-        <location filename="../ui/Preferences.cpp" line="110"/>
-        <location filename="../ui/Preferences.cpp" line="110"/>
-        <location filename="../ui/Preferences.cpp" line="110"/>
-        <location filename="../ui/Preferences.cpp" line="148"/>
+        <location filename="../ui/Preferences.cpp" line="146"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="106"/>
-        <location filename="../ui/Preferences.cpp" line="106"/>
-        <location filename="../ui/Preferences.cpp" line="122"/>
-        <location filename="../ui/Preferences.cpp" line="122"/>
-        <location filename="../ui/Preferences.cpp" line="122"/>
-        <location filename="../ui/Preferences.cpp" line="122"/>
-        <location filename="../ui/Preferences.cpp" line="122"/>
-        <location filename="../ui/Preferences.cpp" line="162"/>
+        <location filename="../ui/Preferences.cpp" line="160"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="109"/>
-        <location filename="../ui/Preferences.cpp" line="109"/>
-        <location filename="../ui/Preferences.cpp" line="125"/>
-        <location filename="../ui/Preferences.cpp" line="154"/>
-        <location filename="../ui/Preferences.cpp" line="158"/>
-        <location filename="../ui/Preferences.cpp" line="125"/>
-        <location filename="../ui/Preferences.cpp" line="154"/>
-        <location filename="../ui/Preferences.cpp" line="158"/>
-        <location filename="../ui/Preferences.cpp" line="125"/>
-        <location filename="../ui/Preferences.cpp" line="154"/>
-        <location filename="../ui/Preferences.cpp" line="158"/>
-        <location filename="../ui/Preferences.cpp" line="125"/>
-        <location filename="../ui/Preferences.cpp" line="154"/>
-        <location filename="../ui/Preferences.cpp" line="158"/>
-        <location filename="../ui/Preferences.cpp" line="125"/>
-        <location filename="../ui/Preferences.cpp" line="154"/>
-        <location filename="../ui/Preferences.cpp" line="158"/>
-        <location filename="../ui/Preferences.cpp" line="166"/>
-        <location filename="../ui/Preferences.cpp" line="200"/>
-        <location filename="../ui/Preferences.cpp" line="206"/>
+        <location filename="../ui/Preferences.cpp" line="164"/>
+        <location filename="../ui/Preferences.cpp" line="198"/>
+        <location filename="../ui/Preferences.cpp" line="204"/>
         <source>Browse...</source>
         <translation>Обзор...</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="112"/>
-        <location filename="../ui/Preferences.cpp" line="112"/>
-        <location filename="../ui/Preferences.cpp" line="128"/>
-        <location filename="../ui/Preferences.cpp" line="128"/>
-        <location filename="../ui/Preferences.cpp" line="128"/>
-        <location filename="../ui/Preferences.cpp" line="128"/>
-        <location filename="../ui/Preferences.cpp" line="128"/>
-        <location filename="../ui/Preferences.cpp" line="169"/>
+        <location filename="../ui/Preferences.cpp" line="167"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="138"/>
-        <location filename="../ui/Preferences.cpp" line="138"/>
         <source>IP Address:</source>
-        <translation>IP адрес:</translation>
+        <translation type="vanished">IP адрес:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="139"/>
-        <location filename="../ui/Preferences.cpp" line="139"/>
-        <location filename="../ui/Preferences.cpp" line="171"/>
-        <location filename="../ui/Preferences.cpp" line="171"/>
-        <location filename="../ui/Preferences.cpp" line="171"/>
-        <location filename="../ui/Preferences.cpp" line="171"/>
-        <location filename="../ui/Preferences.cpp" line="171"/>
-        <location filename="../ui/Preferences.cpp" line="219"/>
+        <location filename="../ui/Preferences.cpp" line="217"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="140"/>
-        <location filename="../ui/Preferences.cpp" line="140"/>
-        <location filename="../ui/Preferences.cpp" line="172"/>
-        <location filename="../ui/Preferences.cpp" line="172"/>
-        <location filename="../ui/Preferences.cpp" line="172"/>
-        <location filename="../ui/Preferences.cpp" line="172"/>
-        <location filename="../ui/Preferences.cpp" line="172"/>
-        <location filename="../ui/Preferences.cpp" line="220"/>
+        <location filename="../ui/Preferences.cpp" line="218"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
         <source>Key:</source>
-        <translation>Ключ:</translation>
+        <translation type="vanished">Ключ:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="142"/>
-        <location filename="../ui/Preferences.cpp" line="142"/>
-        <location filename="../ui/Preferences.cpp" line="176"/>
-        <location filename="../ui/Preferences.cpp" line="176"/>
-        <location filename="../ui/Preferences.cpp" line="176"/>
-        <location filename="../ui/Preferences.cpp" line="176"/>
-        <location filename="../ui/Preferences.cpp" line="176"/>
-        <location filename="../ui/Preferences.cpp" line="224"/>
+        <location filename="../ui/Preferences.cpp" line="222"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="52"/>
+        <location filename="../ui/Preferences.cpp" line="49"/>
         <source>Restart requred</source>
         <translation>Требуется перезапуск</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="27"/>
-        <location filename="../ui/Preferences.cpp" line="52"/>
+        <location filename="../ui/Preferences.cpp" line="49"/>
         <source>You must restart application</source>
         <translation>Вы должны перезапустить приложение</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="39"/>
-        <location filename="../ui/Preferences.cpp" line="64"/>
+        <location filename="../ui/Preferences.cpp" line="61"/>
         <source>Select Font</source>
         <translation>Выбрать шрифт</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="56"/>
-        <location filename="../ui/Preferences.cpp" line="56"/>
-        <location filename="../ui/Preferences.cpp" line="56"/>
-        <location filename="../ui/Preferences.cpp" line="56"/>
-        <location filename="../ui/Preferences.cpp" line="56"/>
-        <location filename="../ui/Preferences.cpp" line="81"/>
+        <location filename="../ui/Preferences.cpp" line="78"/>
         <source>Select SSL Certificate</source>
         <translation>Выберите SSL сертификат</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="64"/>
-        <location filename="../ui/Preferences.cpp" line="64"/>
-        <location filename="../ui/Preferences.cpp" line="64"/>
-        <location filename="../ui/Preferences.cpp" line="64"/>
-        <location filename="../ui/Preferences.cpp" line="64"/>
-        <location filename="../ui/Preferences.cpp" line="89"/>
+        <location filename="../ui/Preferences.cpp" line="86"/>
         <source>Select SSL Private Key</source>
         <translation>Выберите закрытый SSL ключ</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="170"/>
-        <location filename="../ui/Preferences.cpp" line="170"/>
-        <location filename="../ui/Preferences.cpp" line="170"/>
-        <location filename="../ui/Preferences.cpp" line="170"/>
-        <location filename="../ui/Preferences.cpp" line="170"/>
-        <location filename="../ui/Preferences.cpp" line="218"/>
+        <location filename="../ui/Preferences.cpp" line="216"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="173"/>
-        <location filename="../ui/Preferences.cpp" line="173"/>
-        <location filename="../ui/Preferences.cpp" line="173"/>
-        <location filename="../ui/Preferences.cpp" line="173"/>
-        <location filename="../ui/Preferences.cpp" line="173"/>
-        <location filename="../ui/Preferences.cpp" line="221"/>
+        <location filename="../ui/Preferences.cpp" line="219"/>
         <source>SSL certificate:</source>
         <translation>SSL сертификат:</translation>
     </message>
     <message>
-        <location filename="../ui/Preferences.cpp" line="174"/>
-        <location filename="../ui/Preferences.cpp" line="174"/>
-        <location filename="../ui/Preferences.cpp" line="174"/>
-        <location filename="../ui/Preferences.cpp" line="174"/>
-        <location filename="../ui/Preferences.cpp" line="174"/>
-        <location filename="../ui/Preferences.cpp" line="222"/>
+        <location filename="../ui/Preferences.cpp" line="220"/>
         <source>SSL private key:</source>
         <translation>Закрытый SSL ключ:</translation>
     </message>
@@ -952,50 +476,37 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../core/Application.cpp" line="22"/>
-        <location filename="../core/Application.cpp" line="22"/>
-        <location filename="../core/Application.cpp" line="22"/>
-        <location filename="../core/Application.cpp" line="22"/>
-        <location filename="../core/Application.cpp" line="22"/>
-        <location filename="../core/Application.cpp" line="22"/>
-        <location filename="../core/Application.cpp" line="22"/>
+        <location filename="../core/Application.cpp" line="24"/>
         <source>Systray</source>
         <translation>Системный трей</translation>
     </message>
     <message>
-        <location filename="../core/Application.cpp" line="23"/>
-        <location filename="../core/Application.cpp" line="23"/>
-        <location filename="../core/Application.cpp" line="23"/>
-        <location filename="../core/Application.cpp" line="23"/>
-        <location filename="../core/Application.cpp" line="23"/>
-        <location filename="../core/Application.cpp" line="23"/>
-        <location filename="../core/Application.cpp" line="23"/>
+        <location filename="../core/Application.cpp" line="25"/>
         <source>Absent any system tray on this system</source>
         <translation>На этой системе отсутствует системный трей</translation>
+    </message>
+</context>
+<context>
+    <name>RecentFilesMenu</name>
+    <message>
+        <location filename="../ui/RecentFilesMenu.cpp" line="11"/>
+        <source>Clear</source>
+        <translation>Очистить</translation>
     </message>
 </context>
 <context>
     <name>TrayIcon</name>
     <message>
         <location filename="../ui/TrayIcon.cpp" line="7"/>
-        <location filename="../ui/TrayIcon.cpp" line="7"/>
-        <location filename="../ui/TrayIcon.cpp" line="7"/>
-        <location filename="../ui/TrayIcon.cpp" line="7"/>
         <source>Show</source>
         <translation>Показать</translation>
     </message>
     <message>
         <location filename="../ui/TrayIcon.cpp" line="8"/>
-        <location filename="../ui/TrayIcon.cpp" line="8"/>
-        <location filename="../ui/TrayIcon.cpp" line="8"/>
-        <location filename="../ui/TrayIcon.cpp" line="8"/>
         <source>Hide</source>
         <translation>Спрятать</translation>
     </message>
     <message>
-        <location filename="../ui/TrayIcon.cpp" line="10"/>
-        <location filename="../ui/TrayIcon.cpp" line="10"/>
-        <location filename="../ui/TrayIcon.cpp" line="10"/>
         <location filename="../ui/TrayIcon.cpp" line="10"/>
         <source>Exit</source>
         <translation>Выход</translation>

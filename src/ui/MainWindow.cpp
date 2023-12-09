@@ -205,7 +205,7 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isOpened, findAction, &QAction::setEnabled);
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
-    eventsMenu->addAction("Birthdays...", this, &MainWindow::showBirthdays);
+    eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
