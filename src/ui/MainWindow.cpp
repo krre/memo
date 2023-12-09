@@ -418,11 +418,11 @@ void MainWindow::onNoteChanged(Id id) {
     m_findPreviousAction->setEnabled(false);
 
     if (id) {
-        QString note = m_database->value(id, "note").toString();
+        QString note = m_database->noteValue(id, "note").toString();
         m_editor->setPlainText(note);
         m_editor->setFocus();
 
-        int line = m_database->value(id, "line").toInt();
+        int line = m_database->noteValue(id, "line").toInt();
         QTextCursor cursor = m_editor->textCursor();
         cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
         m_editor->setTextCursor(cursor);
@@ -437,10 +437,10 @@ void MainWindow::onEditorFocusLost() {
     if (!lastId) return;
 
     if (m_editor->document()->isModified()) {
-        m_database->updateValue(lastId, "note", m_editor->document()->toPlainText());
+        m_database->updateNoteValue(lastId, "note", m_editor->document()->toPlainText());
     }
 
-    m_database->updateValue(lastId, "line", m_editor->textCursor().blockNumber());
+    m_database->updateNoteValue(lastId, "line", m_editor->textCursor().blockNumber());
 }
 
 void MainWindow::onGlobalActivated() {

@@ -60,6 +60,21 @@ bool Database::isOpen() const {
     return m_db.isOpen();
 }
 
+QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) const {
+    QSqlQuery query;
+    query.prepare(sql);
+
+    for (auto it = params.cbegin(); it != params.cend(); it++) {
+        query.bindValue(":" + it.key(), it.value());
+    }
+
+    if (!query.exec()) {
+        throw SqlQueryError(query);
+    }
+
+    return query;
+}
+
 Id Database::insertNote(Id parentId, int pos, int depth, const QString& title) const {
     QVariantMap params = {
         { "parent_id", parentId },
@@ -82,22 +97,7 @@ Database::Note Database::note(Id id) const {
     return queryToNote(query);
 }
 
-QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) const {
-    QSqlQuery query;
-    query.prepare(sql);
-
-    for (auto it = params.cbegin(); it != params.cend(); it++) {
-        query.bindValue(":" + it.key(), it.value());
-    }
-
-    if (!query.exec()) {
-        throw SqlQueryError(query);
-    }
-
-    return query;
-}
-
-void Database::updateValue(Id id, const QString& name, const QVariant& value) const {
+void Database::updateNoteValue(Id id, const QString& name, const QVariant& value) const {
     QVariantMap params = {
         { "id", id },
         { "value", value },
@@ -107,7 +107,7 @@ void Database::updateValue(Id id, const QString& name, const QVariant& value) co
     exec(QString("UPDATE notes SET %1 = :value %2 WHERE id = :id").arg(name, updateDate), params);
 }
 
-QVariant Database::value(Id id, const QString& name) const {
+QVariant Database::noteValue(Id id, const QString& name) const {
     QSqlQuery query = exec(QString("SELECT %1 FROM notes WHERE id = :id").arg(name), { { "id", id } });
     return query.first() ? query.value(name) : QVariant();
 }

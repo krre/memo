@@ -25,13 +25,14 @@ public:
     void close();
     bool isOpen() const;
 
+    QSqlQuery exec(const QString& sql, const QVariantMap& params = QVariantMap()) const;
+
     Id insertNote(Id parentId, int pos, int depth, const QString& title) const;
     void removeNote(Id id) const;
     Note note(Id id) const;
-    QSqlQuery exec(const QString& sql, const QVariantMap& params = QVariantMap()) const;
 
-    void updateValue(Id id, const QString& name, const QVariant& value) const;
-    QVariant value(Id id, const QString& name) const;
+    void updateNoteValue(Id id, const QString& name, const QVariant& value) const;
+    QVariant noteValue(Id id, const QString& name) const;
 
     void updateMetaValue(const QString& name, const QVariant& value) const;
     QVariant metaValue(const QString& name) const;
