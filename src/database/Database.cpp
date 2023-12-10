@@ -159,7 +159,7 @@ QVector<Database::Birthday> Database::birthdays(const QDate& date) const {
         params["date"] = date.toString("MM-dd");
     }
 
-    QSqlQuery query = exec(QString("SELECT * FROM birthdays %1 ORDER BY date ASC").arg(where), params);
+    QSqlQuery query = exec(QString("SELECT * FROM birthdays %1 ORDER BY strftime('%m-%d', date) ASC").arg(where), params);
 
     while (query.next()) {
         Birthday birthday;
