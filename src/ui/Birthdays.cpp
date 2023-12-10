@@ -61,9 +61,12 @@ void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
 }
 
 void Birthdays::load() {
+    m_table->setRowCount(0);
     const bool isBlocked = m_table->blockSignals(true);
 
-    for (const auto& birthday : m_datebase->birthdays()) {
+    QDate date = m_todayCheckBox->isChecked() ? QDate::currentDate() : QDate();
+
+    for (const auto& birthday : m_datebase->birthdays(date)) {
         addRow(birthday.id, birthday.date, birthday.name);
     }
 
@@ -109,10 +112,14 @@ QVBoxLayout* Birthdays::createButtons() {
     m_deleteButton->setEnabled(false);
     connect(m_deleteButton, &QPushButton::clicked, this, &Birthdays::deleteBirthday);
 
+    m_todayCheckBox = new QCheckBox(tr("Today"));
+    connect(m_todayCheckBox, &QCheckBox::clicked, this, &Birthdays::load);
+
     auto buttonLayout = new QVBoxLayout;
     buttonLayout->addWidget(addButton);
     buttonLayout->addWidget(m_editButton);
     buttonLayout->addWidget(m_deleteButton);
+    buttonLayout->addWidget(m_todayCheckBox);
     buttonLayout->addStretch();
 
     return buttonLayout;

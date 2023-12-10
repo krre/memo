@@ -4,44 +4,49 @@
 <context>
     <name>Birthdays</name>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="5"/>
+        <location filename="../ui/Birthdays.cpp" line="8"/>
         <source>Birthdays</source>
         <translation>Дни рождения</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="26"/>
+        <location filename="../ui/Birthdays.cpp" line="38"/>
         <source>Delete Birthday</source>
         <translation>Удалить день рождения</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="26"/>
+        <location filename="../ui/Birthdays.cpp" line="38"/>
         <source>Are you want to delete your birthday?</source>
         <translation>Вы желаете удалить день рождения?</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="49"/>
+        <location filename="../ui/Birthdays.cpp" line="91"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="49"/>
+        <location filename="../ui/Birthdays.cpp" line="91"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="60"/>
+        <location filename="../ui/Birthdays.cpp" line="104"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="63"/>
+        <location filename="../ui/Birthdays.cpp" line="107"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="67"/>
+        <location filename="../ui/Birthdays.cpp" line="111"/>
         <source>Delete...</source>
         <translation>Удалить...</translation>
+    </message>
+    <message>
+        <location filename="../ui/Birthdays.cpp" line="115"/>
+        <source>Today</source>
+        <translation>Сегодня</translation>
     </message>
 </context>
 <context>

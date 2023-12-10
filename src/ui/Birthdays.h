@@ -6,6 +6,7 @@ class QTableWidget;
 class QTableWidgetItem;
 class QPushButton;
 class QVBoxLayout;
+class QCheckBox;
 
 class Database;
 
@@ -19,6 +20,7 @@ private slots:
     void edit();
     void deleteBirthday();
 
+    void load();
     void updateButtonsState();
     void onCellChanged(int row, int column);
 
@@ -29,7 +31,6 @@ private:
         Name,
     };
 
-    void load();
     void addRow(Id id, const QDate& date, const QString& name);
 
     QTableWidget* createTable();
@@ -39,5 +40,6 @@ private:
     QPushButton* m_editButton = nullptr;
     QPushButton* m_deleteButton = nullptr;
 
+    QCheckBox* m_todayCheckBox = nullptr;
     Database* m_datebase = nullptr;
 };
