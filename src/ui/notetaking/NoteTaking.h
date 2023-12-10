@@ -12,7 +12,7 @@ class NoteTaking : public QTreeView {
 public:
     NoteTaking(Database* database);
 
-    void exportAllNotes(const QString& filePath);
+    int exportNote(Id parentId, const QString& path);
 
 public slots:
     void updateActions();
@@ -42,8 +42,6 @@ private:
     void createContextMenu();
     void updateContextMenu();
     void insertChild(const QString& title);
-    int exportNote(Id parentId, const QString& path);
-    void compressDir(const QString& dirPath);
 
     QMenu* m_contextMenu = nullptr;
     QAction* m_removeAction = nullptr;

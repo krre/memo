@@ -9,6 +9,7 @@
 #include "core/Exception.h"
 #include "core/Settings.h"
 #include "core/SolidString.h"
+#include "core/Exporter.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -297,7 +298,7 @@ void MainWindow::exportAll() {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
-        m_notetaking->exportAllNotes(filePath);
+        Exporter::exportAll(filePath, m_notetaking, m_database, this);
     }
 }
 
