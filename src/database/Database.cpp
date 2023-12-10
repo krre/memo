@@ -155,8 +155,8 @@ QVector<Database::Birthday> Database::birthdays(const QDate& date) const {
     QString where;
 
     if (!date.isNull()) {
-        where = "WHERE date = :date";
-        params["date"] = date.toString(BirthdayDateFormat);
+        where = "WHERE strftime('%m-%d', date) = :date";
+        params["date"] = date.toString("MM-dd");
     }
 
     QSqlQuery query = exec(QString("SELECT * FROM birthdays %1 ORDER BY date ASC").arg(where), params);
@@ -175,10 +175,10 @@ QVector<Database::Birthday> Database::birthdays(const QDate& date) const {
 
 bool Database::isBirthdayToday() const {
     QVariantMap params = {
-        { "date", QDate::currentDate().toString(BirthdayDateFormat) },
+        { "date", QDate::currentDate().toString("MM-dd") },
     };
 
-    QSqlQuery query = exec("SELECT COUNT(*) FROM birthdays WHERE date = :date", params);
+    QSqlQuery query = exec("SELECT COUNT(*) FROM birthdays WHERE strftime('%m-%d', date) = :date", params);
     query.first();
     return query.value(0).toInt();
 }
