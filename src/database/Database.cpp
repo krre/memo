@@ -173,6 +173,16 @@ QVector<Database::Birthday> Database::birthdays(const QDate& date) const {
     return result;
 }
 
+bool Database::isBirthdayToday() const {
+    QVariantMap params = {
+        { "date", QDate::currentDate().toString(BirthdayDateFormat) },
+    };
+
+    QSqlQuery query = exec("SELECT COUNT(*) FROM birthdays WHERE date = :date", params);
+    query.first();
+    return query.value(0).toInt();
+}
+
 void Database::updateMetaValue(const QString& name, const QVariant& value) const {
     exec(QString("UPDATE meta SET %1 = :value").arg(name), { { "value", value } });
 }

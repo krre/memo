@@ -4,7 +4,7 @@
 
 constexpr auto BirthdayDateFormat = "dd.MM.yyyy";
 
-Birthdays::Birthdays(Database* database) : m_datebase(database) {
+Birthdays::Birthdays(Database* database, Filter filter) : m_datebase(database) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -15,6 +15,10 @@ Birthdays::Birthdays(Database* database) : m_datebase(database) {
 
     setAttribute(Qt::WA_DeleteOnClose, true);
     resize(800, 400);
+
+    if (filter == Filter::Today) {
+        m_todayCheckBox->setChecked(true);
+    }
 
     load();
 }

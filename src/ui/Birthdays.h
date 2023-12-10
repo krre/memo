@@ -13,7 +13,12 @@ class Database;
 class Birthdays : public QWidget {
     Q_OBJECT
 public:
-    Birthdays(Database* database);
+    enum class Filter {
+        All,
+        Today
+    };
+
+    Birthdays(Database* database, Filter filter = Filter::All);
 
 private slots:
     void add();

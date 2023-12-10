@@ -46,6 +46,7 @@ public:
     void updateBirthday(const Birthday& birthday) const;
     void removeBirthday(Id id) const;
     QVector<Birthday> birthdays(const QDate& date = QDate()) const;
+    bool isBirthdayToday() const;
 
     void updateMetaValue(const QString& name, const QVariant& value) const;
     QVariant metaValue(const QString& name) const;

@@ -40,6 +40,11 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     });
 
     readSettings();
+
+    if (m_database->isBirthdayToday()) {
+        auto birthdays = new Birthdays(m_database, Birthdays::Filter::Today);
+        birthdays->show();
+    }
 }
 
 void MainWindow::quit() {
