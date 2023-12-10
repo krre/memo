@@ -2,6 +2,8 @@
 #include "core/Globals.h"
 #include <QWidget>
 
+constexpr auto BirthdayDateFormat = "dd.MM.yyyy";
+
 class QTableWidget;
 class QTableWidgetItem;
 class QPushButton;

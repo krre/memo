@@ -2,8 +2,6 @@
 #include "database/Database.h"
 #include <QtWidgets>
 
-constexpr auto BirthdayDateFormat = "dd.MM.yyyy";
-
 Birthdays::Birthdays(Database* database, Filter filter) : m_datebase(database) {
     setWindowTitle(tr("Birthdays"));
 

@@ -2,6 +2,7 @@
 #include "Exception.h"
 #include "database/Database.h"
 #include "ui/notetaking/NoteTaking.h"
+#include "ui/Birthdays.h"
 #include <QtCore/private/qzipwriter_p.h>
 #include <QtWidgets>
 
@@ -14,10 +15,24 @@ void Exporter::exportAll(const QString& filePath, NoteTaking* noteTaking, Databa
         dir.removeRecursively();
     });
 
-    int count = noteTaking->exportNote(0, dirPath);
+    int count = noteTaking->exportNote(0, dirPath + "/notes");
+    exportBirthdays(dirPath, database);
     compressDir(dirPath);
 
     QMessageBox::information(parent, tr("Export Finished"), tr("Count of notes: %1").arg(count));
+}
+
+void Exporter::exportBirthdays(const QString& dirPath, Database* database) {
+    QString filename = dirPath + "/birthdays.txt";
+    QFile file(filename);
+
+    if (!file.open(QIODevice::ReadWrite)) return;
+
+    QTextStream stream(&file);
+
+    for (const auto& birthday : database->birthdays()) {
+        stream << birthday.date.toString(BirthdayDateFormat) << " " << birthday.name << "\n";
+    }
 }
 
 void Exporter::compressDir(const QString& dirPath) {

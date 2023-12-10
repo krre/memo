@@ -239,8 +239,7 @@ void NoteTaking::insertChild(const QString& title) {
 }
 
 int NoteTaking::exportNote(Id parentId, const QString& path) {
-    QDir dir;
-    dir.mkdir(path);
+    QDir().mkpath(path);
 
     int count = 0;
     TreeItem* parentItem = m_model->root()->find(parentId);
