@@ -46,6 +46,8 @@ add_library(common STATIC
     ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
     ui/Birthdays.h ui/Birthdays.cpp
     core/Exporter.h core/Exporter.cpp
+    settings/Settings.h
+    settings/FileSettings.h settings/FileSettings.cpp
 )
 
 qt_add_translations(common TS_FILES i18n/memo-ru.ts)
