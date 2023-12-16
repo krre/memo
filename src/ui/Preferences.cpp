@@ -1,53 +1,56 @@
 #include "Preferences.h"
+#include "settings/Settings.h"
 #include <QtWidgets>
 #include <QtNetwork>
 
-Preferences::Preferences(const Data& data, QWidget* parent) : StandardDialog(parent) {
+Preferences::Preferences(Settings* settings, QWidget* parent) : StandardDialog(parent), m_settings(settings) {
     setWindowTitle(tr("Preferences"));
 
     auto layout = new QVBoxLayout;
-    layout->addWidget(createUiGroupBox(data));
-    layout->addWidget(createHotkeyGroupBox(data));
-    layout->addWidget(createBackupsGroupBox(data));
-    layout->addWidget(createServerGroupBox(data));
+    layout->addWidget(createUiGroupBox());
+    layout->addWidget(createHotkeyGroupBox());
+    layout->addWidget(createBackupsGroupBox());
+    layout->addWidget(createServerGroupBox());
     layout->addStretch(1);
 
     setContentLayout(layout);
     resizeToWidth(600);
-
-    m_language = data.language;
-}
-
-Preferences::Data Preferences::data() const {
-    Data result;
-
-    result.language = m_languageComboBox->currentData().toString();
-    result.backupsDirectory = m_backupsLineEdit->text();
-
-    result.minimizeOnStartup = m_minimizeCheckBox->isChecked();
-    result.hideTrayIcon = m_hideTrayCheckBox->isChecked();
-
-    result.fontFamily = m_fontFamilyLineEdit->text();
-    result.fontSize = m_fontSizeLineEdit->text().toInt();
-
-    result.hotKey = m_hotkeyLineEdit->text();
-    result.hotKeyEnabled = m_hotkeyGroupBox->isChecked();
-
-    result.serverEnabled = m_serverGroupBox->isChecked();
-    result.port = m_portLineEdit->text().toInt();
-    result.token = m_tokenLineEdit->text();
-    result.certificate = m_certificateLineEdit->text();
-    result.privateKey = m_privateKeyEdit->text();
-
-    return result;
 }
 
 void Preferences::accept() {
+    Settings::General general = m_settings->general();
     QString language = m_languageComboBox->currentData().toString();
 
-    if (language != m_language) {
+    if (m_settings->general().language != language) {
+        general.language = m_languageComboBox->currentData().toString();
         QMessageBox::information(this, tr("Restart requred"), tr("You must restart application"));
     }
+
+    general.minimizeOnStartup = m_minimizeCheckBox->isChecked();
+    general.hideTrayIcon = m_hideTrayCheckBox->isChecked();
+    m_settings->setGeneral(general);
+
+    Settings::Backups backups;
+    backups.directory = m_backupsLineEdit->text();
+    m_settings->setBackups(backups);
+
+    Settings::Editor editor;
+    editor.fontFamily = m_fontFamilyLineEdit->text();
+    editor.fontSize = m_fontSizeLineEdit->text().toInt();
+    m_settings->setEditor(editor);
+
+    Settings::GlobalHotkey globalHotkey;
+    globalHotkey.hotkey = m_hotkeyLineEdit->text();
+    globalHotkey.enabled = m_hotkeyGroupBox->isChecked();
+    m_settings->setGlobalHotkey(globalHotkey);
+
+    Settings::Server server;
+    server.enabled = m_serverGroupBox->isChecked();
+    server.port = m_portLineEdit->text().toInt();
+    server.token = m_tokenLineEdit->text();
+    server.certificate = m_certificateLineEdit->text();
+    server.privateKey = m_privateKeyEdit->text();
+    m_settings->setServer(server);
 
     QDialog::accept();
 }
@@ -90,28 +93,32 @@ void Preferences::onPrivateKeyBrowseButtonClicked() {
     }
 }
 
-QGroupBox* Preferences::createUiGroupBox(const Data& data) {
+QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox = new QComboBox;
     m_languageComboBox->addItem(tr("<System>"));
     m_languageComboBox->addItem(tr("English"), "en");
     m_languageComboBox->addItem(tr("Russian"), "ru");
 
-    if (!data.language.isEmpty()) {
-        int index = m_languageComboBox->findData(data.language);
+    Settings::General general = m_settings->general();
+
+    if (!general.language.isEmpty()) {
+        int index = m_languageComboBox->findData(general.language);
 
         if (index != -1) {
             m_languageComboBox->setCurrentIndex(index);
         }
     }
 
+    Settings::Editor editor = m_settings->editor();
+
     m_fontFamilyLineEdit = new QLineEdit;
     m_fontFamilyLineEdit->setReadOnly(true);
-    m_fontFamilyLineEdit->setText(data.fontFamily);
+    m_fontFamilyLineEdit->setText(editor.fontFamily);
 
     m_fontSizeLineEdit = new QLineEdit;
     m_fontSizeLineEdit->setMaximumWidth(50);
     m_fontSizeLineEdit->setReadOnly(true);
-    m_fontSizeLineEdit->setText(QString::number(data.fontSize));
+    m_fontSizeLineEdit->setText(QString::number(editor.fontSize));
 
     auto fontButton = new QPushButton(tr("Open..."));
     connect(fontButton, &QPushButton::clicked, this, &Preferences::onFontButtonClicked);
@@ -122,10 +129,10 @@ QGroupBox* Preferences::createUiGroupBox(const Data& data) {
     fontLayout->addWidget(fontButton);
 
     m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
-    m_minimizeCheckBox->setChecked(data.minimizeOnStartup);
+    m_minimizeCheckBox->setChecked(general.minimizeOnStartup);
 
     m_hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
-    m_hideTrayCheckBox->setChecked(data.hideTrayIcon);
+    m_hideTrayCheckBox->setChecked(general.hideTrayIcon);
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Language:"), m_languageComboBox);
@@ -142,13 +149,15 @@ QGroupBox* Preferences::createUiGroupBox(const Data& data) {
     return result;
 }
 
-QGroupBox* Preferences::createHotkeyGroupBox(const Data& data) {
+QGroupBox* Preferences::createHotkeyGroupBox() {
+    Settings::GlobalHotkey globalHotkey = m_settings->globalHotkey();
+
     m_hotkeyGroupBox = new QGroupBox(tr("Global Hotkey"));
     m_hotkeyGroupBox->setCheckable(true);
-    m_hotkeyGroupBox->setChecked(data.hotKeyEnabled);
+    m_hotkeyGroupBox->setChecked(globalHotkey.enabled);
 
     m_hotkeyLineEdit = new QLineEdit;
-    m_hotkeyLineEdit->setText(data.hotKey);
+    m_hotkeyLineEdit->setText(globalHotkey.hotkey);
 
     auto hotkeyLayout = new QVBoxLayout(m_hotkeyGroupBox);
     hotkeyLayout->addWidget(m_hotkeyLineEdit);
@@ -156,10 +165,10 @@ QGroupBox* Preferences::createHotkeyGroupBox(const Data& data) {
     return m_hotkeyGroupBox;
 }
 
-QGroupBox* Preferences::createBackupsGroupBox(const Data& data) {
+QGroupBox* Preferences::createBackupsGroupBox() {
     auto label = new QLabel(tr("Directory:"));
     m_backupsLineEdit = new QLineEdit;
-    m_backupsLineEdit->setText(data.backupsDirectory);
+    m_backupsLineEdit->setText(m_settings->backups().directory);
 
     auto browseButton = new QPushButton(tr("Browse..."));
     connect(browseButton, &QPushButton::clicked, this, &Preferences::onBackupsBrowseButtonClicked);
@@ -172,7 +181,7 @@ QGroupBox* Preferences::createBackupsGroupBox(const Data& data) {
     return result;
 }
 
-QGroupBox* Preferences::createServerGroupBox(const Data& data) {
+QGroupBox* Preferences::createServerGroupBox() {
     QString addresses;
 
     for (const QHostAddress& address: QNetworkInterface::allAddresses()) {
@@ -186,20 +195,22 @@ QGroupBox* Preferences::createServerGroupBox(const Data& data) {
     auto addressLineEdit = new QLineEdit(addresses);
     addressLineEdit->setReadOnly(true);
 
+    Settings::Server server = m_settings->server();
+
     m_portLineEdit = new QLineEdit;
-    m_portLineEdit->setText(QString::number(data.port));
+    m_portLineEdit->setText(QString::number(server.port));
 
     m_tokenLineEdit = new QLineEdit;
-    m_tokenLineEdit->setText(data.token);
+    m_tokenLineEdit->setText(server.token);
 
     m_certificateLineEdit = new QLineEdit;
-    m_certificateLineEdit->setText(data.certificate);
+    m_certificateLineEdit->setText(server.certificate);
 
     auto certificateBrowseButton = new QPushButton(tr("Browse..."));
     connect(certificateBrowseButton, &QPushButton::clicked, this, &Preferences::onCertificateBrowseButtonClicked);
 
     m_privateKeyEdit = new QLineEdit;
-    m_privateKeyEdit->setText(data.privateKey);
+    m_privateKeyEdit->setText(server.privateKey);
 
     auto privateKeyBrowseButton = new QPushButton(tr("Browse..."));
     connect(privateKeyBrowseButton, &QPushButton::clicked, this, &Preferences::onPrivateKeyBrowseButtonClicked);
@@ -221,7 +232,7 @@ QGroupBox* Preferences::createServerGroupBox(const Data& data) {
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
     m_serverGroupBox->setCheckable(true);
-    m_serverGroupBox->setChecked(data.serverEnabled);
+    m_serverGroupBox->setChecked(server.enabled);
     m_serverGroupBox->setLayout(formLayout);
 
     return m_serverGroupBox;

@@ -329,58 +329,9 @@ void MainWindow::closeFile() {
 }
 
 void MainWindow::showPreferences() {
-    Preferences::Data data;
-    data.language = m_fileSettings->general().language;
-    data.backupsDirectory = m_fileSettings->backups().directory;
-
-    data.fontFamily = m_fileSettings->editor().fontFamily;
-    data.fontSize = m_fileSettings->editor().fontSize;
-
-    data.hideTrayIcon = m_fileSettings->general().hideTrayIcon;
-    data.minimizeOnStartup = m_fileSettings->general().minimizeOnStartup;
-
-    data.hotKeyEnabled = m_fileSettings->globalHotkey().enabled;
-    data.hotKey = m_fileSettings->globalHotkey().hotkey;
-
-    data.serverEnabled = m_fileSettings->server().enabled;
-    data.token = m_fileSettings->server().token;
-    data.port = m_fileSettings->server().port;
-    data.certificate = m_fileSettings->server().certificate;
-    data.privateKey = m_fileSettings->server().privateKey;
-
-    Preferences preferences(data);
+    Preferences preferences(m_fileSettings.data());
 
     if (preferences.exec() == QDialog::Accepted) {
-        Preferences::Data data = preferences.data();
-
-        Settings::General general = m_fileSettings->general();
-        general.language = data.language;
-        general.hideTrayIcon = data.hideTrayIcon;
-        general.minimizeOnStartup = data.minimizeOnStartup;
-        m_fileSettings->setGeneral(general);
-
-        Settings::Backups backups;
-        backups.directory = data.backupsDirectory;
-        m_fileSettings->setBackups(backups);
-
-        Settings::Editor editor;
-        editor.fontFamily = data.fontFamily;
-        editor.fontSize = data.fontSize;
-        m_fileSettings->setEditor(editor);
-
-        Settings::GlobalHotkey globalHotkey;
-        globalHotkey.enabled = data.hotKeyEnabled;
-        globalHotkey.hotkey = data.hotKey;
-        m_fileSettings->setGlobalHotkey(globalHotkey);
-
-        Settings::Server server;
-        server.enabled = data.serverEnabled;
-        server.token = data.token;
-        server.port = data.port;
-        server.certificate = data.certificate;
-        server.privateKey = data.privateKey;
-        m_fileSettings->setServer(server);
-
         applyHotSettings();
     }
 }

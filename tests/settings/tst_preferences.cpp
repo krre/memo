@@ -1,5 +1,5 @@
 #include <ui/Preferences.h>
-#include <core/Settings.h>
+#include <settings/Settings.h>
 #include <QTest>
 #include <QComboBox>
 #include <QLineEdit>
@@ -20,42 +20,118 @@ constexpr auto Port = 80;
 constexpr auto Certificate = "certificate";
 constexpr auto PrivateKey = "privateKey";
 
+class TestSettings : public Settings {
+
+public:
+    void setGeneral(const General& general) override {
+        m_general = general;
+    }
+
+    General general() const override {
+        return m_general;
+    }
+
+    void setMainWindow(const MainWindow& mainWindow) override {
+        m_mainWindow = mainWindow;
+    }
+
+    MainWindow mainWindow() const override {
+        return m_mainWindow;
+    }
+
+    bool containsGeometry() const override {
+        return true;
+    }
+
+    void setBackups(const Backups& backups) override {
+        m_backups = backups;
+    }
+
+    Backups backups() const override {
+        return m_backups;
+    }
+
+    void setEditor(const Editor& editor) override {
+        m_editor = editor;
+    }
+
+    Editor editor() const override {
+        return m_editor;
+    }
+
+    void setGlobalHotkey(const GlobalHotkey& globalHotkey) override {
+        m_globalHotkey = globalHotkey;
+    }
+
+    GlobalHotkey globalHotkey() const override {
+        return m_globalHotkey;
+    }
+
+    void setRecent(const Recent& recent) override {
+        m_recent = recent;
+    }
+
+    Recent recent() const override {
+        return m_recent;
+    }
+
+    void setServer(const Server& server) override {
+        m_server = server;
+    }
+
+    Server server() const override {
+        return m_server;
+    }
+
+private:
+    General m_general;
+    MainWindow m_mainWindow;
+    Backups m_backups;
+    Editor m_editor;
+    GlobalHotkey m_globalHotkey;
+    Recent m_recent;
+    Server m_server;
+};
+
 class TestPreferences : public QObject {
     Q_OBJECT
-public:
-    TestPreferences();
-    ~TestPreferences();
-
 private slots:
     void readOptions();
     void setOptions();
 };
 
-TestPreferences::TestPreferences() {
-
-}
-
-TestPreferences::~TestPreferences() {
-
-}
-
 void TestPreferences::readOptions() {
-    Preferences::Data data;
-    data.language = Language;
-    data.fontFamily = FontFamily;
-    data.fontSize = FontSize;
-    data.minimizeOnStartup = MinimizeOnStartup;
-    data.hideTrayIcon = HideTrayIcon;
-    data.hotKeyEnabled = HotKeyEnabled;
-    data.hotKey = HotKey;
-    data.backupsDirectory = BackupsDirectory;
-    data.serverEnabled = ServerEnabled;
-    data.token = Token;
-    data.port = Port;
-    data.certificate = Certificate;
-    data.privateKey = PrivateKey;
+    TestSettings settings;
 
-    Preferences preferences(data);
+    TestSettings::General general;
+    general.language = Language;
+    general.minimizeOnStartup = MinimizeOnStartup;
+    general.hideTrayIcon = HideTrayIcon;
+    settings.setGeneral(general);
+
+    TestSettings::Editor editor;
+    editor.fontFamily = FontFamily;
+    editor.fontSize = FontSize;
+    settings.setEditor(editor);
+
+    TestSettings::GlobalHotkey globalHotkey;
+    globalHotkey.enabled = HotKeyEnabled;
+    globalHotkey.hotkey = HotKey;
+    settings.setGlobalHotkey(globalHotkey);
+
+    TestSettings::Backups backups;
+    backups.directory = BackupsDirectory;
+    settings.setBackups(backups);
+
+    TestSettings::Server server;
+    server.enabled = ServerEnabled;
+    server.token = Token;
+    server.port = Port;
+    server.certificate = Certificate;
+    server.privateKey = PrivateKey;
+    settings.setServer(server);
+
+    Preferences preferences(&settings);
 
     QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
     QTest::keyClick(&preferences, Qt::Key_Tab);
@@ -117,10 +193,14 @@ void TestPreferences::readOptions() {
 }
 
 void TestPreferences::setOptions() {
-    Preferences::Data inputData;
-    inputData.language = Language; // To prevent opening the need restart dialog
+    TestSettings settings;
 
-    Preferences preferences(inputData);
+    // To prevent opening the need restart dialog
+    TestSettings::General general;
+    general.language = Language;
+    settings.setGeneral(general);
+
+    Preferences preferences(&settings);
 
     QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
     QTest::keyClick(&preferences, Qt::Key_Tab);
@@ -181,21 +261,19 @@ void TestPreferences::setOptions() {
 
     preferences.accept();
 
-    Preferences::Data outputData = preferences.data();
-
-    QCOMPARE(outputData.language, Language);
-    QCOMPARE(outputData.fontFamily, FontFamily);
-    QCOMPARE(outputData.fontSize, FontSize);
-    QCOMPARE(outputData.minimizeOnStartup, MinimizeOnStartup);
-    QCOMPARE(outputData.hideTrayIcon, HideTrayIcon);
-    QCOMPARE(outputData.hotKeyEnabled, HotKeyEnabled);
-    QCOMPARE(outputData.hotKey, HotKey);
-    QCOMPARE(outputData.backupsDirectory, BackupsDirectory);
-    QCOMPARE(outputData.serverEnabled, ServerEnabled);
-    QCOMPARE(outputData.port, Port);
-    QCOMPARE(outputData.token, Token);
-    QCOMPARE(outputData.certificate, Certificate);
-    QCOMPARE(outputData.privateKey, PrivateKey);
+    QCOMPARE(settings.general().language, Language);
+    QCOMPARE(settings.general().minimizeOnStartup, MinimizeOnStartup);
+    QCOMPARE(settings.general().hideTrayIcon, HideTrayIcon);
+    QCOMPARE(settings.editor().fontFamily, FontFamily);
+    QCOMPARE(settings.editor().fontSize, FontSize);
+    QCOMPARE(settings.globalHotkey().enabled, HotKeyEnabled);
+    QCOMPARE(settings.globalHotkey().hotkey, HotKey);
+    QCOMPARE(settings.backups().directory, BackupsDirectory);
+    QCOMPARE(settings.server().enabled, ServerEnabled);
+    QCOMPARE(settings.server().port, Port);
+    QCOMPARE(settings.server().token, Token);
+    QCOMPARE(settings.server().certificate, Certificate);
+    QCOMPARE(settings.server().privateKey, PrivateKey);
 }
 
 QTEST_MAIN(TestPreferences)
