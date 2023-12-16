@@ -2,8 +2,7 @@
 #include "core/Globals.h"
 #include <QMainWindow>
 
-class QSplitter;
-
+class FileSettings;
 class RecentFilesMenu;
 class NoteTaking;
 class TrayIcon;
@@ -12,10 +11,13 @@ class Database;
 class GlobalHotkey;
 class HttpServerManager;
 
+class QSplitter;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     explicit MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
 
 signals:
     void isOpened(bool opened);
@@ -57,6 +59,8 @@ private:
 
     void showErrorDialog(const QString& message);
     QString dateFileName(const QString& name);
+
+    QScopedPointer<FileSettings> m_fileSettings;
 
     QString m_currentFile;
     TrayIcon* m_trayIcon = nullptr;

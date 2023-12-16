@@ -4,8 +4,6 @@
 
 class Settings {
 public:
-    Settings();
-
     struct General {
         QString filePath;
         QString language;

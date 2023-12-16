@@ -7,9 +7,9 @@
 #include "Birthdays.h"
 #include "core/Constants.h"
 #include "core/Exception.h"
-#include "core/Settings.h"
 #include "core/SolidString.h"
 #include "core/Exporter.h"
+#include "settings/FileSettings.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -19,6 +19,8 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Const::App::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
+
+    m_fileSettings.reset(new FileSettings);
 
     m_splitter = new QSplitter;
     setCentralWidget(m_splitter);
@@ -41,11 +43,10 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     });
 
     readSettings();
+}
 
-    if (m_database->isBirthdayToday()) {
-        auto birthdays = new Birthdays(m_database, Birthdays::Filter::Today);
-        birthdays->show();
-    }
+MainWindow::~MainWindow() {
+
 }
 
 void MainWindow::quit() {
@@ -54,52 +55,59 @@ void MainWindow::quit() {
 }
 
 void MainWindow::readSettings() {
-    using namespace SettingsKey;
-
     applyHotSettings();
 
-    if (Settings::contains<General::Geometry>()) {
-        restoreGeometry(Settings::value<General::Geometry>());
+    if (m_fileSettings->containsGeometry()) {
+        restoreGeometry(m_fileSettings->mainWindow().geometry);
+        restoreState(m_fileSettings->mainWindow().state);
     } else {
         const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
 
-    m_splitter->restoreState(Settings::value<General::Splitter>());
+    m_splitter->restoreState(m_fileSettings->mainWindow().splitter);
 
-    loadFile(Settings::value<General::FilePath>());
+    loadFile(m_fileSettings->general().filePath);
 
-    if (!Settings::value<General::MinimizeOnStartup>()) {
+    if (!m_fileSettings->general().minimizeOnStartup) {
         show();
     }
 }
 
 void MainWindow::writeSettings() {
-    using namespace SettingsKey;
+    Settings::MainWindow mainWindow;
+    mainWindow.geometry = saveGeometry();
+    mainWindow.state = saveState();
+    mainWindow.splitter = m_splitter->saveState();
 
-    Settings::setValue<General::Geometry>(saveGeometry());
-    Settings::setValue<General::Splitter>(m_splitter->saveState());
-    Settings::setValue<General::FilePath>(m_currentFile);
+    m_fileSettings->setMainWindow(mainWindow);
+
+    Settings::General general = m_fileSettings->general();
+    general.filePath = m_currentFile;
+
+    m_fileSettings->setGeneral(general);
 }
 
 void MainWindow::applyHotSettings() {
-    using namespace SettingsKey;
+    m_trayIcon->setVisible(!m_fileSettings->general().hideTrayIcon);
 
-    m_trayIcon->setVisible(!Settings::value<General::HideTrayIcon>());
+    Settings::GlobalHotkey globalHotkey = m_fileSettings->globalHotkey();
 
-    if (Settings::value<SettingsKey::GlobalHotkey::Enabled>()) {
-        m_globalHotkey->setShortcut(Settings::value<SettingsKey::GlobalHotkey::Hotkey>());
+    if (globalHotkey.enabled) {
+        m_globalHotkey->setShortcut(globalHotkey.hotkey);
     } else {
         m_globalHotkey->unsetShortcut();
     }
 
-    if (!Settings::value<SettingsKey::Editor::FontFamily>().isEmpty()) {
-        QFont font;
-        font.setFamily(Settings::value<SettingsKey::Editor::FontFamily>());
+    Settings::Editor editor = m_fileSettings->editor();
 
-        if (Settings::value<SettingsKey::Editor::FontSize>()) {
-            font.setPointSize(Settings::value<SettingsKey::Editor::FontSize>());
+    if (!editor.fontFamily.isEmpty()) {
+        QFont font;
+        font.setFamily(editor.fontFamily);
+
+        if (editor.fontSize) {
+            font.setPointSize(editor.fontSize);
         }
 
         m_editor->setFont(font);
@@ -107,34 +115,28 @@ void MainWindow::applyHotSettings() {
 
     m_serverManager->stop();
 
-    if (!Settings::value<Server::Enabled>()) {
+    Settings::Server server = m_fileSettings->server();
+
+    if (!server.enabled) {
         return;
     }
 
-    QString token = Settings::value<Server::Token>();
-
-    if (token.isEmpty()) {
+    if (server.token.isEmpty()) {
         qCritical().noquote() << "Server token is empty";
         return;
     }
 
-    QString certificate = Settings::value<Server::Certificate>();
-
-    if (certificate.isEmpty()) {
+    if (server.certificate.isEmpty()) {
         qCritical().noquote() << "Server SSL certificate path is empty";
         return;
     }
 
-    QString privateKey = Settings::value<Server::PrivateKey>();
-
-    if (privateKey.isEmpty()) {
+    if (server.privateKey.isEmpty()) {
         qCritical().noquote() << "Server SSL private key is empty";
         return;
     }
 
-    int port = Settings::value<Server::Port>();
-
-    m_serverManager->start(port, SolidString(token), SolidString(certificate), SolidString(privateKey));
+    m_serverManager->start(server.port, SolidString(server.token), SolidString(server.certificate), SolidString(server.privateKey));
 }
 
 void MainWindow::setupSplitter() {
@@ -228,6 +230,11 @@ void MainWindow::loadFile(const QString& filePath) {
         m_notetaking->build();
         setCurrentFile(filePath);
         m_recentFilesMenu->addPath(filePath);
+
+        if (m_database->isBirthdayToday()) {
+            auto birthdays = new Birthdays(m_database, Birthdays::Filter::Today);
+            birthdays->show();
+        }
     } catch (const Exception& e) {
         showErrorDialog(e.error());
     }
@@ -294,7 +301,7 @@ void MainWindow::open() {
 
 void MainWindow::exportAll() {
     QFileInfo fi(m_currentFile);
-    QString name = Settings::value<SettingsKey::Backups::Directory>() + "/" + dateFileName(fi.baseName() + ".zip");
+    QString name = m_fileSettings->backups().directory + "/" + dateFileName(fi.baseName() + ".zip");
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
@@ -304,7 +311,7 @@ void MainWindow::exportAll() {
 
 void MainWindow::backup() {
     QFileInfo fi(m_currentFile);
-    QString name = Settings::value<SettingsKey::Backups::Directory>() + "/" + dateFileName(fi.fileName());
+    QString name = m_fileSettings->backups().directory + "/" + dateFileName(fi.fileName());
 
     QString backupFile = QFileDialog::getSaveFileName(this, tr("Create Backup"), name);
 
@@ -321,49 +328,57 @@ void MainWindow::closeFile() {
 }
 
 void MainWindow::showPreferences() {
-    using namespace SettingsKey;
-
     Preferences::Data data;
-    data.language = Settings::value<General::Language>();
-    data.backupsDirectory = Settings::value<Backups::Directory>();
+    data.language = m_fileSettings->general().language;
+    data.backupsDirectory = m_fileSettings->backups().directory;
 
-    data.fontFamily = Settings::value<SettingsKey::Editor::FontFamily>();
-    data.fontSize = Settings::value<SettingsKey::Editor::FontSize>();
+    data.fontFamily = m_fileSettings->editor().fontFamily;
+    data.fontSize = m_fileSettings->editor().fontSize;
 
-    data.hideTrayIcon = Settings::value<General::HideTrayIcon>();
-    data.minimizeOnStartup = Settings::value<General::MinimizeOnStartup>();
+    data.hideTrayIcon = m_fileSettings->general().hideTrayIcon;
+    data.minimizeOnStartup = m_fileSettings->general().minimizeOnStartup;
 
-    data.hotKeyEnabled = Settings::value<SettingsKey::GlobalHotkey::Enabled>();
-    data.hotKey = Settings::value<SettingsKey::GlobalHotkey::Hotkey>();
+    data.hotKeyEnabled = m_fileSettings->globalHotkey().enabled;
+    data.hotKey = m_fileSettings->globalHotkey().hotkey;
 
-    data.serverEnabled = Settings::value<Server::Enabled>();
-    data.token = Settings::value<Server::Token>();
-    data.port = Settings::value<Server::Port>();
-    data.certificate = Settings::value<Server::Certificate>();
-    data.privateKey = Settings::value<Server::PrivateKey>();
+    data.serverEnabled = m_fileSettings->server().enabled;
+    data.token = m_fileSettings->server().token;
+    data.port = m_fileSettings->server().port;
+    data.certificate = m_fileSettings->server().certificate;
+    data.privateKey = m_fileSettings->server().privateKey;
 
     Preferences preferences(data);
 
     if (preferences.exec() == QDialog::Accepted) {
         Preferences::Data data = preferences.data();
 
-        Settings::setValue<General::Language>(data.language);
-        Settings::setValue<Backups::Directory>(data.backupsDirectory);
+        Settings::General general = m_fileSettings->general();
+        general.language = data.language;
+        general.hideTrayIcon = data.hideTrayIcon;
+        general.minimizeOnStartup = data.minimizeOnStartup;
+        m_fileSettings->setGeneral(general);
 
-        Settings::setValue<SettingsKey::Editor::FontFamily>(data.fontFamily);
-        Settings::setValue<SettingsKey::Editor::FontSize>(data.fontSize);
+        Settings::Backups backups;
+        backups.directory = data.backupsDirectory;
+        m_fileSettings->setBackups(backups);
 
-        Settings::setValue<General::HideTrayIcon>(data.hideTrayIcon);
-        Settings::setValue<General::MinimizeOnStartup>(data.minimizeOnStartup);
+        Settings::Editor editor;
+        editor.fontFamily = data.fontFamily;
+        editor.fontSize = data.fontSize;
+        m_fileSettings->setEditor(editor);
 
-        Settings::setValue<SettingsKey::GlobalHotkey::Enabled>(data.hotKeyEnabled);
-        Settings::setValue<SettingsKey::GlobalHotkey::Hotkey>(data.hotKey);
+        Settings::GlobalHotkey globalHotkey;
+        globalHotkey.enabled = data.hotKeyEnabled;
+        globalHotkey.hotkey = data.hotKey;
+        m_fileSettings->setGlobalHotkey(globalHotkey);
 
-        Settings::setValue<Server::Enabled>(data.serverEnabled);
-        Settings::setValue<Server::Token>(data.token);
-        Settings::setValue<Server::Port>(data.port);
-        Settings::setValue<Server::Certificate>(data.certificate);
-        Settings::setValue<Server::PrivateKey>(data.privateKey);
+        Settings::Server server;
+        server.enabled = data.serverEnabled;
+        server.token = data.token;
+        server.port = data.port;
+        server.certificate = data.certificate;
+        server.privateKey = data.privateKey;
+        m_fileSettings->setServer(server);
 
         applyHotSettings();
     }
