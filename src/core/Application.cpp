@@ -1,17 +1,20 @@
 #include "Application.h"
 #include "core/Constants.h"
 #include "core/MessageHandler.h"
-#include "core/Settings.h"
+#include "settings/FileSettings.h"
 #include <QMessageBox>
 #include <QTranslator>
 #include <QLibraryInfo>
 #include <QSystemTrayIcon>
+#include <QSettings>
 
 Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
     setOrganizationName(Const::App::Organization);
     setApplicationName(Const::App::Name);
 
-    Settings::init();
+#ifdef Q_OS_WIN
+    QSettings::setDefaultFormat(QSettings::IniFormat);
+#endif
 
     qInstallMessageHandler(messageHandler);
     installTranslators();
@@ -30,7 +33,8 @@ bool Application::setup() {
 }
 
 void Application::installTranslators() {
-    QString language = Settings::value<SettingsKey::General::Language>();
+    FileSettings settings;
+    QString language = settings.general().language;
 
     if (language.isEmpty()) {
         language = QLocale::system().name().split("_").first();
