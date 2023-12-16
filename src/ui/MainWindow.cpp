@@ -87,6 +87,7 @@ void MainWindow::writeSettings() {
     general.filePath = m_currentFile;
 
     m_fileSettings->setGeneral(general);
+    m_recentFilesMenu->save();
 }
 
 void MainWindow::applyHotSettings() {
@@ -156,7 +157,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::createFile);
     fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::open);
 
-    m_recentFilesMenu = new RecentFilesMenu(tr("Recent Files"), this);
+    m_recentFilesMenu = new RecentFilesMenu(tr("Recent Files"), m_fileSettings.data(), this);
     connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::loadFile);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 

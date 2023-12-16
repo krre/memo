@@ -1,28 +1,19 @@
 #include "RecentFilesMenu.h"
-#include "core/Settings.h"
+#include "settings/Settings.h"
 #include <QFile>
 
 constexpr auto systemActionCount = 2;
 constexpr auto maxActionCount = 10;
 
 
-RecentFilesMenu::RecentFilesMenu(const QString& title, QWidget* parent) : QMenu(title, parent) {
+RecentFilesMenu::RecentFilesMenu(const QString& title, Settings* settings, QWidget* parent) :
+        QMenu(title, parent), m_settings(settings) {
     addSeparator();
     addAction(tr("Clear"), this, &RecentFilesMenu::clear);
 
-    for (const QString& filePath : Settings::value<SettingsKey::RecentFiles::Name>()) {
+    for (const QString& filePath : settings->recent().files) {
         addPath(filePath);
     }
-}
-
-RecentFilesMenu::~RecentFilesMenu() {
-    QStringList pathes;
-
-    for (int i = 0; i < actions().size() - systemActionCount; ++i) {
-        pathes.append(actions().at(i)->text());
-    }
-
-    Settings::setValue<SettingsKey::RecentFiles::Name>(pathes);
 }
 
 void RecentFilesMenu::addPath(const QString& path) {
@@ -45,6 +36,16 @@ void RecentFilesMenu::addPath(const QString& path) {
     if (actions().size() > maxActionCount + systemActionCount) {
         removeAction(actions().at(actions().size() - systemActionCount - 1));
     }
+}
+
+void RecentFilesMenu::save() {
+    Settings::Recent recent;
+
+    for (int i = 0; i < actions().size() - systemActionCount; ++i) {
+        recent.files.append(actions().at(i)->text());
+    }
+
+    m_settings->setRecent(recent);
 }
 
 void RecentFilesMenu::clear() {
