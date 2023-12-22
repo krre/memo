@@ -89,8 +89,10 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
 }
 
 QTableWidget* Birthdays::createTable() {
-    m_table = new QTableWidget(0, 3);
-    m_table->setHorizontalHeaderLabels({ "Id", tr("Date"), tr("Name") });
+    QStringList labels = { "Id", tr("Date"), tr("Name") };
+
+    m_table = new QTableWidget(0, labels.count());
+    m_table->setHorizontalHeaderLabels(labels);
     m_table->setSelectionBehavior(QAbstractItemView::SelectItems);
     m_table->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed);
     m_table->horizontalHeader()->setStretchLastSection(true);
