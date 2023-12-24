@@ -74,6 +74,8 @@ private:
     HttpServerManager* m_serverManager = nullptr;
     QString m_findText;
 
+    QMenu* m_editMenu = nullptr;
+    QMenu* m_eventsMenu = nullptr;
     QAction* m_findNextAction = nullptr;
     QAction* m_findPreviousAction = nullptr;
 

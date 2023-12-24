@@ -42,6 +42,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
        m_notetaking->setFocus();
     });
 
+    setCurrentFile("");
     readSettings();
 }
 
@@ -180,19 +181,19 @@ void MainWindow::createActions() {
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::quit);
 
-    auto editMenu = menuBar()->addMenu(tr("Edit"));
-    auto undoAction = editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
-    auto redoAction = editMenu->addAction(tr("Redo"), QKeySequence::Redo, m_editor, &Editor::redo);
-    editMenu->addSeparator();
-    auto cutAction = editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
-    auto copyAction = editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
-    auto pasteAction = editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
-    editMenu->addSeparator();
-    auto selectAllAction = editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
-    editMenu->addSeparator();
-    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
-    m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
-    m_findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
+    m_editMenu = menuBar()->addMenu(tr("Edit"));
+    auto undoAction = m_editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
+    auto redoAction = m_editMenu->addAction(tr("Redo"), QKeySequence::Redo, m_editor, &Editor::redo);
+    m_editMenu->addSeparator();
+    auto cutAction = m_editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
+    auto copyAction = m_editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
+    auto pasteAction = m_editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
+    m_editMenu->addSeparator();
+    auto selectAllAction = m_editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
+    m_editMenu->addSeparator();
+    auto findAction = m_editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
+    m_findNextAction = m_editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
+    m_findPreviousAction = m_editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
 
     undoAction->setEnabled(false);
     redoAction->setEnabled(false);
@@ -213,8 +214,8 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);
     connect(this, &MainWindow::isOpened, findAction, &QAction::setEnabled);
 
-    auto eventsMenu = menuBar()->addMenu(tr("Events"));
-    eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
+    m_eventsMenu = menuBar()->addMenu(tr("Events"));
+    m_eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
@@ -243,15 +244,18 @@ void MainWindow::loadFile(const QString& filePath) {
 
 void MainWindow::setCurrentFile(const QString& filePath) {
     QString title = QApplication::applicationName();
+    bool isFileOpened = !filePath.isEmpty();
 
-    if (!filePath.isEmpty()) {
+    if (isFileOpened) {
         QFileInfo fi(filePath);
         title = title + " - " + fi.fileName();
     }
 
     setWindowTitle(title);
     m_currentFile = filePath;
-    emit isOpened(!filePath.isEmpty());
+    m_editMenu->menuAction()->setVisible(isFileOpened);
+    m_eventsMenu->menuAction()->setVisible(isFileOpened);
+    emit isOpened(isFileOpened);
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
