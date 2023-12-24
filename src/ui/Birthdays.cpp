@@ -1,5 +1,6 @@
 #include "Birthdays.h"
 #include "database/Database.h"
+#include "core/Constants.h"
 #include <QtWidgets>
 
 Birthdays::Birthdays(Database* database, Filter filter) : m_datebase(database) {
@@ -37,7 +38,7 @@ void Birthdays::edit() {
 }
 
 void Birthdays::deleteBirthday() {
-    if (QMessageBox::question(this, tr("Delete Birthday"), tr("Are you want to delete your birthday?")) == QMessageBox::Yes) {
+    if (QMessageBox::question(this, Const::App::Name, tr("Are you want to delete your birthday?")) == QMessageBox::Yes) {
         int row = m_table->currentRow();
         Id id = m_table->item(row, int(Column::Id))->text().toInt();
 

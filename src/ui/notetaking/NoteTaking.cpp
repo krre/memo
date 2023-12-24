@@ -4,6 +4,7 @@
 #include "NoteProperties.h"
 #include "database/Database.h"
 #include "database/DatabaseException.h"
+#include "core/Constants.h"
 #include <QtWidgets>
 #include <QtSql>
 
@@ -97,7 +98,7 @@ void NoteTaking::removeNotes() {
     QModelIndex index = selectionModel()->currentIndex();
     TreeItem* parentItem = m_model->item(index.parent());
 
-    int result = QMessageBox::question(this, tr("Remove Notes"), tr("Remove %1?").arg(m_model->data(index).toString()));
+    int result = QMessageBox::question(this, Const::App::Name, tr("Remove %1?").arg(m_model->data(index).toString()));
 
     if (result == QMessageBox::Yes) {
         TreeItem* item = m_model->item(index);

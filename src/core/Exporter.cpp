@@ -3,6 +3,7 @@
 #include "database/Database.h"
 #include "ui/notetaking/NoteTaking.h"
 #include "ui/Birthdays.h"
+#include "core/Constants.h"
 #include <QtCore/private/qzipwriter_p.h>
 #include <QtWidgets>
 
@@ -19,7 +20,7 @@ void Exporter::exportAll(const QString& filePath, NoteTaking* noteTaking, Databa
     exportBirthdays(dirPath, database);
     compressDir(dirPath);
 
-    QMessageBox::information(parent, tr("Export Finished"), tr("Count of notes: %1").arg(count));
+    QMessageBox::information(parent, Const::App::Name, tr("Export Finished. Count of notes: %1").arg(count));
 }
 
 void Exporter::exportBirthdays(const QString& dirPath, Database* database) {

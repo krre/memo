@@ -24,8 +24,7 @@ bool Application::setup() {
     setQuitOnLastWindowClosed(false);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(nullptr, QObject::tr("Systray"),
-                              QObject::tr("Absent any system tray on this system"));
+        QMessageBox::critical(nullptr, Const::App::Name, QObject::tr("Absent any system tray on this system"));
         return false;
     }
 

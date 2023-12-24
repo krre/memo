@@ -1,5 +1,6 @@
 #include "Preferences.h"
 #include "settings/Settings.h"
+#include "core/Constants.h"
 #include <QtWidgets>
 #include <QtNetwork>
 
@@ -23,7 +24,7 @@ void Preferences::accept() {
 
     if (m_settings->general().language != language) {
         general.language = m_languageComboBox->currentData().toString();
-        QMessageBox::information(this, tr("Restart requred"), tr("You must restart application"));
+        QMessageBox::information(this, Const::App::Name, tr("You must restart application"));
     }
 
     general.minimizeOnStartup = m_minimizeCheckBox->isChecked();

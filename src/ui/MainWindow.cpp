@@ -259,7 +259,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
-    QMessageBox::critical(this, tr("Error"), message, QMessageBox::Ok);
+    QMessageBox::critical(this, Const::App::Name, message, QMessageBox::Ok);
 }
 
 QString MainWindow::dateFileName(const QString& name) {
