@@ -2,7 +2,7 @@
 #include "RecentFilesMenu.h"
 #include "Editor.h"
 #include "TrayIcon.h"
-#include "FindText.h"
+#include "FindDialog.h"
 #include "Preferences.h"
 #include "Birthdays.h"
 #include "core/Constants.h"
@@ -337,10 +337,10 @@ void MainWindow::showPreferences() {
 }
 
 void MainWindow::find() {
-    FindText findText;
-    if (findText.exec() == QDialog::Rejected) return;
+    FindDialog findDialog;
+    if (findDialog.exec() == QDialog::Rejected) return;
 
-    m_findText = findText.text();
+    m_findText = findDialog.text();
 
     QTextCursor cursor = m_editor->textCursor();
     QTextCursor savedCursor = cursor;

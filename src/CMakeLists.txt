@@ -35,7 +35,7 @@ add_library(common STATIC
     ui/RecentFilesMenu.h ui/RecentFilesMenu.cpp
     ui/TrayIcon.h ui/TrayIcon.cpp
     ui/Editor.h ui/Editor.cpp
-    ui/FindText.h ui/FindText.cpp
+    ui/FindDialog.h ui/FindDialog.cpp
     ui/Preferences.h ui/Preferences.cpp
     ui/hotkey/GlobalHotkey.h ui/hotkey/GlobalHotkey.cpp
     ui/hotkey/NativeEventFilter.h

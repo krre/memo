@@ -3,10 +3,10 @@
 
 class QLineEdit;
 
-class FindText : public StandardDialog {
+class FindDialog : public StandardDialog {
     Q_OBJECT
 public:
-    FindText();
+    FindDialog();
     QString text() const;
 
 private:

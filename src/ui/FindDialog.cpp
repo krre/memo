@@ -1,7 +1,7 @@
-#include "FindText.h"
+#include "FindDialog.h"
 #include <QtWidgets>
 
-FindText::FindText() {
+FindDialog::FindDialog() {
     setWindowTitle(tr("Find"));
 
     m_lineEdit = new QLineEdit;
@@ -21,6 +21,6 @@ FindText::FindText() {
     m_lineEdit->setFocus();
 }
 
-QString FindText::text() const {
+QString FindDialog::text() const {
     return m_lineEdit->text();
 }
