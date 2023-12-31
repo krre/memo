@@ -1,4 +1,4 @@
-#include <ui/Preferences.h>
+#include <ui/dialog/Preferences.h>
 #include <settings/Settings.h>
 #include <QTest>
 #include <QComboBox>

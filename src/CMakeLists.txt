@@ -17,7 +17,7 @@ endif()
 add_library(common STATIC
     i18n/memo-ru.ts
     ${PLATFORM_SRC}
-    ui/StandardDialog.h ui/StandardDialog.cpp
+    ui/dialog/StandardDialog.h ui/dialog/StandardDialog.cpp
     core/Application.h core/Application.cpp
     core/Constants.h
     core/Globals.h
@@ -35,8 +35,8 @@ add_library(common STATIC
     ui/RecentFilesMenu.h ui/RecentFilesMenu.cpp
     ui/TrayIcon.h ui/TrayIcon.cpp
     ui/Editor.h ui/Editor.cpp
-    ui/FindDialog.h ui/FindDialog.cpp
-    ui/Preferences.h ui/Preferences.cpp
+    ui/dialog/FindDialog.h ui/dialog/FindDialog.cpp
+    ui/dialog/Preferences.h ui/dialog/Preferences.cpp
     ui/hotkey/GlobalHotkey.h ui/hotkey/GlobalHotkey.cpp
     ui/hotkey/NativeEventFilter.h
     ui/notetaking/NoteProperties.h ui/notetaking/NoteProperties.cpp

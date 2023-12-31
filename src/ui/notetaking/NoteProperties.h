@@ -1,5 +1,5 @@
 #pragma once
-#include "ui/StandardDialog.h"
+#include "ui/dialog/StandardDialog.h"
 
 class NoteProperties : public StandardDialog {
     Q_OBJECT
