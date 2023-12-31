@@ -10,6 +10,7 @@
 #include "settings/FileSettings.h"
 #include "dialog/Preferences.h"
 #include "dialog/FindDialog.h"
+#include "dialog/FindAllNotesDialog.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
@@ -192,6 +193,7 @@ void MainWindow::createActions() {
     auto selectAllAction = m_editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
     m_editMenu->addSeparator();
     auto findAction = m_editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
+    auto findAllAction = m_editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
     m_findNextAction = m_editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
     m_findPreviousAction = m_editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
 
@@ -201,6 +203,7 @@ void MainWindow::createActions() {
     copyAction->setEnabled(false);
     selectAllAction->setEnabled(false);
     findAction->setEnabled(false);
+    findAllAction->setEnabled(false);
     m_findNextAction->setEnabled(false);
     m_findPreviousAction->setEnabled(false);
 
@@ -213,6 +216,7 @@ void MainWindow::createActions() {
     });
     connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);
     connect(this, &MainWindow::isOpened, findAction, &QAction::setEnabled);
+    connect(this, &MainWindow::isOpened, findAllAction, &QAction::setEnabled);
 
     m_eventsMenu = menuBar()->addMenu(tr("Events"));
     m_eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
@@ -360,6 +364,14 @@ void MainWindow::find() {
 
     m_findNextAction->setEnabled(true);
     m_findPreviousAction->setEnabled(true);
+}
+
+void MainWindow::findInAllNotes() {
+    FindAllNotesDialog findAllNotesDialog(m_database);
+
+    if (findAllNotesDialog.exec() == QDialog::Accepted) {
+        m_notetaking->setCurrentId(findAllNotesDialog.noteId());
+    }
 }
 
 void MainWindow::findNext() {

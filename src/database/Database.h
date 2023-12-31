@@ -18,6 +18,11 @@ public:
         QString updatedAt;
     };
 
+    struct FindNote {
+        Id id;
+        QString title;
+    };
+
     struct Birthday {
         Id id;
         QDate date;
@@ -50,6 +55,8 @@ public:
 
     void updateMetaValue(const QString& name, const QVariant& value) const;
     QVariant metaValue(const QString& name) const;
+
+    QVector<FindNote> find(const QString& text) const;
 
     QString name() const;
 

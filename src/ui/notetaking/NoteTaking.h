@@ -13,6 +13,7 @@ public:
     NoteTaking(Database* database);
 
     int exportNote(Id parentId, const QString& path);
+    void setCurrentId(Id id);
 
 public slots:
     void updateActions();

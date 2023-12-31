@@ -36,6 +36,7 @@ private slots:
     void closeFile();
     void showPreferences();
     void find();
+    void findInAllNotes();
     void findNext();
     void findPrevious();
     void showBirthdays();

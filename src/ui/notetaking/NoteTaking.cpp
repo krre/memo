@@ -41,10 +41,8 @@ void NoteTaking::build() {
     QVector<Database::Note> notes = m_database->notes();
     int selectedId = m_database->metaValue("selected_id").toInt();
 
-    TreeItem* rootItem = m_model->root();
-
     for (const Database::Note& note : notes) {
-        TreeItem* parentItem = rootItem->find(note.parentId);
+        TreeItem* parentItem = m_model->root()->find(note.parentId);
         QModelIndex parentIndex = m_model->index(parentItem);
         m_model->insertRow(note.pos, parentIndex);
 
@@ -56,16 +54,7 @@ void NoteTaking::build() {
     if (selectedId == 0) {
         setCurrentIndex(QModelIndex());
     } else {
-        TreeItem* item = m_model->root()->find(selectedId);
-        QModelIndex index = m_model->index(item);
-        setCurrentIndex(index);
-
-        TreeItem* parent = item->parent();
-
-        while (parent != rootItem) {
-            setExpanded(m_model->index(parent), true);
-            parent = parent->parent();
-        }
+        setCurrentId(selectedId);
     }
 }
 
@@ -268,6 +257,19 @@ int NoteTaking::exportNote(Id parentId, const QString& path) {
     }
 
     return count;
+}
+
+void NoteTaking::setCurrentId(Id id) {
+    TreeItem* item = m_model->root()->find(id);
+    QModelIndex index = m_model->index(item);
+    setCurrentIndex(index);
+
+    TreeItem* parent = item->parent();
+
+    while (parent != m_model->root()) {
+        setExpanded(m_model->index(parent), true);
+        parent = parent->parent();
+    }
 }
 
 void NoteTaking::mousePressEvent(QMouseEvent* event) {

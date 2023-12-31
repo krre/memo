@@ -192,6 +192,27 @@ QVariant Database::metaValue(const QString& name) const {
     return query.first() ? query.value(name) : QVariant();
 }
 
+QVector<Database::FindNote> Database::find(const QString& text) const {
+    QSqlQuery query = exec(QString("SELECT id, title, note FROM notes"));
+    QVector<FindNote> result;
+
+    while (query.next()) {
+        Id id = query.value("id").toInt();
+        QString title = query.value("title").toString();
+        QString note = query.value("note").toString();
+
+        if (title.contains(text, Qt::CaseInsensitive) || note.contains(text, Qt::CaseInsensitive)) {
+            FindNote findNote;
+            findNote.id = id;
+            findNote.title = title;
+
+            result.append(findNote);
+        }
+    }
+
+    return result;
+}
+
 QString Database::name() const {
     QFileInfo fi(m_db.databaseName());
     return fi.baseName();
