@@ -62,6 +62,7 @@ public:
 
 private:
     Note queryToNote(const QSqlQuery& query) const;
+    QString parentPath(Id id) const;
 
     QSqlDatabase m_db;
 };

@@ -204,7 +204,7 @@ QVector<Database::FindNote> Database::find(const QString& text) const {
         if (title.contains(text, Qt::CaseInsensitive) || note.contains(text, Qt::CaseInsensitive)) {
             FindNote findNote;
             findNote.id = id;
-            findNote.title = title;
+            findNote.title = parentPath(id);
 
             result.append(findNote);
         }
@@ -229,5 +229,30 @@ Database::Note Database::queryToNote(const QSqlQuery& query) const {
     result.createdAt = query.value("created_at").toString();
     result.updatedAt = query.value("updated_at").toString();
 
+    return result;
+}
+
+QString Database::parentPath(Id id) const {
+    Id parentId = id;
+    QStringList titles;
+
+    while (parentId) {
+        QSqlQuery query = exec("SELECT title, parent_id FROM notes WHERE id = :id", { { "id", parentId } });
+
+        if (!query.next()) {
+            break;
+        }
+
+        parentId = query.value("parent_id").toInt();
+        titles.append(query.value("title").toString());
+    }
+
+    QString result;
+
+    for (const auto& title : titles) {
+        result.prepend(title + " > ");
+    }
+
+    result.chop(3);
     return result;
 }
