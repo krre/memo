@@ -5,7 +5,7 @@ Note-taking for my personal usage (desktop version)
 - Qt 6.6
 
 ## Download
-https://github.com/krre/memo-desktop/releases
+https://github.com/krre/memo/releases
 
 ## Screenshots
 ![Screenshot](/images/screenshot-1.png?raw=true)
