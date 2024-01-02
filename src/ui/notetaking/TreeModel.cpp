@@ -1,7 +1,8 @@
 #include "TreeModel.h"
 #include "TreeItem.h"
-#include "core/Constants.h"
 #include <QtCore>
+
+constexpr auto TreeItemMimeType = "application/x-treeitem";
 
 TreeModel::TreeModel(QObject* parent) : QAbstractItemModel (parent) {
     m_rootItem.reset(new TreeItem);
@@ -79,7 +80,7 @@ Qt::DropActions TreeModel::supportedDragActions() const {
 }
 
 QStringList TreeModel::mimeTypes() const {
-    return { Const::NoteTaking::TreeItemMimeType };
+    return { TreeItemMimeType };
 }
 
 QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
@@ -87,7 +88,7 @@ QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << item(indexes.first())->id();
-    mimeData->setData(Const::NoteTaking::TreeItemMimeType, data);
+    mimeData->setData(TreeItemMimeType, data);
     return mimeData;
 }
 
@@ -97,7 +98,7 @@ bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action
     Q_UNUSED(parent);
 
     if (action != Qt::MoveAction) return false;
-    if (!mimeData->hasFormat(Const::NoteTaking::TreeItemMimeType)) return false;
+    if (!mimeData->hasFormat(TreeItemMimeType)) return false;
 
     return true;
 }
@@ -107,7 +108,7 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
 
     if (!canDropMimeData(mimeData, action, row, column, parent)) return false;
 
-    QByteArray data = mimeData->data(Const::NoteTaking::TreeItemMimeType);
+    QByteArray data = mimeData->data(TreeItemMimeType);
     QDataStream stream(&data, QIODevice::ReadOnly);
     Id id;
     stream >> id;

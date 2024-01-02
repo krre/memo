@@ -19,7 +19,6 @@ add_library(common STATIC
     ${PLATFORM_SRC}
     ui/dialog/StandardDialog.h ui/dialog/StandardDialog.cpp
     core/Application.h core/Application.cpp
-    core/Constants.h
     core/Globals.h
     core/Exception.h core/Exception.cpp
     core/MessageHandler.h
