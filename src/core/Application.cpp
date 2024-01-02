@@ -1,15 +1,14 @@
 #include "Application.h"
 #include "core/MessageHandler.h"
 #include "settings/FileSettings.h"
-#include <QMessageBox>
 #include <QTranslator>
 #include <QLibraryInfo>
-#include <QSystemTrayIcon>
 #include <QSettings>
 
 Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
     setOrganizationName(Application::Organization);
     setApplicationName(Application::Name);
+    setQuitOnLastWindowClosed(false);
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -17,17 +16,6 @@ Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
 
     qInstallMessageHandler(messageHandler);
     installTranslators();
-}
-
-bool Application::setup() {
-    setQuitOnLastWindowClosed(false);
-
-    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(nullptr, Application::Name, QObject::tr("Absent any system tray on this system"));
-        return false;
-    }
-
-    return true;
 }
 
 void Application::installTranslators() {

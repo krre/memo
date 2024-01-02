@@ -14,7 +14,6 @@ public:
     static constexpr auto BuildTime = __TIME__;
 
     Application(int& argc, char* argv[]);
-    bool setup();
 
 private:
     void installTranslators();
