@@ -1,5 +1,4 @@
 #include "Application.h"
-#include "core/Constants.h"
 #include "core/MessageHandler.h"
 #include "settings/FileSettings.h"
 #include <QMessageBox>
@@ -9,8 +8,8 @@
 #include <QSettings>
 
 Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
-    setOrganizationName(Const::App::Organization);
-    setApplicationName(Const::App::Name);
+    setOrganizationName(Application::Organization);
+    setApplicationName(Application::Name);
 
 #ifdef Q_OS_WIN
     QSettings::setDefaultFormat(QSettings::IniFormat);
@@ -24,7 +23,7 @@ bool Application::setup() {
     setQuitOnLastWindowClosed(false);
 
     if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(nullptr, Const::App::Name, QObject::tr("Absent any system tray on this system"));
+        QMessageBox::critical(nullptr, Application::Name, QObject::tr("Absent any system tray on this system"));
         return false;
     }
 

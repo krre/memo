@@ -3,7 +3,7 @@
 #include "Editor.h"
 #include "TrayIcon.h"
 #include "Birthdays.h"
-#include "core/Constants.h"
+#include "core/Application.h"
 #include "core/Exception.h"
 #include "core/SolidString.h"
 #include "core/Exporter.h"
@@ -18,7 +18,7 @@
 #include <QtWidgets>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
-    setWindowTitle(Const::App::Name);
+    setWindowTitle(Application::Name);
     setWindowIcon(QIcon(":/images/icon.png"));
 
     m_fileSettings.reset(new FileSettings);
@@ -223,9 +223,9 @@ void MainWindow::createActions() {
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
-        QDesktopServices::openUrl(QUrl(Const::App::ReleasesUrl));
+        QDesktopServices::openUrl(QUrl(Application::ReleasesUrl));
     });
-    helpMenu->addAction(tr("About %1...").arg(Const::App::Name), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Application::Name), this, &MainWindow::about);
 }
 
 void MainWindow::loadFile(const QString& filePath) {
@@ -263,7 +263,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
-    QMessageBox::critical(this, Const::App::Name, message, QMessageBox::Ok);
+    QMessageBox::critical(this, Application::Name, message, QMessageBox::Ok);
 }
 
 QString MainWindow::dateFileName(const QString& name) {
@@ -357,7 +357,7 @@ void MainWindow::find() {
     m_editor->setTextCursor(cursor);
 
     if (!m_editor->find(m_findText)) {
-        QMessageBox::warning(this, Const::App::Name, tr("Text not found"));
+        QMessageBox::warning(this, Application::Name, tr("Text not found"));
         m_editor->setTextCursor(savedCursor);
         return;
     }
@@ -388,15 +388,14 @@ void MainWindow::showBirthdays() {
 }
 
 void MainWindow::about() {
-    using namespace Const::App;
-
-    QMessageBox::about(this, tr("About %1").arg(Name),
+    QMessageBox::about(this, tr("About %1").arg(Application::Name),
         tr("<h3>%1 %2 %3</h3>"
            "Note-taking for quick notes<br><br>"
            "Based on Qt %4<br>"
            "Build on %5 %6<br><br>"
            "<a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
-            .arg(Name, Version, Status, QT_VERSION_STR, BuildDate, BuildTime, URL, CopyrightYear));
+            .arg(Application::Name, Application::Version, Application::Status, QT_VERSION_STR,
+            Application::BuildDate, Application::BuildTime, Application::Url, Application::CopyrightYear));
 }
 
 void MainWindow::onNoteChanged(Id id) {
