@@ -1,6 +1,6 @@
 #pragma once
+#include "core/Globals.h"
 #include <QAbstractItemModel>
-#include <core/Globals.h>
 
 class TreeItem;
 

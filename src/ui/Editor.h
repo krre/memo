@@ -1,6 +1,6 @@
 #pragma once
+#include "core/Globals.h"
 #include <QPlainTextEdit>
-#include <core/Globals.h>
 
 class Editor : public QPlainTextEdit {
     Q_OBJECT

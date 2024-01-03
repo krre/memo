@@ -1,8 +1,7 @@
 #pragma once
+#include "core/Globals.h"
 #include <QList>
 #include <QVariant>
-#include <QVector>
-#include <core/Globals.h>
 
 class TreeItem {
 
