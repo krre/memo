@@ -107,7 +107,7 @@ void NoteTaking::removeNotes() {
 
     if (result == QMessageBox::Yes) {
         TreeItem* item = m_model->item(index);
-        QVector<Id> ids = m_model->childIds(item);
+        Ids ids = m_model->childIds(item);
         m_model->removeRow(index.row(), index.parent());
 
         for (Id id : ids) {
@@ -177,7 +177,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
          }
 
          // Rewrite depth in all children of target note.
-         QVector<Id> childIds = m_model->childIds(targetItem);
+         Ids childIds = m_model->childIds(targetItem);
          for (Id id : childIds) {
              int depth = targetItem->find(id)->depth() - 1;
              m_database->updateNoteValue(id, "depth", depth);
