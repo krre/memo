@@ -34,8 +34,7 @@ int TreeModel::rowCount(const QModelIndex& parent) const {
     return item(parent)->childCount();
 }
 
-int TreeModel::columnCount(const QModelIndex& parent) const {
-    Q_UNUSED(parent)
+int TreeModel::columnCount(const QModelIndex& parent [[maybe_unused]]) const {
     return 1;
 }
 
@@ -92,20 +91,14 @@ QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
     return mimeData;
 }
 
-bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column, const QModelIndex& parent) const {
-    Q_UNUSED(row);
-    Q_UNUSED(column);
-    Q_UNUSED(parent);
-
+bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row [[maybe_unused]], int column [[maybe_unused]], const QModelIndex& parent [[maybe_unused]]) const {
     if (action != Qt::MoveAction) return false;
     if (!mimeData->hasFormat(TreeItemMimeType)) return false;
 
     return true;
 }
 
-bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
-    Q_UNUSED(column);
-
+bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column [[maybe_unused]], const QModelIndex& parent) {
     if (!canDropMimeData(mimeData, action, row, column, parent)) return false;
 
     QByteArray data = mimeData->data(TreeItemMimeType);
@@ -139,9 +132,7 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
     return false; // Need false to disable removing row by Qt.
 }
 
-bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
-    Q_UNUSED(rows)
-
+bool TreeModel::insertRows(int position, int rows [[maybe_unused]], const QModelIndex& parent) {
     beginInsertRows(parent, position, position);
     bool success = item(parent)->insertChild(position);
     endInsertRows();
@@ -149,9 +140,7 @@ bool TreeModel::insertRows(int position, int rows, const QModelIndex& parent) {
     return success;
 }
 
-bool TreeModel::removeRows(int position, int rows, const QModelIndex& parent) {
-    Q_UNUSED(rows)
-
+bool TreeModel::removeRows(int position, int rows [[maybe_unused]], const QModelIndex& parent) {
     beginRemoveRows(parent, position, position);
     bool success = item(parent)->removeChild(position);
     endRemoveRows();
@@ -159,9 +148,7 @@ bool TreeModel::removeRows(int position, int rows, const QModelIndex& parent) {
     return success;
 }
 
-bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int count, const QModelIndex& destinationParent, int destinationChild) {
-    Q_UNUSED(count)
-
+bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int count [[maybe_unused]], const QModelIndex& destinationParent, int destinationChild) {
     bool success = false;
 
     beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationChild);

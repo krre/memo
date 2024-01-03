@@ -16,9 +16,7 @@ NativeEventFilter::NativeEventFilter(QObject* parent) : QObject(parent) {
     win = DefaultRootWindow(display);
 }
 
-bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) {
-    Q_UNUSED(result)
-
+bool NativeEventFilter::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result [[maybe_unused]]) {
     if (eventType == "xcb_generic_event_t") {
         auto event = static_cast<xcb_generic_event_t*>(message);
 

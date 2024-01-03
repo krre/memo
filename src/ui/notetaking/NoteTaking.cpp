@@ -269,8 +269,7 @@ void NoteTaking::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-void NoteTaking::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
-    Q_UNUSED(previous)
+void NoteTaking::currentChanged(const QModelIndex& current, const QModelIndex& previous [[maybe_unused]]) {
     if (!m_isInited) return;
 
     try {
