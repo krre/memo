@@ -185,7 +185,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
     }
 }
 
-void NoteTaking::showProperties() {
+void NoteTaking::showProperties() const {
     Id id = m_model->item(currentIndex())->id();
     Note note = m_database->note(id);
 
@@ -216,7 +216,7 @@ void NoteTaking::insertChild(const QString& title) {
     updateActions();
 }
 
-int NoteTaking::exportNote(Id parentId, const QString& path) {
+int NoteTaking::exportNote(Id parentId, const QString& path) const {
     QDir().mkpath(path);
 
     int count = 0;

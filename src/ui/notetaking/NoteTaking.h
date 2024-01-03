@@ -12,7 +12,7 @@ class NoteTaking : public QTreeView {
 public:
     NoteTaking(Database* database);
 
-    int exportNote(Id parentId, const QString& path);
+    int exportNote(Id parentId, const QString& path) const;
     void setCurrentId(Id id);
 
 public slots:
@@ -37,7 +37,7 @@ private slots:
     void moveUp();
     void moveDown();
     void moveTree(const QModelIndex& index);
-    void showProperties();
+    void showProperties() const;
 
 private:
     void insertChild(const QString& title);

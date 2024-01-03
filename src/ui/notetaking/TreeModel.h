@@ -32,7 +32,7 @@ public:
     TreeItem* root() const;
     TreeItem* item(const QModelIndex& index) const;
     QModelIndex index(TreeItem* item) const;
-    Ids childIds(TreeItem* item);
+    Ids childIds(TreeItem* item) const;
 
 signals:
     void itemDropped(const QModelIndex& index);

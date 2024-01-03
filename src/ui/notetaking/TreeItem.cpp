@@ -9,7 +9,7 @@ TreeItem::~TreeItem() {
     qDeleteAll(m_children);
 }
 
-TreeItem* TreeItem::child(int number) {
+TreeItem* TreeItem::child(int number) const {
     return m_children.value(number);
 }
 

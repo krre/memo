@@ -14,7 +14,7 @@ public:
 
     TreeItem* find(Id id);
 
-    TreeItem* child(int number);
+    TreeItem* child(int number) const;
     int childCount() const;
     int childNumber() const;
 
