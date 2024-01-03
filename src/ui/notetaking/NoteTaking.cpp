@@ -173,12 +173,7 @@ void NoteTaking::showProperties() {
     Id id = m_model->item(currentIndex())->id();
     Note note = m_database->note(id);
 
-    NoteProperties::Data data;
-    data.title = note.title;
-    data.createdAt = note.createdAt;
-    data.updatedAt = note.updatedAt;
-
-    NoteProperties props(data);
+    NoteProperties props(note);
     props.exec();
 }
 
