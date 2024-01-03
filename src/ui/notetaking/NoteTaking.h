@@ -40,16 +40,8 @@ private slots:
     void showProperties();
 
 private:
-    void createContextMenu();
-    void updateContextMenu();
     void insertChild(const QString& title);
 
-    QMenu* m_contextMenu = nullptr;
-    QAction* m_removeAction = nullptr;
-    QAction* m_renameAction = nullptr;
-    QAction* m_moveUpAction = nullptr;
-    QAction* m_moveDownAction = nullptr;
-    QAction* m_propertiesAction = nullptr;
     QScopedPointer<TreeModel> m_model;
     Database* m_database = nullptr;
     bool m_isInited = false;

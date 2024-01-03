@@ -11,7 +11,6 @@
 NoteTaking::NoteTaking(Database* database) : m_database(database) {
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, &QTreeView::customContextMenuRequested, this, &NoteTaking::onCustomContextMenu);
-    createContextMenu();
     header()->setVisible(false);
 
     setDragEnabled(true);
@@ -68,10 +67,27 @@ void NoteTaking::clear() {
 }
 
 void NoteTaking::onCustomContextMenu(const QPoint& point) {
-    if (m_database->isOpen()) {
-        updateContextMenu();
-        m_contextMenu->exec(mapToGlobal(point));
-    }
+    if (!m_database->isOpen()) return;
+
+    auto contextMenu = new QMenu(this);
+    contextMenu->setAttribute(Qt::WA_DeleteOnClose);
+    contextMenu->addAction(tr("Add..."), this, &NoteTaking::addNote);
+    auto removeAction = contextMenu->addAction(tr("Remove..."), this, &NoteTaking::removeNotes);
+    auto renameAction = contextMenu->addAction(tr("Rename"), this, &NoteTaking::renameNote);
+    contextMenu->addSeparator();
+    auto moveUpAction = contextMenu->addAction(tr("Move Up"), this, &NoteTaking::moveUp);
+    auto moveDownAction = contextMenu->addAction(tr("Move Down"), this, &NoteTaking::moveDown);
+    contextMenu->addSeparator();
+    auto propertiesAction = contextMenu->addAction(tr("Properties..."), this, &NoteTaking::showProperties);
+
+    bool enabled = currentIndex().isValid();
+    removeAction->setEnabled(enabled);
+    renameAction->setEnabled(enabled);
+    moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
+    moveDownAction->setEnabled(enabled && currentIndex().row() < m_model->rowCount(currentIndex().parent()) - 1);
+    propertiesAction->setEnabled(enabled);
+
+    contextMenu->exec(mapToGlobal(point));
 }
 
 void NoteTaking::addNote() {
@@ -175,29 +191,6 @@ void NoteTaking::showProperties() {
 
     NoteProperties props(note);
     props.exec();
-}
-
-void NoteTaking::createContextMenu() {
-    m_contextMenu = new QMenu(this);
-    m_contextMenu->addAction(tr("Add..."), this, &NoteTaking::addNote);
-    m_removeAction = m_contextMenu->addAction(tr("Remove..."), this, &NoteTaking::removeNotes);
-    m_renameAction = m_contextMenu->addAction(tr("Rename"), this, &NoteTaking::renameNote);
-    m_contextMenu->addSeparator();
-    m_moveUpAction = m_contextMenu->addAction(tr("Move Up"), this, &NoteTaking::moveUp);
-    m_moveDownAction = m_contextMenu->addAction(tr("Move Down"), this, &NoteTaking::moveDown);
-    m_contextMenu->addSeparator();
-    m_propertiesAction = m_contextMenu->addAction(tr("Properties..."), this, &NoteTaking::showProperties);
-}
-
-void NoteTaking::updateContextMenu() {
-    bool enabled = currentIndex().isValid();
-    m_removeAction->setEnabled(enabled);
-    m_renameAction->setEnabled(enabled);
-
-    m_moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
-    m_moveDownAction->setEnabled(enabled && currentIndex().row() < m_model->rowCount(currentIndex().parent()) - 1);
-
-    m_propertiesAction->setEnabled(enabled);
 }
 
 void NoteTaking::insertChild(const QString& title) {
