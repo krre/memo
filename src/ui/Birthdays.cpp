@@ -23,7 +23,7 @@ Birthdays::Birthdays(Database* database, Filter filter) : m_datebase(database) {
 }
 
 void Birthdays::add() {
-    Database::Birthday birthday;
+    Birthday birthday;
     birthday.date = QDate::currentDate();
 
     Id id = m_datebase->insertBirthday(birthday);
@@ -55,7 +55,7 @@ void Birthdays::updateButtonsState() {
 }
 
 void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
-    Database::Birthday birthday;
+    Birthday birthday;
     birthday.id = m_table->item(row, int(Column::Id))->text().toInt();
     birthday.date = QDate::fromString(m_table->item(row, int(Column::Date))->text(), BirthdayDateFormat);
     birthday.name = m_table->item(row, int(Column::Name))->text();

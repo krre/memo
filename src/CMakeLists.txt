@@ -47,6 +47,7 @@ add_library(common STATIC
     core/Exporter.h core/Exporter.cpp
     settings/Settings.h
     settings/FileSettings.h settings/FileSettings.cpp
+    core/Model.h
 )
 
 qt_add_translations(common TS_FILES i18n/memo-ru.ts)

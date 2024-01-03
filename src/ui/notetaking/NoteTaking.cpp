@@ -38,10 +38,10 @@ void NoteTaking::updateActions() {
 
 void NoteTaking::build() {
     clear();
-    QVector<Database::Note> notes = m_database->notes();
+    QVector<Note> notes = m_database->notes();
     int selectedId = m_database->metaValue("selected_id").toInt();
 
-    for (const Database::Note& note : notes) {
+    for (const Note& note : notes) {
         TreeItem* parentItem = m_model->root()->find(note.parentId);
         QModelIndex parentIndex = m_model->index(parentItem);
         m_model->insertRow(note.pos, parentIndex);
@@ -171,7 +171,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
 
 void NoteTaking::showProperties() {
     Id id = m_model->item(currentIndex())->id();
-    Database::Note note = m_database->note(id);
+    Note note = m_database->note(id);
 
     NoteProperties::Data data;
     data.title = note.title;

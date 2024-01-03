@@ -45,7 +45,7 @@ Id FindAllNotesDialog::noteId() const {
 
 void FindAllNotesDialog::find() {
     m_listWidget->clear();
-    QVector<Database::FindNote> findNotes = m_database->find(m_lineEdit->text());
+    QVector<FindNote> findNotes = m_database->find(m_lineEdit->text());
 
     for (const auto& note : findNotes) {
         auto item = new QListWidgetItem(note.title, m_listWidget);

@@ -93,13 +93,13 @@ void Database::removeNote(Id id) const {
     exec("DELETE FROM notes WHERE id = :id", { { "id", id } });
 }
 
-Database::Note Database::note(Id id) const {
+Note Database::note(Id id) const {
     QSqlQuery query = exec("SELECT * FROM notes WHERE id = :id", { { "id", id } });
     query.next();
     return queryToNote(query);
 }
 
-QVector<Database::Note> Database::notes() const {
+QVector<Note> Database::notes() const {
     QVector<Note> result;
     QSqlQuery query = exec("SELECT * FROM notes ORDER BY depth, pos");
 
@@ -149,7 +149,7 @@ void Database::removeBirthday(Id id) const {
     exec("DELETE FROM birthdays WHERE id = :id", { { "id", id } });
 }
 
-QVector<Database::Birthday> Database::birthdays(const QDate& date) const {
+QVector<Birthday> Database::birthdays(const QDate& date) const {
     QVector<Birthday> result;
     QVariantMap params;
     QString where;
@@ -192,7 +192,7 @@ QVariant Database::metaValue(const QString& name) const {
     return query.first() ? query.value(name) : QVariant();
 }
 
-QVector<Database::FindNote> Database::find(const QString& text) const {
+QVector<FindNote> Database::find(const QString& text) const {
     QSqlQuery query = exec(QString("SELECT id, title, note FROM notes"));
     QVector<FindNote> result;
 
@@ -218,7 +218,7 @@ QString Database::name() const {
     return fi.baseName();
 }
 
-Database::Note Database::queryToNote(const QSqlQuery& query) const {
+Note Database::queryToNote(const QSqlQuery& query) const {
     Note result;
     result.id = query.value("id").toLongLong();
     result.parentId = query.value("parent_id").toInt();

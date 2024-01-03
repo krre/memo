@@ -1,34 +1,11 @@
 #pragma once
-#include "core/Globals.h"
+#include "core/Model.h"
 #include <QVariantMap>
 #include <QSqlDatabase>
-#include <QDate>
 
 class Database : public QObject {
 
 public:
-    struct Note {
-        Id id;
-        Id parentId;
-        int pos;
-        int depth;
-        QString title;
-        QString note;
-        QString createdAt;
-        QString updatedAt;
-    };
-
-    struct FindNote {
-        Id id;
-        QString title;
-    };
-
-    struct Birthday {
-        Id id;
-        QDate date;
-        QString name;
-    };
-
     explicit Database(QObject* parent = nullptr);
     ~Database() override;
 
