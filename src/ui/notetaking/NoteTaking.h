@@ -16,7 +16,6 @@ public:
     void setCurrentId(Id id);
 
 public slots:
-    void updateActions();
     void build();
     void clear();
 

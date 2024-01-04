@@ -27,14 +27,6 @@ NoteTaking::NoteTaking(Database* database) : m_database(database) {
     });
 }
 
-void NoteTaking::updateActions() {
-    bool hasCurrent = selectionModel()->currentIndex().isValid();
-
-    if (hasCurrent) {
-        closePersistentEditor(selectionModel()->currentIndex());
-    }
-}
-
 void NoteTaking::build() {
     clear();
     QVector<Note> notes = m_database->notes();
@@ -212,8 +204,6 @@ void NoteTaking::insertChild(const QString& title) {
 
     selectionModel()->setCurrentIndex(m_model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
     setExpanded(currentIndex, true);
-
-    updateActions();
 }
 
 int NoteTaking::exportNote(Id parentId, const QString& path) const {
