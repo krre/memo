@@ -48,5 +48,5 @@ private:
     QPushButton* m_deleteButton = nullptr;
 
     QCheckBox* m_todayCheckBox = nullptr;
-    Database* m_datebase = nullptr;
+    Database* m_database = nullptr;
 };

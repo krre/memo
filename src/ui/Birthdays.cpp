@@ -3,7 +3,7 @@
 #include "core/Application.h"
 #include <QtWidgets>
 
-Birthdays::Birthdays(Database* database, Filter filter) : m_datebase(database) {
+Birthdays::Birthdays(Database* database, Filter filter) : m_database(database) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -26,7 +26,7 @@ void Birthdays::add() {
     Birthday birthday;
     birthday.date = QDate::currentDate();
 
-    Id id = m_datebase->insertBirthday(birthday);
+    Id id = m_database->insertBirthday(birthday);
 
     const bool isBlocked = m_table->blockSignals(true);
     addRow(id, birthday.date, "");
@@ -42,7 +42,7 @@ void Birthdays::deleteBirthday() {
         int row = m_table->currentRow();
         Id id = m_table->item(row, int(Column::Id))->text().toInt();
 
-        m_datebase->removeBirthday(id);
+        m_database->removeBirthday(id);
         m_table->removeRow(row);
 
         m_table->setCurrentCell(-1, 0);
@@ -60,7 +60,7 @@ void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
     birthday.date = QDate::fromString(m_table->item(row, int(Column::Date))->text(), BirthdayDateFormat);
     birthday.name = m_table->item(row, int(Column::Name))->text();
 
-    m_datebase->updateBirthday(birthday);
+    m_database->updateBirthday(birthday);
 }
 
 void Birthdays::load() {
@@ -69,7 +69,7 @@ void Birthdays::load() {
 
     QDate date = m_todayCheckBox->isChecked() ? QDate::currentDate() : QDate();
 
-    for (const auto& birthday : m_datebase->birthdays(date)) {
+    for (const auto& birthday : m_database->birthdays(date)) {
         addRow(birthday.id, birthday.date, birthday.name);
     }
 
