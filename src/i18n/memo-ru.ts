@@ -67,17 +67,17 @@
 <context>
     <name>FindAllNotesDialog</name>
     <message>
-        <location filename="../ui/dialog/FindAllNotesDialog.cpp" line="5"/>
+        <location filename="../ui/dialog/FindAllNotesDialog.cpp" line="6"/>
         <source>Find in All Notes</source>
         <translation>Найти во всех заметках</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/FindAllNotesDialog.cpp" line="11"/>
+        <location filename="../ui/dialog/FindAllNotesDialog.cpp" line="12"/>
         <source>Text:</source>
         <translation>Текст:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/FindAllNotesDialog.cpp" line="20"/>
+        <location filename="../ui/dialog/FindAllNotesDialog.cpp" line="21"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
@@ -217,12 +217,12 @@
         <translation>Создать резервную копию</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="390"/>
+        <location filename="../ui/MainWindow.cpp" line="393"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="391"/>
+        <location filename="../ui/MainWindow.cpp" line="394"/>
         <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Note-taking for quick notes&lt;br&gt;&lt;br&gt;Based on Qt %4&lt;br&gt;Build on %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;Основано на Qt %4&lt;br&gt;Собрано %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Владимир Зарыпов</translation>
     </message>
@@ -292,7 +292,17 @@
         <translation>Дни рождения...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="360"/>
+        <location filename="../ui/MainWindow.cpp" line="349"/>
+        <source>Find</source>
+        <translation>Найти</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="349"/>
+        <source>Text:</source>
+        <translation>Текст:</translation>
+    </message>
+    <message>
+        <location filename="../ui/MainWindow.cpp" line="362"/>
         <source>Text not found</source>
         <translation>Текст не найден</translation>
     </message>
@@ -331,12 +341,12 @@
         <translation type="vanished">Количество заметок: %1</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="90"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="87"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="90"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="87"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
@@ -345,37 +355,37 @@
         <translation type="vanished">Удалить заметки</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="101"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="98"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="198"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="66"/>
         <source>Add...</source>
         <translation>Добавить...</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="199"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="67"/>
         <source>Remove...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="200"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="68"/>
         <source>Rename</source>
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="202"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="70"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="203"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="71"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="205"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="73"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
@@ -529,9 +539,8 @@
         <translation type="vanished">Системный трей</translation>
     </message>
     <message>
-        <location filename="../core/Application.cpp" line="27"/>
         <source>Absent any system tray on this system</source>
-        <translation>На этой системе отсутствует системный трей</translation>
+        <translation type="vanished">На этой системе отсутствует системный трей</translation>
     </message>
 </context>
 <context>

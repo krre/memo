@@ -9,7 +9,6 @@
 #include "core/Exporter.h"
 #include "settings/FileSettings.h"
 #include "dialog/Preferences.h"
-#include "dialog/FindDialog.h"
 #include "dialog/FindAllNotesDialog.h"
 #include "notetaking/NoteTaking.h"
 #include "database/Database.h"
@@ -345,10 +344,12 @@ void MainWindow::showPreferences() {
 }
 
 void MainWindow::find() {
-    FindDialog findDialog;
-    if (findDialog.exec() == QDialog::Rejected) return;
+    bool ok;
+    m_findText = QInputDialog::getText(this, tr("Find"), tr("Text:"), QLineEdit::Normal, "", &ok);
 
-    m_findText = findDialog.text();
+    if (!ok || m_findText.isEmpty()) {
+        return;
+    }
 
     QTextCursor cursor = m_editor->textCursor();
     QTextCursor savedCursor = cursor;

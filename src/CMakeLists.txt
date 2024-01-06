@@ -34,7 +34,6 @@ add_library(common STATIC
     ui/RecentFilesMenu.h ui/RecentFilesMenu.cpp
     ui/TrayIcon.h ui/TrayIcon.cpp
     ui/Editor.h ui/Editor.cpp
-    ui/dialog/FindDialog.h ui/dialog/FindDialog.cpp
     ui/dialog/FindAllNotesDialog.h ui/dialog/FindAllNotesDialog.cpp
     ui/dialog/Preferences.h ui/dialog/Preferences.cpp
     ui/hotkey/GlobalHotkey.h ui/hotkey/GlobalHotkey.cpp
