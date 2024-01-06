@@ -150,7 +150,7 @@ void MainWindow::setupSplitter() {
 
     m_splitter->setHandleWidth(1);
     m_splitter->setChildrenCollapsible(false);
-    m_splitter->setSizes(QList<int>() << 120 << 500);
+    m_splitter->setSizes({ 120, 500 });
 }
 
 void MainWindow::createActions() {
