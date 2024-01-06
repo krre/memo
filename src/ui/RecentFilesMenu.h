@@ -6,7 +6,7 @@ class Settings;
 class RecentFilesMenu : public QMenu {
     Q_OBJECT
 public:
-    RecentFilesMenu(const QString& title, Settings* settings, QWidget* parent = nullptr);
+    RecentFilesMenu(Settings* settings, QWidget* parent = nullptr);
 
     void addPath(const QString& path);
     void save();
