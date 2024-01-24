@@ -32,6 +32,12 @@ void Application::installTranslators() {
         installTranslator(qtTranslator);
     }
 
+    auto qtbaseTranslator = new QTranslator(qApp);
+
+    if (qtbaseTranslator->load("qtbase_" + language, QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
+        installTranslator(qtbaseTranslator);
+    }
+
     auto memoTranslator = new QTranslator(qApp);
 
     if (memoTranslator->load("memo-" + language, ":/i18n")) {
