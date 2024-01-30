@@ -19,6 +19,7 @@ add_subdirectory(tests)
 add_custom_target(other
     SOURCES
     README.md
+    config.h.in
 )
 
 target_link_libraries(memo PRIVATE common)
