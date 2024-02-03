@@ -26,19 +26,19 @@ void Application::installTranslators() {
         language = QLocale::system().name().split("_").first();
     }
 
-    auto qtTranslator = new QTranslator(qApp);
+    auto qtTranslator = new QTranslator(this);
 
     if (qtTranslator->load("qt_" + language, QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
         installTranslator(qtTranslator);
     }
 
-    auto qtbaseTranslator = new QTranslator(qApp);
+    auto qtbaseTranslator = new QTranslator(this);
 
     if (qtbaseTranslator->load("qtbase_" + language, QLibraryInfo::path(QLibraryInfo::TranslationsPath))) {
         installTranslator(qtbaseTranslator);
     }
 
-    auto memoTranslator = new QTranslator(qApp);
+    auto memoTranslator = new QTranslator(this);
 
     if (memoTranslator->load("memo-" + language, ":/i18n")) {
         installTranslator(memoTranslator);
