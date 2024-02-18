@@ -10,7 +10,6 @@ public:
 
     void setMainWindow(const MainWindow& mainWindow) override;
     MainWindow mainWindow() const override;
-    bool containsGeometry() const override;
 
     void setBackups(const Backups& backups) override;
     Backups backups() const override;

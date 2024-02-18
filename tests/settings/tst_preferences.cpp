@@ -39,10 +39,6 @@ public:
         return m_mainWindow;
     }
 
-    bool containsGeometry() const override {
-        return true;
-    }
-
     void setBackups(const Backups& backups) override {
         m_backups = backups;
     }

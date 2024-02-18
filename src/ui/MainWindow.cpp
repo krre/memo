@@ -58,14 +58,17 @@ void MainWindow::quit() {
 void MainWindow::readSettings() {
     applyHotSettings();
 
-    if (m_fileSettings->containsGeometry()) {
-        restoreGeometry(m_fileSettings->mainWindow().geometry);
-        restoreState(m_fileSettings->mainWindow().state);
+    QByteArray geometry = m_fileSettings->mainWindow().geometry;
+
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
     } else {
         const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
         resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
+
+    restoreState(m_fileSettings->mainWindow().state);
 
     m_splitter->restoreState(m_fileSettings->mainWindow().splitter);
 

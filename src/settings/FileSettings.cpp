@@ -57,11 +57,6 @@ Settings::MainWindow FileSettings::mainWindow() const {
     return result;
 }
 
-bool FileSettings::containsGeometry() const {
-    QSettings settings;
-    return settings.contains("MainWindow/geometry");
-}
-
 void FileSettings::setBackups(const Backups& backups) {
     QSettings settings;
     settings.setValue("Backups/directory", backups.directory);
