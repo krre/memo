@@ -1,5 +1,7 @@
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
+configure_file(config.h.in config.h @ONLY)
+
 if(WIN32)
     set(PLATFORM_SRC ui/hotkey/NativeEventFilterWin.cpp)
 endif()
@@ -56,6 +58,7 @@ qt_add_translations(common TS_FILES ${TS_SOURCE})
 add_custom_target(custom
     SOURCES
     ${TS_SOURCE}
+    config.h.in
 )
 
 target_link_libraries(common PRIVATE Qt6::Widgets Qt6::Sql Qt6::HttpServer ${PLATFORM_LIBS})
