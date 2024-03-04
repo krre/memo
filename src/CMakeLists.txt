@@ -15,7 +15,6 @@ if(APPLE)
 endif()
 
 add_library(common STATIC
-    i18n/memo-ru.ts
     ${PLATFORM_SRC}
     ui/dialog/StandardDialog.h ui/dialog/StandardDialog.cpp
     core/Application.h core/Application.cpp
@@ -49,7 +48,15 @@ add_library(common STATIC
     core/Model.h
 )
 
-qt_add_translations(common TS_FILES i18n/memo-ru.ts)
+SET(TS_SOURCE i18n/memo-ru.ts)
+
+qt_add_translations(common TS_FILES ${TS_SOURCE})
+
+# For visibility in IDE (e.g., Qt Creator)
+add_custom_target(custom
+    SOURCES
+    ${TS_SOURCE}
+)
 
 target_link_libraries(common PRIVATE Qt6::Widgets Qt6::Sql Qt6::HttpServer ${PLATFORM_LIBS})
 target_include_directories(common PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${Qt6Gui_PRIVATE_INCLUDE_DIRS})
