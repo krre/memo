@@ -25,7 +25,7 @@ add_library(common STATIC
     core/MessageHandler.h
     core/SolidString.h core/SolidString.cpp
     database/Database.h database/Database.cpp
-    database/Patcher.h database/Patcher.cpp
+    database/Migrater.h database/Migrater.cpp
     database/DatabaseException.h database/DatabaseException.cpp
     server/HttpServerManager.h server/HttpServerManager.cpp
     server/handler/Handler.h server/handler/Handler.cpp

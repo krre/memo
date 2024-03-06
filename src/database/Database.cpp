@@ -1,5 +1,5 @@
 #include "Database.h"
-#include "Patcher.h"
+#include "Migrater.h"
 #include "DatabaseException.h"
 #include <QtSql>
 
@@ -47,8 +47,8 @@ void Database::open(const QString& filepath) {
         throw DatabaseError(m_db.lastError());
     }
 
-    Patcher patcher(this);
-    patcher.run();
+    Migrater migrater(this);
+    migrater.run();
 }
 
 void Database::close() {
