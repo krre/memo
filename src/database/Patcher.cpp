@@ -2,7 +2,7 @@
 #include "Database.h"
 #include <QSqlQuery>
 
-const int currentVersion = 3;
+constexpr auto currentVersion = 3;
 
 Patcher::Patcher(Database* db) : m_db(db) {
     patches[2] = [this] { patch2(); };
