@@ -4,7 +4,6 @@
 #include <QSqlQuery>
 
 class DatabaseError : public Exception {
-
 public:
     DatabaseError(const QSqlError& error);
     QString error() const override;

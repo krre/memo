@@ -4,7 +4,6 @@
 #include <QSqlDatabase>
 
 class Database : public QObject {
-
 public:
     explicit Database(QObject* parent = nullptr);
     ~Database() override;

@@ -2,7 +2,6 @@
 #include <QString>
 
 class Exception : std::exception {
-
 public:
     Exception() = default;
     virtual QString error() const = 0;

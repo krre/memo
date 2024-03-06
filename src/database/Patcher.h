@@ -4,7 +4,6 @@
 class Database;
 
 class Patcher {
-
 public:
     Patcher(Database* db);
     void run() const;
