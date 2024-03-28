@@ -199,7 +199,7 @@ void NoteTaking::insertChild(const QString& title) {
     }
 
     QModelIndex child = m_model->index(childRow, 0, currentIndex);
-    m_model->setData(child, QVariant(title), Qt::EditRole);
+    m_model->setData(child, title, Qt::EditRole);
     m_model->item(child)->setId(childId);
 
     selectionModel()->setCurrentIndex(m_model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
