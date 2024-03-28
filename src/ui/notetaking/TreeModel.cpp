@@ -83,12 +83,12 @@ QStringList TreeModel::mimeTypes() const {
 }
 
 QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
-    auto mimeData = new QMimeData;
+    auto result = new QMimeData;
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
     stream << item(indexes.first())->id();
-    mimeData->setData(TreeItemMimeType, data);
-    return mimeData;
+    result->setData(TreeItemMimeType, data);
+    return result;
 }
 
 bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row [[maybe_unused]], int column [[maybe_unused]], const QModelIndex& parent [[maybe_unused]]) const {
