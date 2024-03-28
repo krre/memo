@@ -62,6 +62,7 @@ bool TreeItem::insertChild(int position, TreeItem* item) {
 bool TreeItem::removeChild(int position) {
     if (position < 0 || position > m_children.count() - 1) return false;
 
+    delete m_children.at(position);
     m_children.removeAt(position);
 
     return true;
