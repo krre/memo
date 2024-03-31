@@ -38,7 +38,7 @@ void NoteTaking::build() {
         m_model->insertRow(note.pos, parentIndex);
 
         QModelIndex index = m_model->index(note.pos, 0, parentIndex);
-        m_model->setData(index, QVariant(note.title), Qt::EditRole);
+        m_model->setData(index, note.title, Qt::EditRole);
         m_model->item(index)->setId(note.id);
     }
 
