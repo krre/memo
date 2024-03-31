@@ -190,19 +190,19 @@ void NoteTaking::insertChild(const QString& title) {
     TreeItem* currentItem = m_model->item(currentIndex);
 
     Id currentId = currentItem->id();
-    int childRow = currentItem->childCount();
-    int childDepth = currentItem->depth();
-    Id childId = m_database->insertNote(currentId, childRow, childDepth, title);
+    int pos = currentItem->childCount();
+    int depth = currentItem->depth();
+    Id noteId = m_database->insertNote(currentId, pos, depth, title);
 
-    if (!m_model->insertRow(childRow, currentIndex)) {
+    if (!m_model->insertRow(pos, currentIndex)) {
         return;
     }
 
-    QModelIndex childIndex = m_model->index(childRow, 0, currentIndex);
-    m_model->setData(childIndex, title, Qt::EditRole);
-    m_model->item(childIndex)->setId(childId);
+    QModelIndex noteIndex = m_model->index(pos, 0, currentIndex);
+    m_model->setData(noteIndex, title, Qt::EditRole);
+    m_model->item(noteIndex)->setId(noteId);
 
-    selectionModel()->setCurrentIndex(m_model->index(childRow, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
+    selectionModel()->setCurrentIndex(m_model->index(pos, 0, currentIndex), QItemSelectionModel::ClearAndSelect);
     setExpanded(currentIndex, true);
 }
 
