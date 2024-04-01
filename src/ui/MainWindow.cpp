@@ -131,17 +131,21 @@ void MainWindow::applyHotSettings() {
         return;
     }
 
-    if (server.certificate.isEmpty()) {
-        qCritical().noquote() << "Server SSL certificate path is empty";
-        return;
-    }
+    if (server.sslEnabled) {
+        if (server.certificate.isEmpty()) {
+            qCritical().noquote() << "Server SSL certificate path is empty";
+            return;
+        }
 
-    if (server.privateKey.isEmpty()) {
-        qCritical().noquote() << "Server SSL private key is empty";
-        return;
-    }
+        if (server.privateKey.isEmpty()) {
+            qCritical().noquote() << "Server SSL private key is empty";
+            return;
+        }
 
-    m_serverManager->start(server.port, SolidString(server.token), SolidString(server.certificate), SolidString(server.privateKey));
+        m_serverManager->start(server.port, SolidString(server.token), SolidString(server.certificate), SolidString(server.privateKey));
+    } else {
+        m_serverManager->start(server.port, SolidString(server.token));
+    }
 }
 
 void MainWindow::setupSplitter() {

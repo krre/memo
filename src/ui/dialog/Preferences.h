@@ -43,6 +43,7 @@ private:
     QGroupBox* m_serverGroupBox = nullptr;
     QLineEdit* m_portLineEdit = nullptr;
     QLineEdit* m_tokenLineEdit = nullptr;
+    QGroupBox* m_sslGroupBox = nullptr;
     BrowseLayout* m_certificateBrowseLayout = nullptr;
     BrowseLayout* m_privateKeyBrowseLayout = nullptr;
 };

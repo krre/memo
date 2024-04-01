@@ -153,6 +153,7 @@ void FileSettings::setServer(const Server& server) {
     settings.setValue("enabled", server.enabled);
     settings.setValue("token", server.token);
     settings.setValue("port", server.port);
+    settings.setValue("sslEnabled", server.sslEnabled);
     settings.setValue("certificate", server.certificate);
     settings.setValue("privateKey", server.privateKey);
 
@@ -168,6 +169,7 @@ Settings::Server FileSettings::server() const {
     result.enabled = settings.value("enabled").toBool();
     result.token = settings.value("token").toString();
     result.port = settings.value("port").toInt();
+    result.sslEnabled = settings.value("sslEnabled").toBool();
     result.certificate = settings.value("certificate").toString();
     result.privateKey = settings.value("privateKey").toString();
 

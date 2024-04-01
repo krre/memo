@@ -39,6 +39,7 @@ public:
         bool enabled;
         QString token;
         int port;
+        bool sslEnabled;
         QString certificate;
         QString privateKey;
     };

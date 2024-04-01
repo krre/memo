@@ -53,7 +53,7 @@
     <message>
         <location filename="../ui/dialog/BrowseLayout.cpp" line="7"/>
         <source>Browse...</source>
-        <translation type="unfinished">Обзор...</translation>
+        <translation>Обзор...</translation>
     </message>
 </context>
 <context>
@@ -403,71 +403,81 @@
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="129"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="130"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="124"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="125"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="84"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="85"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="125"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="126"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="109"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="110"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="75"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="76"/>
         <source>Select Directory</source>
         <translation>Выберите директорию</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="85"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="86"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="86"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="87"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="117"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="118"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="120"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="121"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="141"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="142"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="158"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="159"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
+    </message>
+    <message>
+        <location filename="../ui/dialog/Preferences.cpp" line="193"/>
+        <source>Certificate:</source>
+        <translation>Сертификат:</translation>
+    </message>
+    <message>
+        <location filename="../ui/dialog/Preferences.cpp" line="194"/>
+        <source>Private key:</source>
+        <translation>Закрытый ключ:</translation>
     </message>
     <message>
         <source>Browse...</source>
         <translation type="vanished">Обзор...</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="160"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="161"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
@@ -476,12 +486,12 @@
         <translation type="vanished">IP адрес:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="193"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="203"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="194"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="204"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
@@ -490,7 +500,7 @@
         <translation type="vanished">Ключ:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="198"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="210"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
@@ -504,7 +514,7 @@
         <translation>Вы должны перезапустить приложение</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="66"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="67"/>
         <source>Select Font</source>
         <translation>Выбрать шрифт</translation>
     </message>
@@ -517,19 +527,17 @@
         <translation type="vanished">Выберите закрытый SSL ключ</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="192"/>
+        <location filename="../ui/dialog/Preferences.cpp" line="202"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="195"/>
         <source>SSL certificate:</source>
-        <translation>SSL сертификат:</translation>
+        <translation type="vanished">SSL сертификат:</translation>
     </message>
     <message>
-        <location filename="../ui/dialog/Preferences.cpp" line="196"/>
         <source>SSL private key:</source>
-        <translation>Закрытый SSL ключ:</translation>
+        <translation type="vanished">Закрытый SSL ключ:</translation>
     </message>
 </context>
 <context>

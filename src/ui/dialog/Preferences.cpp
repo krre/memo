@@ -50,6 +50,7 @@ void Preferences::accept() {
     server.enabled = m_serverGroupBox->isChecked();
     server.port = m_portLineEdit->text().toInt();
     server.token = m_tokenLineEdit->text();
+    server.sslEnabled = m_sslGroupBox->isChecked();
     server.certificate = m_certificateBrowseLayout->text();
     server.privateKey = m_privateKeyBrowseLayout->text();
     m_settings->setServer(server);
@@ -188,17 +189,28 @@ QGroupBox* Preferences::createServerGroupBox() {
     m_certificateBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, server.certificate);
     m_privateKeyBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, server.privateKey);
 
+    auto sslFormLayout = new QFormLayout;
+    sslFormLayout->addRow(tr("Certificate:"), m_certificateBrowseLayout);
+    sslFormLayout->addRow(tr("Private key:"), m_privateKeyBrowseLayout);
+
+    m_sslGroupBox = new QGroupBox("SSL");
+    m_sslGroupBox->setCheckable(true);
+    m_sslGroupBox->setChecked(server.sslEnabled);
+    m_sslGroupBox->setLayout(sslFormLayout);
+
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("IP address:"), addressLineEdit);
     formLayout->addRow(tr("Port:"), m_portLineEdit);
     formLayout->addRow(tr("Token:"), m_tokenLineEdit);
-    formLayout->addRow(tr("SSL certificate:"), m_certificateBrowseLayout);
-    formLayout->addRow(tr("SSL private key:"), m_privateKeyBrowseLayout);
+
+    auto verticalLayout = new QVBoxLayout;
+    verticalLayout->addLayout(formLayout);
+    verticalLayout->addWidget(m_sslGroupBox);
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
     m_serverGroupBox->setCheckable(true);
     m_serverGroupBox->setChecked(server.enabled);
-    m_serverGroupBox->setLayout(formLayout);
+    m_serverGroupBox->setLayout(verticalLayout);
 
     return m_serverGroupBox;
 }

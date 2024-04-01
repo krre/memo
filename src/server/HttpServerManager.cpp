@@ -14,11 +14,6 @@ HttpServerManager::HttpServerManager(Database* database, QObject* parent) : QObj
 void HttpServerManager::start(quint16 port, const SolidString& token, const SolidString& certificatePath, const SolidString& privateKeyPath) {
     stop();
 
-    if (!port) {
-        qCritical().noquote() << "Server port is zero";
-        return;
-    }
-
     QFile certFile(certificatePath);
     certFile.open(QIODevice::ReadOnly);
     QSslCertificate certificate(&certFile, QSsl::Pem);
@@ -31,6 +26,29 @@ void HttpServerManager::start(quint16 port, const SolidString& token, const Soli
 
     m_httpServer = new QHttpServer(this);
     m_httpServer->sslSetup(certificate, privateKey);
+
+    startImpl(port, token);
+}
+
+void HttpServerManager::start(quint16 port, const SolidString& token) {
+    stop();
+    m_httpServer = new QHttpServer(this);
+    startImpl(port, token);
+}
+
+void HttpServerManager::stop() {
+    if (!m_httpServer) return;
+
+    delete m_httpServer;
+    m_httpServer = nullptr;
+    qInfo().noquote() << "Server stopped";
+}
+
+void HttpServerManager::startImpl(quint16 port, const SolidString& token) {
+    if (!port) {
+        qCritical().noquote() << "Server port is zero";
+        return;
+    }
 
     m_httpServer->route("/name", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
         NameHandler handler(m_database);
@@ -49,12 +67,4 @@ void HttpServerManager::start(quint16 port, const SolidString& token, const Soli
     } else {
         qCritical().noquote() << "Failed to start server on port" << port;
     }
-}
-
-void HttpServerManager::stop() {
-    if (!m_httpServer) return;
-
-    delete m_httpServer;
-    m_httpServer = nullptr;
-    qInfo().noquote() << "Server stopped";
 }
