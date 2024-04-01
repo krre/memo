@@ -1,4 +1,5 @@
 #include "Preferences.h"
+#include "BrowseLayout.h"
 #include "settings/Settings.h"
 #include "core/Application.h"
 #include <QtWidgets>
@@ -32,7 +33,7 @@ void Preferences::accept() {
     m_settings->setGeneral(general);
 
     Settings::Backups backups;
-    backups.directory = m_backupsLineEdit->text();
+    backups.directory = m_backupsBrowseLayout->text();
     m_settings->setBackups(backups);
 
     Settings::Editor editor;
@@ -49,8 +50,8 @@ void Preferences::accept() {
     server.enabled = m_serverGroupBox->isChecked();
     server.port = m_portLineEdit->text().toInt();
     server.token = m_tokenLineEdit->text();
-    server.certificate = m_certificateLineEdit->text();
-    server.privateKey = m_privateKeyEdit->text();
+    server.certificate = m_certificateBrowseLayout->text();
+    server.privateKey = m_privateKeyBrowseLayout->text();
     m_settings->setServer(server);
 
     QDialog::accept();
@@ -71,26 +72,10 @@ void Preferences::onFontButtonClicked() {
 }
 
 void Preferences::onBackupsBrowseButtonClicked() {
-    QString dirPath = QFileDialog::getExistingDirectory(nullptr, tr("Select Directory"), m_backupsLineEdit->text());
+    QString dirPath = QFileDialog::getExistingDirectory(nullptr, tr("Select Directory"), m_backupsBrowseLayout->text());
 
     if (!dirPath.isEmpty()) {
-        m_backupsLineEdit->setText(dirPath);
-    }
-}
-
-void Preferences::onCertificateBrowseButtonClicked() {
-    QString filePath = QFileDialog::getOpenFileName(nullptr, tr("Select SSL Certificate"), m_certificateLineEdit->text());
-
-    if (!filePath.isEmpty()) {
-        m_certificateLineEdit->setText(filePath);
-    }
-}
-
-void Preferences::onPrivateKeyBrowseButtonClicked() {
-    QString filePath = QFileDialog::getOpenFileName(nullptr, tr("Select SSL Private Key"), m_privateKeyEdit->text());
-
-    if (!filePath.isEmpty()) {
-        m_privateKeyEdit->setText(filePath);
+        m_backupsBrowseLayout->setText(dirPath);
     }
 }
 
@@ -167,18 +152,14 @@ QGroupBox* Preferences::createHotkeyGroupBox() {
 }
 
 QGroupBox* Preferences::createBackupsGroupBox() {
-    auto label = new QLabel(tr("Directory:"));
-    m_backupsLineEdit = new QLineEdit;
-    m_backupsLineEdit->setText(m_settings->backups().directory);
+    m_backupsBrowseLayout = new BrowseLayout(BrowseLayout::Mode::Directory, m_settings->backups().directory);
 
-    auto browseButton = new QPushButton(tr("Browse..."));
-    connect(browseButton, &QPushButton::clicked, this, &Preferences::onBackupsBrowseButtonClicked);
+    auto formLayout = new QFormLayout;
+    formLayout->addRow(tr("Directory:"), m_backupsBrowseLayout);
 
     auto result = new QGroupBox(tr("Backups"));
-    auto horizontalLayout = new QHBoxLayout(result);
-    horizontalLayout->addWidget(label);
-    horizontalLayout->addWidget(m_backupsLineEdit);
-    horizontalLayout->addWidget(browseButton);
+    result->setLayout(formLayout);
+
     return result;
 }
 
@@ -204,32 +185,15 @@ QGroupBox* Preferences::createServerGroupBox() {
     m_tokenLineEdit = new QLineEdit;
     m_tokenLineEdit->setText(server.token);
 
-    m_certificateLineEdit = new QLineEdit;
-    m_certificateLineEdit->setText(server.certificate);
-
-    auto certificateBrowseButton = new QPushButton(tr("Browse..."));
-    connect(certificateBrowseButton, &QPushButton::clicked, this, &Preferences::onCertificateBrowseButtonClicked);
-
-    m_privateKeyEdit = new QLineEdit;
-    m_privateKeyEdit->setText(server.privateKey);
-
-    auto privateKeyBrowseButton = new QPushButton(tr("Browse..."));
-    connect(privateKeyBrowseButton, &QPushButton::clicked, this, &Preferences::onPrivateKeyBrowseButtonClicked);
-
-    auto certificateLayout = new QHBoxLayout;
-    certificateLayout->addWidget(m_certificateLineEdit);
-    certificateLayout->addWidget(certificateBrowseButton);
-
-    auto privateKeyLayout = new QHBoxLayout;
-    privateKeyLayout->addWidget(m_privateKeyEdit);
-    privateKeyLayout->addWidget(privateKeyBrowseButton);
+    m_certificateBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, server.certificate);
+    m_privateKeyBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, server.privateKey);
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("IP address:"), addressLineEdit);
     formLayout->addRow(tr("Port:"), m_portLineEdit);
     formLayout->addRow(tr("Token:"), m_tokenLineEdit);
-    formLayout->addRow(tr("SSL certificate:"), certificateLayout);
-    formLayout->addRow(tr("SSL private key:"), privateKeyLayout);
+    formLayout->addRow(tr("SSL certificate:"), m_certificateBrowseLayout);
+    formLayout->addRow(tr("SSL private key:"), m_privateKeyBrowseLayout);
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
     m_serverGroupBox->setCheckable(true);

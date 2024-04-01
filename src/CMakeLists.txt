@@ -48,6 +48,7 @@ add_library(common STATIC
     settings/Settings.h
     settings/FileSettings.h settings/FileSettings.cpp
     core/Model.h
+    ui/dialog/BrowseLayout.cpp ui/dialog/BrowseLayout.h
 )
 
 SET(TS_SOURCE i18n/memo-ru.ts)

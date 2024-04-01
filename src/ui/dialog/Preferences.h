@@ -2,6 +2,7 @@
 #include "StandardDialog.h"
 
 class Settings;
+class BrowseLayout;
 
 class QComboBox;
 class QLineEdit;
@@ -19,8 +20,6 @@ public slots:
 private slots:
     void onFontButtonClicked();
     void onBackupsBrowseButtonClicked();
-    void onCertificateBrowseButtonClicked();
-    void onPrivateKeyBrowseButtonClicked();
 
 private:
     QGroupBox* createUiGroupBox();
@@ -39,11 +38,11 @@ private:
     QGroupBox* m_hotkeyGroupBox = nullptr;
     QLineEdit* m_hotkeyLineEdit = nullptr;
 
-    QLineEdit* m_backupsLineEdit = nullptr;
+    BrowseLayout* m_backupsBrowseLayout = nullptr;
 
     QGroupBox* m_serverGroupBox = nullptr;
     QLineEdit* m_portLineEdit = nullptr;
     QLineEdit* m_tokenLineEdit = nullptr;
-    QLineEdit* m_certificateLineEdit = nullptr;
-    QLineEdit* m_privateKeyEdit = nullptr;
+    BrowseLayout* m_certificateBrowseLayout = nullptr;
+    BrowseLayout* m_privateKeyBrowseLayout = nullptr;
 };
