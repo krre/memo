@@ -17,6 +17,7 @@ constexpr auto BackupsDirectory = "/home/user/backups";
 constexpr auto ServerEnabled = true;
 constexpr auto Token = "123456";
 constexpr auto Port = 80;
+constexpr auto SslEnabled = true;
 constexpr auto Certificate = "certificate";
 constexpr auto PrivateKey = "privateKey";
 
@@ -123,12 +124,14 @@ void TestPreferences::readOptions() {
     server.enabled = ServerEnabled;
     server.token = Token;
     server.port = Port;
+    server.sslEnabled = SslEnabled;
     server.certificate = Certificate;
     server.privateKey = PrivateKey;
     settings.setServer(server);
 
     Preferences preferences(&settings);
 
+    QTest::keyClick(&preferences, Qt::Key_Tab); // OK button
     QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto languageComboBox = static_cast<QComboBox*>(preferences.focusWidget());
@@ -167,6 +170,9 @@ void TestPreferences::readOptions() {
     auto tokenLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto sslGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
     auto certificateLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
 
     QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
@@ -184,6 +190,7 @@ void TestPreferences::readOptions() {
     QCOMPARE(serverGroupBox->isChecked(), ServerEnabled);
     QCOMPARE(portLineEdit->text().toInt(), Port);
     QCOMPARE(tokenLineEdit->text(), Token);
+    QCOMPARE(sslGroupBox->isChecked(), SslEnabled);
     QCOMPARE(certificateLineEdit->text(), Certificate);
     QCOMPARE(privateKeyEdit->text(), PrivateKey);
 }
@@ -198,6 +205,7 @@ void TestPreferences::setOptions() {
 
     Preferences preferences(&settings);
 
+    QTest::keyClick(&preferences, Qt::Key_Tab); // OK button
     QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto languageComboBox = static_cast<QComboBox*>(preferences.focusWidget());
@@ -247,6 +255,10 @@ void TestPreferences::setOptions() {
     tokenLineEdit->setText(Token);
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto sslGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
+    sslGroupBox->setChecked(SslEnabled);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
     auto certificateLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
     certificateLineEdit->setText(Certificate);
 
@@ -268,6 +280,7 @@ void TestPreferences::setOptions() {
     QCOMPARE(settings.server().enabled, ServerEnabled);
     QCOMPARE(settings.server().port, Port);
     QCOMPARE(settings.server().token, Token);
+    QCOMPARE(settings.server().sslEnabled, SslEnabled);
     QCOMPARE(settings.server().certificate, Certificate);
     QCOMPARE(settings.server().privateKey, PrivateKey);
 }
