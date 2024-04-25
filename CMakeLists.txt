@@ -26,9 +26,6 @@ add_custom_target(other
     README.md
 )
 
-target_link_libraries(memo PRIVATE common)
-target_link_libraries(test_settings PRIVATE common)
-
 install(TARGETS memo
     BUNDLE  DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
