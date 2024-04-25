@@ -1,4 +1,4 @@
-find_package(Qt6 REQUIRED COMPONENTS Test Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Test)
 
 qt_add_executable(test_settings tst_preferences.cpp)
 

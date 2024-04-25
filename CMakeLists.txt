@@ -5,7 +5,13 @@ project(memo VERSION 1.9.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Sql HttpServer)
+find_package(Qt6 REQUIRED COMPONENTS
+    Widgets
+    Sql
+    HttpServer
+    LinguistTools
+)
+
 qt_standard_project_setup()
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
