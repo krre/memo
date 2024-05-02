@@ -9,10 +9,6 @@
         <translation>Дни рождения</translation>
     </message>
     <message>
-        <source>Delete Birthday</source>
-        <translation type="vanished">Удалить день рождения</translation>
-    </message>
-    <message>
         <location filename="../ui/Birthdays.cpp" line="41"/>
         <source>Are you want to delete your birthday?</source>
         <translation>Вы желаете удалить день рождения?</translation>
@@ -59,14 +55,6 @@
 <context>
     <name>Exporter</name>
     <message>
-        <source>Export Finished</source>
-        <translation type="vanished">Экспорт завершён</translation>
-    </message>
-    <message>
-        <source>Count of notes: %1</source>
-        <translation type="vanished">Количество заметок: %1</translation>
-    </message>
-    <message>
         <location filename="../core/Exporter.cpp" line="23"/>
         <source>Export Finished. Count of notes: %1</source>
         <translation>Экспорт завершён. Количество заметок: %1</translation>
@@ -91,223 +79,185 @@
     </message>
 </context>
 <context>
-    <name>FindDialog</name>
-    <message>
-        <source>Find</source>
-        <translation type="vanished">Найти</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Текст:</translation>
-    </message>
-</context>
-<context>
-    <name>FindText</name>
-    <message>
-        <source>Find</source>
-        <translation type="vanished">Найти</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Текст:</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="160"/>
+        <location filename="../ui/MainWindow.cpp" line="164"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="161"/>
+        <location filename="../ui/MainWindow.cpp" line="165"/>
         <source>New...</source>
         <translation>Создать...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="162"/>
+        <location filename="../ui/MainWindow.cpp" line="166"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="169"/>
+        <location filename="../ui/MainWindow.cpp" line="173"/>
         <source>Create Backup...</source>
         <translation>Создать резервную копию...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="170"/>
+        <location filename="../ui/MainWindow.cpp" line="174"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <source>Recent Files</source>
-        <translation type="vanished">Недавние файлы</translation>
-    </message>
-    <message>
-        <source>Clear</source>
-        <translation type="vanished">Очистить</translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.cpp" line="168"/>
+        <location filename="../ui/MainWindow.cpp" line="172"/>
         <source>Export All...</source>
         <translation>Экспортировать всё...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="181"/>
+        <location filename="../ui/MainWindow.cpp" line="185"/>
         <source>Preferences...</source>
         <translation>Настройки...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="183"/>
+        <location filename="../ui/MainWindow.cpp" line="187"/>
         <source>Hide</source>
         <translation>Спрятать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="185"/>
+        <location filename="../ui/MainWindow.cpp" line="189"/>
         <source>Exit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="226"/>
+        <location filename="../ui/MainWindow.cpp" line="230"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="227"/>
+        <location filename="../ui/MainWindow.cpp" line="231"/>
         <source>Open download page</source>
         <translation>Открыть страницу загрузки</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="230"/>
+        <location filename="../ui/MainWindow.cpp" line="234"/>
         <source>About %1...</source>
         <translation>О программе %1...</translation>
     </message>
     <message>
-        <source>Show</source>
-        <translation type="vanished">Показать</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation type="vanished">Ошибка</translation>
-    </message>
-    <message>
-        <location filename="../ui/MainWindow.cpp" line="283"/>
+        <location filename="../ui/MainWindow.cpp" line="287"/>
         <source>New File</source>
         <translation>Новый файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="284"/>
-        <location filename="../ui/MainWindow.cpp" line="306"/>
+        <location filename="../ui/MainWindow.cpp" line="288"/>
+        <location filename="../ui/MainWindow.cpp" line="310"/>
         <source>All Files (*);;Database Files (*.db)</source>
         <translation>Все файлы (*);;Файлы баз данных (*.db)</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="292"/>
+        <location filename="../ui/MainWindow.cpp" line="296"/>
         <source>Error rewriting old file</source>
         <translation>Ошибка перезаписи старого файла</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="305"/>
+        <location filename="../ui/MainWindow.cpp" line="309"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="316"/>
+        <location filename="../ui/MainWindow.cpp" line="320"/>
         <source>Export notes to ZIP archive</source>
         <translation>Экспортировать заметки в ZIP архив</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="327"/>
+        <location filename="../ui/MainWindow.cpp" line="331"/>
         <source>Create Backup</source>
         <translation>Создать резервную копию</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="395"/>
+        <location filename="../ui/MainWindow.cpp" line="399"/>
         <source>About %1</source>
         <translation>О программе %1</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="396"/>
+        <location filename="../ui/MainWindow.cpp" line="400"/>
         <source>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Note-taking for quick notes&lt;br&gt;&lt;br&gt;Based on Qt %4&lt;br&gt;Build on %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2 %3&lt;/h3&gt;Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;Основано на Qt %4&lt;br&gt;Собрано %5 %6&lt;br&gt;&lt;br&gt;&lt;a href=%7&gt;%7&lt;/a&gt;&lt;br&gt;&lt;br&gt;Copyright © %8, Владимир Зарыпов</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="187"/>
+        <location filename="../ui/MainWindow.cpp" line="191"/>
         <source>Edit</source>
         <translation>Правка</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="188"/>
+        <location filename="../ui/MainWindow.cpp" line="192"/>
         <source>Undo</source>
         <translation>Отменить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="189"/>
+        <location filename="../ui/MainWindow.cpp" line="193"/>
         <source>Redo</source>
         <translation>Повторить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="191"/>
+        <location filename="../ui/MainWindow.cpp" line="195"/>
         <source>Cut</source>
         <translation>Вырезать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="192"/>
+        <location filename="../ui/MainWindow.cpp" line="196"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="193"/>
+        <location filename="../ui/MainWindow.cpp" line="197"/>
         <source>Paste</source>
         <translation>Вставить</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="195"/>
+        <location filename="../ui/MainWindow.cpp" line="199"/>
         <source>Select All</source>
         <translation>Выделить всё</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="197"/>
+        <location filename="../ui/MainWindow.cpp" line="201"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="198"/>
+        <location filename="../ui/MainWindow.cpp" line="202"/>
         <source>Find in All Notes...</source>
         <translation>Найти во всех заметках...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="199"/>
+        <location filename="../ui/MainWindow.cpp" line="203"/>
         <source>Find Next</source>
         <translation>Найти далее</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="200"/>
+        <location filename="../ui/MainWindow.cpp" line="204"/>
         <source>Find Previous</source>
         <translation>Найти предыдущее</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="223"/>
+        <location filename="../ui/MainWindow.cpp" line="227"/>
         <source>Events</source>
         <translation>События</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="224"/>
+        <location filename="../ui/MainWindow.cpp" line="228"/>
         <source>Birthdays...</source>
         <translation>Дни рождения...</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="351"/>
+        <location filename="../ui/MainWindow.cpp" line="355"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="351"/>
+        <location filename="../ui/MainWindow.cpp" line="355"/>
         <source>Text:</source>
         <translation>Текст:</translation>
     </message>
     <message>
-        <location filename="../ui/MainWindow.cpp" line="364"/>
+        <location filename="../ui/MainWindow.cpp" line="368"/>
         <source>Text not found</source>
         <translation>Текст не найден</translation>
     </message>
@@ -338,14 +288,6 @@
 <context>
     <name>NoteTaking</name>
     <message>
-        <source>Export Finished</source>
-        <translation type="vanished">Экспорт завершён</translation>
-    </message>
-    <message>
-        <source>Count of notes: %1</source>
-        <translation type="vanished">Количество заметок: %1</translation>
-    </message>
-    <message>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="87"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
@@ -354,10 +296,6 @@
         <location filename="../ui/notetaking/NoteTaking.cpp" line="87"/>
         <source>Name:</source>
         <translation>Название:</translation>
-    </message>
-    <message>
-        <source>Remove Notes</source>
-        <translation type="vanished">Удалить заметки</translation>
     </message>
     <message>
         <location filename="../ui/notetaking/NoteTaking.cpp" line="98"/>
@@ -473,17 +411,9 @@
         <translation>Закрытый ключ:</translation>
     </message>
     <message>
-        <source>Browse...</source>
-        <translation type="vanished">Обзор...</translation>
-    </message>
-    <message>
         <location filename="../ui/dialog/Preferences.cpp" line="161"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
-    </message>
-    <message>
-        <source>IP Address:</source>
-        <translation type="vanished">IP адрес:</translation>
     </message>
     <message>
         <location filename="../ui/dialog/Preferences.cpp" line="203"/>
@@ -496,17 +426,9 @@
         <translation>Токен:</translation>
     </message>
     <message>
-        <source>Key:</source>
-        <translation type="vanished">Ключ:</translation>
-    </message>
-    <message>
         <location filename="../ui/dialog/Preferences.cpp" line="210"/>
         <source>Server</source>
         <translation>Сервер</translation>
-    </message>
-    <message>
-        <source>Restart requred</source>
-        <translation type="vanished">Требуется перезапуск</translation>
     </message>
     <message>
         <location filename="../ui/dialog/Preferences.cpp" line="28"/>
@@ -519,36 +441,17 @@
         <translation>Выбрать шрифт</translation>
     </message>
     <message>
-        <source>Select SSL Certificate</source>
-        <translation type="vanished">Выберите SSL сертификат</translation>
-    </message>
-    <message>
-        <source>Select SSL Private Key</source>
-        <translation type="vanished">Выберите закрытый SSL ключ</translation>
-    </message>
-    <message>
         <location filename="../ui/dialog/Preferences.cpp" line="202"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
-    </message>
-    <message>
-        <source>SSL certificate:</source>
-        <translation type="vanished">SSL сертификат:</translation>
-    </message>
-    <message>
-        <source>SSL private key:</source>
-        <translation type="vanished">Закрытый SSL ключ:</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <source>Systray</source>
-        <translation type="vanished">Системный трей</translation>
-    </message>
-    <message>
+        <location filename="../../app/main.cpp" line="14"/>
         <source>Absent any system tray on this system</source>
-        <translation type="vanished">На этой системе отсутствует системный трей</translation>
+        <translation>На этой системе отсутствует системный трей</translation>
     </message>
 </context>
 <context>
