@@ -49,17 +49,9 @@ add_library(common STATIC
     ui/dialog/BrowseLayout.cpp ui/dialog/BrowseLayout.h
 )
 
-SET(TS_SOURCE i18n/memo-ru.ts)
-
-qt_add_translations(common
-    TS_FILES ${TS_SOURCE}
-    # LUPDATE_OPTIONS -no-obsolete
-)
-
 # For visibility in IDE (e.g., Qt Creator)
 add_custom_target(custom
     SOURCES
-    ${TS_SOURCE}
     config.h.in
 )
 
