@@ -97,16 +97,19 @@ void NoteTaking::removeNotes() {
     if (QMessageBox::question(this, Application::Name,
                               tr("Remove %1?").arg(m_model->data(index).toString())) == QMessageBox::No) return;
 
+    TreeItem* item = m_model->item(index);
+    Ids ids = m_model->childIds(item);
+
+    m_model->removeRow(index.row(), index.parent());
+
     TreeItem* parentItem = m_model->item(index.parent());
 
     for (int i = 0; i < parentItem->childCount(); i++) {
         Id id = parentItem->child(i)->id();
         m_database->updateNoteValue(id, "pos", i);
-    }
 
-    TreeItem* item = m_model->item(index);
-    Ids ids = m_model->childIds(item);
-    m_model->removeRow(index.row(), index.parent());
+        qDebug() << "id" << id << "pos" << i;
+    }
 
     for (Id id : ids) {
         m_database->removeNote(id);
