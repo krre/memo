@@ -107,8 +107,6 @@ void NoteTaking::removeNotes() {
     for (int i = 0; i < parentItem->childCount(); i++) {
         Id id = parentItem->child(i)->id();
         m_database->updateNoteValue(id, "pos", i);
-
-        qDebug() << "id" << id << "pos" << i;
     }
 
     for (Id id : ids) {
