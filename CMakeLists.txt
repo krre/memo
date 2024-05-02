@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(memo VERSION 1.9.0)
+project(memo VERSION 1.9.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
