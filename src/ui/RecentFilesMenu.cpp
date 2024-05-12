@@ -5,8 +5,8 @@
 constexpr auto systemActionCount = 2;
 constexpr auto maxActionCount = 10;
 
-RecentFilesMenu::RecentFilesMenu(Settings* settings, QWidget* parent) :
-        QMenu(tr("Recent Files"), parent), m_settings(settings) {
+RecentFilesMenu::RecentFilesMenu(Settings* settings, QWidget* parent)
+    : QMenu(tr("Recent Files"), parent), m_settings(settings) {
     addSeparator();
     addAction(tr("Clear"), this, &RecentFilesMenu::clear);
 

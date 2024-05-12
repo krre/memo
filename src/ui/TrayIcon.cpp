@@ -2,7 +2,8 @@
 #include "MainWindow.h"
 #include <QtWidgets>
 
-TrayIcon::TrayIcon(MainWindow* mainWindow) : QSystemTrayIcon(mainWindow), m_mainWindow(mainWindow) {
+TrayIcon::TrayIcon(MainWindow* mainWindow)
+    : QSystemTrayIcon(mainWindow), m_mainWindow(mainWindow) {
     m_menu = new QMenu(mainWindow);
     m_menu->addAction(tr("Show"), m_mainWindow, &QMainWindow::showNormal);
     m_menu->addAction(tr("Hide"), m_mainWindow, &QMainWindow::hide);

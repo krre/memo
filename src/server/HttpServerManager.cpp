@@ -7,8 +7,8 @@
 #include <QFile>
 #include <QSslKey>
 
-HttpServerManager::HttpServerManager(Database* database, QObject* parent) : QObject(parent), m_database(database) {
-
+HttpServerManager::HttpServerManager(Database* database, QObject* parent)
+    : QObject(parent), m_database(database) {
 }
 
 void HttpServerManager::start(quint16 port, const SolidString& token, const SolidString& certificatePath, const SolidString& privateKeyPath) {

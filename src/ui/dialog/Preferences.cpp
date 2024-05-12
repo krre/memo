@@ -5,7 +5,8 @@
 #include <QtWidgets>
 #include <QtNetwork>
 
-Preferences::Preferences(Settings* settings, QWidget* parent) : StandardDialog(parent), m_settings(settings) {
+Preferences::Preferences(Settings* settings, QWidget* parent)
+    : StandardDialog(parent), m_settings(settings) {
     setWindowTitle(tr("Preferences"));
 
     auto layout = new QVBoxLayout;
