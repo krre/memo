@@ -3,7 +3,6 @@
 #include <QHttpServerResponse>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QJsonDocument>
 
 NotesHandler::NotesHandler(Database* database) : Handler(database) {
 
