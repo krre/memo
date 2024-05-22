@@ -51,13 +51,11 @@ void HttpServerManager::startImpl(quint16 port, const SolidString& token) {
     }
 
     m_httpServer->route("/name", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
-        NameHandler handler(m_database);
-        responder.sendResponse(handler.exec(request, token));
+        responder.sendResponse(NameHandler(m_database).exec(request, token));
     });
 
     m_httpServer->route("/notes", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
-        NotesHandler handler(m_database);
-        responder.sendResponse(handler.exec(request, token));
+        responder.sendResponse(NotesHandler(m_database).exec(request, token));
     });
 
     if (int result = m_httpServer->listen(QHostAddress::Any, port)) {
