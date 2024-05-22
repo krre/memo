@@ -60,9 +60,7 @@ void HttpServerManager::startImpl(quint16 port, const SolidString& token) {
         responder.sendResponse(handler.exec(request, token));
     });
 
-    int result = m_httpServer->listen(QHostAddress::Any, port);
-
-    if (result) {
+    if (int result = m_httpServer->listen(QHostAddress::Any, port)) {
         qInfo().noquote() << "Server started on port" << result;
     } else {
         qCritical().noquote() << "Failed to start server on port" << port;
