@@ -10,10 +10,9 @@ NotesHandler::NotesHandler(Database* database) : Handler(database) {
 }
 
 QHttpServerResponse NotesHandler::buildResponse() {
-    QVector<Note> notes = database()->notes();
-    QJsonArray array;
+    QJsonArray result;
 
-    for (const Note& note : notes) {
+    for (const Note& note : database()->notes()) {
         QJsonObject obj;
         obj["id"] = note.id;
         obj["parentId"] = note.parentId;
@@ -22,8 +21,8 @@ QHttpServerResponse NotesHandler::buildResponse() {
         obj["title"] = note.title;
         obj["note"] = note.note;
 
-        array.append(obj);
+        result.append(obj);
     }
 
-    return QHttpServerResponse(array);
+    return QHttpServerResponse(result);
 }
