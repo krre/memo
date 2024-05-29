@@ -403,7 +403,7 @@ void MainWindow::about() {
            "Build on %5 %6<br><br>"
            "<a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
             .arg(Application::Name, Application::Version, Application::Status, QT_VERSION_STR,
-            Application::BuildDate, Application::BuildTime, Application::Url, Application::CopyrightYear));
+            Application::BuildDate, Application::BuildTime, Application::Url, Application::Years));
 }
 
 void MainWindow::onNoteChanged(Id id) {
