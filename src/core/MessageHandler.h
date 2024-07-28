@@ -1,24 +1,24 @@
 #pragma once
 #include <QString>
 
-void messageHandler(QtMsgType type, const QMessageLogContext& context [[maybe_unused]], const QString& msg) {
-     auto localMsg = msg.toLocal8Bit().constData();
+void messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg) {
+      QString message = qFormatLogMessage(type, context, msg);
 
      switch (type) {
          case QtDebugMsg:
-             fprintf(stderr, "[Debug] %s\n", localMsg);
+             fprintf(stderr, "[Debug] %s\n", qPrintable(message));
              break;
          case QtInfoMsg:
-             fprintf(stderr, "[Info] %s\n", localMsg);
+             fprintf(stderr, "[Info] %s\n", qPrintable(message));
              break;
          case QtWarningMsg:
-             fprintf(stderr, "[Warning] %s\n", localMsg);
+             fprintf(stderr, "[Warning] %s\n", qPrintable(message));
              break;
          case QtCriticalMsg:
-             fprintf(stderr, "[Critical] %s\n", localMsg);
+             fprintf(stderr, "[Critical] %s\n", qPrintable(message));
              break;
          case QtFatalMsg:
-             fprintf(stderr, "[Fatal] %s\n", localMsg);
+             fprintf(stderr, "[Fatal] %s\n", qPrintable(message));
              break;
     }
 }
