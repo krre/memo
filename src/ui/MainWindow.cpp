@@ -415,7 +415,7 @@ void MainWindow::onNoteChanged(Id id) {
 
     if (id) {
         QString note = m_database->noteValue(id, "note").toString();
-        m_editor->setPlainText(note);
+        m_editor->setNote(note);
         m_editor->setFocus();
 
         int line = m_database->noteValue(id, "line").toInt();
@@ -433,7 +433,7 @@ void MainWindow::onEditorFocusLost() {
     if (!lastId) return;
 
     if (m_editor->document()->isModified()) {
-        m_database->updateNoteValue(lastId, "note", m_editor->document()->toPlainText());
+        m_database->updateNoteValue(lastId, "note", m_editor->note());
     }
 
     m_database->updateNoteValue(lastId, "line", m_editor->textCursor().blockNumber());

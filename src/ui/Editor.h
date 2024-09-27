@@ -5,10 +5,21 @@
 class Editor : public QTextEdit {
     Q_OBJECT
 public:
+    enum class Mode {
+        Plain,
+        Markdown
+    };
+
     explicit Editor(QWidget* parent = nullptr);
 
     void setId(Id id);
     Id id() const;
+
+    void setMode(Mode mode);
+    Mode mode() const;
+
+    void setNote(const QString& note);
+    QString note() const;
 
 signals:
     void focusLost();
@@ -20,4 +31,5 @@ protected:
 
 private:
     Id m_id = 0;
+    Mode m_mode = Mode::Plain;
 };
