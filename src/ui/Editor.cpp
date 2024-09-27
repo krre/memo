@@ -1,7 +1,7 @@
 #include "Editor.h"
 #include <QtWidgets>
 
-Editor::Editor(QWidget* parent) : QPlainTextEdit(parent) {
+Editor::Editor(QWidget* parent) : QTextEdit(parent) {
     setEnabled(false);
 }
 
@@ -15,13 +15,13 @@ Id Editor::id() const {
 
 void Editor::focusOutEvent(QFocusEvent* event) {
     emit focusLost();
-    QPlainTextEdit::focusOutEvent(event);
+    QTextEdit::focusOutEvent(event);
 }
 
 void Editor::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Backtab) {
         emit leave();
     } else {
-        QPlainTextEdit::keyPressEvent(event);
+        QTextEdit::keyPressEvent(event);
     }
 }

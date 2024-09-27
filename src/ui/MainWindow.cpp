@@ -213,11 +213,11 @@ void MainWindow::createActions() {
     m_findNextAction->setEnabled(false);
     m_findPreviousAction->setEnabled(false);
 
-    connect(m_editor, &QPlainTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
-    connect(m_editor, &QPlainTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
-    connect(m_editor, &QPlainTextEdit::copyAvailable, cutAction, &QAction::setEnabled);
-    connect(m_editor, &QPlainTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
-    connect(m_editor, &QPlainTextEdit::textChanged, this, [=, this] {
+    connect(m_editor, &QTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
+    connect(m_editor, &QTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
+    connect(m_editor, &QTextEdit::copyAvailable, cutAction, &QAction::setEnabled);
+    connect(m_editor, &QTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
+    connect(m_editor, &QTextEdit::textChanged, this, [=, this] {
         selectAllAction->setEnabled(!m_editor->document()->isEmpty());
     });
     connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);

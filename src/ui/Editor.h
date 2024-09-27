@@ -1,8 +1,8 @@
 #pragma once
 #include "core/Globals.h"
-#include <QPlainTextEdit>
+#include <QTextEdit>
 
-class Editor : public QPlainTextEdit {
+class Editor : public QTextEdit {
     Q_OBJECT
 public:
     explicit Editor(QWidget* parent = nullptr);
