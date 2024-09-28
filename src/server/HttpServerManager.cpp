@@ -40,7 +40,7 @@ void HttpServerManager::start(quint16 port, const SolidString& token, const Soli
 void HttpServerManager::start(quint16 port, const SolidString& token) {
     stop();
 
-    m_tcpServer = new QTcpServer;
+    m_tcpServer = new QTcpServer(this);
     m_httpServer = new QHttpServer(this);
 
     startImpl(port, token);
