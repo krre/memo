@@ -2,6 +2,8 @@
 #include <QObject>
 
 class QHttpServer;
+class QTcpServer;
+
 class Database;
 class SolidString;
 
@@ -18,5 +20,7 @@ private:
     void startImpl(quint16 port, const SolidString& token);
 
     Database* m_database = nullptr;
+
     QHttpServer* m_httpServer = nullptr;
+    QTcpServer* m_tcpServer = nullptr;
 };

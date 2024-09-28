@@ -4,6 +4,7 @@
 #include "handler/NameHandler.h"
 #include "handler/NotesHandler.h"
 #include <QHttpServer>
+#include <QSslServer>
 #include <QFile>
 #include <QSslKey>
 
@@ -25,22 +26,36 @@ void HttpServerManager::start(quint16 port, const SolidString& token, const Soli
     keyFile.close();
 
     m_httpServer = new QHttpServer(this);
-    m_httpServer->sslSetup(certificate, privateKey);
+    m_tcpServer = new QSslServer;
+
+    QSslConfiguration sslConfiguration;
+    sslConfiguration.setLocalCertificate(certificate);
+    sslConfiguration.setPrivateKey(privateKey);
+
+    static_cast<QSslServer>(m_tcpServer).setSslConfiguration(sslConfiguration);
 
     startImpl(port, token);
 }
 
 void HttpServerManager::start(quint16 port, const SolidString& token) {
     stop();
+
+    m_tcpServer = new QTcpServer;
     m_httpServer = new QHttpServer(this);
+
     startImpl(port, token);
 }
 
 void HttpServerManager::stop() {
     if (!m_httpServer) return;
 
+    delete m_tcpServer;
+    m_tcpServer = nullptr;
+
     delete m_httpServer;
     m_httpServer = nullptr;
+
+
     qInfo().noquote() << "Server stopped";
 }
 
@@ -50,17 +65,18 @@ void HttpServerManager::startImpl(quint16 port, const SolidString& token) {
         return;
     }
 
-    m_httpServer->route("/name", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
+    m_httpServer->route("/name", [=, this] (const QHttpServerRequest& request, QHttpServerResponder& responder) {
         responder.sendResponse(NameHandler(m_database).exec(request, token));
     });
 
-    m_httpServer->route("/notes", [=, this] (const QHttpServerRequest& request, QHttpServerResponder&& responder) {
+    m_httpServer->route("/notes", [=, this] (const QHttpServerRequest& request, QHttpServerResponder& responder) {
         responder.sendResponse(NotesHandler(m_database).exec(request, token));
     });
 
-    if (int result = m_httpServer->listen(QHostAddress::Any, port)) {
-        qInfo().noquote() << "Server started on port" << result;
-    } else {
+    if (!m_tcpServer->listen(QHostAddress::Any, port) || !m_httpServer->bind(m_tcpServer)) {
         qCritical().noquote() << "Failed to start server on port" << port;
+        stop();
+    } else {
+       qInfo().noquote() << "Server started on port" << port;
     }
 }

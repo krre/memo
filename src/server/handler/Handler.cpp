@@ -8,9 +8,8 @@ Handler::Handler(Database* database) : m_database(database) {
 
 QHttpServerResponse Handler::exec(const QHttpServerRequest& request, const QString& token) {
     bool accessOk = false;
-    auto headers = request.headers();
 
-    for (auto& [ first, second ] : headers) {
+    for (auto& [ first, second ] : request.headers().toListOfPairs()) {
         if (first.toLower() == "token" && second == token) {
             accessOk = true;
             break;
