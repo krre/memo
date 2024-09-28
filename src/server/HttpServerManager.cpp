@@ -55,7 +55,6 @@ void HttpServerManager::stop() {
     delete m_httpServer;
     m_httpServer = nullptr;
 
-
     qInfo().noquote() << "Server stopped";
 }
 
