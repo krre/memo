@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
-#include <QString>
+
+class QString;
 
 class NoteTaking;
 class Database;
