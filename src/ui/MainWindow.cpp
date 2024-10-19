@@ -397,12 +397,12 @@ void MainWindow::showBirthdays() {
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About %1").arg(Application::Name),
-        tr("<h3>%1 %2 %3</h3>"
+        tr("<h3>%1 %2</h3>"
            "Note-taking for quick notes<br><br>"
-           "Based on Qt %4<br>"
-           "Build on %5 %6<br><br>"
-           "<a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
-            .arg(Application::Name, Application::Version, Application::Status, QT_VERSION_STR,
+           "Based on Qt %3<br>"
+           "Build on %4 %5<br><br>"
+           "<a href=%6>%6</a><br><br>Copyright © %7, Vladimir Zarypov")
+            .arg(Application::Name, Application::Version, QT_VERSION_STR,
             Application::BuildDate, Application::BuildTime, Application::Url, Application::Years));
 }
 
