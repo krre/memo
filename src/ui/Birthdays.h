@@ -36,6 +36,7 @@ private:
         Id,
         Date,
         Name,
+        Age,
     };
 
     void addRow(Id id, const QDate& date, const QString& name);

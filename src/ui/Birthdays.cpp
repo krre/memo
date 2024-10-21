@@ -73,6 +73,8 @@ void Birthdays::load() {
         addRow(birthday.id, birthday.date, birthday.name);
     }
 
+    m_table->resizeColumnsToContents();
+
     m_table->blockSignals(isBlocked);
 }
 
@@ -87,10 +89,19 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
 
     QTableWidgetItem* nameItem = new QTableWidgetItem(name);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Name), nameItem);
+
+    int age = QDate::currentDate().year() - date.year();
+
+    if (QDate::currentDate().dayOfYear() < date.dayOfYear()) {
+        age -= 1;
+    }
+
+    QTableWidgetItem* ageItem = new QTableWidgetItem(QString::number(age));
+    m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
 }
 
 QTableWidget* Birthdays::createTable() {
-    QStringList labels = { "Id", tr("Date"), tr("Name") };
+    QStringList labels = { "Id", tr("Date"), tr("Name"), tr("Age") };
 
     m_table = new QTableWidget(0, labels.count());
     m_table->setHorizontalHeaderLabels(labels);

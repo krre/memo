@@ -14,32 +14,37 @@
         <translation>Вы желаете удалить день рождения?</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="93"/>
+        <location filename="../ui/Birthdays.cpp" line="102"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="93"/>
+        <location filename="../ui/Birthdays.cpp" line="102"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="109"/>
+        <location filename="../ui/Birthdays.cpp" line="102"/>
+        <source>Age</source>
+        <translation>Возраст</translation>
+    </message>
+    <message>
+        <location filename="../ui/Birthdays.cpp" line="118"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="112"/>
+        <location filename="../ui/Birthdays.cpp" line="121"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="116"/>
+        <location filename="../ui/Birthdays.cpp" line="125"/>
         <source>Delete...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="120"/>
+        <location filename="../ui/Birthdays.cpp" line="129"/>
         <source>Today</source>
         <translation>Сегодня</translation>
     </message>
