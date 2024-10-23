@@ -4,47 +4,47 @@
 <context>
     <name>Birthdays</name>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="7"/>
+        <location filename="../ui/Birthdays.cpp" line="8"/>
         <source>Birthdays</source>
         <translation>Дни рождения</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="41"/>
+        <location filename="../ui/Birthdays.cpp" line="48"/>
         <source>Are you want to delete your birthday?</source>
         <translation>Вы желаете удалить день рождения?</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="104"/>
+        <location filename="../ui/Birthdays.cpp" line="128"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="104"/>
+        <location filename="../ui/Birthdays.cpp" line="128"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="104"/>
+        <location filename="../ui/Birthdays.cpp" line="128"/>
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="120"/>
+        <location filename="../ui/Birthdays.cpp" line="144"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="123"/>
+        <location filename="../ui/Birthdays.cpp" line="147"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="127"/>
+        <location filename="../ui/Birthdays.cpp" line="151"/>
         <source>Delete...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="131"/>
+        <location filename="../ui/Birthdays.cpp" line="155"/>
         <source>Today</source>
         <translation>Сегодня</translation>
     </message>
@@ -276,16 +276,21 @@
     </message>
     <message>
         <location filename="../ui/notetaking/NoteProperties.cpp" line="8"/>
+        <source>ID:</source>
+        <translation>ИД:</translation>
+    </message>
+    <message>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="9"/>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
         <source>Created at:</source>
         <translation>Создано:</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteProperties.cpp" line="10"/>
+        <location filename="../ui/notetaking/NoteProperties.cpp" line="11"/>
         <source>Updated at:</source>
         <translation>Обновлено:</translation>
     </message>
@@ -293,17 +298,17 @@
 <context>
     <name>NoteTaking</name>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="97"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="98"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="97"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="98"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="109"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
