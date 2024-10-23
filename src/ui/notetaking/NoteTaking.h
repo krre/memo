@@ -36,6 +36,7 @@ private slots:
     void moveUp();
     void moveDown();
     void moveTree(const QModelIndex& index);
+    void expandTree();
     void showProperties() const;
 
 private:

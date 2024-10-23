@@ -14,37 +14,37 @@
         <translation>Вы желаете удалить день рождения?</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="102"/>
+        <location filename="../ui/Birthdays.cpp" line="104"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="102"/>
+        <location filename="../ui/Birthdays.cpp" line="104"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="102"/>
+        <location filename="../ui/Birthdays.cpp" line="104"/>
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="118"/>
+        <location filename="../ui/Birthdays.cpp" line="120"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="121"/>
+        <location filename="../ui/Birthdays.cpp" line="123"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="125"/>
+        <location filename="../ui/Birthdays.cpp" line="127"/>
         <source>Delete...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../ui/Birthdays.cpp" line="129"/>
+        <location filename="../ui/Birthdays.cpp" line="131"/>
         <source>Today</source>
         <translation>Сегодня</translation>
     </message>
@@ -293,17 +293,17 @@
 <context>
     <name>NoteTaking</name>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="87"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="97"/>
         <source>Add Note</source>
         <translation>Добавить заметку</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="87"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="97"/>
         <source>Name:</source>
         <translation>Название:</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="98"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="108"/>
         <source>Remove %1?</source>
         <translation>Удалить %1?</translation>
     </message>
@@ -323,17 +323,32 @@
         <translation>Переименовать</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="70"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="72"/>
         <source>Move Up</source>
         <translation>Переместить вверх</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="71"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="73"/>
         <source>Move Down</source>
         <translation>Переместить вниз</translation>
     </message>
     <message>
-        <location filename="../ui/notetaking/NoteTaking.cpp" line="73"/>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="77"/>
+        <source>Expand</source>
+        <translation>Развернуть</translation>
+    </message>
+    <message>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="78"/>
+        <source>Collapse All</source>
+        <translation>Свернуть всё</translation>
+    </message>
+    <message>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="79"/>
+        <source>Expand All</source>
+        <translation>Развернуть всё</translation>
+    </message>
+    <message>
+        <location filename="../ui/notetaking/NoteTaking.cpp" line="83"/>
         <source>Properties...</source>
         <translation>Свойства...</translation>
     </message>
