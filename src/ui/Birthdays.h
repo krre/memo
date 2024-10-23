@@ -16,12 +16,7 @@ class Settings;
 class Birthdays : public QWidget {
     Q_OBJECT
 public:
-    enum class Filter {
-        All,
-        Today
-    };
-
-    Birthdays(Database* database, Settings* settings, Filter filter = Filter::All);
+    Birthdays(Database* database, Settings* settings);
 
 protected:
     void closeEvent(QCloseEvent* event) override;

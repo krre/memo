@@ -4,7 +4,7 @@
 #include "settings/Settings.h"
 #include <QtWidgets>
 
-Birthdays::Birthdays(Database* database, Settings* settings, Filter filter) : m_database(database), m_settings(settings) {
+Birthdays::Birthdays(Database* database, Settings* settings) : m_database(database), m_settings(settings) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -15,7 +15,7 @@ Birthdays::Birthdays(Database* database, Settings* settings, Filter filter) : m_
 
     setAttribute(Qt::WA_DeleteOnClose, true);
 
-    if (filter == Filter::Today) {
+    if (database->isBirthdayToday()) {
         m_todayCheckBox->setChecked(true);
     }
 
