@@ -17,6 +17,10 @@ public:
         QByteArray splitter;
     };
 
+    struct Birthdays {
+        QByteArray geometry;
+    };
+
     struct Backups {
         QString directory;
     };
@@ -49,6 +53,9 @@ public:
 
     virtual void setMainWindow(const MainWindow& mainWindow) = 0;
     virtual MainWindow mainWindow() const = 0;
+
+    virtual void setBirthdays(const Birthdays& birthdays) = 0;
+    virtual Birthdays birthdays() const = 0;
 
     virtual void setBackups(const Backups& backups) = 0;
     virtual Backups backups() const = 0;

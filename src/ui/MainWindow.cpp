@@ -244,7 +244,7 @@ void MainWindow::loadFile(const QString& filePath) {
         m_recentFilesMenu->addPath(filePath);
 
         if (m_database->isBirthdayToday()) {
-            auto birthdays = new Birthdays(m_database, Birthdays::Filter::Today);
+            auto birthdays = new Birthdays(m_database, m_fileSettings.data(), Birthdays::Filter::Today);
             birthdays->show();
         }
     } catch (const Exception& e) {
@@ -391,7 +391,7 @@ void MainWindow::findPrevious() {
 }
 
 void MainWindow::showBirthdays() {
-    auto birthdays = new Birthdays(m_database);
+    auto birthdays = new Birthdays(m_database, m_fileSettings.data());
     birthdays->show();
 }
 

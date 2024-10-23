@@ -1,9 +1,10 @@
 #include "Birthdays.h"
 #include "database/Database.h"
 #include "core/Application.h"
+#include "settings/Settings.h"
 #include <QtWidgets>
 
-Birthdays::Birthdays(Database* database, Filter filter) : m_database(database) {
+Birthdays::Birthdays(Database* database, Settings* settings, Filter filter) : m_database(database), m_settings(settings) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -13,13 +14,19 @@ Birthdays::Birthdays(Database* database, Filter filter) : m_database(database) {
     setLayout(horizontalLayout);
 
     setAttribute(Qt::WA_DeleteOnClose, true);
-    resize(800, 400);
 
     if (filter == Filter::Today) {
         m_todayCheckBox->setChecked(true);
     }
 
     load();
+
+    readSettings();
+}
+
+void Birthdays::closeEvent(QCloseEvent* event) {
+    writeSettings();
+    event->accept();
 }
 
 void Birthdays::add() {
@@ -52,6 +59,23 @@ void Birthdays::deleteBirthday() {
 void Birthdays::updateButtonsState() {
     m_editButton->setEnabled(m_table->currentRow() >= 0);
     m_deleteButton->setEnabled(m_table->currentRow() >= 0);
+}
+
+void Birthdays::readSettings() {
+    QByteArray geometry = m_settings->birthdays().geometry;
+
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    } else {
+        resize(800, 400);
+    }
+}
+
+void Birthdays::writeSettings() {
+    Settings::Birthdays birthdays;
+    birthdays.geometry = saveGeometry();
+
+    m_settings->setBirthdays(birthdays);
 }
 
 void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {

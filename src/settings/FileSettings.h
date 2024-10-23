@@ -11,6 +11,9 @@ public:
     void setMainWindow(const MainWindow& mainWindow) override;
     MainWindow mainWindow() const override;
 
+    void setBirthdays(const Birthdays& birthdays) override;
+    Birthdays birthdays() const override;
+
     void setBackups(const Backups& backups) override;
     Backups backups() const override;
 
