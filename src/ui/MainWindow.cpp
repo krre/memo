@@ -414,6 +414,9 @@ void MainWindow::onNoteChanged(Id id) {
     m_findPreviousAction->setEnabled(false);
 
     if (id) {
+        bool markdown = m_database->noteValue(id, "markdown").toInt();
+        m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
+
         QString note = m_database->noteValue(id, "note").toString();
         m_editor->setNote(note);
         m_editor->setFocus();
@@ -437,6 +440,7 @@ void MainWindow::onEditorFocusLost() {
     }
 
     m_database->updateNoteValue(lastId, "line", m_editor->textCursor().blockNumber());
+    m_database->updateNoteValue(lastId, "markdown", m_editor->mode() == Editor::Mode::Markdown ? 1 : 0);
 }
 
 void MainWindow::onGlobalActivated() {

@@ -228,6 +228,7 @@ Note Database::queryToNote(const QSqlQuery& query) const {
     result.note = query.value("note").toString();
     result.createdAt = query.value("created_at").toString();
     result.updatedAt = query.value("updated_at").toString();
+    result.markdown = query.value("markdown").toInt();
 
     return result;
 }

@@ -2,11 +2,12 @@
 #include "Database.h"
 #include <QSqlQuery>
 
-constexpr auto currentVersion = 3;
+constexpr auto currentVersion = 4;
 
 Migrater::Migrater(Database* db) : m_db(db) {
     migrations[2] = [this] { migration2(); };
     migrations[3] = [this] { migration3(); };
+    migrations[4] = [this] { migration4(); };
 }
 
 void Migrater::run() const {
@@ -34,4 +35,8 @@ void Migrater::migration3() const {
             "name TEXT"
         ")"
     );
+}
+
+void Migrater::migration4() const {
+    m_db->exec("ALTER TABLE notes ADD COLUMN markdown BOOLEAN NOT NULL DEFAULT 0");
 }

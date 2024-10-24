@@ -12,6 +12,7 @@ struct Note {
     QString note;
     QString createdAt;
     QString updatedAt;
+    bool markdown;
 };
 
 struct FindNote {
