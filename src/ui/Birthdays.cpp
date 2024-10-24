@@ -85,6 +85,7 @@ void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
     birthday.name = m_table->item(row, int(Column::Name))->text();
 
     m_database->updateBirthday(birthday);
+    m_table->item(row, int(Column::Age))->setText(QString::number(age(birthday.date)));
 }
 
 void Birthdays::load() {
@@ -114,15 +115,19 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     QTableWidgetItem* nameItem = new QTableWidgetItem(name);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Name), nameItem);
 
-    int age = QDate::currentDate().year() - date.year();
-
-    if (QDate::currentDate().dayOfYear() < date.dayOfYear()) {
-        age -= 1;
-    }
-
-    QTableWidgetItem* ageItem = new QTableWidgetItem(QString::number(age));
+    QTableWidgetItem* ageItem = new QTableWidgetItem(QString::number(age(date)));
     ageItem->setFlags(ageItem->flags() ^ Qt::ItemIsEditable);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
+}
+
+int Birthdays::age(const QDate& date) {
+    int result = QDate::currentDate().year() - date.year();
+
+    if (QDate::currentDate().dayOfYear() < date.dayOfYear()) {
+        result -= 1;
+    }
+
+    return result;
 }
 
 QTableWidget* Birthdays::createTable() {
