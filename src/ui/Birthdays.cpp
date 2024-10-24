@@ -121,6 +121,7 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     }
 
     QTableWidgetItem* ageItem = new QTableWidgetItem(QString::number(age));
+    ageItem->setFlags(ageItem->flags() ^ Qt::ItemIsEditable);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
 }
 
