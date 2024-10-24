@@ -23,6 +23,8 @@ void Editor::setMode(Mode mode) {
     } else if (mode == Mode::Markdown) {
         setMarkdown(toPlainText());
     }
+
+    setReadOnly(mode == Mode::Markdown);
 }
 
 Editor::Mode Editor::mode() const {
