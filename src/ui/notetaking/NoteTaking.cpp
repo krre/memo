@@ -66,10 +66,20 @@ void NoteTaking::onCustomContextMenu(const QPoint& point) {
     contextMenu->addAction(tr("Add..."), this, &NoteTaking::addNote);
     auto removeAction = contextMenu->addAction(tr("Remove..."), this, &NoteTaking::removeNotes);
     auto renameAction = contextMenu->addAction(tr("Rename"), this, &NoteTaking::renameNote);
+
     contextMenu->addSeparator();
+
     auto moveUpAction = contextMenu->addAction(tr("Move Up"), this, &NoteTaking::moveUp);
     auto moveDownAction = contextMenu->addAction(tr("Move Down"), this, &NoteTaking::moveDown);
+
     contextMenu->addSeparator();
+
+    auto expandAction = contextMenu->addAction(tr("Expand"), this, &NoteTaking::expandTree);
+    contextMenu->addAction(tr("Collapse All"), this, &NoteTaking::collapseAll);
+    contextMenu->addAction(tr("Expand All"), this, &NoteTaking::expandAll);
+
+    contextMenu->addSeparator();
+
     auto propertiesAction = contextMenu->addAction(tr("Properties..."), this, &NoteTaking::showProperties);
 
     bool enabled = currentIndex().isValid();
@@ -77,6 +87,7 @@ void NoteTaking::onCustomContextMenu(const QPoint& point) {
     renameAction->setEnabled(enabled);
     moveUpAction->setEnabled(enabled && currentIndex().row() > 0);
     moveDownAction->setEnabled(enabled && currentIndex().row() < m_model->rowCount(currentIndex().parent()) - 1);
+    expandAction->setEnabled(enabled);
     propertiesAction->setEnabled(enabled);
 
     contextMenu->exec(mapToGlobal(point));
@@ -176,6 +187,10 @@ void NoteTaking::moveTree(const QModelIndex& index) {
              m_database->updateNoteValue(id, "depth", depth);
          }
     }
+}
+
+void NoteTaking::expandTree() {
+    expandRecursively(currentIndex());
 }
 
 void NoteTaking::showProperties() const {

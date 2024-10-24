@@ -3,23 +3,23 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setGeneral(const General& general) {
+void FileSettings::setApplication(const Application& application) {
     QSettings settings;
-    settings.beginGroup("General");
+    settings.beginGroup("Application");
 
-    settings.setValue("filePath", general.filePath);
-    settings.setValue("language", general.language);
-    settings.setValue("minimizeOnStartup", general.minimizeOnStartup);
-    settings.setValue("hideTrayIcon", general.hideTrayIcon);
+    settings.setValue("filePath", application.filePath);
+    settings.setValue("language", application.language);
+    settings.setValue("minimizeOnStartup", application.minimizeOnStartup);
+    settings.setValue("hideTrayIcon", application.hideTrayIcon);
 
     settings.endGroup();
 }
 
-Settings::General FileSettings::general() const {
-    General result;
+Settings::Application FileSettings::application() const {
+    Application result;
 
     QSettings settings;
-    settings.beginGroup("General");
+    settings.beginGroup("Application");
 
     result.filePath = settings.value("filePath").toString();
     result.language = settings.value("language").toString();
@@ -51,6 +51,28 @@ Settings::MainWindow FileSettings::mainWindow() const {
     result.geometry = settings.value("geometry").toByteArray();
     result.state = settings.value("state").toByteArray();
     result.splitter = settings.value("splitter").toByteArray();
+
+    settings.endGroup();
+
+    return result;
+}
+
+void FileSettings::setBirthdays(const Birthdays& birthdays) {
+    QSettings settings;
+    settings.beginGroup("Birthdays");
+
+    settings.setValue("geometry", birthdays.geometry);
+
+    settings.endGroup();
+}
+
+Settings::Birthdays FileSettings::birthdays() const {
+    Birthdays result;
+
+    QSettings settings;
+    settings.beginGroup("Birthdays");
+
+    result.geometry = settings.value("geometry").toByteArray();
 
     settings.endGroup();
 

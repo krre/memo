@@ -2,7 +2,7 @@
 Note-taking for my personal usage (desktop version)
 
 ## Dependencies
-- Qt 6.7
+- Qt 6.8
 
 ## Download
 https://github.com/krre/memo/releases

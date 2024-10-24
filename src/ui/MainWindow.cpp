@@ -72,9 +72,9 @@ void MainWindow::readSettings() {
 
     m_splitter->restoreState(m_fileSettings->mainWindow().splitter);
 
-    loadFile(m_fileSettings->general().filePath);
+    loadFile(m_fileSettings->application().filePath);
 
-    if (!m_fileSettings->general().minimizeOnStartup) {
+    if (!m_fileSettings->application().minimizeOnStartup) {
         show();
     }
 }
@@ -87,15 +87,15 @@ void MainWindow::writeSettings() {
 
     m_fileSettings->setMainWindow(mainWindow);
 
-    Settings::General general = m_fileSettings->general();
-    general.filePath = m_currentFile;
+    Settings::Application application = m_fileSettings->application();
+    application.filePath = m_currentFile;
 
-    m_fileSettings->setGeneral(general);
+    m_fileSettings->setApplication(application);
     m_recentFilesMenu->save();
 }
 
 void MainWindow::applyHotSettings() {
-    m_trayIcon->setVisible(!m_fileSettings->general().hideTrayIcon);
+    m_trayIcon->setVisible(!m_fileSettings->application().hideTrayIcon);
 
     Settings::GlobalHotkey globalHotkey = m_fileSettings->globalHotkey();
 
@@ -244,8 +244,7 @@ void MainWindow::loadFile(const QString& filePath) {
         m_recentFilesMenu->addPath(filePath);
 
         if (m_database->isBirthdayToday()) {
-            auto birthdays = new Birthdays(m_database, Birthdays::Filter::Today);
-            birthdays->show();
+            showBirthdays();
         }
     } catch (const Exception& e) {
         showErrorDialog(e.error());
@@ -391,18 +390,19 @@ void MainWindow::findPrevious() {
 }
 
 void MainWindow::showBirthdays() {
-    auto birthdays = new Birthdays(m_database);
+    auto birthdays = new Birthdays(m_database, m_fileSettings.data());
     birthdays->show();
+    birthdays->activateWindow();
 }
 
 void MainWindow::about() {
     QMessageBox::about(this, tr("About %1").arg(Application::Name),
-        tr("<h3>%1 %2 %3</h3>"
+        tr("<h3>%1 %2</h3>"
            "Note-taking for quick notes<br><br>"
-           "Based on Qt %4<br>"
-           "Build on %5 %6<br><br>"
-           "<a href=%7>%7</a><br><br>Copyright © %8, Vladimir Zarypov")
-            .arg(Application::Name, Application::Version, Application::Status, QT_VERSION_STR,
+           "Based on Qt %3<br>"
+           "Build on %4 %5<br><br>"
+           "<a href=%6>%6</a><br><br>Copyright © %7, Vladimir Zarypov")
+            .arg(Application::Name, Application::Version, QT_VERSION_STR,
             Application::BuildDate, Application::BuildTime, Application::Url, Application::Years));
 }
 

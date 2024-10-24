@@ -11,16 +11,15 @@ class QVBoxLayout;
 class QCheckBox;
 
 class Database;
+class Settings;
 
 class Birthdays : public QWidget {
     Q_OBJECT
 public:
-    enum class Filter {
-        All,
-        Today
-    };
+    Birthdays(Database* database, Settings* settings);
 
-    Birthdays(Database* database, Filter filter = Filter::All);
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private slots:
     void add();
@@ -36,7 +35,11 @@ private:
         Id,
         Date,
         Name,
+        Age,
     };
+
+    void readSettings();
+    void writeSettings();
 
     void addRow(Id id, const QDate& date, const QString& name);
 
@@ -48,5 +51,7 @@ private:
     QPushButton* m_deleteButton = nullptr;
 
     QCheckBox* m_todayCheckBox = nullptr;
+
     Database* m_database = nullptr;
+    Settings* m_settings = nullptr;
 };

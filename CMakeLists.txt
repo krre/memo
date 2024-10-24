@@ -24,6 +24,7 @@ SET(TS_SOURCE src/i18n/memo-ru.ts)
 
 qt_add_translations(memo
     TS_FILES ${TS_SOURCE}
+    # LUPDATE_OPTIONS -no-obsolete
 )
 
 # For visibility in IDE (e.g., Qt Creator)

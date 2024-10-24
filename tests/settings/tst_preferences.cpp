@@ -24,12 +24,12 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setGeneral(const General& general) override {
-        m_general = general;
+    void setApplication(const Application& application) override {
+        m_application = application;
     }
 
-    General general() const override {
-        return m_general;
+    Application application() const override {
+        return m_application;
     }
 
     void setMainWindow(const MainWindow& mainWindow) override {
@@ -38,6 +38,14 @@ public:
 
     MainWindow mainWindow() const override {
         return m_mainWindow;
+    }
+
+    void setBirthdays(const Birthdays& birthdays) override {
+        m_birthdays = birthdays;
+    }
+
+    Birthdays birthdays() const override {
+        return m_birthdays;
     }
 
     void setBackups(const Backups& backups) override {
@@ -81,8 +89,9 @@ public:
     }
 
 private:
-    General m_general;
+    Application m_application;
     MainWindow m_mainWindow;
+    Birthdays m_birthdays;
     Backups m_backups;
     Editor m_editor;
     GlobalHotkey m_globalHotkey;
@@ -100,11 +109,11 @@ private slots:
 void TestPreferences::readOptions() {
     TestSettings settings;
 
-    TestSettings::General general;
-    general.language = Language;
-    general.minimizeOnStartup = MinimizeOnStartup;
-    general.hideTrayIcon = HideTrayIcon;
-    settings.setGeneral(general);
+    TestSettings::Application application;
+    application.language = Language;
+    application.minimizeOnStartup = MinimizeOnStartup;
+    application.hideTrayIcon = HideTrayIcon;
+    settings.setApplication(application);
 
     TestSettings::Editor editor;
     editor.fontFamily = FontFamily;
@@ -199,9 +208,9 @@ void TestPreferences::setOptions() {
     TestSettings settings;
 
     // To prevent opening the need restart dialog
-    TestSettings::General general;
-    general.language = Language;
-    settings.setGeneral(general);
+    TestSettings::Application application;
+    application.language = Language;
+    settings.setApplication(application);
 
     Preferences preferences(&settings);
 
@@ -269,9 +278,9 @@ void TestPreferences::setOptions() {
 
     preferences.accept();
 
-    QCOMPARE(settings.general().language, Language);
-    QCOMPARE(settings.general().minimizeOnStartup, MinimizeOnStartup);
-    QCOMPARE(settings.general().hideTrayIcon, HideTrayIcon);
+    QCOMPARE(settings.application().language, Language);
+    QCOMPARE(settings.application().minimizeOnStartup, MinimizeOnStartup);
+    QCOMPARE(settings.application().hideTrayIcon, HideTrayIcon);
     QCOMPARE(settings.editor().fontFamily, FontFamily);
     QCOMPARE(settings.editor().fontSize, FontSize);
     QCOMPARE(settings.globalHotkey().enabled, HotKeyEnabled);

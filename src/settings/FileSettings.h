@@ -5,11 +5,14 @@ class FileSettings : public Settings {
 public:
     FileSettings();
 
-    void setGeneral(const General& general) override;
-    General general() const override;
+    void setApplication(const Application& application) override;
+    Application application() const override;
 
     void setMainWindow(const MainWindow& mainWindow) override;
     MainWindow mainWindow() const override;
+
+    void setBirthdays(const Birthdays& birthdays) override;
+    Birthdays birthdays() const override;
 
     void setBackups(const Backups& backups) override;
     Backups backups() const override;

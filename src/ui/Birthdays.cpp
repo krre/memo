@@ -1,9 +1,10 @@
 #include "Birthdays.h"
 #include "database/Database.h"
 #include "core/Application.h"
+#include "settings/Settings.h"
 #include <QtWidgets>
 
-Birthdays::Birthdays(Database* database, Filter filter) : m_database(database) {
+Birthdays::Birthdays(Database* database, Settings* settings) : m_database(database), m_settings(settings) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -13,13 +14,19 @@ Birthdays::Birthdays(Database* database, Filter filter) : m_database(database) {
     setLayout(horizontalLayout);
 
     setAttribute(Qt::WA_DeleteOnClose, true);
-    resize(800, 400);
 
-    if (filter == Filter::Today) {
+    if (database->isBirthdayToday()) {
         m_todayCheckBox->setChecked(true);
     }
 
     load();
+
+    readSettings();
+}
+
+void Birthdays::closeEvent(QCloseEvent* event) {
+    writeSettings();
+    event->accept();
 }
 
 void Birthdays::add() {
@@ -54,6 +61,23 @@ void Birthdays::updateButtonsState() {
     m_deleteButton->setEnabled(m_table->currentRow() >= 0);
 }
 
+void Birthdays::readSettings() {
+    QByteArray geometry = m_settings->birthdays().geometry;
+
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    } else {
+        resize(800, 400);
+    }
+}
+
+void Birthdays::writeSettings() {
+    Settings::Birthdays birthdays;
+    birthdays.geometry = saveGeometry();
+
+    m_settings->setBirthdays(birthdays);
+}
+
 void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
     Birthday birthday;
     birthday.id = m_table->item(row, int(Column::Id))->text().toInt();
@@ -73,6 +97,8 @@ void Birthdays::load() {
         addRow(birthday.id, birthday.date, birthday.name);
     }
 
+    m_table->resizeColumnsToContents();
+
     m_table->blockSignals(isBlocked);
 }
 
@@ -87,10 +113,19 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
 
     QTableWidgetItem* nameItem = new QTableWidgetItem(name);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Name), nameItem);
+
+    int age = QDate::currentDate().year() - date.year();
+
+    if (QDate::currentDate().dayOfYear() < date.dayOfYear()) {
+        age -= 1;
+    }
+
+    QTableWidgetItem* ageItem = new QTableWidgetItem(QString::number(age));
+    m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
 }
 
 QTableWidget* Birthdays::createTable() {
-    QStringList labels = { "Id", tr("Date"), tr("Name") };
+    QStringList labels = { "Id", tr("Date"), tr("Name"), tr("Age") };
 
     m_table = new QTableWidget(0, labels.count());
     m_table->setHorizontalHeaderLabels(labels);
