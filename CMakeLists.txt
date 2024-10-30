@@ -35,7 +35,7 @@ add_custom_target(other
 )
 
 install(TARGETS memo
-    BUNDLE  DESTINATION .
+    BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
