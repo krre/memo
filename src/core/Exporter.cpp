@@ -40,11 +40,11 @@ void Exporter::compressDir(const QString& dirPath) {
     QZipWriter zipWriter(dirPath + ".zip");
 
     switch (zipWriter.status()) {
-    case QZipWriter::FileWriteError: throw RuntimeError("Write file error");
-    case QZipWriter::FileOpenError: throw RuntimeError("Open file error");
-    case QZipWriter::FilePermissionsError: throw RuntimeError("Permissions file error");
-    case QZipWriter::FileError: throw RuntimeError("File error");
-    case QZipWriter::NoError: break;
+        case QZipWriter::FileWriteError: throw RuntimeError("Write file error");
+        case QZipWriter::FileOpenError: throw RuntimeError("Open file error");
+        case QZipWriter::FilePermissionsError: throw RuntimeError("Permissions file error");
+        case QZipWriter::FileError: throw RuntimeError("File error");
+        case QZipWriter::NoError: break;
     }
 
     zipWriter.setCompressionPolicy(QZipWriter::AutoCompress);
