@@ -3,32 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setMainWindow(const MainWindow& mainWindow) {
-    QSettings settings;
-    settings.beginGroup("MainWindow");
-
-    settings.setValue("geometry", mainWindow.geometry);
-    settings.setValue("state", mainWindow.state);
-    settings.setValue("splitter", mainWindow.splitter);
-
-    settings.endGroup();
-}
-
-Settings::MainWindow FileSettings::mainWindow() const {
-    MainWindow result;
-
-    QSettings settings;
-    settings.beginGroup("MainWindow");
-
-    result.geometry = settings.value("geometry").toByteArray();
-    result.state = settings.value("state").toByteArray();
-    result.splitter = settings.value("splitter").toByteArray();
-
-    settings.endGroup();
-
-    return result;
-}
-
 void FileSettings::setBirthdays(const Birthdays& birthdays) {
     QSettings settings;
     settings.beginGroup("Birthdays");

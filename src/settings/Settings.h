@@ -3,12 +3,6 @@
 
 class Settings {
 public:
-    struct MainWindow {
-        QByteArray geometry;
-        QByteArray state;
-        QByteArray splitter;
-    };
-
     struct Birthdays {
         QByteArray geometry;
     };
@@ -52,8 +46,14 @@ public:
     void setApplicationHideTrayIcon(bool hideTrayIcon);
     bool applicationHideTrayIcon() const;
 
-    virtual void setMainWindow(const MainWindow& mainWindow) = 0;
-    virtual MainWindow mainWindow() const = 0;
+    void setMainWindowGeometry(const  QByteArray& geometry);
+    QByteArray mainWindowGeometry() const;
+
+    void setMainWindowState(const  QByteArray& state);
+    QByteArray mainWindowState() const;
+
+    void setMainWindowSplitter(const  QByteArray& splitter);
+    QByteArray mainWindowSplitter() const;
 
     virtual void setBirthdays(const Birthdays& birthdays) = 0;
     virtual Birthdays birthdays() const = 0;

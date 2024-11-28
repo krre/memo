@@ -58,7 +58,7 @@ void MainWindow::quit() {
 void MainWindow::readSettings() {
     applyHotSettings();
 
-    QByteArray geometry = m_fileSettings->mainWindow().geometry;
+    QByteArray geometry = m_fileSettings->mainWindowGeometry();
 
     if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
@@ -68,9 +68,9 @@ void MainWindow::readSettings() {
         move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
     }
 
-    restoreState(m_fileSettings->mainWindow().state);
+    restoreState(m_fileSettings->mainWindowState());
 
-    m_splitter->restoreState(m_fileSettings->mainWindow().splitter);
+    m_splitter->restoreState(m_fileSettings->mainWindowSplitter());
 
     loadFile(m_fileSettings->applicationFilePath());
 
@@ -80,12 +80,9 @@ void MainWindow::readSettings() {
 }
 
 void MainWindow::writeSettings() {
-    Settings::MainWindow mainWindow;
-    mainWindow.geometry = saveGeometry();
-    mainWindow.state = saveState();
-    mainWindow.splitter = m_splitter->saveState();
-
-    m_fileSettings->setMainWindow(mainWindow);
+    m_fileSettings->setMainWindowGeometry(saveGeometry());
+    m_fileSettings->setMainWindowState(m_splitter->saveState());
+    m_fileSettings->setMainWindowSplitter(m_splitter->saveState());
 
     m_fileSettings->setApplicationFilePath(m_currentFile);
     m_recentFilesMenu->save();

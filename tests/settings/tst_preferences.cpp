@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setMainWindow(const MainWindow& mainWindow) override {
-        m_mainWindow = mainWindow;
-    }
-
-    MainWindow mainWindow() const override {
-        return m_mainWindow;
-    }
-
     void setBirthdays(const Birthdays& birthdays) override {
         m_birthdays = birthdays;
     }
@@ -90,7 +82,6 @@ protected:
     }
 
 private:
-    MainWindow m_mainWindow;
     Birthdays m_birthdays;
     Backups m_backups;
     Editor m_editor;
