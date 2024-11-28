@@ -3,33 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setRecent(const Recent& recent) {
-    QSettings settings;
-    settings.beginWriteArray("Recent");
-
-    for (int i = 0; i < recent.files.size(); ++i) {
-        settings.setArrayIndex(i);
-        settings.setValue("file", recent.files.at(i));
-    }
-
-    settings.endArray();
-}
-
-Settings::Recent FileSettings::recent() const {
-    Recent result;
-
-    QSettings settings;
-    int size = settings.beginReadArray("Recent");
-
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        result.files.append(settings.value("file").toString());
-    }
-
-    settings.endArray();
-    return result;
-}
-
 void FileSettings::setServer(const Server& server) {
     QSettings settings;
     settings.beginGroup("Server");

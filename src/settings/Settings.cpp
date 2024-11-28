@@ -103,3 +103,23 @@ void Settings::setGlobalHotkeyValue(const QString& value) {
 QString Settings::globalHotkeyValue() const {
     return value("GlobalHotkey/value").toString();
 }
+
+void Settings::setRecentFiles(const QStringList& recentFiles) {
+    QVariantList list;
+
+    for (const auto& file : recentFiles) {
+        list.append(file);
+    }
+
+    setList("RecentFiles/file", list);
+}
+
+QStringList Settings::recentFiles() const {
+    QStringList result;
+
+    for (const auto& value : list("RecentFiles/file")) {
+        result.append(value.toString());
+    }
+
+    return result;
+}

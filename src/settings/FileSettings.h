@@ -5,9 +5,6 @@ class FileSettings : public Settings {
 public:
     FileSettings();
 
-    void setRecent(const Recent& recent) override;
-    Recent recent() const override;
-
     void setServer(const Server& server) override;
     Server server() const override;
 

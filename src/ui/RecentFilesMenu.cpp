@@ -10,7 +10,7 @@ RecentFilesMenu::RecentFilesMenu(Settings* settings, QWidget* parent)
     addSeparator();
     addAction(tr("Clear"), this, &RecentFilesMenu::clear);
 
-    for (const QString& filePath : settings->recent().files) {
+    for (const QString& filePath : settings->recentFiles()) {
         addPath(filePath);
     }
 }
@@ -38,13 +38,13 @@ void RecentFilesMenu::addPath(const QString& path) {
 }
 
 void RecentFilesMenu::save() {
-    Settings::Recent recent;
+    QStringList recentFiles;
 
     for (int i = 0; i < actions().size() - systemActionCount; ++i) {
-        recent.files.append(actions().at(i)->text());
+        recentFiles.append(actions().at(i)->text());
     }
 
-    m_settings->setRecent(recent);
+    m_settings->setRecentFiles(recentFiles);
 }
 
 void RecentFilesMenu::clear() {

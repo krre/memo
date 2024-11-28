@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setRecent(const Recent& recent) override {
-        m_recent = recent;
-    }
-
-    Recent recent() const override {
-        return m_recent;
-    }
-
     void setServer(const Server& server) override {
         m_server = server;
     }
@@ -58,7 +50,6 @@ protected:
     }
 
 private:
-    Recent m_recent;
     Server m_server;
 
     QHash<QString, QVariant> settings;

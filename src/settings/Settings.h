@@ -3,10 +3,6 @@
 
 class Settings {
 public:
-    struct Recent {
-        QStringList files;
-    };
-
     struct Server {
         bool enabled;
         QString token;
@@ -55,8 +51,8 @@ public:
     void setGlobalHotkeyValue(const QString& value);
     QString globalHotkeyValue() const;
 
-    virtual void setRecent(const Recent& recent) = 0;
-    virtual Recent recent() const = 0;
+    void setRecentFiles(const QStringList& recentFiles);
+    QStringList recentFiles() const;
 
     virtual void setServer(const Server& server) = 0;
     virtual Server server() const = 0;
