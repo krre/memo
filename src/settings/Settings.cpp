@@ -87,3 +87,19 @@ void Settings::setEditorFontSize(int fontSize) {
 int Settings::editorFontSize() const {
     return value("Editor/fontSize").toInt();
 }
+
+void Settings::setGlobalHotkeyEnabled(bool enabled) {
+    setValue("GlobalHotkey/enabled", enabled);
+}
+
+bool Settings::globalHotkeyEnabled() const {
+    return value("GlobalHotkey/enabled").toBool();
+}
+
+void Settings::setGlobalHotkeyValue(const QString& value) {
+    setValue("GlobalHotkey/value", value);
+}
+
+QString Settings::globalHotkeyValue() const {
+    return value("GlobalHotkey/value").toString();
+}

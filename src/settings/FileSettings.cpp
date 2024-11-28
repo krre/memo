@@ -3,30 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setGlobalHotkey(const GlobalHotkey& globalHotkey) {
-    QSettings settings;
-    settings.beginGroup("GlobalHotkey");
-
-    settings.setValue("enabled", globalHotkey.enabled);
-    settings.setValue("hotkey", globalHotkey.hotkey);
-
-    settings.endGroup();
-}
-
-Settings::GlobalHotkey FileSettings::globalHotkey() const {
-    GlobalHotkey result;
-
-    QSettings settings;
-    settings.beginGroup("GlobalHotkey");
-
-    result.enabled = settings.value("enabled").toBool();
-    result.hotkey = settings.value("hotkey").toString();
-
-    settings.endGroup();
-
-    return result;
-}
-
 void FileSettings::setRecent(const Recent& recent) {
     QSettings settings;
     settings.beginWriteArray("Recent");

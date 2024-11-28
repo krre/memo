@@ -35,10 +35,8 @@ void Preferences::accept() {
     m_settings->setEditorFontFamily(m_fontFamilyLineEdit->text());
     m_settings->setEditorFontSize(m_fontSizeLineEdit->text().toInt());
 
-    Settings::GlobalHotkey globalHotkey;
-    globalHotkey.hotkey = m_hotkeyLineEdit->text();
-    globalHotkey.enabled = m_hotkeyGroupBox->isChecked();
-    m_settings->setGlobalHotkey(globalHotkey);
+    m_settings->setGlobalHotkeyEnabled(m_hotkeyGroupBox->isChecked());
+    m_settings->setGlobalHotkeyValue(m_hotkeyLineEdit->text());
 
     Settings::Server server;
     server.enabled = m_serverGroupBox->isChecked();
@@ -129,14 +127,12 @@ QGroupBox* Preferences::createUiGroupBox() {
 }
 
 QGroupBox* Preferences::createHotkeyGroupBox() {
-    Settings::GlobalHotkey globalHotkey = m_settings->globalHotkey();
-
     m_hotkeyGroupBox = new QGroupBox(tr("Global Hotkey"));
     m_hotkeyGroupBox->setCheckable(true);
-    m_hotkeyGroupBox->setChecked(globalHotkey.enabled);
+    m_hotkeyGroupBox->setChecked(m_settings->globalHotkeyEnabled());
 
     m_hotkeyLineEdit = new QLineEdit;
-    m_hotkeyLineEdit->setText(globalHotkey.hotkey);
+    m_hotkeyLineEdit->setText(m_settings->globalHotkeyValue());
 
     auto hotkeyLayout = new QVBoxLayout(m_hotkeyGroupBox);
     hotkeyLayout->addWidget(m_hotkeyLineEdit);

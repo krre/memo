@@ -3,11 +3,6 @@
 
 class Settings {
 public:
-    struct GlobalHotkey {
-        bool enabled;
-        QString hotkey;
-    };
-
     struct Recent {
         QStringList files;
     };
@@ -54,8 +49,11 @@ public:
     void setEditorFontSize(int fontSize);
     int editorFontSize() const;
 
-    virtual void setGlobalHotkey(const GlobalHotkey& globalHotkey) = 0;
-    virtual GlobalHotkey globalHotkey() const = 0;
+    void setGlobalHotkeyEnabled(bool enabled);
+    bool globalHotkeyEnabled() const;
+
+    void setGlobalHotkeyValue(const QString& value);
+    QString globalHotkeyValue() const;
 
     virtual void setRecent(const Recent& recent) = 0;
     virtual Recent recent() const = 0;

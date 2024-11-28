@@ -91,10 +91,10 @@ void MainWindow::writeSettings() {
 void MainWindow::applyHotSettings() {
     m_trayIcon->setVisible(!m_fileSettings->applicationHideTrayIcon());
 
-    Settings::GlobalHotkey globalHotkey = m_fileSettings->globalHotkey();
+    bool globalHotkeyEnabled = m_fileSettings->globalHotkeyEnabled();
 
-    if (globalHotkey.enabled) {
-        m_globalHotkey->setShortcut(globalHotkey.hotkey);
+    if (globalHotkeyEnabled) {
+        m_globalHotkey->setShortcut(m_fileSettings->globalHotkeyValue());
     } else {
         m_globalHotkey->unsetShortcut();
     }

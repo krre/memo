@@ -5,9 +5,6 @@ class FileSettings : public Settings {
 public:
     FileSettings();
 
-    void setGlobalHotkey(const GlobalHotkey& globalHotkey) override;
-    GlobalHotkey globalHotkey() const override;
-
     void setRecent(const Recent& recent) override;
     Recent recent() const override;
 

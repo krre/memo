@@ -12,7 +12,7 @@ constexpr auto FontSize = 10;
 constexpr auto MinimizeOnStartup = true;
 constexpr auto HideTrayIcon = true;
 constexpr auto HotKeyEnabled = true;
-constexpr auto HotKey = "Ctrl+Alt+M";
+constexpr auto HotKeyValue = "Ctrl+Alt+M";
 constexpr auto BackupsDirectory = "/home/user/backups";
 constexpr auto ServerEnabled = true;
 constexpr auto Token = "123456";
@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setGlobalHotkey(const GlobalHotkey& globalHotkey) override {
-        m_globalHotkey = globalHotkey;
-    }
-
-    GlobalHotkey globalHotkey() const override {
-        return m_globalHotkey;
-    }
-
     void setRecent(const Recent& recent) override {
         m_recent = recent;
     }
@@ -58,7 +50,6 @@ protected:
     }
 
 private:
-    GlobalHotkey m_globalHotkey;
     Recent m_recent;
     Server m_server;
 
@@ -82,10 +73,8 @@ void TestPreferences::readOptions() {
     settings.setEditorFontFamily(FontFamily);
     settings.setEditorFontSize(FontSize);
 
-    TestSettings::GlobalHotkey globalHotkey;
-    globalHotkey.enabled = HotKeyEnabled;
-    globalHotkey.hotkey = HotKey;
-    settings.setGlobalHotkey(globalHotkey);
+    settings.setGlobalHotkeyEnabled(HotKeyEnabled);
+    settings.setGlobalHotkeyValue(HotKeyValue);
 
     settings.setBackupsDirectory(BackupsDirectory);
 
@@ -154,7 +143,7 @@ void TestPreferences::readOptions() {
     QCOMPARE(minimizeCheckBox->isChecked(), MinimizeOnStartup);
     QCOMPARE(hideTrayCheckBox->isChecked(), HideTrayIcon);
     QCOMPARE(hotkeyGroupBox->isChecked(), HotKeyEnabled);
-    QCOMPARE(hotkeyLineEdit->text(), HotKey);
+    QCOMPARE(hotkeyLineEdit->text(), HotKeyValue);
     QCOMPARE(backupsLineEdit->text(), BackupsDirectory);
     QCOMPARE(serverGroupBox->isChecked(), ServerEnabled);
     QCOMPARE(portLineEdit->text().toInt(), Port);
@@ -201,7 +190,7 @@ void TestPreferences::setOptions() {
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hotkeyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    hotkeyLineEdit->setText(HotKey);
+    hotkeyLineEdit->setText(HotKeyValue);
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto backupsLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
@@ -241,8 +230,8 @@ void TestPreferences::setOptions() {
     QCOMPARE(settings.applicationHideTrayIcon(), HideTrayIcon);
     QCOMPARE(settings.editorFontFamily(), FontFamily);
     QCOMPARE(settings.editorFontSize(), FontSize);
-    QCOMPARE(settings.globalHotkey().enabled, HotKeyEnabled);
-    QCOMPARE(settings.globalHotkey().hotkey, HotKey);
+    QCOMPARE(settings.globalHotkeyEnabled(), HotKeyEnabled);
+    QCOMPARE(settings.globalHotkeyValue(), HotKeyValue);
     QCOMPARE(settings.backupsDirectory(), BackupsDirectory);
     QCOMPARE(settings.server().enabled, ServerEnabled);
     QCOMPARE(settings.server().port, Port);
