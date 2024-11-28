@@ -23,15 +23,6 @@ constexpr auto PrivateKey = "privateKey";
 
 class TestSettings : public Settings {
 
-public:
-    void setServer(const Server& server) override {
-        m_server = server;
-    }
-
-    Server server() const override {
-        return m_server;
-    }
-
 protected:
     void setValue(const QString& key, const QVariant& value) override {
         settings[key] = value;
@@ -50,8 +41,6 @@ protected:
     }
 
 private:
-    Server m_server;
-
     QHash<QString, QVariant> settings;
 };
 
@@ -77,14 +66,12 @@ void TestPreferences::readOptions() {
 
     settings.setBackupsDirectory(BackupsDirectory);
 
-    TestSettings::Server server;
-    server.enabled = ServerEnabled;
-    server.token = Token;
-    server.port = Port;
-    server.sslEnabled = SslEnabled;
-    server.certificate = Certificate;
-    server.privateKey = PrivateKey;
-    settings.setServer(server);
+    settings.setServerEnabled(ServerEnabled);
+    settings.setServerToken(Token);
+    settings.setServerPort(Port);
+    settings.setServerSslEnabled(SslEnabled);
+    settings.setServerCertificate(Certificate);
+    settings.setServerPrivateKey(PrivateKey);
 
     Preferences preferences(&settings);
 
@@ -232,12 +219,12 @@ void TestPreferences::setOptions() {
     QCOMPARE(settings.globalHotkeyEnabled(), HotKeyEnabled);
     QCOMPARE(settings.globalHotkeyValue(), HotKeyValue);
     QCOMPARE(settings.backupsDirectory(), BackupsDirectory);
-    QCOMPARE(settings.server().enabled, ServerEnabled);
-    QCOMPARE(settings.server().port, Port);
-    QCOMPARE(settings.server().token, Token);
-    QCOMPARE(settings.server().sslEnabled, SslEnabled);
-    QCOMPARE(settings.server().certificate, Certificate);
-    QCOMPARE(settings.server().privateKey, PrivateKey);
+    QCOMPARE(settings.serverEnabled(), ServerEnabled);
+    QCOMPARE(settings.serverPort(), Port);
+    QCOMPARE(settings.serverToken(), Token);
+    QCOMPARE(settings.serverSslEnabled(), SslEnabled);
+    QCOMPARE(settings.serverCertificate(), Certificate);
+    QCOMPARE(settings.serverPrivateKey(), PrivateKey);
 }
 
 QTEST_MAIN(TestPreferences)

@@ -38,14 +38,12 @@ void Preferences::accept() {
     m_settings->setGlobalHotkeyEnabled(m_hotkeyGroupBox->isChecked());
     m_settings->setGlobalHotkeyValue(m_hotkeyLineEdit->text());
 
-    Settings::Server server;
-    server.enabled = m_serverGroupBox->isChecked();
-    server.port = m_portLineEdit->text().toInt();
-    server.token = m_tokenLineEdit->text();
-    server.sslEnabled = m_sslGroupBox->isChecked();
-    server.certificate = m_certificateBrowseLayout->text();
-    server.privateKey = m_privateKeyBrowseLayout->text();
-    m_settings->setServer(server);
+    m_settings->setServerEnabled(m_serverGroupBox->isChecked());
+    m_settings->setServerPort(m_portLineEdit->text().toInt());
+    m_settings->setServerToken(m_tokenLineEdit->text());
+    m_settings->setServerSslEnabled(m_sslGroupBox->isChecked());
+    m_settings->setServerCertificate(m_certificateBrowseLayout->text());
+    m_settings->setServerPrivateKey(m_privateKeyBrowseLayout->text());
 
     QDialog::accept();
 }
@@ -166,16 +164,14 @@ QGroupBox* Preferences::createServerGroupBox() {
     auto addressLineEdit = new QLineEdit(addresses);
     addressLineEdit->setReadOnly(true);
 
-    Settings::Server server = m_settings->server();
-
     m_portLineEdit = new QLineEdit;
-    m_portLineEdit->setText(QString::number(server.port));
+    m_portLineEdit->setText(QString::number(m_settings->serverPort()));
 
     m_tokenLineEdit = new QLineEdit;
-    m_tokenLineEdit->setText(server.token);
+    m_tokenLineEdit->setText(m_settings->serverToken());
 
-    m_certificateBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, server.certificate);
-    m_privateKeyBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, server.privateKey);
+    m_certificateBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, m_settings->serverCertificate());
+    m_privateKeyBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, m_settings->serverPrivateKey());
 
     auto sslFormLayout = new QFormLayout;
     sslFormLayout->addRow(tr("Certificate:"), m_certificateBrowseLayout);
@@ -183,7 +179,7 @@ QGroupBox* Preferences::createServerGroupBox() {
 
     m_sslGroupBox = new QGroupBox("SSL");
     m_sslGroupBox->setCheckable(true);
-    m_sslGroupBox->setChecked(server.sslEnabled);
+    m_sslGroupBox->setChecked(m_settings->serverSslEnabled());
     m_sslGroupBox->setLayout(sslFormLayout);
 
     auto formLayout = new QFormLayout;
@@ -197,7 +193,7 @@ QGroupBox* Preferences::createServerGroupBox() {
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
     m_serverGroupBox->setCheckable(true);
-    m_serverGroupBox->setChecked(server.enabled);
+    m_serverGroupBox->setChecked(m_settings->serverEnabled());
     m_serverGroupBox->setLayout(verticalLayout);
 
     return m_serverGroupBox;

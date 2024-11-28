@@ -116,31 +116,37 @@ void MainWindow::applyHotSettings() {
 
     m_serverManager->stop();
 
-    Settings::Server server = m_fileSettings->server();
-
-    if (!server.enabled) {
+    if (!m_fileSettings->serverEnabled()) {
         return;
     }
 
-    if (server.token.isEmpty()) {
+    QString token = m_fileSettings->serverToken();
+
+    if (token.isEmpty()) {
         qCritical().noquote() << "Server token is empty";
         return;
     }
 
-    if (server.sslEnabled) {
-        if (server.certificate.isEmpty()) {
+    int port = m_fileSettings->serverPort();
+
+    if (m_fileSettings->serverSslEnabled()) {
+        QString certificate = m_fileSettings->serverCertificate();
+
+        if (certificate.isEmpty()) {
             qCritical().noquote() << "Server SSL certificate path is empty";
             return;
         }
 
-        if (server.privateKey.isEmpty()) {
+        QString privateKey = m_fileSettings->serverPrivateKey();
+
+        if (privateKey.isEmpty()) {
             qCritical().noquote() << "Server SSL private key is empty";
             return;
         }
 
-        m_serverManager->start(server.port, SolidString(server.token), SolidString(server.certificate), SolidString(server.privateKey));
+        m_serverManager->start(port, SolidString(token), SolidString(certificate), SolidString(privateKey));
     } else {
-        m_serverManager->start(server.port, SolidString(server.token));
+        m_serverManager->start(port, SolidString(token));
     }
 }
 

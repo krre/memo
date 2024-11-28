@@ -3,15 +3,6 @@
 
 class Settings {
 public:
-    struct Server {
-        bool enabled;
-        QString token;
-        int port;
-        bool sslEnabled;
-        QString certificate;
-        QString privateKey;
-    };
-
     void setApplicationLanguage(const QString& lang);
     QString applicationLanguage() const;
 
@@ -54,8 +45,23 @@ public:
     void setRecentFiles(const QStringList& recentFiles);
     QStringList recentFiles() const;
 
-    virtual void setServer(const Server& server) = 0;
-    virtual Server server() const = 0;
+    void setServerEnabled(bool enabled);
+    bool serverEnabled() const;
+
+    void setServerToken(const QString& token);
+    QString serverToken() const;
+
+    void setServerPort(int port);
+    int serverPort() const;
+
+    void setServerSslEnabled(bool enabled);
+    bool serverSslEnabled() const;
+
+    void setServerCertificate(const QString& certificate);
+    QString serverCertificate() const;
+
+    void setServerPrivateKey(const QString& privateKey);
+    QString serverPrivateKey() const;
 
 protected:
     virtual void setValue(const QString& key, const QVariant& value) = 0;

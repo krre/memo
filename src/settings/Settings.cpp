@@ -123,3 +123,51 @@ QStringList Settings::recentFiles() const {
 
     return result;
 }
+
+void Settings::setServerEnabled(bool enabled) {
+    setValue("Server/enabled", enabled);
+}
+
+bool Settings::serverEnabled() const {
+    return value("Server/enabled").toBool();
+}
+
+void Settings::setServerToken(const QString& token) {
+    setValue("Server/token", token);
+}
+
+QString Settings::serverToken() const {
+    return value("Server/token").toString();
+}
+
+void Settings::setServerPort(int port) {
+    setValue("Server/port", port);
+}
+
+int Settings::serverPort() const {
+    return value("Server/port").toInt();
+}
+
+void Settings::setServerSslEnabled(bool enabled) {
+    setValue("Server/sslEnabled", enabled);
+}
+
+bool Settings::serverSslEnabled() const {
+    return value("Server/sslEnabled").toBool();
+}
+
+void Settings::setServerCertificate(const QString& certificate) {
+    setValue("Server/certificate", certificate);
+}
+
+QString Settings::serverCertificate() const {
+    return value("Server/certificate").toString();
+}
+
+void Settings::setServerPrivateKey(const QString& privateKey) {
+    setValue("Server/privateKey", privateKey);
+}
+
+QString Settings::serverPrivateKey() const {
+    return value("Server/privateKey").toString();
+}
