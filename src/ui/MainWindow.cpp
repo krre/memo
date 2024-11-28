@@ -309,7 +309,7 @@ void MainWindow::open() {
 
 void MainWindow::exportAll() {
     QFileInfo fi(m_currentFile);
-    QString name = m_fileSettings->backups().directory + "/" + dateFileName(fi.baseName() + ".zip");
+    QString name = m_fileSettings->backupsDirectory() + "/" + dateFileName(fi.baseName() + ".zip");
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
@@ -319,7 +319,7 @@ void MainWindow::exportAll() {
 
 void MainWindow::backup() {
     QFileInfo fi(m_currentFile);
-    QString name = m_fileSettings->backups().directory + "/" + dateFileName(fi.fileName());
+    QString name = m_fileSettings->backupsDirectory() + "/" + dateFileName(fi.fileName());
 
     QString backupFile = QFileDialog::getSaveFileName(this, tr("Create Backup"), name);
 

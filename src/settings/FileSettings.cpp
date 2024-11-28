@@ -3,20 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setBackups(const Backups& backups) {
-    QSettings settings;
-    settings.setValue("Backups/directory", backups.directory);
-}
-
-Settings::Backups FileSettings::backups() const {
-    Backups result;
-
-    QSettings settings;
-    result.directory = settings.value("Backups/directory").toString();
-
-    return result;
-}
-
 void FileSettings::setEditor(const Editor& editor) {
     QSettings settings;
     settings.beginGroup("Editor");

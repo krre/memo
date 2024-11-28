@@ -3,10 +3,6 @@
 
 class Settings {
 public:
-    struct Backups {
-        QString directory;
-    };
-
     struct Editor {
         QString fontFamily;
         int fontSize;
@@ -54,8 +50,8 @@ public:
     void setBirthdaysGeometry(const  QByteArray& geometry);
     QByteArray birthdaysGeometry() const;
 
-    virtual void setBackups(const Backups& backups) = 0;
-    virtual Backups backups() const = 0;
+    void setBackupsDirectory(const QString& directory);
+    QString backupsDirectory() const;
 
     virtual void setEditor(const Editor& editor) = 0;
     virtual Editor editor() const = 0;

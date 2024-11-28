@@ -5,9 +5,6 @@ class FileSettings : public Settings {
 public:
     FileSettings();
 
-    void setBackups(const Backups& backups) override;
-    Backups backups() const override;
-
     void setEditor(const Editor& editor) override;
     Editor editor() const override;
 

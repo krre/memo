@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setBackups(const Backups& backups) override {
-        m_backups = backups;
-    }
-
-    Backups backups() const override {
-        return m_backups;
-    }
-
     void setEditor(const Editor& editor) override {
         m_editor = editor;
     }
@@ -74,7 +66,6 @@ protected:
     }
 
 private:
-    Backups m_backups;
     Editor m_editor;
     GlobalHotkey m_globalHotkey;
     Recent m_recent;
@@ -107,9 +98,7 @@ void TestPreferences::readOptions() {
     globalHotkey.hotkey = HotKey;
     settings.setGlobalHotkey(globalHotkey);
 
-    TestSettings::Backups backups;
-    backups.directory = BackupsDirectory;
-    settings.setBackups(backups);
+    settings.setBackupsDirectory(BackupsDirectory);
 
     TestSettings::Server server;
     server.enabled = ServerEnabled;
@@ -265,7 +254,7 @@ void TestPreferences::setOptions() {
     QCOMPARE(settings.editor().fontSize, FontSize);
     QCOMPARE(settings.globalHotkey().enabled, HotKeyEnabled);
     QCOMPARE(settings.globalHotkey().hotkey, HotKey);
-    QCOMPARE(settings.backups().directory, BackupsDirectory);
+    QCOMPARE(settings.backupsDirectory(), BackupsDirectory);
     QCOMPARE(settings.server().enabled, ServerEnabled);
     QCOMPARE(settings.server().port, Port);
     QCOMPARE(settings.server().token, Token);

@@ -30,10 +30,7 @@ void Preferences::accept() {
 
     m_settings->setApplicationMinimizeOnStartup(m_minimizeCheckBox->isChecked());
     m_settings->setApplicationHideTrayIcon(m_hideTrayCheckBox->isChecked());
-
-    Settings::Backups backups;
-    backups.directory = m_backupsBrowseLayout->text();
-    m_settings->setBackups(backups);
+    m_settings->setBackupsDirectory(m_backupsBrowseLayout->text());
 
     Settings::Editor editor;
     editor.fontFamily = m_fontFamilyLineEdit->text();
@@ -152,7 +149,7 @@ QGroupBox* Preferences::createHotkeyGroupBox() {
 }
 
 QGroupBox* Preferences::createBackupsGroupBox() {
-    m_backupsBrowseLayout = new BrowseLayout(BrowseLayout::Mode::Directory, m_settings->backups().directory);
+    m_backupsBrowseLayout = new BrowseLayout(BrowseLayout::Mode::Directory, m_settings->backupsDirectory());
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Directory:"), m_backupsBrowseLayout);

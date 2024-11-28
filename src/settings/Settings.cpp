@@ -63,3 +63,11 @@ void Settings::setBirthdaysGeometry(const QByteArray& geometry) {
 QByteArray Settings::birthdaysGeometry() const {
     return value("Birthdays/geometry").toByteArray();
 }
+
+void Settings::setBackupsDirectory(const QString& directory) {
+    setValue("Backups/directory", directory);
+}
+
+QString Settings::backupsDirectory() const {
+    return value("Backups/directory").toString();
+}
