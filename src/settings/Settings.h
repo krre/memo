@@ -1,6 +1,5 @@
 #pragma once
-#include <QByteArray>
-#include <QStringList>
+#include <QVariant>
 
 class Settings {
 public:
@@ -71,4 +70,8 @@ public:
 
     virtual void setServer(const Server& server) = 0;
     virtual Server server() const = 0;
+
+protected:
+    virtual void setValue(const QString& key, const QVariant& value) = 0;
+    virtual QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const = 0;
 };

@@ -88,6 +88,15 @@ public:
         return m_server;
     }
 
+protected:
+    void setValue(const QString& key, const QVariant& value) override {
+        settings[key] = value;
+    }
+
+    QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const override {
+        return settings.contains(key) ? settings[key] : defaultValue;
+    }
+
 private:
     Application m_application;
     MainWindow m_mainWindow;
@@ -97,6 +106,8 @@ private:
     GlobalHotkey m_globalHotkey;
     Recent m_recent;
     Server m_server;
+
+    QHash<QString, QVariant> settings;
 };
 
 class TestPreferences : public QObject {

@@ -47,6 +47,7 @@ add_library(common STATIC
     settings/FileSettings.h settings/FileSettings.cpp
     core/Model.h
     ui/dialog/BrowseLayout.cpp ui/dialog/BrowseLayout.h
+    settings/Settings.cpp
 )
 
 # For visibility in IDE (e.g., Qt Creator)
