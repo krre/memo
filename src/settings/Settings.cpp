@@ -71,3 +71,19 @@ void Settings::setBackupsDirectory(const QString& directory) {
 QString Settings::backupsDirectory() const {
     return value("Backups/directory").toString();
 }
+
+void Settings::setEditorFontFamily(const QString& fontFamily) {
+    setValue("Editor/fontFamily", fontFamily);
+}
+
+QString Settings::editorFontFamily() const {
+    return value("Editor/fontFamily").toString();
+}
+
+void Settings::setEditorFontSize(int fontSize) {
+    setValue("Editor/fontSize", fontSize);
+}
+
+int Settings::editorFontSize() const {
+    return value("Editor/fontSize").toInt();
+}

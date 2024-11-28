@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setEditor(const Editor& editor) override {
-        m_editor = editor;
-    }
-
-    Editor editor() const override {
-        return m_editor;
-    }
-
     void setGlobalHotkey(const GlobalHotkey& globalHotkey) override {
         m_globalHotkey = globalHotkey;
     }
@@ -66,7 +58,6 @@ protected:
     }
 
 private:
-    Editor m_editor;
     GlobalHotkey m_globalHotkey;
     Recent m_recent;
     Server m_server;
@@ -88,10 +79,8 @@ void TestPreferences::readOptions() {
     settings.setApplicationMinimizeOnStartup(MinimizeOnStartup);
     settings.setApplicationHideTrayIcon(HideTrayIcon);
 
-    TestSettings::Editor editor;
-    editor.fontFamily = FontFamily;
-    editor.fontSize = FontSize;
-    settings.setEditor(editor);
+    settings.setEditorFontFamily(FontFamily);
+    settings.setEditorFontSize(FontSize);
 
     TestSettings::GlobalHotkey globalHotkey;
     globalHotkey.enabled = HotKeyEnabled;
@@ -250,8 +239,8 @@ void TestPreferences::setOptions() {
     QCOMPARE(settings.applicationLanguage(), Language);
     QCOMPARE(settings.applicationMinimizeOnStartup(), MinimizeOnStartup);
     QCOMPARE(settings.applicationHideTrayIcon(), HideTrayIcon);
-    QCOMPARE(settings.editor().fontFamily, FontFamily);
-    QCOMPARE(settings.editor().fontSize, FontSize);
+    QCOMPARE(settings.editorFontFamily(), FontFamily);
+    QCOMPARE(settings.editorFontSize(), FontSize);
     QCOMPARE(settings.globalHotkey().enabled, HotKeyEnabled);
     QCOMPARE(settings.globalHotkey().hotkey, HotKey);
     QCOMPARE(settings.backupsDirectory(), BackupsDirectory);

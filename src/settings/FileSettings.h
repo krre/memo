@@ -5,9 +5,6 @@ class FileSettings : public Settings {
 public:
     FileSettings();
 
-    void setEditor(const Editor& editor) override;
-    Editor editor() const override;
-
     void setGlobalHotkey(const GlobalHotkey& globalHotkey) override;
     GlobalHotkey globalHotkey() const override;
 

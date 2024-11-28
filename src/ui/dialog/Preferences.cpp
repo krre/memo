@@ -32,10 +32,8 @@ void Preferences::accept() {
     m_settings->setApplicationHideTrayIcon(m_hideTrayCheckBox->isChecked());
     m_settings->setBackupsDirectory(m_backupsBrowseLayout->text());
 
-    Settings::Editor editor;
-    editor.fontFamily = m_fontFamilyLineEdit->text();
-    editor.fontSize = m_fontSizeLineEdit->text().toInt();
-    m_settings->setEditor(editor);
+    m_settings->setEditorFontFamily(m_fontFamilyLineEdit->text());
+    m_settings->setEditorFontSize(m_fontSizeLineEdit->text().toInt());
 
     Settings::GlobalHotkey globalHotkey;
     globalHotkey.hotkey = m_hotkeyLineEdit->text();
@@ -92,16 +90,14 @@ QGroupBox* Preferences::createUiGroupBox() {
         }
     }
 
-    Settings::Editor editor = m_settings->editor();
-
     m_fontFamilyLineEdit = new QLineEdit;
     m_fontFamilyLineEdit->setReadOnly(true);
-    m_fontFamilyLineEdit->setText(editor.fontFamily);
+    m_fontFamilyLineEdit->setText(m_settings->editorFontFamily());
 
     m_fontSizeLineEdit = new QLineEdit;
     m_fontSizeLineEdit->setMaximumWidth(50);
     m_fontSizeLineEdit->setReadOnly(true);
-    m_fontSizeLineEdit->setText(QString::number(editor.fontSize));
+    m_fontSizeLineEdit->setText(QString::number(m_settings->editorFontSize()));
 
     auto fontButton = new QPushButton(tr("Open..."));
     connect(fontButton, &QPushButton::clicked, this, &Preferences::onFontButtonClicked);

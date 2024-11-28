@@ -3,30 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setEditor(const Editor& editor) {
-    QSettings settings;
-    settings.beginGroup("Editor");
-
-    settings.setValue("fontFamily", editor.fontFamily);
-    settings.setValue("fontSize", editor.fontSize);
-
-    settings.endGroup();
-}
-
-Settings::Editor FileSettings::editor() const {
-    Editor result;
-
-    QSettings settings;
-    settings.beginGroup("Editor");
-
-    result.fontFamily = settings.value("fontFamily").toString();
-    result.fontSize = settings.value("fontSize").toInt();
-
-    settings.endGroup();
-
-    return result;
-}
-
 void FileSettings::setGlobalHotkey(const GlobalHotkey& globalHotkey) {
     QSettings settings;
     settings.beginGroup("GlobalHotkey");

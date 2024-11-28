@@ -3,11 +3,6 @@
 
 class Settings {
 public:
-    struct Editor {
-        QString fontFamily;
-        int fontSize;
-    };
-
     struct GlobalHotkey {
         bool enabled;
         QString hotkey;
@@ -53,8 +48,11 @@ public:
     void setBackupsDirectory(const QString& directory);
     QString backupsDirectory() const;
 
-    virtual void setEditor(const Editor& editor) = 0;
-    virtual Editor editor() const = 0;
+    void setEditorFontFamily(const QString& fontFamily);
+    QString editorFontFamily() const;
+
+    void setEditorFontSize(int fontSize);
+    int editorFontSize() const;
 
     virtual void setGlobalHotkey(const GlobalHotkey& globalHotkey) = 0;
     virtual GlobalHotkey globalHotkey() const = 0;

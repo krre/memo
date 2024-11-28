@@ -99,14 +99,16 @@ void MainWindow::applyHotSettings() {
         m_globalHotkey->unsetShortcut();
     }
 
-    Settings::Editor editor = m_fileSettings->editor();
+    QString fontFamily = m_fileSettings->editorFontFamily();
 
-    if (!editor.fontFamily.isEmpty()) {
+    if (!fontFamily.isEmpty()) {
         QFont font;
-        font.setFamily(editor.fontFamily);
+        font.setFamily(fontFamily);
 
-        if (editor.fontSize) {
-            font.setPointSize(editor.fontSize);
+        int fontSize = m_fileSettings->editorFontSize();
+
+        if (fontSize) {
+            font.setPointSize(fontSize);
         }
 
         m_editor->setFont(font);
