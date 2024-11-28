@@ -49,6 +49,14 @@ protected:
         return settings.contains(key) ? settings[key] : defaultValue;
     }
 
+    void setList(const QString& key, const QVariantList& list) override {
+        settings[key] = list;
+    }
+
+    QVariantList list(const QString& key) const override {
+        return settings[key].toList();
+    }
+
 private:
     Recent m_recent;
     Server m_server;
