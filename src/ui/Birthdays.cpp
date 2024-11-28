@@ -62,7 +62,7 @@ void Birthdays::updateButtonsState() {
 }
 
 void Birthdays::readSettings() {
-    QByteArray geometry = m_settings->birthdays().geometry;
+    QByteArray geometry = m_settings->birthdaysGeometry();
 
     if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
@@ -72,10 +72,7 @@ void Birthdays::readSettings() {
 }
 
 void Birthdays::writeSettings() {
-    Settings::Birthdays birthdays;
-    birthdays.geometry = saveGeometry();
-
-    m_settings->setBirthdays(birthdays);
+    m_settings->setBirthdaysGeometry(saveGeometry());
 }
 
 void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {

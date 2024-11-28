@@ -3,28 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setBirthdays(const Birthdays& birthdays) {
-    QSettings settings;
-    settings.beginGroup("Birthdays");
-
-    settings.setValue("geometry", birthdays.geometry);
-
-    settings.endGroup();
-}
-
-Settings::Birthdays FileSettings::birthdays() const {
-    Birthdays result;
-
-    QSettings settings;
-    settings.beginGroup("Birthdays");
-
-    result.geometry = settings.value("geometry").toByteArray();
-
-    settings.endGroup();
-
-    return result;
-}
-
 void FileSettings::setBackups(const Backups& backups) {
     QSettings settings;
     settings.setValue("Backups/directory", backups.directory);

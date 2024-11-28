@@ -55,3 +55,11 @@ void Settings::setMainWindowSplitter(const QByteArray& splitter) {
 QByteArray Settings::mainWindowSplitter() const {
     return value("MainWindow/splitter").toByteArray();
 }
+
+void Settings::setBirthdaysGeometry(const QByteArray& geometry) {
+    setValue("Birthdays/geometry", geometry);
+}
+
+QByteArray Settings::birthdaysGeometry() const {
+    return value("Birthdays/geometry").toByteArray();
+}

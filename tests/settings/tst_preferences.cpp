@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setBirthdays(const Birthdays& birthdays) override {
-        m_birthdays = birthdays;
-    }
-
-    Birthdays birthdays() const override {
-        return m_birthdays;
-    }
-
     void setBackups(const Backups& backups) override {
         m_backups = backups;
     }
@@ -82,7 +74,6 @@ protected:
     }
 
 private:
-    Birthdays m_birthdays;
     Backups m_backups;
     Editor m_editor;
     GlobalHotkey m_globalHotkey;

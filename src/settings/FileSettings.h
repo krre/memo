@@ -5,9 +5,6 @@ class FileSettings : public Settings {
 public:
     FileSettings();
 
-    void setBirthdays(const Birthdays& birthdays) override;
-    Birthdays birthdays() const override;
-
     void setBackups(const Backups& backups) override;
     Backups backups() const override;
 

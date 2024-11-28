@@ -3,10 +3,6 @@
 
 class Settings {
 public:
-    struct Birthdays {
-        QByteArray geometry;
-    };
-
     struct Backups {
         QString directory;
     };
@@ -55,8 +51,8 @@ public:
     void setMainWindowSplitter(const  QByteArray& splitter);
     QByteArray mainWindowSplitter() const;
 
-    virtual void setBirthdays(const Birthdays& birthdays) = 0;
-    virtual Birthdays birthdays() const = 0;
+    void setBirthdaysGeometry(const  QByteArray& geometry);
+    QByteArray birthdaysGeometry() const;
 
     virtual void setBackups(const Backups& backups) = 0;
     virtual Backups backups() const = 0;
