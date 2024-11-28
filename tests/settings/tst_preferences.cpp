@@ -24,14 +24,6 @@ constexpr auto PrivateKey = "privateKey";
 class TestSettings : public Settings {
 
 public:
-    void setApplication(const Application& application) override {
-        m_application = application;
-    }
-
-    Application application() const override {
-        return m_application;
-    }
-
     void setMainWindow(const MainWindow& mainWindow) override {
         m_mainWindow = mainWindow;
     }
@@ -98,7 +90,6 @@ protected:
     }
 
 private:
-    Application m_application;
     MainWindow m_mainWindow;
     Birthdays m_birthdays;
     Backups m_backups;
@@ -120,11 +111,9 @@ private slots:
 void TestPreferences::readOptions() {
     TestSettings settings;
 
-    TestSettings::Application application;
-    application.language = Language;
-    application.minimizeOnStartup = MinimizeOnStartup;
-    application.hideTrayIcon = HideTrayIcon;
-    settings.setApplication(application);
+    settings.setApplicationLanguage(Language);
+    settings.setApplicationMinimizeOnStartup(MinimizeOnStartup);
+    settings.setApplicationHideTrayIcon(HideTrayIcon);
 
     TestSettings::Editor editor;
     editor.fontFamily = FontFamily;
@@ -219,9 +208,7 @@ void TestPreferences::setOptions() {
     TestSettings settings;
 
     // To prevent opening the need restart dialog
-    TestSettings::Application application;
-    application.language = Language;
-    settings.setApplication(application);
+    settings.setApplicationLanguage(Language);
 
     Preferences preferences(&settings);
 
@@ -289,9 +276,9 @@ void TestPreferences::setOptions() {
 
     preferences.accept();
 
-    QCOMPARE(settings.application().language, Language);
-    QCOMPARE(settings.application().minimizeOnStartup, MinimizeOnStartup);
-    QCOMPARE(settings.application().hideTrayIcon, HideTrayIcon);
+    QCOMPARE(settings.applicationLanguage(), Language);
+    QCOMPARE(settings.applicationMinimizeOnStartup(), MinimizeOnStartup);
+    QCOMPARE(settings.applicationHideTrayIcon(), HideTrayIcon);
     QCOMPARE(settings.editor().fontFamily, FontFamily);
     QCOMPARE(settings.editor().fontSize, FontSize);
     QCOMPARE(settings.globalHotkey().enabled, HotKeyEnabled);

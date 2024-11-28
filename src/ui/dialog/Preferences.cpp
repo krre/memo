@@ -21,17 +21,15 @@ Preferences::Preferences(Settings* settings, QWidget* parent)
 }
 
 void Preferences::accept() {
-    Settings::Application application = m_settings->application();
     QString language = m_languageComboBox->currentData().toString();
 
-    if (m_settings->application().language != language) {
-        application.language = m_languageComboBox->currentData().toString();
+    if (m_settings->applicationLanguage() != language) {
+        m_settings->setApplicationLanguage(m_languageComboBox->currentData().toString());
         QMessageBox::information(this, Application::Name, tr("You must restart application"));
     }
 
-    application.minimizeOnStartup = m_minimizeCheckBox->isChecked();
-    application.hideTrayIcon = m_hideTrayCheckBox->isChecked();
-    m_settings->setApplication(application);
+    m_settings->setApplicationMinimizeOnStartup(m_minimizeCheckBox->isChecked());
+    m_settings->setApplicationHideTrayIcon(m_hideTrayCheckBox->isChecked());
 
     Settings::Backups backups;
     backups.directory = m_backupsBrowseLayout->text();
@@ -87,10 +85,10 @@ QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox->addItem(tr("English"), "en");
     m_languageComboBox->addItem(tr("Russian"), "ru");
 
-    Settings::Application application = m_settings->application();
+    QString lang = m_settings->applicationLanguage();
 
-    if (!application.language.isEmpty()) {
-        int index = m_languageComboBox->findData(application.language);
+    if (!lang.isEmpty()) {
+        int index = m_languageComboBox->findData(lang);
 
         if (index != -1) {
             m_languageComboBox->setCurrentIndex(index);
@@ -117,10 +115,10 @@ QGroupBox* Preferences::createUiGroupBox() {
     fontLayout->addWidget(fontButton);
 
     m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
-    m_minimizeCheckBox->setChecked(application.minimizeOnStartup);
+    m_minimizeCheckBox->setChecked(m_settings->applicationMinimizeOnStartup());
 
     m_hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
-    m_hideTrayCheckBox->setChecked(application.hideTrayIcon);
+    m_hideTrayCheckBox->setChecked(m_settings->applicationHideTrayIcon());
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Language:"), m_languageComboBox);

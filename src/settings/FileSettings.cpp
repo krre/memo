@@ -3,34 +3,6 @@
 
 FileSettings::FileSettings() {}
 
-void FileSettings::setApplication(const Application& application) {
-    QSettings settings;
-    settings.beginGroup("Application");
-
-    settings.setValue("filePath", application.filePath);
-    settings.setValue("language", application.language);
-    settings.setValue("minimizeOnStartup", application.minimizeOnStartup);
-    settings.setValue("hideTrayIcon", application.hideTrayIcon);
-
-    settings.endGroup();
-}
-
-Settings::Application FileSettings::application() const {
-    Application result;
-
-    QSettings settings;
-    settings.beginGroup("Application");
-
-    result.filePath = settings.value("filePath").toString();
-    result.language = settings.value("language").toString();
-    result.minimizeOnStartup = settings.value("minimizeOnStartup").toBool();
-    result.hideTrayIcon = settings.value("hideTrayIcon").toBool();
-
-    settings.endGroup();
-
-    return result;
-}
-
 void FileSettings::setMainWindow(const MainWindow& mainWindow) {
     QSettings settings;
     settings.beginGroup("MainWindow");

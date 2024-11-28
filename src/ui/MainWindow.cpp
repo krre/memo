@@ -72,9 +72,9 @@ void MainWindow::readSettings() {
 
     m_splitter->restoreState(m_fileSettings->mainWindow().splitter);
 
-    loadFile(m_fileSettings->application().filePath);
+    loadFile(m_fileSettings->applicationFilePath());
 
-    if (!m_fileSettings->application().minimizeOnStartup) {
+    if (!m_fileSettings->applicationMinimizeOnStartup()) {
         show();
     }
 }
@@ -87,15 +87,12 @@ void MainWindow::writeSettings() {
 
     m_fileSettings->setMainWindow(mainWindow);
 
-    Settings::Application application = m_fileSettings->application();
-    application.filePath = m_currentFile;
-
-    m_fileSettings->setApplication(application);
+    m_fileSettings->setApplicationFilePath(m_currentFile);
     m_recentFilesMenu->save();
 }
 
 void MainWindow::applyHotSettings() {
-    m_trayIcon->setVisible(!m_fileSettings->application().hideTrayIcon);
+    m_trayIcon->setVisible(!m_fileSettings->applicationHideTrayIcon());
 
     Settings::GlobalHotkey globalHotkey = m_fileSettings->globalHotkey();
 

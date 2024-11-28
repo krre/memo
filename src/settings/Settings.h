@@ -3,13 +3,6 @@
 
 class Settings {
 public:
-    struct Application {
-        QString filePath;
-        QString language;
-        bool minimizeOnStartup;
-        bool hideTrayIcon;
-    };
-
     struct MainWindow {
         QByteArray geometry;
         QByteArray state;
@@ -47,8 +40,17 @@ public:
         QString privateKey;
     };
 
-    virtual void setApplication(const Application& application) = 0;
-    virtual Application application() const = 0;
+    void setApplicationLanguage(const QString& lang);
+    QString applicationLanguage() const;
+
+    void setApplicationFilePath(const QString& filePath);
+    QString applicationFilePath() const;
+
+    void setApplicationMinimizeOnStartup(bool minimizeOnStartup);
+    bool applicationMinimizeOnStartup() const;
+
+    void setApplicationHideTrayIcon(bool hideTrayIcon);
+    bool applicationHideTrayIcon() const;
 
     virtual void setMainWindow(const MainWindow& mainWindow) = 0;
     virtual MainWindow mainWindow() const = 0;
