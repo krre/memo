@@ -21,7 +21,7 @@ void Settings::setApplicationMinimizeOnStartup(bool minimizeOnStartup) {
 }
 
 bool Settings::applicationMinimizeOnStartup() const {
-    return value("Application/minimizeOnStartup").toBool();
+    return value("Application/minimizeOnStartup", true).toBool();
 }
 
 void Settings::setApplicationHideTrayIcon(bool hideTrayIcon) {
@@ -93,7 +93,7 @@ void Settings::setGlobalHotkeyEnabled(bool enabled) {
 }
 
 bool Settings::globalHotkeyEnabled() const {
-    return value("GlobalHotkey/enabled").toBool();
+    return value("GlobalHotkey/enabled", true).toBool();
 }
 
 void Settings::setGlobalHotkeyValue(const QString& value) {
@@ -101,7 +101,7 @@ void Settings::setGlobalHotkeyValue(const QString& value) {
 }
 
 QString Settings::globalHotkeyValue() const {
-    return value("GlobalHotkey/value").toString();
+    return value("GlobalHotkey/value", "Ctrl+Alt+M").toString();
 }
 
 void Settings::setRecentFiles(const QStringList& recentFiles) {
