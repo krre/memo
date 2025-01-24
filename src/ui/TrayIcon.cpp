@@ -1,6 +1,6 @@
 #include "TrayIcon.h"
 #include "MainWindow.h"
-#include <QtWidgets>
+#include <QMenu>
 
 TrayIcon::TrayIcon(MainWindow* mainWindow)
     : QSystemTrayIcon(mainWindow), m_mainWindow(mainWindow) {

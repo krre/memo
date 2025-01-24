@@ -1,5 +1,6 @@
 #include "Editor.h"
-#include <QtWidgets>
+#include <QMenu>
+#include <QKeyEvent>
 
 Editor::Editor(QWidget* parent) : QTextEdit(parent) {
     setEnabled(false);

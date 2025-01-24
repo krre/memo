@@ -1,7 +1,7 @@
 #include "Database.h"
 #include "Migrater.h"
 #include "DatabaseException.h"
-#include <QtSql>
+#include <QFileInfo>
 
 constexpr auto BirthdayDateFormat = "yyyy-MM-dd";
 

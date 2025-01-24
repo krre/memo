@@ -1,5 +1,7 @@
 #include "NoteProperties.h"
-#include <QtWidgets>
+#include <QLabel>
+#include <QDialogButtonBox>
+#include <QFormLayout>
 
 NoteProperties::NoteProperties(const Note& note) {
     setWindowTitle(tr("Note Properties"));

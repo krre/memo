@@ -2,7 +2,13 @@
 #include "database/Database.h"
 #include "core/Application.h"
 #include "settings/Settings.h"
-#include <QtWidgets>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QMessageBox>
+#include <QHBoxLayout>
+#include <QCloseEvent>
 
 Birthdays::Birthdays(Database* database, Settings* settings) : m_database(database), m_settings(settings) {
     setWindowTitle(tr("Birthdays"));

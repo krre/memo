@@ -1,6 +1,7 @@
 #include "TreeModel.h"
 #include "TreeItem.h"
-#include <QtCore>
+#include <QMimeData>
+#include <QIODevice>
 
 constexpr auto TreeItemMimeType = "application/x-treeitem";
 

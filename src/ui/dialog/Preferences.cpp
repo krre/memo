@@ -2,8 +2,17 @@
 #include "BrowseLayout.h"
 #include "settings/Settings.h"
 #include "core/Application.h"
-#include <QtWidgets>
-#include <QtNetwork>
+#include <QGroupBox>
+#include <QComboBox>
+#include <QMessageBox>
+#include <QCheckBox>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFontDialog>
+#include <QFileDialog>
+#include <QFormLayout>
+#include <QHostAddress>
+#include <QNetworkInterface>
 
 Preferences::Preferences(Settings* settings, QWidget* parent)
     : StandardDialog(parent), m_settings(settings) {

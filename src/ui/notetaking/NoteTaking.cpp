@@ -5,8 +5,13 @@
 #include "core/Application.h"
 #include "database/Database.h"
 #include "database/DatabaseException.h"
-#include <QtWidgets>
-#include <QtSql>
+#include <QHeaderView>
+#include <QMenu>
+#include <QLineEdit>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QDir>
+#include <QMouseEvent>
 
 NoteTaking::NoteTaking(Database* database) : m_database(database) {
     setContextMenuPolicy(Qt::CustomContextMenu);

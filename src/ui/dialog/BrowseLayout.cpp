@@ -1,5 +1,7 @@
 #include "BrowseLayout.h"
-#include <QtWidgets>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QFileDialog>
 
 BrowseLayout::BrowseLayout(Mode mode, const QString& text) : m_mode(mode) {
     m_lineEdit = new QLineEdit(text);

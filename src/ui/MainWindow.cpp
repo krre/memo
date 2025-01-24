@@ -14,7 +14,16 @@
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
 #include "server/HttpServerManager.h"
-#include <QtWidgets>
+#include <QSplitter>
+#include <QMenuBar>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QScreen>
+#include <QDesktopServices>
+#include <QFile>
+#include <QFileInfo>
+#include <QCloseEvent>
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Application::Name);

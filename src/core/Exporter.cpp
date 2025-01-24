@@ -5,7 +5,10 @@
 #include "ui/Birthdays.h"
 #include "core/Application.h"
 #include <QtCore/private/qzipwriter_p.h>
-#include <QtWidgets>
+#include <QFileInfo>
+#include <QMessageBox>
+#include <QDir>
+#include <QDirIterator>
 
 void Exporter::exportAll(const QString& filePath, NoteTaking* noteTaking, Database* database, QWidget* parent) {
     QFileInfo fi(filePath);

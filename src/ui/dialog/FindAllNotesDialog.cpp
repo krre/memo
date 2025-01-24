@@ -1,6 +1,11 @@
 #include "FindAllNotesDialog.h"
 #include "database/Database.h"
-#include <QtWidgets>
+#include <QLineEdit>
+#include <QListWidget>
+#include <QLabel>
+#include <QPushButton>
+#include <QDialogButtonBox>
+#include <QFormLayout>
 
 FindAllNotesDialog::FindAllNotesDialog(Database* database) : m_database(database) {
     setWindowTitle(tr("Find in All Notes"));
