@@ -9,7 +9,7 @@ public:
     static constexpr auto Version = PROJECT_VERSION;
     static constexpr auto Url = "https://github.com/krre/memo";
     static constexpr auto ReleasesUrl = "https://github.com/krre/memo/releases";
-    static constexpr auto Years = "2019-2024";
+    static constexpr auto Years = "2019-2025";
     static constexpr auto BuildDate = __DATE__;
     static constexpr auto BuildTime = __TIME__;
 
