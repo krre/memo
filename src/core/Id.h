@@ -3,7 +3,7 @@
 
 class Id {
 public:
-    Id(quint64 id);
+    Id(quint64 id = 0);
 
     quint64 value() const;
     QJsonValue toJson() const;
