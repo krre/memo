@@ -1,6 +1,6 @@
 #include "HttpServerManager.h"
 #include "database/Database.h"
-#include "core/SolidString.h"
+#include "core/SafeString.h"
 #include "handler/NameHandler.h"
 #include "handler/NotesHandler.h"
 #include <QHttpServer>
@@ -12,7 +12,7 @@ HttpServerManager::HttpServerManager(Database* database, QObject* parent)
     : QObject(parent), m_database(database) {
 }
 
-void HttpServerManager::start(quint16 port, const SolidString& token, const SolidString& certificatePath, const SolidString& privateKeyPath) {
+void HttpServerManager::start(quint16 port, const SafeString& token, const SafeString& certificatePath, const SafeString& privateKeyPath) {
     stop();
 
     QFile certFile(certificatePath);
@@ -37,7 +37,7 @@ void HttpServerManager::start(quint16 port, const SolidString& token, const Soli
     startImpl(port, token);
 }
 
-void HttpServerManager::start(quint16 port, const SolidString& token) {
+void HttpServerManager::start(quint16 port, const SafeString& token) {
     stop();
 
     m_tcpServer = new QTcpServer(this);
@@ -58,7 +58,7 @@ void HttpServerManager::stop() {
     qInfo().noquote() << "Server stopped";
 }
 
-void HttpServerManager::startImpl(quint16 port, const SolidString& token) {
+void HttpServerManager::startImpl(quint16 port, const SafeString& token) {
     if (!port) {
         qCritical().noquote() << "Server port is zero";
         return;

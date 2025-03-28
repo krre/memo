@@ -21,7 +21,7 @@ add_library(common STATIC
     core/Globals.h
     core/Exception.h core/Exception.cpp
     core/MessageHandler.h
-    core/SolidString.h core/SolidString.cpp
+    core/SafeString.h core/SafeString.cpp
     database/Database.h database/Database.cpp
     database/Migrater.h database/Migrater.cpp
     database/DatabaseException.h database/DatabaseException.cpp

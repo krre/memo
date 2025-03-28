@@ -5,7 +5,7 @@
 #include "Birthdays.h"
 #include "core/Application.h"
 #include "core/Exception.h"
-#include "core/SolidString.h"
+#include "core/SafeString.h"
 #include "core/Exporter.h"
 #include "settings/FileSettings.h"
 #include "dialog/Preferences.h"
@@ -153,9 +153,9 @@ void MainWindow::applyHotSettings() {
             return;
         }
 
-        m_serverManager->start(port, SolidString(token), SolidString(certificate), SolidString(privateKey));
+        m_serverManager->start(port, SafeString(token), SafeString(certificate), SafeString(privateKey));
     } else {
-        m_serverManager->start(port, SolidString(token));
+        m_serverManager->start(port, SafeString(token));
     }
 }
 

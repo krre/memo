@@ -1,7 +1,7 @@
-#include "SolidString.h"
+#include "SafeString.h"
 #include "Exception.h"
 
-SolidString::SolidString(const QString& other) : QString(other) {
+SafeString::SafeString(const QString& other) : QString(other) {
     if (other.isEmpty()) {
         throw RuntimeError("String is empty");
     }
