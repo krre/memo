@@ -8,6 +8,14 @@ public:
     quint64 value() const;
     QJsonValue toJson() const;
 
+    bool operator==(const Id& other) const {
+        return m_id == other.m_id;
+    }
+
+    bool operator!=(const Id& other) const {
+        return !(*this == other);
+    }
+
 private:
     quint64 m_id = 0;
 };
