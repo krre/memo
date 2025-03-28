@@ -12,6 +12,10 @@ QJsonValue Id::toJson() const {
     return QJsonValue(static_cast<qint64>(m_id));
 }
 
-QString Id::toString() {
+QString Id::toString() const {
     return QString::number(m_id);
+}
+
+QVariant Id::toVariant() const {
+    return QVariant(m_id);
 }

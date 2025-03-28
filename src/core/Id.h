@@ -7,7 +7,8 @@ public:
 
     quint64 value() const;
     QJsonValue toJson() const;
-    QString toString();
+    QString toString() const;
+    QVariant toVariant() const;
 
     bool operator==(const Id& other) const {
         return m_id == other.m_id;
