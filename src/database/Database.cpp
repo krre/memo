@@ -79,7 +79,7 @@ QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) const {
 
 Id Database::insertNote(Id parentId, int pos, int depth, const QString& title) const {
     QVariantMap params = {
-        { "parent_id", parentId },
+        { "parent_id", parentId.value() },
         { "pos", pos },
         { "depth", depth },
         { "title", title }
@@ -90,11 +90,11 @@ Id Database::insertNote(Id parentId, int pos, int depth, const QString& title) c
 }
 
 void Database::removeNote(Id id) const {
-    exec("DELETE FROM notes WHERE id = :id", { { "id", id } });
+    exec("DELETE FROM notes WHERE id = :id", { { "id", id.value() } });
 }
 
 Note Database::note(Id id) const {
-    QSqlQuery query = exec("SELECT * FROM notes WHERE id = :id", { { "id", id } });
+    QSqlQuery query = exec("SELECT * FROM notes WHERE id = :id", { { "id", id.value() } });
     query.next();
     return queryToNote(query);
 }
@@ -112,7 +112,7 @@ QVector<Note> Database::notes() const {
 
 void Database::updateNoteValue(Id id, const QString& name, const QVariant& value) const {
     QVariantMap params = {
-        { "id", id },
+        { "id", id.value() },
         { "value", value },
     };
 
@@ -121,7 +121,7 @@ void Database::updateNoteValue(Id id, const QString& name, const QVariant& value
 }
 
 QVariant Database::noteValue(Id id, const QString& name) const {
-    QSqlQuery query = exec(QString("SELECT %1 FROM notes WHERE id = :id").arg(name), { { "id", id } });
+    QSqlQuery query = exec(QString("SELECT %1 FROM notes WHERE id = :id").arg(name), { { "id", id.value() } });
     return query.first() ? query.value(name) : QVariant();
 }
 
@@ -137,7 +137,7 @@ Id Database::insertBirthday(const Birthday& birthday) const {
 
 void Database::updateBirthday(const Birthday& birthday) const {
     QVariantMap params = {
-        { "id", birthday.id },
+        { "id", birthday.id.value() },
         { "date", birthday.date.toString(BirthdayDateFormat) },
         { "name", birthday.name }
     };
@@ -146,7 +146,7 @@ void Database::updateBirthday(const Birthday& birthday) const {
 }
 
 void Database::removeBirthday(Id id) const {
-    exec("DELETE FROM birthdays WHERE id = :id", { { "id", id } });
+    exec("DELETE FROM birthdays WHERE id = :id", { { "id", id.value() } });
 }
 
 QVector<Birthday> Database::birthdays(const QDate& date) const {
@@ -237,8 +237,8 @@ QString Database::parentPath(Id id) const {
     Id parentId = id;
     QStringList titles;
 
-    while (parentId) {
-        QSqlQuery query = exec("SELECT title, parent_id FROM notes WHERE id = :id", { { "id", parentId } });
+    while (parentId.isValid()) {
+        QSqlQuery query = exec("SELECT title, parent_id FROM notes WHERE id = :id", { { "id", parentId.value() } });
 
         if (!query.next()) {
             break;

@@ -19,3 +19,7 @@ QString Id::toString() const {
 QVariant Id::toVariant() const {
     return QVariant(m_id);
 }
+
+bool Id::isValid() const {
+    return m_id > 0;
+}

@@ -87,7 +87,7 @@ QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
     auto result = new QMimeData;
     QByteArray data;
     QDataStream stream(&data, QIODevice::WriteOnly);
-    stream << item(indexes.first())->id();
+    stream << item(indexes.first())->id().value();
     result->setData(TreeItemMimeType, data);
     return result;
 }
@@ -104,8 +104,11 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
 
     QByteArray data = mimeData->data(TreeItemMimeType);
     QDataStream stream(&data, QIODevice::ReadOnly);
-    Id id;
-    stream >> id;
+
+    quint64 rawId;
+    stream >> rawId;
+
+    Id id(rawId);
 
     TreeItem* sourceItem = m_rootItem->find(id);
     QModelIndex sourceParent = index(sourceItem->parent());

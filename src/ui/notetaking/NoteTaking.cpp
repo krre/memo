@@ -176,7 +176,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
     }
 
     if (sourceParentId != destinationParentId) {
-        m_database->updateNoteValue(sourceId, "parent_id", destinationParentId);
+        m_database->updateNoteValue(sourceId, "parent_id", destinationParentId.toVariant());
 
          TreeItem* destinationParentItem = m_model->root()->find(destinationParentId);
 
@@ -285,7 +285,7 @@ void NoteTaking::currentChanged(const QModelIndex& current, const QModelIndex& p
 
     try {
         Id id = m_model->item(current)->id();
-        m_database->updateMetaValue("selected_id", id);
+        m_database->updateMetaValue("selected_id", id.toVariant());
         emit noteChanged(id);
     } catch (const SqlQueryError& e) {
         qCritical() << "Error update selected_id: " << e.error();

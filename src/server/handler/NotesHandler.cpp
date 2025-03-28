@@ -13,8 +13,8 @@ QHttpServerResponse NotesHandler::buildResponse() {
 
     for (const Note& note : database()->notes()) {
         QJsonObject obj;
-        obj["id"] = note.id;
-        obj["parentId"] = note.parentId;
+        obj["id"] = note.id.toJson();
+        obj["parentId"] = note.parentId.toJson();
         obj["pos"] = note.pos;
         obj["depth"] = note.depth;
         obj["title"] = note.title;

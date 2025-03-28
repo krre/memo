@@ -419,12 +419,12 @@ void MainWindow::about() {
 
 void MainWindow::onNoteChanged(Id id) {
     m_editor->setId(id);
-    m_editor->setEnabled(id > 0);
+    m_editor->setEnabled(id.isValid());
 
     m_findNextAction->setEnabled(false);
     m_findPreviousAction->setEnabled(false);
 
-    if (id) {
+    if (id.isValid()) {
         bool markdown = m_database->noteValue(id, "markdown").toInt();
         m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
 
@@ -444,7 +444,7 @@ void MainWindow::onNoteChanged(Id id) {
 void MainWindow::onEditorFocusLost() {
     Id lastId = m_editor->id();
 
-    if (!lastId) return;
+    if (!lastId.isValid()) return;
 
     if (m_editor->document()->isModified()) {
         m_database->updateNoteValue(lastId, "note", m_editor->note());

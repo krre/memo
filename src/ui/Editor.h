@@ -1,5 +1,5 @@
 #pragma once
-#include "core/Globals.h"
+#include "core/Id.h"
 #include <QTextEdit>
 
 class Editor : public QTextEdit {

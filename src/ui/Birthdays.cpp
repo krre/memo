@@ -42,7 +42,7 @@ void Birthdays::add() {
     Id id = m_database->insertBirthday(birthday);
 
     const bool isBlocked = m_table->blockSignals(true);
-    addRow(id, birthday.date, "");
+    addRow(id.value(), birthday.date, "");
     m_table->blockSignals(isBlocked);
 }
 
@@ -98,7 +98,7 @@ void Birthdays::load() {
     QDate date = m_todayCheckBox->isChecked() ? QDate::currentDate() : QDate();
 
     for (const auto& birthday : m_database->birthdays(date)) {
-        addRow(birthday.id, birthday.date, birthday.name);
+        addRow(birthday.id.value(), birthday.date, birthday.name);
     }
 
     m_table->resizeColumnsToContents();
@@ -109,7 +109,7 @@ void Birthdays::load() {
 void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     m_table->insertRow(m_table->rowCount());
 
-    QTableWidgetItem* idItem = new QTableWidgetItem(QString::number(id));
+    QTableWidgetItem* idItem = new QTableWidgetItem(id.toString());
     m_table->setItem(m_table->rowCount() - 1, int(Column::Id), idItem);
 
     QTableWidgetItem* dateItem = new QTableWidgetItem(date.toString(BirthdayDateFormat));

@@ -1,5 +1,5 @@
 #pragma once
-#include "core/Globals.h"
+#include "core/Id.h"
 #include <QList>
 #include <QVariant>
 

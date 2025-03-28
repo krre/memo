@@ -54,6 +54,6 @@ void FindAllNotesDialog::find() {
 
     for (const auto& note : findNotes) {
         auto item = new QListWidgetItem(note.title, m_listWidget);
-        item->setData(Qt::UserRole, note.id);
+        item->setData(Qt::UserRole, note.id.toVariant());
     }
 }

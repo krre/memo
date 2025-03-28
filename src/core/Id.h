@@ -10,6 +10,8 @@ public:
     QString toString() const;
     QVariant toVariant() const;
 
+    bool isValid() const;
+
     bool operator==(const Id& other) const {
         return m_id == other.m_id;
     }

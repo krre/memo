@@ -1,6 +1,6 @@
 #pragma once
 #include "StandardDialog.h"
-#include "core/Globals.h"
+#include "core/Id.h"
 
 class Database;
 
