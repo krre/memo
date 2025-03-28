@@ -1,5 +1,5 @@
 #pragma once
-#include <QtTypes>
+#include <QVector>
 
 class Id {
 public:
@@ -10,3 +10,5 @@ public:
 private:
     quint64 m_id = 0;
 };
+
+using Ids = QVector<Id>;
