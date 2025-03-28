@@ -11,3 +11,7 @@ quint64 Id::value() const {
 QJsonValue Id::toJson() const {
     return QJsonValue(static_cast<qint64>(m_id));
 }
+
+QString Id::toString() {
+    return QString::number(m_id);
+}
