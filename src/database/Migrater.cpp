@@ -2,7 +2,7 @@
 #include "Database.h"
 #include <QSqlQuery>
 
-constexpr auto currentVersion = 4;
+constexpr auto CurrentVersion = 4;
 
 Migrater::Migrater(Database* db) : m_db(db) {
     migrations[2] = [this] { migration2(); };
@@ -13,14 +13,14 @@ Migrater::Migrater(Database* db) : m_db(db) {
 void Migrater::run() const {
     int version = m_db->metaValue("version").toInt();
 
-    if (version == currentVersion) return;
+    if (version == CurrentVersion) return;
 
-    for (int i = version + 1; i <= currentVersion; ++i) {
+    for (int i = version + 1; i <= CurrentVersion; ++i) {
         migrations[i]();
         qInfo() << "Run database migration" << i;
     }
 
-    m_db->updateMetaValue("version", currentVersion);
+    m_db->updateMetaValue("version", CurrentVersion);
 }
 
 void Migrater::migration2() const {

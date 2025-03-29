@@ -2,8 +2,8 @@
 #include "settings/Settings.h"
 #include <QFile>
 
-constexpr auto systemActionCount = 2;
-constexpr auto maxActionCount = 10;
+constexpr auto SystemActionCount = 2;
+constexpr auto MaxActionCount = 10;
 
 RecentFilesMenu::RecentFilesMenu(Settings* settings, QWidget* parent)
     : QMenu(tr("Recent Files"), parent), m_settings(settings) {
@@ -32,15 +32,15 @@ void RecentFilesMenu::addPath(const QString& path) {
 
     insertAction(actions().constFirst(), fileAction);
 
-    if (actions().size() > maxActionCount + systemActionCount) {
-        removeAction(actions().at(actions().size() - systemActionCount - 1));
+    if (actions().size() > MaxActionCount + SystemActionCount) {
+        removeAction(actions().at(actions().size() - SystemActionCount - 1));
     }
 }
 
 void RecentFilesMenu::save() {
     QStringList recentFiles;
 
-    for (int i = 0; i < actions().size() - systemActionCount; ++i) {
+    for (int i = 0; i < actions().size() - SystemActionCount; ++i) {
         recentFiles.append(actions().at(i)->text());
     }
 
@@ -48,7 +48,7 @@ void RecentFilesMenu::save() {
 }
 
 void RecentFilesMenu::clear() {
-    for (int i = actions().size() - systemActionCount - 1; i >= 0; i--) {
+    for (int i = actions().size() - SystemActionCount - 1; i >= 0; i--) {
         removeAction(actions().at(i));
     }
 }
