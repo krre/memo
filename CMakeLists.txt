@@ -20,9 +20,9 @@ add_subdirectory(app)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-SET(TS_SOURCE src/i18n/memo-ru.ts)
+SET(TS_SOURCE src/i18n/${PROJECT_NAME}-ru.ts)
 
-qt_add_translations(memo
+qt_add_translations(${PROJECT_NAME}
     TS_FILES ${TS_SOURCE}
     # LUPDATE_OPTIONS -no-obsolete
 )
@@ -34,27 +34,27 @@ add_custom_target(other
     README.md
 )
 
-install(TARGETS memo
+install(TARGETS ${PROJECT_NAME}
     BUNDLE DESTINATION .
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 qt_generate_deploy_app_script(
-    TARGET memo
+    TARGET ${PROJECT_NAME}
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
 
-qt_finalize_target(memo)
+qt_finalize_target(${PROJECT_NAME})
 
 install(SCRIPT ${deploy_script})
 
-set(CPACK_PACKAGE_NAME memo)
+set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Note-taking")
 set(CPACK_PACKAGE_VENDOR "Memo Group")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 set(CPACK_VERBATIM_VARIABLES ON)
-set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/memo")
+set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/${PROJECT_NAME}")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Vladimir Zarypov <krre31@gmail.com>")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS libc6 libstdc++6 libgcc-s1)
 include(CPack)
