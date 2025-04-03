@@ -178,20 +178,20 @@ void NoteTaking::moveTree(const QModelIndex& index) {
     if (sourceParentId != destinationParentId) {
         m_database->updateNoteValue(sourceId, "parent_id", destinationParentId.toVariant());
 
-         TreeItem* destinationParentItem = m_model->root()->find(destinationParentId);
+        TreeItem* destinationParentItem = m_model->root()->find(destinationParentId);
 
          // Rewrite note positions on destination parent.
-         for (int i = 0; i < destinationParentItem->childCount(); i++) {
-             m_database->updateNoteValue(destinationParentItem->child(i)->id(), "pos", i);
-         }
+        for (int i = 0; i < destinationParentItem->childCount(); i++) {
+            m_database->updateNoteValue(destinationParentItem->child(i)->id(), "pos", i);
+        }
 
          // Rewrite depth in all children of target note.
-         Ids childIds = m_model->childIds(targetItem);
+        Ids childIds = m_model->childIds(targetItem);
 
-         for (Id id : std::as_const(childIds)) {
-             int depth = targetItem->find(id)->depth() - 1;
-             m_database->updateNoteValue(id, "depth", depth);
-         }
+        for (Id id : std::as_const(childIds)) {
+            int depth = targetItem->find(id)->depth() - 1;
+            m_database->updateNoteValue(id, "depth", depth);
+        }
     }
 }
 
