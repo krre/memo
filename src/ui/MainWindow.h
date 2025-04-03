@@ -7,6 +7,7 @@ class RecentFilesMenu;
 class NoteTaking;
 class TrayIcon;
 class Editor;
+class Navigation;
 class Database;
 class GlobalHotkey;
 class HttpServerManager;
@@ -42,11 +43,11 @@ private slots:
     void showBirthdays();
     void about();
 
-    void onNoteChanged(Id id);
     void onEditorFocusLost();
     void onGlobalActivated();
 
     void loadFile(const QString& filePath);
+    void openNote(Id id);
 
 private:
     void readSettings();
@@ -70,6 +71,7 @@ private:
 
     NoteTaking* m_notetaking = nullptr;
     Editor* m_editor = nullptr;
+    Navigation* m_navigation = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;
     Database* m_database = nullptr;
     HttpServerManager* m_serverManager = nullptr;
@@ -79,5 +81,4 @@ private:
     QMenu* m_eventsMenu = nullptr;
     QAction* m_findNextAction = nullptr;
     QAction* m_findPreviousAction = nullptr;
-
 };

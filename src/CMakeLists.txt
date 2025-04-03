@@ -49,6 +49,7 @@ add_library(common STATIC
     ui/dialog/BrowseLayout.cpp ui/dialog/BrowseLayout.h
     settings/Settings.cpp
     core/Id.h core/Id.cpp
+    ui/Navigation.h ui/Navigation.cpp
 )
 
 # For visibility in IDE (e.g., Qt Creator)

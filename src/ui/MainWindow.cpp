@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "RecentFilesMenu.h"
 #include "Editor.h"
+#include "Navigation.h"
 #include "TrayIcon.h"
 #include "Birthdays.h"
 #include "core/Application.h"
@@ -16,6 +17,9 @@
 #include "server/HttpServerManager.h"
 #include <QSplitter>
 #include <QMenuBar>
+#include <QToolBar>
+#include <QToolButton>
+#include <QVBoxLayout>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QInputDialog>
@@ -41,11 +45,14 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(m_globalHotkey, &GlobalHotkey::activated, this, &MainWindow::onGlobalActivated);
 
     m_trayIcon = new TrayIcon(this);
+    m_navigation = new Navigation(this);
 
     setupSplitter();
     createActions();
 
-    connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::onNoteChanged);
+    connect(m_notetaking, &NoteTaking::noteChanged, m_navigation, &Navigation::go);
+    connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::openNote);
+    connect(m_navigation, &Navigation::navigate, this, &MainWindow::openNote);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
     connect(m_editor, &Editor::leave, this, [this] {
        m_notetaking->setFocus();
@@ -161,10 +168,23 @@ void MainWindow::applyHotSettings() {
 
 void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
+
+    auto editorToolBar = new QToolBar;
+    editorToolBar->addAction("⬅", m_navigation, &Navigation::back);
+    editorToolBar->addAction("➡", m_navigation, &Navigation::forward);
+
     m_editor = new Editor;
 
+    auto editorLayout = new QVBoxLayout;
+    editorLayout->setContentsMargins(QMargins());
+    editorLayout->addWidget(editorToolBar);
+    editorLayout->addWidget(m_editor);
+
+    auto editorWidget = new QWidget;
+    editorWidget->setLayout(editorLayout);
+
     m_splitter->addWidget(m_notetaking);
-    m_splitter->addWidget(m_editor);
+    m_splitter->addWidget(editorWidget);
 
     m_splitter->setHandleWidth(1);
     m_splitter->setChildrenCollapsible(false);
@@ -278,6 +298,32 @@ void MainWindow::setCurrentFile(const QString& filePath) {
     emit isOpened(isFileOpened);
 }
 
+void MainWindow::openNote(Id id) {
+    m_notetaking->setCurrentId(id);
+
+    m_editor->setId(id);
+    m_editor->setEnabled(id.isValid());
+
+    m_findNextAction->setEnabled(false);
+    m_findPreviousAction->setEnabled(false);
+
+    if (id.isValid()) {
+        bool markdown = m_database->noteValue(id, "markdown").toInt();
+        m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
+
+        QString note = m_database->noteValue(id, "note").toString();
+        m_editor->setNote(note);
+        m_editor->setFocus();
+
+        int line = m_database->noteValue(id, "line").toInt();
+        QTextCursor cursor = m_editor->textCursor();
+        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
+        m_editor->setTextCursor(cursor);
+    } else {
+        m_editor->clear();
+    }
+}
+
 void MainWindow::showErrorDialog(const QString& message) {
     QMessageBox::critical(this, Application::Name, message, QMessageBox::Ok);
 }
@@ -347,7 +393,7 @@ void MainWindow::backup() {
 
 void MainWindow::closeFile() {
     m_database->close();
-    onNoteChanged(0);
+    openNote(0);
     m_notetaking->clear();
     setCurrentFile();
 }
@@ -415,30 +461,6 @@ void MainWindow::about() {
            "<a href=%6>%6</a><br><br>Copyright © %7, Vladimir Zarypov")
             .arg(Application::Name, Application::Version, QT_VERSION_STR,
             Application::BuildDate, Application::BuildTime, Application::Url, Application::Years));
-}
-
-void MainWindow::onNoteChanged(Id id) {
-    m_editor->setId(id);
-    m_editor->setEnabled(id.isValid());
-
-    m_findNextAction->setEnabled(false);
-    m_findPreviousAction->setEnabled(false);
-
-    if (id.isValid()) {
-        bool markdown = m_database->noteValue(id, "markdown").toInt();
-        m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
-
-        QString note = m_database->noteValue(id, "note").toString();
-        m_editor->setNote(note);
-        m_editor->setFocus();
-
-        int line = m_database->noteValue(id, "line").toInt();
-        QTextCursor cursor = m_editor->textCursor();
-        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
-        m_editor->setTextCursor(cursor);
-    } else {
-        m_editor->clear();
-    }
 }
 
 void MainWindow::onEditorFocusLost() {
