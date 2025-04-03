@@ -13,6 +13,9 @@ public:
 signals:
     void navigate(Id id);
 
+    void backAvailable(bool backAvailable);
+    void forwardAvailable(bool backAvailable);
+
 public slots:
     void go(Id id);
 

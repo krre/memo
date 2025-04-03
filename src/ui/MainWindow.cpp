@@ -170,8 +170,14 @@ void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
 
     auto editorToolBar = new QToolBar;
-    editorToolBar->addAction("⬅", m_navigation, &Navigation::back);
-    editorToolBar->addAction("➡", m_navigation, &Navigation::forward);
+
+    auto backAction = editorToolBar->addAction("⬅", m_navigation, &Navigation::back);
+    backAction->setEnabled(false);
+    connect(m_navigation, &Navigation::backAvailable, backAction, &QAction::setEnabled);
+
+    auto forwardAction = editorToolBar->addAction("➡", m_navigation, &Navigation::forward);
+    forwardAction->setEnabled(false);
+    connect(m_navigation, &Navigation::forwardAvailable, forwardAction, &QAction::setEnabled);
 
     m_editor = new Editor;
 
