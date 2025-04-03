@@ -31,6 +31,14 @@ void Navigation::remove(Id id) {
     m_history.removeAll(id);
 }
 
+void Navigation::clear() {
+    m_position = -1;
+    m_history.clear();
+
+    emit backAvailable(false);
+    emit forwardAvailable(false);
+}
+
 void Navigation::back() {
     if (m_position > 0) {
         navigation = true;

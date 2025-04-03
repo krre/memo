@@ -47,7 +47,9 @@ private slots:
     void onGlobalActivated();
 
     void loadFile(const QString& filePath);
+
     void openNote(Id id);
+    void closeNote();
 
 private:
     void readSettings();

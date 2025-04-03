@@ -308,26 +308,28 @@ void MainWindow::openNote(Id id) {
     m_notetaking->setCurrentId(id);
 
     m_editor->setId(id);
-    m_editor->setEnabled(id.isValid());
+    m_editor->setEnabled(true);
 
     m_findNextAction->setEnabled(false);
     m_findPreviousAction->setEnabled(false);
 
-    if (id.isValid()) {
-        bool markdown = m_database->noteValue(id, "markdown").toInt();
-        m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
+    bool markdown = m_database->noteValue(id, "markdown").toInt();
+    m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
 
-        QString note = m_database->noteValue(id, "note").toString();
-        m_editor->setNote(note);
-        m_editor->setFocus();
+    QString note = m_database->noteValue(id, "note").toString();
+    m_editor->setNote(note);
+    m_editor->setFocus();
 
-        int line = m_database->noteValue(id, "line").toInt();
-        QTextCursor cursor = m_editor->textCursor();
-        cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
-        m_editor->setTextCursor(cursor);
-    } else {
-        m_editor->clear();
-    }
+    int line = m_database->noteValue(id, "line").toInt();
+    QTextCursor cursor = m_editor->textCursor();
+    cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
+    m_editor->setTextCursor(cursor);
+}
+
+void MainWindow::closeNote() {
+    m_editor->clear();
+    m_editor->setEnabled(false);
+    m_navigation->clear();
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
@@ -399,7 +401,7 @@ void MainWindow::backup() {
 
 void MainWindow::closeFile() {
     m_database->close();
-    openNote(0);
+    closeNote();
     m_notetaking->clear();
     setCurrentFile();
 }
@@ -473,6 +475,7 @@ void MainWindow::onEditorFocusLost() {
     Id lastId = m_editor->id();
 
     if (!lastId.isValid()) return;
+    if (!m_database->isOpen()) return;
 
     if (m_editor->document()->isModified()) {
         m_database->updateNoteValue(lastId, "note", m_editor->note());

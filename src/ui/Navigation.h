@@ -9,6 +9,7 @@ public:
     Navigation(QObject* parent = nullptr);
 
     void remove(Id id);
+    void clear();
 
 signals:
     void navigate(Id id);
