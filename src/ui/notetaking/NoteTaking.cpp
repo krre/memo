@@ -37,7 +37,7 @@ void NoteTaking::build() {
     QVector<Note> notes = m_database->notes();
     int selectedId = m_database->metaValue("selected_id").toInt();
 
-    for (const Note& note : notes) {
+    for (const Note& note : std::as_const(notes)) {
         TreeItem* parentItem = m_model->root()->find(note.parentId);
         QModelIndex parentIndex = m_model->index(parentItem);
         m_model->insertRow(note.pos, parentIndex);
@@ -125,7 +125,7 @@ void NoteTaking::removeNotes() {
         m_database->updateNoteValue(id, "pos", i);
     }
 
-    for (Id id : ids) {
+    for (Id id : std::as_const(ids)) {
         m_database->removeNote(id);
     }
 }
@@ -187,7 +187,8 @@ void NoteTaking::moveTree(const QModelIndex& index) {
 
          // Rewrite depth in all children of target note.
          Ids childIds = m_model->childIds(targetItem);
-         for (Id id : childIds) {
+
+         for (Id id : std::as_const(childIds)) {
              int depth = targetItem->find(id)->depth() - 1;
              m_database->updateNoteValue(id, "depth", depth);
          }
