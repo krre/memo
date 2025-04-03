@@ -9,8 +9,9 @@ RecentFilesMenu::RecentFilesMenu(Settings* settings, QWidget* parent)
     : QMenu(tr("Recent Files"), parent), m_settings(settings) {
     addSeparator();
     addAction(tr("Clear"), this, &RecentFilesMenu::clear);
+    const auto recentFiles = settings->recentFiles();
 
-    for (const QString& filePath : settings->recentFiles()) {
+    for (const QString& filePath : recentFiles) {
         addPath(filePath);
     }
 }
@@ -18,8 +19,9 @@ RecentFilesMenu::RecentFilesMenu(Settings* settings, QWidget* parent)
 void RecentFilesMenu::addPath(const QString& path) {
     if (path.isEmpty()) return;
     if (!QFile::exists(path)) return;
+    const auto pathActions = actions();
 
-    for (QAction* action : actions()) {
+    for (QAction* action : pathActions) {
         if (action->text() == path) {
             removeAction(action);
         }

@@ -40,7 +40,7 @@ void TreeItem::setParent(TreeItem* parent) {
 TreeItem* TreeItem::find(Id id) {
     if (m_id == id) return this;
 
-    for (TreeItem* child : m_children) {
+    for (TreeItem* child : std::as_const(m_children)) {
         TreeItem* item = child->find(id);
 
         if (item) {

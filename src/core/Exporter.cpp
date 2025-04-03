@@ -33,8 +33,9 @@ void Exporter::exportBirthdays(const QString& dirPath, Database* database) {
     if (!file.open(QIODevice::ReadWrite)) return;
 
     QTextStream stream(&file);
+    const auto birthdays = database->birthdays();
 
-    for (const auto& birthday : database->birthdays()) {
+    for (const auto& birthday : birthdays) {
         stream << birthday.date.toString(BirthdayDateFormat) << " " << birthday.name << "\n";
     }
 }
