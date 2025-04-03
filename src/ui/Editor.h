@@ -12,14 +12,15 @@ public:
 
     explicit Editor(QWidget* parent = nullptr);
 
-    void setId(Id id);
     Id id() const;
 
     void setMode(Mode mode);
     Mode mode() const;
 
-    void setNote(const QString& note);
+    void setNote(Id id, const QString& note);
     QString note() const;
+
+    void clearNote();
 
 signals:
     void focusLost();

@@ -6,10 +6,6 @@ Editor::Editor(QWidget* parent) : QTextEdit(parent) {
     setEnabled(false);
 }
 
-void Editor::setId(Id id) {
-    m_id = id;
-}
-
 Id Editor::id() const {
     return m_id;
 }
@@ -32,16 +28,26 @@ Editor::Mode Editor::mode() const {
     return m_mode;
 }
 
-void Editor::setNote(const QString& note) {
+void Editor::setNote(Id id, const QString& note) {
+    m_id = id;
+
     if (m_mode == Mode::Plain) {
         setPlainText(note);
     } else if (m_mode == Mode::Markdown) {
         setMarkdown(note);
     }
+
+    setFocus();
+    setEnabled(true);
 }
 
 QString Editor::note() const {
     return m_mode == Mode::Plain ? toPlainText() : toMarkdown();
+}
+
+void Editor::clearNote() {
+    clear();
+    setEnabled(false);
 }
 
 void Editor::focusOutEvent(QFocusEvent* event) {

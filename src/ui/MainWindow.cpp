@@ -311,18 +311,14 @@ void MainWindow::openNote(Id id) {
 
     m_notetaking->setCurrentId(id);
 
-    m_editor->setId(id);
-    m_editor->setEnabled(true);
-
     m_findNextAction->setEnabled(false);
     m_findPreviousAction->setEnabled(false);
 
+    QString note = m_database->noteValue(id, "note").toString();
+    m_editor->setNote(id, note);
+
     bool markdown = m_database->noteValue(id, "markdown").toInt();
     m_editor->setMode(markdown ? Editor::Mode::Markdown : Editor::Mode::Plain);
-
-    QString note = m_database->noteValue(id, "note").toString();
-    m_editor->setNote(note);
-    m_editor->setFocus();
 
     int line = m_database->noteValue(id, "line").toInt();
     QTextCursor cursor = m_editor->textCursor();
@@ -331,8 +327,7 @@ void MainWindow::openNote(Id id) {
 }
 
 void MainWindow::closeNote() {
-    m_editor->clear();
-    m_editor->setEnabled(false);
+    m_editor->clearNote();
     m_navigation->clear();
 }
 
