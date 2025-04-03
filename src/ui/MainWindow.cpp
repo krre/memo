@@ -299,12 +299,16 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
     setWindowTitle(title);
     m_currentFile = filePath;
-    m_editMenu->menuAction()->setVisible(isFileOpened);
     m_eventsMenu->menuAction()->setVisible(isFileOpened);
     emit isOpened(isFileOpened);
 }
 
 void MainWindow::openNote(Id id) {
+    if (!id.isValid()) {
+        closeNote();
+        return;
+    }
+
     m_notetaking->setCurrentId(id);
 
     m_editor->setId(id);
