@@ -54,9 +54,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::openNote);
     connect(m_navigation, &Navigation::navigate, this, &MainWindow::openNote);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
-    connect(m_editor, &Editor::leave, this, [this] {
-       m_notetaking->setFocus();
-    });
+    connect(m_editor, &Editor::leave, m_notetaking, qOverload<>(&NoteTaking::setFocus));
 
     setCurrentFile("");
     readSettings();
