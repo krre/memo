@@ -221,23 +221,23 @@ void MainWindow::createActions() {
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::quit);
 
-    m_editMenu = menuBar()->addMenu(tr("Edit"));
-    auto undoAction = m_editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
-    auto redoAction = m_editMenu->addAction(tr("Redo"), QKeySequence::Redo, m_editor, &Editor::redo);
-    m_editMenu->addSeparator();
-    auto cutAction = m_editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
-    auto copyAction = m_editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
-    auto pasteAction = m_editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
-    m_editMenu->addSeparator();
-    auto selectAllAction = m_editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
-    m_editMenu->addSeparator();
-    auto findAction = m_editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
-    auto findAllAction = m_editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
-    m_findNextAction = m_editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
-    m_findPreviousAction = m_editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
+    auto editMenu = menuBar()->addMenu(tr("Edit"));
+    auto undoAction = editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
+    auto redoAction = editMenu->addAction(tr("Redo"), QKeySequence::Redo, m_editor, &Editor::redo);
+    editMenu->addSeparator();
+    auto cutAction = editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
+    auto copyAction = editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
+    auto pasteAction = editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
+    editMenu->addSeparator();
+    auto selectAllAction = editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
+    editMenu->addSeparator();
+    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
+    auto findAllAction = editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
+    m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
+    m_findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
 
-    m_editMenu->addSeparator();
-    m_editMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
+    editMenu->addSeparator();
+    editMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
 
     undoAction->setEnabled(false);
     redoAction->setEnabled(false);
