@@ -263,8 +263,10 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isEdited, pasteAction, &QAction::setEnabled);
     connect(this, &MainWindow::isEdited, findAction, &QAction::setEnabled);
 
-    m_eventsMenu = menuBar()->addMenu(tr("Events"));
-    m_eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
+    auto eventsMenu = menuBar()->addMenu(tr("Events"));
+    eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
+    eventsMenu->menuAction()->setVisible(false);
+    connect(this, &MainWindow::isOpened, eventsMenu->menuAction(), &QAction::setVisible);
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), [] {
@@ -301,7 +303,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
     setWindowTitle(title);
     m_currentFile = filePath;
-    m_eventsMenu->menuAction()->setVisible(isFileOpened);
+
     emit isOpened(isFileOpened);
 }
 
