@@ -254,9 +254,7 @@ void MainWindow::createActions() {
     connect(m_editor, &QTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::copyAvailable, cutAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
-    connect(m_editor, &QTextEdit::textChanged, this, [=, this] {
-        selectAllAction->setEnabled(!m_editor->document()->isEmpty());
-    });
+    connect(m_editor, &QTextEdit::textChanged, this, [=, this] { selectAllAction->setEnabled(!m_editor->document()->isEmpty()); });
 
     connect(this, &MainWindow::isOpened, findAllAction, &QAction::setEnabled);
 
@@ -269,9 +267,7 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isOpened, eventsMenu->menuAction(), &QAction::setVisible);
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
-    helpMenu->addAction(tr("Open download page"), [] {
-        QDesktopServices::openUrl(QUrl(Application::ReleasesUrl));
-    });
+    helpMenu->addAction(tr("Open download page"), this, [] { QDesktopServices::openUrl(QUrl(Application::ReleasesUrl)); });
     helpMenu->addAction(tr("About %1...").arg(Application::Name), this, &MainWindow::about);
 }
 
