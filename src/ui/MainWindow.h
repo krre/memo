@@ -22,6 +22,7 @@ public:
 
 signals:
     void isOpened(bool opened);
+    void isEdited(bool edited);
 
 public slots:
     void quit();

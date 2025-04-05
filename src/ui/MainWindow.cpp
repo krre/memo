@@ -242,6 +242,7 @@ void MainWindow::createActions() {
     redoAction->setEnabled(false);
     cutAction->setEnabled(false);
     copyAction->setEnabled(false);
+    pasteAction->setEnabled(false);
     selectAllAction->setEnabled(false);
     findAction->setEnabled(false);
     findAllAction->setEnabled(false);
@@ -255,9 +256,11 @@ void MainWindow::createActions() {
     connect(m_editor, &QTextEdit::textChanged, this, [=, this] {
         selectAllAction->setEnabled(!m_editor->document()->isEmpty());
     });
-    connect(this, &MainWindow::isOpened, pasteAction, &QAction::setEnabled);
-    connect(this, &MainWindow::isOpened, findAction, &QAction::setEnabled);
+
     connect(this, &MainWindow::isOpened, findAllAction, &QAction::setEnabled);
+
+    connect(this, &MainWindow::isEdited, pasteAction, &QAction::setEnabled);
+    connect(this, &MainWindow::isEdited, findAction, &QAction::setEnabled);
 
     m_eventsMenu = menuBar()->addMenu(tr("Events"));
     m_eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
@@ -322,11 +325,19 @@ void MainWindow::openNote(Id id) {
     QTextCursor cursor = m_editor->textCursor();
     cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
     m_editor->setTextCursor(cursor);
+
+    emit isEdited(true);
 }
 
 void MainWindow::closeNote() {
     m_editor->clearNote();
     m_navigation->clear();
+    m_findText.clear();
+
+    m_findNextAction->setEnabled(false);
+    m_findPreviousAction->setEnabled(false);
+
+    emit isEdited(false);
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
