@@ -217,8 +217,6 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::isOpened, closeAction, &QAction::setEnabled);
 
     fileMenu->addSeparator();
-    fileMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
-    fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), Qt::Key_Escape, this, &MainWindow::hide);
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Exit"), Qt::CTRL | Qt::Key_Q, this, &MainWindow::quit);
@@ -237,6 +235,9 @@ void MainWindow::createActions() {
     auto findAllAction = m_editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
     m_findNextAction = m_editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
     m_findPreviousAction = m_editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
+
+    m_editMenu->addSeparator();
+    m_editMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
 
     undoAction->setEnabled(false);
     redoAction->setEnabled(false);
