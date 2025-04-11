@@ -120,7 +120,7 @@ void NoteTaking::removeNotes() {
 
     TreeItem* parentItem = m_model->item(index.parent());
 
-    for (int i = 0; i < parentItem->childCount(); i++) {
+    for (int i = 0; i < parentItem->childCount(); ++i) {
         Id id = parentItem->child(i)->id();
         m_database->updateNoteValue(id, "pos", i);
     }
@@ -171,7 +171,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
     TreeItem* sourceParentItem = m_model->root()->find(sourceParentId);
 
     // Rewrite note positions on source parent.
-    for (int i = 0; i < sourceParentItem->childCount(); i++) {
+    for (int i = 0; i < sourceParentItem->childCount(); ++i) {
         m_database->updateNoteValue(sourceParentItem->child(i)->id(), "pos", i);
     }
 
@@ -181,7 +181,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
         TreeItem* destinationParentItem = m_model->root()->find(destinationParentId);
 
          // Rewrite note positions on destination parent.
-        for (int i = 0; i < destinationParentItem->childCount(); i++) {
+        for (int i = 0; i < destinationParentItem->childCount(); ++i) {
             m_database->updateNoteValue(destinationParentItem->child(i)->id(), "pos", i);
         }
 
@@ -234,7 +234,7 @@ int NoteTaking::exportNote(Id parentId, const QString& path) const {
     int count = 0;
     TreeItem* parentItem = m_model->root()->find(parentId);
 
-    for (int i = 0; i < parentItem->childCount(); i++) {
+    for (int i = 0; i < parentItem->childCount(); ++i) {
         TreeItem* childItem = parentItem->child(i);
         QString title = childItem->data().toString();
         QString note = m_database->noteValue(childItem->id(), "note").toString();

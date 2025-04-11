@@ -66,7 +66,7 @@ QSqlQuery Database::exec(const QString& sql, const QVariantMap& params) const {
     QSqlQuery query;
     query.prepare(sql);
 
-    for (auto it = params.cbegin(); it != params.cend(); it++) {
+    for (auto it = params.cbegin(); it != params.cend(); ++it) {
         query.bindValue(":" + it.key(), it.value());
     }
 

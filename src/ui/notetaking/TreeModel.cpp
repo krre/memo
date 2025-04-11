@@ -200,7 +200,7 @@ Ids TreeModel::childIds(TreeItem* item) const {
     Ids result;
     result.append(item->id());
 
-    for (int i = 0; i < item->childCount(); i++) {
+    for (int i = 0; i < item->childCount(); ++i) {
         result.append(childIds(item->child(i)));
     }
 
