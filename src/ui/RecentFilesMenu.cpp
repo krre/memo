@@ -50,7 +50,7 @@ void RecentFilesMenu::save() {
 }
 
 void RecentFilesMenu::clear() {
-    for (int i = actions().size() - SystemActionCount - 1; i >= 0; i--) {
+    for (int i = actions().size() - SystemActionCount - 1; i >= 0; --i) {
         removeAction(actions().at(i));
     }
 }
