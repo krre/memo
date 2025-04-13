@@ -12,7 +12,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     LinguistTools
 )
 
-qt_standard_project_setup()
+qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES ru)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
@@ -20,17 +20,15 @@ add_subdirectory(app)
 add_subdirectory(src)
 add_subdirectory(tests)
 
-SET(TS_SOURCE src/i18n/${PROJECT_NAME}-ru.ts)
-
 qt_add_translations(${PROJECT_NAME}
-    TS_FILES ${TS_SOURCE}
+    NO_GENERATE_PLURALS_TS_FILE
+    TS_OUTPUT_DIRECTORY i18n
     # LUPDATE_OPTIONS -no-obsolete
 )
 
 # For visibility in IDE (e.g., Qt Creator)
 add_custom_target(other
     SOURCES
-    ${TS_SOURCE}
     README.md
 )
 
@@ -44,8 +42,6 @@ qt_generate_deploy_app_script(
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
 )
-
-qt_finalize_target(${PROJECT_NAME})
 
 install(SCRIPT ${deploy_script})
 
