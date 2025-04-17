@@ -31,7 +31,7 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(Application::Name);
-    setWindowIcon(QIcon(":/images/logo.png"));
+    setWindowIcon(QIcon(":/assets/logo/logo.png"));
 
     m_fileSettings.reset(new FileSettings);
 
