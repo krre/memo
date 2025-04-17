@@ -8,4 +8,4 @@ Note-taking for my personal usage (desktop version)
 https://github.com/krre/memo/releases
 
 ## Screenshots
-![Screenshot](/images/screenshot-1.png?raw=true)
+![Screenshot](/assets/screenshots/screenshot-1.png?raw=true)
