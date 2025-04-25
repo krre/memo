@@ -21,6 +21,7 @@ void Navigation::go(Id id) {
 
     m_history.append(id);
     m_position++;
+    emit clearAvailable(true);
 
     if (m_position > 0) {
         emit backAvailable(true);
@@ -29,14 +30,6 @@ void Navigation::go(Id id) {
 
 void Navigation::remove(Id id) {
     m_history.removeAll(id);
-}
-
-void Navigation::clear() {
-    m_position = -1;
-    m_history.clear();
-
-    emit backAvailable(false);
-    emit forwardAvailable(false);
 }
 
 void Navigation::back() {
@@ -61,4 +54,13 @@ void Navigation::forward() {
     if (m_position == m_history.count() - 1) {
         emit forwardAvailable(false);
     }
+}
+
+void Navigation::clear() {
+    m_position = -1;
+    m_history.clear();
+
+    emit backAvailable(false);
+    emit forwardAvailable(false);
+    emit clearAvailable(false);
 }

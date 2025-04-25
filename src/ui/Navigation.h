@@ -9,19 +9,20 @@ public:
     Navigation(QObject* parent = nullptr);
 
     void remove(Id id);
-    void clear();
 
 signals:
     void navigate(Id id);
 
     void backAvailable(bool backAvailable);
     void forwardAvailable(bool backAvailable);
+    void clearAvailable(bool clearAvailable);
 
 public slots:
     void go(Id id);
 
     void back();
     void forward();
+    void clear();
 
 private:
     QList<Id> m_history;

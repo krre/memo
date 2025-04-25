@@ -177,6 +177,10 @@ void MainWindow::setupSplitter() {
     forwardAction->setEnabled(false);
     connect(m_navigation, &Navigation::forwardAvailable, forwardAction, &QAction::setEnabled);
 
+    auto clearAction = editorToolBar->addAction(QIcon(":/assets/icons/trash.svg"), QString(), m_navigation, &Navigation::clear);
+    clearAction->setEnabled(false);
+    connect(m_navigation, &Navigation::clearAvailable, clearAction, &QAction::setEnabled);
+
     m_editor = new Editor;
 
     auto editorLayout = new QVBoxLayout;
@@ -279,6 +283,7 @@ void MainWindow::loadFile(const QString& filePath) {
         m_notetaking->build();
         setCurrentFile(filePath);
         m_recentFilesMenu->addPath(filePath);
+        m_navigation->clear();
 
         if (m_database->isBirthdayToday()) {
             showBirthdays();
