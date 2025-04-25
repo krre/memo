@@ -14,7 +14,7 @@ signals:
     void navigate(Id id);
 
     void backAvailable(bool backAvailable);
-    void forwardAvailable(bool backAvailable);
+    void forwardAvailable(bool forwardAvailable);
     void clearAvailable(bool clearAvailable);
 
 public slots:
