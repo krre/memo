@@ -23,7 +23,7 @@ void Navigation::go(Id id) {
     m_position++;
     emit clearAvailable(true);
 
-    if (m_position > 0) {
+    if (m_position >= 0) {
         emit backAvailable(true);
     }
 }
