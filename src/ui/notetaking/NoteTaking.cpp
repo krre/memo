@@ -159,7 +159,6 @@ void NoteTaking::moveDown() {
 }
 
 void NoteTaking::moveTree(const QModelIndex& index) {
-    qDebug() << index;
     selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
     expand(index.parent());
 

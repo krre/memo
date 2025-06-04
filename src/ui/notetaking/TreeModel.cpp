@@ -24,7 +24,7 @@ QModelIndex TreeModel::parent(const QModelIndex& child) const {
 
     auto parentItem = item(child)->parent();
 
-    if (item(child)->parent() == m_rootItem.data()) {
+    if (!parentItem || parentItem == m_rootItem.data()) {
         return QModelIndex();
     }
 
@@ -130,8 +130,6 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
     beginInsertRows(parent, row, row);
     item(parent)->insertChild(row, sourceItem);
     endInsertRows();
-
-    // qDebug() << row << parent << index(row, 0, parent);
 
     emit itemDropped(index(row, 0, parent));
 
