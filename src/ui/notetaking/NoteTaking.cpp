@@ -27,7 +27,7 @@ NoteTaking::NoteTaking(Database* database) : m_database(database) {
     clear();
 
     connect(itemDelegate(), &QAbstractItemDelegate::closeEditor, this, [=, this] {
-        TreeItem* item = m_model->item(selectionModel()->currentIndex());
+        auto item = m_model->item(selectionModel()->currentIndex());
         database->updateNoteValue(item->id(), "title", item->data());
     });
 }
@@ -38,7 +38,7 @@ void NoteTaking::build() {
     int selectedId = m_database->metaValue("selected_id").toInt();
 
     for (const Note& note : std::as_const(notes)) {
-        TreeItem* parentItem = m_model->root()->find(note.parentId);
+        auto parentItem = m_model->root()->find(note.parentId);
         QModelIndex parentIndex = m_model->index(parentItem);
         m_model->insertRow(note.pos, parentIndex);
 
@@ -113,12 +113,12 @@ void NoteTaking::removeNotes() {
     if (QMessageBox::question(this, Application::Name,
                               tr("Remove %1?").arg(m_model->data(index).toString())) == QMessageBox::No) return;
 
-    TreeItem* item = m_model->item(index);
+    auto item = m_model->item(index);
     Ids ids = m_model->childIds(item);
 
     m_model->removeRow(index.row(), index.parent());
 
-    TreeItem* parentItem = m_model->item(index.parent());
+    auto parentItem = m_model->item(index.parent());
 
     for (int i = 0; i < parentItem->childCount(); ++i) {
         Id id = parentItem->child(i)->id();
@@ -159,16 +159,17 @@ void NoteTaking::moveDown() {
 }
 
 void NoteTaking::moveTree(const QModelIndex& index) {
+    qDebug() << index;
     selectionModel()->setCurrentIndex(index, QItemSelectionModel::ClearAndSelect);
     expand(index.parent());
 
     // Move tree in database.
-    TreeItem* targetItem = m_model->item(index);
+    auto targetItem = m_model->item(index);
     Id sourceId = targetItem->id();
     Id sourceParentId = m_database->noteValue(sourceId, "parent_id").toInt();
     Id destinationParentId = targetItem->parent()->id();
 
-    TreeItem* sourceParentItem = m_model->root()->find(sourceParentId);
+    auto sourceParentItem = m_model->root()->find(sourceParentId);
 
     // Rewrite note positions on source parent.
     for (int i = 0; i < sourceParentItem->childCount(); ++i) {
@@ -178,7 +179,7 @@ void NoteTaking::moveTree(const QModelIndex& index) {
     if (sourceParentId != destinationParentId) {
         m_database->updateNoteValue(sourceId, "parent_id", destinationParentId.toVariant());
 
-        TreeItem* destinationParentItem = m_model->root()->find(destinationParentId);
+        auto destinationParentItem = m_model->root()->find(destinationParentId);
 
          // Rewrite note positions on destination parent.
         for (int i = 0; i < destinationParentItem->childCount(); ++i) {
@@ -209,7 +210,7 @@ void NoteTaking::showProperties() const {
 
 void NoteTaking::insertChild(const QString& title) {
     QModelIndex currentIndex = selectionModel()->currentIndex();
-    TreeItem* currentItem = m_model->item(currentIndex);
+    auto currentItem = m_model->item(currentIndex);
 
     Id currentId = currentItem->id();
     int pos = currentItem->childCount();
@@ -232,10 +233,10 @@ int NoteTaking::exportNote(Id parentId, const QString& path) const {
     QDir().mkpath(path);
 
     int count = 0;
-    TreeItem* parentItem = m_model->root()->find(parentId);
+    auto parentItem = m_model->root()->find(parentId);
 
     for (int i = 0; i < parentItem->childCount(); ++i) {
-        TreeItem* childItem = parentItem->child(i);
+        auto childItem = parentItem->child(i);
         QString title = childItem->data().toString();
         QString note = m_database->noteValue(childItem->id(), "note").toString();
         QString notePath = path + "/" + title;
@@ -260,11 +261,11 @@ int NoteTaking::exportNote(Id parentId, const QString& path) const {
 }
 
 void NoteTaking::setCurrentId(Id id) {
-    TreeItem* item = m_model->root()->find(id);
+    auto item = m_model->root()->find(id);
     QModelIndex index = m_model->index(item);
     setCurrentIndex(index);
 
-    TreeItem* parent = item->parent();
+    auto parent = item->parent();
 
     while (parent != m_model->root()) {
         setExpanded(m_model->index(parent), true);

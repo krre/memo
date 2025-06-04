@@ -13,7 +13,7 @@ TreeModel::~TreeModel() {
 }
 
 QModelIndex TreeModel::index(int row, int column, const QModelIndex& parent) const {
-    TreeItem* childItem = item(parent)->child(row);
+    auto childItem = item(parent)->child(row);
     return childItem ? createIndex(row, column, childItem) : QModelIndex();
 }
 
@@ -22,7 +22,7 @@ QModelIndex TreeModel::parent(const QModelIndex& child) const {
         return QModelIndex();
     }
 
-    TreeItem* parentItem = item(child)->parent();
+    auto parentItem = item(child)->parent();
 
     if (item(child)->parent() == m_rootItem.data()) {
         return QModelIndex();
@@ -110,7 +110,7 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
 
     Id id(rawId);
 
-    TreeItem* sourceItem = m_rootItem->find(id);
+    auto sourceItem = m_rootItem->find(id);
     QModelIndex sourceParent = index(sourceItem->parent());
 
     if (row < 0) {
@@ -130,6 +130,8 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
     beginInsertRows(parent, row, row);
     item(parent)->insertChild(row, sourceItem);
     endInsertRows();
+
+    // qDebug() << row << parent << index(row, 0, parent);
 
     emit itemDropped(index(row, 0, parent));
 
@@ -156,8 +158,8 @@ bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int cou
     bool success = false;
 
     beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationChild);
-    TreeItem* sourceParentItem = item(sourceParent);
-    TreeItem* targetItem = sourceParentItem->child(sourceRow);
+    auto sourceParentItem = item(sourceParent);
+    auto targetItem = sourceParentItem->child(sourceRow);
 
     success = item(destinationParent)->insertChild(destinationChild, targetItem);
 
