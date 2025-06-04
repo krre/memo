@@ -181,15 +181,7 @@ TreeItem* TreeModel::root() const {
 }
 
 TreeItem* TreeModel::item(const QModelIndex& index) const {
-    if (index.isValid()) {
-        auto item = static_cast<TreeItem*>(index.internalPointer());
-
-        if (item) {
-            return item;
-        }
-    }
-
-    return m_rootItem.data();
+    return index.isValid() && index.internalPointer() ? static_cast<TreeItem*>(index.internalPointer()) : m_rootItem.data();
 }
 
 QModelIndex TreeModel::index(TreeItem* item) const {

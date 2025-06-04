@@ -35,7 +35,6 @@ NoteTaking::NoteTaking(Database* database) : m_database(database) {
 void NoteTaking::build() {
     clear();
     QVector<Note> notes = m_database->notes();
-    int selectedId = m_database->metaValue("selected_id").toInt();
 
     for (const Note& note : std::as_const(notes)) {
         auto parentItem = m_model->root()->find(note.parentId);
@@ -46,6 +45,8 @@ void NoteTaking::build() {
         m_model->setData(index, note.title, Qt::EditRole);
         m_model->item(index)->setId(note.id);
     }
+
+    int selectedId = m_database->metaValue("selected_id").toInt();
 
     if (selectedId == 0) {
         setCurrentIndex(QModelIndex());
