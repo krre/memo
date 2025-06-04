@@ -59,13 +59,13 @@ bool TreeItem::insertChild(int position, TreeItem* item) {
     return true;
 }
 
-bool TreeItem::removeChild(int position) {
-    if (position < 0 || position > m_children.count() - 1) return false;
+TreeItem* TreeItem::removeChild(int position) {
+    if (position < 0 || position > m_children.count() - 1) return nullptr;
 
-    delete m_children.at(position);
+    auto item = m_children.at(position);
     m_children.removeAt(position);
 
-    return true;
+    return item;
 }
 
 void TreeItem::setData(const QVariant& data) {

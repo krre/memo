@@ -21,7 +21,7 @@ public:
     void setData(const QVariant& data);
 
     bool insertChild(int position, TreeItem* item = nullptr);
-    bool removeChild(int position);
+    TreeItem* removeChild(int position);
 
     Id id() const;
     void setId(Id id);

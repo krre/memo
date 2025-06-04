@@ -146,10 +146,15 @@ bool TreeModel::insertRows(int position, int rows [[maybe_unused]], const QModel
 
 bool TreeModel::removeRows(int position, int rows [[maybe_unused]], const QModelIndex& parent) {
     beginRemoveRows(parent, position, position);
-    bool success = item(parent)->removeChild(position);
+    auto removedItem = item(parent)->removeChild(position);
+
+    if (removedItem) {
+        delete removedItem;
+    }
+
     endRemoveRows();
 
-    return success;
+    return removedItem;
 }
 
 bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int count [[maybe_unused]], const QModelIndex& destinationParent, int destinationChild) {
