@@ -36,14 +36,14 @@ void Migrater::migration1() const {
             created_at TIMESTAMP DEFAULT (datetime('now', 'localtime')),
             updated_at TIMESTAMP DEFAULT (datetime('now', 'localtime'))
         ))"
-         );
+    );
 
     m_db->exec(R"(
         CREATE TABLE meta(
             version INTEGER,
             selected_id INTEGER
         ))"
-         );
+    );
 
     m_db->exec("INSERT INTO meta (version, selected_id) VALUES (1, 0)");
 }
