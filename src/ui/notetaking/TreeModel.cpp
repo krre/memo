@@ -115,7 +115,10 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
 
     bool result = moveRow(sourceParent, sourceItem->childNumber(), parent, row);
 
-    // emit itemDropped(index(row, 0, parent));
+    auto validParent = parent.isValid() ? parent : index(m_rootItem.data());
+    int validRow = row >= 0 ? row : item(validParent)->childCount() - 1;
+
+    emit itemDropped(index(validRow, 0, validParent));
 
     return result;
 }
