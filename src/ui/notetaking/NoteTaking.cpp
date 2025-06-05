@@ -176,23 +176,23 @@ void NoteTaking::moveTree(const QModelIndex& index) {
         m_database->updateNoteValue(sourceParentItem->child(i)->id(), "pos", i);
     }
 
-    if (sourceParentId != destinationParentId) {
-        m_database->updateNoteValue(sourceId, "parent_id", destinationParentId.toVariant());
+    if (sourceParentId == destinationParentId) return;
 
-        auto destinationParentItem = m_model->root()->find(destinationParentId);
+    m_database->updateNoteValue(sourceId, "parent_id", destinationParentId.toVariant());
 
-         // Rewrite note positions on destination parent.
-        for (int i = 0; i < destinationParentItem->childCount(); ++i) {
-            m_database->updateNoteValue(destinationParentItem->child(i)->id(), "pos", i);
-        }
+    auto destinationParentItem = m_model->root()->find(destinationParentId);
 
-         // Rewrite depth in all children of target note.
-        Ids childIds = m_model->childIds(targetItem);
+     // Rewrite note positions on destination parent.
+    for (int i = 0; i < destinationParentItem->childCount(); ++i) {
+        m_database->updateNoteValue(destinationParentItem->child(i)->id(), "pos", i);
+    }
 
-        for (Id id : std::as_const(childIds)) {
-            int depth = targetItem->find(id)->depth() - 1;
-            m_database->updateNoteValue(id, "depth", depth);
-        }
+     // Rewrite depth in all children of target note.
+    Ids childIds = m_model->childIds(targetItem);
+
+    for (Id id : std::as_const(childIds)) {
+        int depth = targetItem->find(id)->depth() - 1;
+        m_database->updateNoteValue(id, "depth", depth);
     }
 }
 

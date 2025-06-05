@@ -99,7 +99,7 @@ bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action
     return true;
 }
 
-bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column [[maybe_unused]], const QModelIndex& parent) {
+bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column, const QModelIndex& parent) {
     if (!canDropMimeData(mimeData, action, row, column, parent)) return false;
 
     QByteArray data = mimeData->data(TreeItemMimeType);
@@ -113,27 +113,11 @@ bool TreeModel::dropMimeData(const QMimeData* mimeData, Qt::DropAction action, i
     auto sourceItem = m_rootItem->find(id);
     QModelIndex sourceParent = index(sourceItem->parent());
 
-    if (row < 0) {
-        if (parent.isValid()) {
-            row = 0;
-        } else if (sourceItem->parent() == m_rootItem.data()) {
-            row = rowCount(parent) - 1;
-        } else {
-            row = rowCount(parent);
-        }
-    } else if (sourceItem->parent() == item(parent) && sourceItem->childNumber() < row) {
-        row--;
-    }
+    bool result = moveRow(sourceParent, sourceItem->childNumber(), parent, row);
 
-    removeRow(sourceItem->childNumber(), sourceParent);
+    // emit itemDropped(index(row, 0, parent));
 
-    beginInsertRows(parent, row, row);
-    item(parent)->insertChild(row, sourceItem);
-    endInsertRows();
-
-    emit itemDropped(index(row, 0, parent));
-
-    return false; // Need false to disable removing row by Qt.
+    return result;
 }
 
 bool TreeModel::insertRows(int position, int rows [[maybe_unused]], const QModelIndex& parent) {
@@ -158,27 +142,17 @@ bool TreeModel::removeRows(int position, int rows [[maybe_unused]], const QModel
 }
 
 bool TreeModel::moveRows(const QModelIndex& sourceParent, int sourceRow, int count [[maybe_unused]], const QModelIndex& destinationParent, int destinationChild) {
-    bool success = false;
+    auto destinationParentItem = destinationParent.isValid() ? item(destinationParent) : m_rootItem.data();
+    int destinationRow = destinationChild >= 0 ? destinationChild : destinationParentItem->childCount();
 
-    beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationChild);
-    auto sourceParentItem = item(sourceParent);
-    auto targetItem = sourceParentItem->child(sourceRow);
+    beginMoveRows(sourceParent, sourceRow, sourceRow, destinationParent, destinationRow);
 
-    success = item(destinationParent)->insertChild(destinationChild, targetItem);
-
-    if (success) {
-        if (sourceParent == destinationParent) {
-            if (sourceRow > destinationChild) {
-                success = sourceParentItem->removeChild(sourceRow + 1);
-            } else {
-                success = sourceParentItem->removeChild(sourceRow);
-            }
-        }
-    }
+    auto sourceItem = item(sourceParent)->removeChild(sourceRow);
+    destinationParentItem->insertChild(destinationRow, sourceItem);
 
     endMoveRows();
 
-    return success;
+    return false; // Need false to disable removing row by Qt.
 }
 
 TreeItem* TreeModel::root() const {

@@ -54,7 +54,12 @@ TreeItem* TreeItem::find(Id id) {
 bool TreeItem::insertChild(int position, TreeItem* item) {
     auto childItem = item ? item : new TreeItem;
     childItem->setParent(this);
-    m_children.insert(position, childItem);
+
+    if (position >= m_children.count()) {
+        m_children.append(childItem);
+    } else {
+        m_children.insert(position, childItem);
+    }
 
     return true;
 }
