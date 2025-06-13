@@ -1,6 +1,7 @@
 #include "Editor.h"
 #include <QMenu>
 #include <QKeyEvent>
+#include <QMimeData>
 
 Editor::Editor(QWidget* parent) : QTextEdit(parent) {
     setEnabled(false);
@@ -77,4 +78,10 @@ void Editor::contextMenuEvent(QContextMenuEvent* event) {
 
     menu->exec(event->globalPos());
     delete menu;
+}
+
+void Editor::insertFromMimeData(const QMimeData* source) {
+    if (source->hasText()) {
+        insertPlainText(source->text());
+    }
 }
