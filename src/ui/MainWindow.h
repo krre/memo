@@ -36,11 +36,12 @@ private slots:
     void exportAll();
     void backup();
     void close();
-    void showPreferences();
     void find();
     void findInAllNotes();
     void findNext();
     void findPrevious();
+
+    void showPreferences();
     void showBirthdays();
     void showAbout();
 

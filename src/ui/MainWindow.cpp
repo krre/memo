@@ -418,14 +418,6 @@ void MainWindow::close() {
     setCurrentFile();
 }
 
-void MainWindow::showPreferences() {
-    Preferences preferences(m_fileSettings.data());
-
-    if (preferences.exec() == QDialog::Accepted) {
-        applyHotSettings();
-    }
-}
-
 void MainWindow::find() {
     bool ok;
     m_findText = QInputDialog::getText(this, tr("Find"), tr("Text:"), QLineEdit::Normal, "", &ok);
@@ -464,6 +456,14 @@ void MainWindow::findNext() {
 
 void MainWindow::findPrevious() {
     m_editor->find(m_findText, QTextDocument::FindBackward);
+}
+
+void MainWindow::showPreferences() {
+    Preferences preferences(m_fileSettings.data());
+
+    if (preferences.exec() == QDialog::Accepted) {
+        applyHotSettings();
+    }
 }
 
 void MainWindow::showBirthdays() {
