@@ -47,11 +47,11 @@ private:
 class TestPreferences : public QObject {
     Q_OBJECT
 private slots:
-    void readOptions();
-    void setOptions();
+    void readPreferences();
+    void setPreferences();
 };
 
-void TestPreferences::readOptions() {
+void TestPreferences::readPreferences() {
     TestSettings settings;
 
     settings.setApplicationLanguage(Language);
@@ -139,7 +139,7 @@ void TestPreferences::readOptions() {
     QCOMPARE(privateKeyEdit->text(), PrivateKey);
 }
 
-void TestPreferences::setOptions() {
+void TestPreferences::setPreferences() {
     TestSettings settings;
 
     // To prevent opening the need restart dialog
