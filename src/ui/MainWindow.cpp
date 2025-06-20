@@ -86,7 +86,7 @@ void MainWindow::readSettings() {
 
     m_splitter->restoreState(m_fileSettings->mainWindowSplitter());
 
-    loadFile(m_fileSettings->applicationFilePath());
+    load(m_fileSettings->applicationFilePath());
 
     if (!m_fileSettings->applicationMinimizeOnStartup()) {
         show();
@@ -201,16 +201,16 @@ void MainWindow::setupSplitter() {
 
 void MainWindow::createActions() {
     auto fileMenu = menuBar()->addMenu(tr("File"));
-    fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::createFile);
+    fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::create);
     fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::open);
 
     m_recentFilesMenu = new RecentFilesMenu(m_fileSettings.data(), this);
-    connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::loadFile);
+    connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::load);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
     auto exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::exportAll);
     auto createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::backup);
-    auto closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::closeFile);
+    auto closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::close);
 
     exportAction->setEnabled(false);
     createBackupAction->setEnabled(false);
@@ -272,10 +272,10 @@ void MainWindow::createActions() {
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), this, [] { QDesktopServices::openUrl(QUrl(Application::ReleasesUrl)); });
-    helpMenu->addAction(tr("About %1...").arg(Application::Name), this, &MainWindow::about);
+    helpMenu->addAction(tr("About %1...").arg(Application::Name), this, &MainWindow::showAbout);
 }
 
-void MainWindow::loadFile(const QString& filePath) {
+void MainWindow::load(const QString& filePath) {
     if (filePath.isEmpty() || !QFile::exists(filePath)) return;
 
     try {
@@ -359,13 +359,13 @@ void MainWindow::closeEvent(QCloseEvent* event) {
     event->accept();
 }
 
-void MainWindow::createFile() {
+void MainWindow::create() {
     QString fileName = QFileDialog::getSaveFileName(this, tr("New File"), "notes.db",
                                                     tr("All Files (*);;Database Files (*.db)"));
 
     if (fileName.isEmpty()) return;
 
-    closeFile();
+    close();
 
     if (QFile::exists(fileName)) {
         if (!QFile::remove(fileName)) {
@@ -375,7 +375,7 @@ void MainWindow::createFile() {
 
     try {
         m_database->create(fileName);
-        loadFile(fileName);
+        load(fileName);
     } catch (const Exception& e) {
         showErrorDialog(e.error());
     }
@@ -385,8 +385,8 @@ void MainWindow::open() {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open File"), QString(),
                                                     tr("All Files (*);;Database Files (*.db)"));
     if (!fileName.isEmpty()) {
-        closeFile();
-        loadFile(fileName);
+        close();
+        load(fileName);
     }
 }
 
@@ -411,7 +411,7 @@ void MainWindow::backup() {
     }
 }
 
-void MainWindow::closeFile() {
+void MainWindow::close() {
     m_database->close();
     closeNote();
     m_notetaking->clear();
@@ -472,7 +472,7 @@ void MainWindow::showBirthdays() {
     birthdays->activateWindow();
 }
 
-void MainWindow::about() {
+void MainWindow::showAbout() {
     QMessageBox::about(this, tr("About %1").arg(Application::Name),
         tr("<h3>%1 %2</h3>"
            "Note-taking for quick notes<br><br>"

@@ -31,23 +31,23 @@ protected:
     void closeEvent(QCloseEvent* event) override;
 
 private slots:
-    void createFile();
+    void create();
     void open();
     void exportAll();
     void backup();
-    void closeFile();
+    void close();
     void showPreferences();
     void find();
     void findInAllNotes();
     void findNext();
     void findPrevious();
     void showBirthdays();
-    void about();
+    void showAbout();
 
     void onEditorFocusLost();
     void onGlobalActivated();
 
-    void loadFile(const QString& filePath);
+    void load(const QString& filePath);
 
     void openNote(Id id);
     void closeNote();
