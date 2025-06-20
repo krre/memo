@@ -29,7 +29,7 @@
 #include <QFileInfo>
 #include <QCloseEvent>
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
+MainWindow::MainWindow() {
     setWindowTitle(Application::Name);
     setWindowIcon(QIcon(":/assets/logo/logo.png"));
 
