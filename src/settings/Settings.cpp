@@ -160,8 +160,9 @@ void Settings::setRecentFiles(const QStringList& recentFiles) {
 
 QStringList Settings::recentFiles() const {
     QStringList result;
+    const QVariantList recentFiles = list(RecentFiles::File);
 
-    for (const auto& value : list(RecentFiles::File)) {
+    for (const auto& value : recentFiles) {
         result.append(value.toString());
     }
 
