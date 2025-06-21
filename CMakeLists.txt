@@ -37,8 +37,6 @@ install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-qt_finalize_executable(${PROJECT_NAME})
-
 qt_generate_deploy_app_script(
     TARGET ${PROJECT_NAME}
     OUTPUT_SCRIPT deploy_script
@@ -46,4 +44,3 @@ qt_generate_deploy_app_script(
 )
 
 install(SCRIPT ${deploy_script})
-
