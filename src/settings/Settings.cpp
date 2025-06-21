@@ -1,107 +1,151 @@
 #include "Settings.h"
 
+namespace Application {
+    constexpr auto Language = "Application/language";
+    constexpr auto FilePath = "Application/filePath";
+    constexpr auto MinimizeOnStartup = "Application/minimizeOnStartup";
+    constexpr auto HideTrayIcon = "Application/hideTrayIcon";
+}
+
+namespace MainWindow {
+    constexpr auto Geometry = "MainWindow/geometry";
+    constexpr auto State = "MainWindow/state";
+    constexpr auto Splitter = "MainWindow/splitter";
+}
+
+namespace Birthdays {
+    constexpr auto Geometry = "Birthdays/geometry";
+}
+
+namespace Backups {
+    constexpr auto Directory = "Backups/directory";
+}
+
+namespace Editor {
+    constexpr auto FontFamily = "Editor/fontFamily";
+    constexpr auto FontSize = "Editor/fontSize";
+}
+
+namespace GlobalHotkey {
+    constexpr auto Enabled = "GlobalHotkey/enabled";
+    constexpr auto Value = "GlobalHotkey/value";
+}
+
+namespace RecentFiles {
+    constexpr auto File = "RecentFiles/file";
+}
+
+namespace Server {
+    constexpr auto Enabled = "Server/enabled";
+    constexpr auto Token = "Server/token";
+    constexpr auto Port = "Server/port";
+    constexpr auto SslEnabled = "Server/sslEnabled";
+    constexpr auto Certificate = "Server/certificate";
+    constexpr auto PrivateKey = "Server/privateKey";
+}
+
 void Settings::setApplicationLanguage(const QString& lang) {
-    setValue("Application/language", lang);
+    setValue(Application::Language, lang);
 }
 
 QString Settings::applicationLanguage() const {
-    return value("Application/language").toString();
+    return value(Application::Language).toString();
 }
 
 void Settings::setApplicationFilePath(const QString& filePath) {
-    setValue("Application/filePath", filePath);
+    setValue(Application::FilePath, filePath);
 }
 
 QString Settings::applicationFilePath() const {
-    return value("Application/filePath").toString();
+    return value(Application::FilePath).toString();
 }
 
 void Settings::setApplicationMinimizeOnStartup(bool minimizeOnStartup) {
-    setValue("Application/minimizeOnStartup", minimizeOnStartup);
+    setValue(Application::MinimizeOnStartup, minimizeOnStartup);
 }
 
 bool Settings::applicationMinimizeOnStartup() const {
-    return value("Application/minimizeOnStartup", true).toBool();
+    return value(Application::MinimizeOnStartup, true).toBool();
 }
 
 void Settings::setApplicationHideTrayIcon(bool hideTrayIcon) {
-    setValue("Application/hideTrayIcon", hideTrayIcon);
+    setValue(Application::HideTrayIcon, hideTrayIcon);
 }
 
 bool Settings::applicationHideTrayIcon() const {
-    return value("Application/hideTrayIcon").toBool();
+    return value(Application::HideTrayIcon).toBool();
 }
 
 void Settings::setMainWindowGeometry(const QByteArray& geometry) {
-    setValue("MainWindow/geometry", geometry);
+    setValue(MainWindow::Geometry, geometry);
 }
 
 QByteArray Settings::mainWindowGeometry() const {
-    return value("MainWindow/geometry").toByteArray();
+    return value(MainWindow::Geometry).toByteArray();
 }
 
 void Settings::setMainWindowState(const QByteArray& state) {
-    setValue("MainWindow/state", state);
+    setValue(MainWindow::State, state);
 }
 
 QByteArray Settings::mainWindowState() const {
-    return value("MainWindow/state").toByteArray();
+    return value(MainWindow::State).toByteArray();
 }
 
 void Settings::setMainWindowSplitter(const QByteArray& splitter) {
-    setValue("MainWindow/splitter", splitter);
+    setValue(MainWindow::Splitter, splitter);
 }
 
 QByteArray Settings::mainWindowSplitter() const {
-    return value("MainWindow/splitter").toByteArray();
+    return value(MainWindow::Splitter).toByteArray();
 }
 
 void Settings::setBirthdaysGeometry(const QByteArray& geometry) {
-    setValue("Birthdays/geometry", geometry);
+    setValue(Birthdays::Geometry, geometry);
 }
 
 QByteArray Settings::birthdaysGeometry() const {
-    return value("Birthdays/geometry").toByteArray();
+    return value(Birthdays::Geometry).toByteArray();
 }
 
 void Settings::setBackupsDirectory(const QString& directory) {
-    setValue("Backups/directory", directory);
+    setValue(Backups::Directory, directory);
 }
 
 QString Settings::backupsDirectory() const {
-    return value("Backups/directory").toString();
+    return value(Backups::Directory).toString();
 }
 
 void Settings::setEditorFontFamily(const QString& fontFamily) {
-    setValue("Editor/fontFamily", fontFamily);
+    setValue(Editor::FontFamily, fontFamily);
 }
 
 QString Settings::editorFontFamily() const {
-    return value("Editor/fontFamily").toString();
+    return value(Editor::FontFamily).toString();
 }
 
 void Settings::setEditorFontSize(int fontSize) {
-    setValue("Editor/fontSize", fontSize);
+    setValue(Editor::FontSize, fontSize);
 }
 
 int Settings::editorFontSize() const {
-    return value("Editor/fontSize").toInt();
+    return value(Editor::FontSize).toInt();
 }
 
 void Settings::setGlobalHotkeyEnabled(bool enabled) {
-    setValue("GlobalHotkey/enabled", enabled);
+    setValue(GlobalHotkey::Enabled, enabled);
 }
 
 bool Settings::globalHotkeyEnabled() const {
-    return value("GlobalHotkey/enabled", true).toBool();
+    return value(GlobalHotkey::Enabled, true).toBool();
 }
 
 void Settings::setGlobalHotkeyValue(const QString& value) {
-    setValue("GlobalHotkey/value", value);
+    setValue(GlobalHotkey::Value, value);
 }
 
 QString Settings::globalHotkeyValue() const {
-    return value("GlobalHotkey/value", "Ctrl+Alt+M").toString();
+    return value(GlobalHotkey::Value, "Ctrl+Alt+M").toString();
 }
 
 void Settings::setRecentFiles(const QStringList& recentFiles) {
@@ -111,13 +155,13 @@ void Settings::setRecentFiles(const QStringList& recentFiles) {
         list.append(file);
     }
 
-    setList("RecentFiles/file", list);
+    setList(RecentFiles::File, list);
 }
 
 QStringList Settings::recentFiles() const {
     QStringList result;
 
-    for (const auto& value : list("RecentFiles/file")) {
+    for (const auto& value : list(RecentFiles::File)) {
         result.append(value.toString());
     }
 
@@ -125,49 +169,49 @@ QStringList Settings::recentFiles() const {
 }
 
 void Settings::setServerEnabled(bool enabled) {
-    setValue("Server/enabled", enabled);
+    setValue(Server::Enabled, enabled);
 }
 
 bool Settings::serverEnabled() const {
-    return value("Server/enabled").toBool();
+    return value(Server::Enabled).toBool();
 }
 
 void Settings::setServerToken(const QString& token) {
-    setValue("Server/token", token);
+    setValue(Server::Token, token);
 }
 
 QString Settings::serverToken() const {
-    return value("Server/token").toString();
+    return value(Server::Token).toString();
 }
 
 void Settings::setServerPort(int port) {
-    setValue("Server/port", port);
+    setValue(Server::Port, port);
 }
 
 int Settings::serverPort() const {
-    return value("Server/port").toInt();
+    return value(Server::Port).toInt();
 }
 
 void Settings::setServerSslEnabled(bool enabled) {
-    setValue("Server/sslEnabled", enabled);
+    setValue(Server::SslEnabled, enabled);
 }
 
 bool Settings::serverSslEnabled() const {
-    return value("Server/sslEnabled").toBool();
+    return value(Server::SslEnabled).toBool();
 }
 
 void Settings::setServerCertificate(const QString& certificate) {
-    setValue("Server/certificate", certificate);
+    setValue(Server::Certificate, certificate);
 }
 
 QString Settings::serverCertificate() const {
-    return value("Server/certificate").toString();
+    return value(Server::Certificate).toString();
 }
 
 void Settings::setServerPrivateKey(const QString& privateKey) {
-    setValue("Server/privateKey", privateKey);
+    setValue(Server::PrivateKey, privateKey);
 }
 
 QString Settings::serverPrivateKey() const {
-    return value("Server/privateKey").toString();
+    return value(Server::PrivateKey).toString();
 }
