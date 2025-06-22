@@ -5,7 +5,7 @@
 
 class TreeItem {
 public:
-    explicit TreeItem(TreeItem* parent = nullptr);
+    TreeItem(TreeItem* parent = nullptr);
     ~TreeItem();
 
     TreeItem* parent();

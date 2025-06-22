@@ -6,7 +6,7 @@ class NativeEventFilter;
 class GlobalHotkey : public QObject {
     Q_OBJECT
 public:
-    explicit GlobalHotkey(QObject* parent = nullptr);
+    GlobalHotkey(QObject* parent = nullptr);
 
     void setShortcut(const QString& shortcut);
     void unsetShortcut();

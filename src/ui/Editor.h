@@ -10,7 +10,7 @@ public:
         Markdown
     };
 
-    explicit Editor(QWidget* parent = nullptr);
+    Editor(QWidget* parent = nullptr);
 
     Id id() const;
 

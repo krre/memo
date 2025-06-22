@@ -5,7 +5,7 @@
 
 class Database : public QObject {
 public:
-    explicit Database(QObject* parent = nullptr);
+    Database(QObject* parent = nullptr);
     ~Database() override;
 
     void create(const QString& filepath);
