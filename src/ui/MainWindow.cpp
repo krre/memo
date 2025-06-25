@@ -299,7 +299,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
 
     if (isFileOpened) {
         QFileInfo fi(filePath);
-        title = title + " - " + fi.fileName();
+        title = fi.fileName() + " - " + title;
     }
 
     setWindowTitle(title);
