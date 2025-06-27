@@ -33,7 +33,7 @@ MainWindow::MainWindow() {
     setWindowTitle(Application::Name);
     setWindowIcon(QIcon(":/assets/logo/logo.png"));
 
-    m_fileSettings.reset(new FileSettings);
+    m_fileSettings = new FileSettings(this);
 
     m_splitter = new QSplitter;
     setCentralWidget(m_splitter);
@@ -58,10 +58,6 @@ MainWindow::MainWindow() {
 
     setCurrentFile("");
     readSettings();
-}
-
-MainWindow::~MainWindow() {
-
 }
 
 void MainWindow::quit() {
@@ -204,7 +200,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::create);
     fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::open);
 
-    m_recentFilesMenu = new RecentFilesMenu(m_fileSettings.data(), this);
+    m_recentFilesMenu = new RecentFilesMenu(m_fileSettings, this);
     connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::load);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
@@ -459,7 +455,7 @@ void MainWindow::findPrevious() {
 }
 
 void MainWindow::showPreferences() {
-    Preferences preferences(m_fileSettings.data());
+    Preferences preferences(m_fileSettings);
 
     if (preferences.exec() == QDialog::Accepted) {
         applyHotSettings();
@@ -467,7 +463,7 @@ void MainWindow::showPreferences() {
 }
 
 void MainWindow::showBirthdays() {
-    auto birthdays = new Birthdays(m_database, m_fileSettings.data());
+    auto birthdays = new Birthdays(m_database, m_fileSettings);
     birthdays->show();
     birthdays->activateWindow();
 }

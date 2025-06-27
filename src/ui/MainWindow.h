@@ -18,7 +18,6 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     MainWindow();
-    ~MainWindow();
 
 signals:
     void isOpened(bool opened);
@@ -66,7 +65,7 @@ private:
     void showErrorDialog(const QString& message);
     QString dateFileName(const QString& name);
 
-    QScopedPointer<FileSettings> m_fileSettings;
+    FileSettings* m_fileSettings = nullptr;
 
     QString m_currentFile;
     TrayIcon* m_trayIcon = nullptr;
