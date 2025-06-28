@@ -16,39 +16,39 @@ endif()
 
 add_library(common STATIC
     ${PLATFORM_SRC}
-    ui/dialog/StandardDialog.h ui/dialog/StandardDialog.cpp
     core/Application.h core/Application.cpp
     core/Exception.h core/Exception.cpp
+    core/Exporter.h core/Exporter.cpp
+    core/Id.h core/Id.cpp
     core/MessageHandler.h
+    core/Model.h
     core/SafeString.h core/SafeString.cpp
     database/Database.h database/Database.cpp
-    database/Migrater.h database/Migrater.cpp
     database/DatabaseException.h database/DatabaseException.cpp
+    database/Migrater.h database/Migrater.cpp
     server/HttpServerManager.h server/HttpServerManager.cpp
     server/handler/Handler.h server/handler/Handler.cpp
     server/handler/NameHandler.h server/handler/NameHandler.cpp
     server/handler/NotesHandler.h server/handler/NotesHandler.cpp
+    settings/FileSettings.h settings/FileSettings.cpp
+    settings/Settings.cpp
+    settings/Settings.h
+    ui/Birthdays.h ui/Birthdays.cpp
+    ui/Editor.h ui/Editor.cpp
     ui/MainWindow.h ui/MainWindow.cpp
+    ui/Navigation.h ui/Navigation.cpp
     ui/RecentFilesMenu.h ui/RecentFilesMenu.cpp
     ui/TrayIcon.h ui/TrayIcon.cpp
-    ui/Editor.h ui/Editor.cpp
+    ui/dialog/BrowseLayout.cpp ui/dialog/BrowseLayout.h
     ui/dialog/FindAllNotesDialog.h ui/dialog/FindAllNotesDialog.cpp
     ui/dialog/Preferences.h ui/dialog/Preferences.cpp
+    ui/dialog/StandardDialog.h ui/dialog/StandardDialog.cpp
     ui/hotkey/GlobalHotkey.h ui/hotkey/GlobalHotkey.cpp
     ui/hotkey/NativeEventFilter.h
     ui/notetaking/NoteProperties.h ui/notetaking/NoteProperties.cpp
     ui/notetaking/NoteTaking.h ui/notetaking/NoteTaking.cpp
     ui/notetaking/TreeItem.h ui/notetaking/TreeItem.cpp
     ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
-    ui/Birthdays.h ui/Birthdays.cpp
-    core/Exporter.h core/Exporter.cpp
-    settings/Settings.h
-    settings/FileSettings.h settings/FileSettings.cpp
-    core/Model.h
-    ui/dialog/BrowseLayout.cpp ui/dialog/BrowseLayout.h
-    settings/Settings.cpp
-    core/Id.h core/Id.cpp
-    ui/Navigation.h ui/Navigation.cpp
 )
 
 # For visibility in IDE (e.g., Qt Creator)
