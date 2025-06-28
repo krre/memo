@@ -21,7 +21,7 @@ public:
 
 signals:
     void noteOpenChanged(bool open);
-    void isEdited(bool edited);
+    void noteEditChanged(bool edit);
 
 public slots:
     void quit();

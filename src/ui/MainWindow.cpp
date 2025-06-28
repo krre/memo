@@ -258,8 +258,8 @@ void MainWindow::createActions() {
 
     connect(this, &MainWindow::noteOpenChanged, findAllAction, &QAction::setEnabled);
 
-    connect(this, &MainWindow::isEdited, pasteAction, &QAction::setEnabled);
-    connect(this, &MainWindow::isEdited, findAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteEditChanged, pasteAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteEditChanged, findAction, &QAction::setEnabled);
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
     eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
@@ -326,7 +326,7 @@ void MainWindow::openNote(Id id) {
     cursor.movePosition(QTextCursor::NextBlock, QTextCursor::MoveAnchor, line);
     m_editor->setTextCursor(cursor);
 
-    emit isEdited(true);
+    emit noteEditChanged(true);
 }
 
 void MainWindow::closeNote() {
@@ -337,7 +337,7 @@ void MainWindow::closeNote() {
     m_findNextAction->setEnabled(false);
     m_findPreviousAction->setEnabled(false);
 
-    emit isEdited(false);
+    emit noteEditChanged(false);
 }
 
 void MainWindow::showErrorDialog(const QString& message) {
