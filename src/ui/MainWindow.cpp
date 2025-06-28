@@ -212,9 +212,9 @@ void MainWindow::createActions() {
     createBackupAction->setEnabled(false);
     closeAction->setEnabled(false);
 
-    connect(this, &MainWindow::isOpened, exportAction, &QAction::setEnabled);
-    connect(this, &MainWindow::isOpened, createBackupAction, &QAction::setEnabled);
-    connect(this, &MainWindow::isOpened, closeAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteOpenChanged, exportAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteOpenChanged, createBackupAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteOpenChanged, closeAction, &QAction::setEnabled);
 
     fileMenu->addSeparator();
     fileMenu->addAction(tr("Hide"), Qt::Key_Escape, this, &MainWindow::hide);
@@ -256,7 +256,7 @@ void MainWindow::createActions() {
     connect(m_editor, &QTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::textChanged, this, [=, this] { selectAllAction->setEnabled(!m_editor->document()->isEmpty()); });
 
-    connect(this, &MainWindow::isOpened, findAllAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteOpenChanged, findAllAction, &QAction::setEnabled);
 
     connect(this, &MainWindow::isEdited, pasteAction, &QAction::setEnabled);
     connect(this, &MainWindow::isEdited, findAction, &QAction::setEnabled);
@@ -264,7 +264,7 @@ void MainWindow::createActions() {
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
     eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
     eventsMenu->menuAction()->setVisible(false);
-    connect(this, &MainWindow::isOpened, eventsMenu->menuAction(), &QAction::setVisible);
+    connect(this, &MainWindow::noteOpenChanged, eventsMenu->menuAction(), &QAction::setVisible);
 
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), this, [] { QDesktopServices::openUrl(QUrl(Application::ReleasesUrl)); });
@@ -301,7 +301,7 @@ void MainWindow::setCurrentFile(const QString& filePath) {
     setWindowTitle(title);
     m_currentFile = filePath;
 
-    emit isOpened(isFileOpened);
+    emit noteOpenChanged(isFileOpened);
 }
 
 void MainWindow::openNote(Id id) {

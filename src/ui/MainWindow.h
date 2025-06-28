@@ -20,7 +20,7 @@ public:
     MainWindow();
 
 signals:
-    void isOpened(bool opened);
+    void noteOpenChanged(bool open);
     void isEdited(bool edited);
 
 public slots:
