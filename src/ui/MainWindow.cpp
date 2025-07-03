@@ -95,7 +95,7 @@ void MainWindow::writeSettings() {
     m_fileSettings->setMainWindowSplitter(m_splitter->saveState());
 
     m_fileSettings->setApplicationFilePath(m_currentFile);
-    m_recentFilesMenu->save();
+    m_fileSettings->setRecentFiles(m_recentFilesMenu->recentFiles());
 }
 
 void MainWindow::applyHotSettings() {
@@ -200,7 +200,7 @@ void MainWindow::createActions() {
     fileMenu->addAction(tr("New..."), Qt::CTRL | Qt::Key_N, this, &MainWindow::create);
     fileMenu->addAction(tr("Open..."), Qt::CTRL | Qt::Key_O, this, &MainWindow::open);
 
-    m_recentFilesMenu = new RecentFilesMenu(m_fileSettings, this);
+    m_recentFilesMenu = new RecentFilesMenu(m_fileSettings->recentFiles(), this);
     connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::load);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
