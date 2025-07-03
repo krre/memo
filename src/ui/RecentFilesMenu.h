@@ -1,8 +1,6 @@
 #pragma once
 #include <QMenu>
 
-class Settings;
-
 class RecentFilesMenu : public QMenu {
     Q_OBJECT
 public:
