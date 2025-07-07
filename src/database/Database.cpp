@@ -126,7 +126,7 @@ void Database::updateBirthday(const Birthday& birthday) const {
         { "name", birthday.name }
     };
 
-    exec(QString("UPDATE birthdays SET date = :date, name = :name WHERE id = :id"), params);
+    exec("UPDATE birthdays SET date = :date, name = :name WHERE id = :id", params);
 }
 
 void Database::removeBirthday(Id id) const {
@@ -181,7 +181,7 @@ QVariant Database::metaValue(const QString& name) const {
 }
 
 QVector<FindNote> Database::find(const QString& text) const {
-    QSqlQuery query = exec(QString("SELECT id, title, note FROM notes"));
+    QSqlQuery query = exec("SELECT id, title, note FROM notes");
     QVector<FindNote> result;
 
     while (query.next()) {
