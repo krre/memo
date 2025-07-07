@@ -53,12 +53,12 @@ void Migrater::migration2() const {
 }
 
 void Migrater::migration3() const {
-    m_db->exec(
-        "CREATE TABLE birthdays("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            "date DATE,"
-            "name TEXT"
-        ")"
+    m_db->exec(R"(
+        CREATE TABLE birthdays(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            date DATE,
+            name TEXT
+        ))"
     );
 }
 
