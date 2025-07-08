@@ -13,7 +13,6 @@ private:
 };
 
 class SqlQueryError : public Exception {
-
 public:
     SqlQueryError(const QSqlQuery& query);
     QString error() const override;
