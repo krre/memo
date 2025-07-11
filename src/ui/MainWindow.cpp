@@ -73,9 +73,10 @@ void MainWindow::readSettings() {
     if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
     } else {
-        const QRect availableGeometry = QGuiApplication::screens().constFirst()->availableGeometry();
-        resize(availableGeometry.width() / 2, availableGeometry.height() / 2);
-        move((availableGeometry.width() - width()) / 2, (availableGeometry.height() - height()) / 2);
+        QSize screenSize = screen()->size();
+        constexpr auto scale = 0.75;
+        resize(screenSize.width() * scale, screenSize.height() * scale);
+        move((screenSize.width() - width()) / 2, (screenSize.height() - height()) / 2);
     }
 
     restoreState(m_fileSettings->mainWindowState());
