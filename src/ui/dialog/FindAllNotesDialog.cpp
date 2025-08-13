@@ -56,4 +56,8 @@ void FindAllNotesDialog::find() {
         auto item = new QListWidgetItem(note.title, m_listWidget);
         item->setData(Qt::UserRole, note.id.toVariant());
     }
+
+    if (findNotes.count()) {
+        m_listWidget->setCurrentRow(0);
+    }
 }
