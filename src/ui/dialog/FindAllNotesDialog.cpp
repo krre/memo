@@ -30,6 +30,7 @@ FindAllNotesDialog::FindAllNotesDialog(Database* database) : m_database(database
 
     buttonBox()->addButton(findButton, QDialogButtonBox::ActionRole);
     buttonBox()->button(QDialogButtonBox::Ok)->setEnabled(false);
+    buttonBox()->button(QDialogButtonBox::Ok)->setText(tr("Go"));
 
     connect(m_lineEdit, &QLineEdit::textChanged, this, [=] (const QString& text) {
         findButton->setEnabled(!text.isEmpty());
