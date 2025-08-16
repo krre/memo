@@ -68,22 +68,22 @@
 <context>
     <name>FindAllNotesDialog</name>
     <message>
-        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="11"/>
+        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="12"/>
         <source>Find in All Notes</source>
         <translation>Найти во всех заметках</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="17"/>
+        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="20"/>
         <source>Text:</source>
         <translation>Текст:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="26"/>
+        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="30"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="33"/>
+        <location filename="../src/ui/dialog/FindAllNotesDialog.cpp" line="37"/>
         <source>Go</source>
         <translation>Перейти</translation>
     </message>
@@ -381,92 +381,97 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="127"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="131"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="122"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="126"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="84"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="85"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="123"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="127"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="107"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="108"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="75"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="76"/>
         <source>Select Directory</source>
         <translation>Выберите директорию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="85"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="86"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="86"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="87"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="115"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="116"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="118"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="119"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="137"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="122"/>
+        <source>Remind about birthdays</source>
+        <translation>Напоминать о днях рождения</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="142"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="154"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="159"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="186"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="191"/>
         <source>Certificate:</source>
         <translation>Сертификат:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="187"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="192"/>
         <source>Private key:</source>
         <translation>Закрытый ключ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="156"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="161"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="196"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="201"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="197"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="202"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="203"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="208"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
@@ -476,12 +481,12 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Вы должны перезапустить приложение</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="66"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="67"/>
         <source>Select Font</source>
         <translation>Выбрать шрифт</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="195"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="200"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
     </message>

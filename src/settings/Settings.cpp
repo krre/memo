@@ -15,6 +15,7 @@ namespace MainWindow {
 
 namespace Birthdays {
     constexpr auto Geometry = "Birthdays/geometry";
+    constexpr auto Remind = "Birthdays/remind";
 }
 
 namespace Backups {
@@ -106,6 +107,14 @@ void Settings::setBirthdaysGeometry(const QByteArray& geometry) {
 
 QByteArray Settings::birthdaysGeometry() const {
     return value(Birthdays::Geometry).toByteArray();
+}
+
+void Settings::setBirthdaysRemind(bool remind) {
+    setValue(Birthdays::Remind, remind);
+}
+
+bool Settings::birthdaysRemind() const {
+    return value(Birthdays::Remind, true).toBool();
 }
 
 void Settings::setBackupsDirectory(const QString& directory) {

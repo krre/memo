@@ -27,6 +27,9 @@ public:
     void setBirthdaysGeometry(const  QByteArray& geometry);
     QByteArray birthdaysGeometry() const;
 
+    void setBirthdaysRemind(bool remind);
+    bool birthdaysRemind() const;
+
     void setBackupsDirectory(const QString& directory);
     QString backupsDirectory() const;
 

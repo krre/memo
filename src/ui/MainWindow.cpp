@@ -282,7 +282,7 @@ void MainWindow::load(const QString& filePath) {
         m_recentFilesMenu->addPath(filePath);
         m_navigation->clear();
 
-        if (m_database->isBirthdayToday()) {
+        if (m_fileSettings->birthdaysRemind() && m_database->isBirthdayToday()) {
             showBirthdays();
         }
     } catch (const Exception& e) {

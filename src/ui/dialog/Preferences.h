@@ -32,6 +32,7 @@ private:
     QComboBox* m_languageComboBox = nullptr;
     QLineEdit* m_fontFamilyLineEdit = nullptr;
     QLineEdit* m_fontSizeLineEdit = nullptr;
+    QCheckBox* m_remindBirthdaysCheckBox = nullptr;
     QCheckBox* m_minimizeCheckBox = nullptr;
     QCheckBox* m_hideTrayCheckBox = nullptr;
 

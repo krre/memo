@@ -39,6 +39,7 @@ void Preferences::accept() {
 
     m_settings->setApplicationMinimizeOnStartup(m_minimizeCheckBox->isChecked());
     m_settings->setApplicationHideTrayIcon(m_hideTrayCheckBox->isChecked());
+    m_settings->setBirthdaysRemind(m_remindBirthdaysCheckBox->isChecked());
     m_settings->setBackupsDirectory(m_backupsBrowseLayout->text());
 
     m_settings->setEditorFontFamily(m_fontFamilyLineEdit->text());
@@ -118,6 +119,9 @@ QGroupBox* Preferences::createUiGroupBox() {
     m_hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
     m_hideTrayCheckBox->setChecked(m_settings->applicationHideTrayIcon());
 
+    m_remindBirthdaysCheckBox = new QCheckBox(tr("Remind about birthdays"));
+    m_remindBirthdaysCheckBox->setChecked(m_settings->birthdaysRemind());
+
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Language:"), m_languageComboBox);
     formLayout->addRow(tr("Font:"), fontLayout);
@@ -129,6 +133,7 @@ QGroupBox* Preferences::createUiGroupBox() {
     verticalLayout->addLayout(formLayout);
     verticalLayout->addWidget(m_minimizeCheckBox);
     verticalLayout->addWidget(m_hideTrayCheckBox);
+    verticalLayout->addWidget(m_remindBirthdaysCheckBox);
 
     return result;
 }
