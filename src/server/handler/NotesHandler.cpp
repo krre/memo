@@ -10,8 +10,9 @@ NotesHandler::NotesHandler(Database* database) : Handler(database) {
 
 QHttpServerResponse NotesHandler::buildResponse() {
     QJsonArray result;
+    const auto notes = database()->notes();
 
-    for (const Note& note : database()->notes()) {
+    for (const Note& note : notes) {
         QJsonObject obj;
         obj["id"] = note.id.toJson();
         obj["parentId"] = note.parentId.toJson();

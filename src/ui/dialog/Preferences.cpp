@@ -166,8 +166,9 @@ QGroupBox* Preferences::createBackupsGroupBox() {
 
 QGroupBox* Preferences::createServerGroupBox() {
     QString addresses;
+    const auto allAddresses = QNetworkInterface::allAddresses();
 
-    for (const QHostAddress& address: QNetworkInterface::allAddresses()) {
+    for (const QHostAddress& address: allAddresses) {
         if (address.protocol() == QAbstractSocket::IPv4Protocol && address.isGlobal()) {
             addresses += address.toString() + ";";
         }

@@ -96,8 +96,9 @@ void Birthdays::load() {
     const bool isBlocked = m_table->blockSignals(true);
 
     QDate date = m_todayCheckBox->isChecked() ? QDate::currentDate() : QDate();
+    const auto birthdays = m_database->birthdays(date);
 
-    for (const auto& birthday : m_database->birthdays(date)) {
+    for (const auto& birthday : birthdays) {
         addRow(birthday.id.value(), birthday.date, birthday.name);
     }
 
