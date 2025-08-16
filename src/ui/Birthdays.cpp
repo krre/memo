@@ -109,16 +109,16 @@ void Birthdays::load() {
 void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     m_table->insertRow(m_table->rowCount());
 
-    QTableWidgetItem* idItem = new QTableWidgetItem(id.toString());
+    auto idItem = new QTableWidgetItem(id.toString());
     m_table->setItem(m_table->rowCount() - 1, int(Column::Id), idItem);
 
-    QTableWidgetItem* dateItem = new QTableWidgetItem(date.toString(BirthdayDateFormat));
+    auto dateItem = new QTableWidgetItem(date.toString(BirthdayDateFormat));
     m_table->setItem(m_table->rowCount() - 1, int(Column::Date), dateItem);
 
-    QTableWidgetItem* nameItem = new QTableWidgetItem(name);
+    auto nameItem = new QTableWidgetItem(name);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Name), nameItem);
 
-    QTableWidgetItem* ageItem = new QTableWidgetItem(QString::number(age(date)));
+    auto ageItem = new QTableWidgetItem(QString::number(age(date)));
     ageItem->setFlags(ageItem->flags() ^ Qt::ItemIsEditable);
     m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
 }
