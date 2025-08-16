@@ -11,6 +11,7 @@ constexpr auto FontFamily = "Ubuntu";
 constexpr auto FontSize = 10;
 constexpr auto MinimizeOnStartup = true;
 constexpr auto HideTrayIcon = true;
+constexpr auto RemindBirthdays = true;
 constexpr auto HotKeyEnabled = true;
 constexpr auto HotKeyValue = "Ctrl+Alt+M";
 constexpr auto BackupsDirectory = "/home/user/backups";
@@ -64,6 +65,7 @@ void TestPreferences::readPreferences() {
     settings.setGlobalHotkeyEnabled(HotKeyEnabled);
     settings.setGlobalHotkeyValue(HotKeyValue);
 
+    settings.setBirthdaysRemind(RemindBirthdays);
     settings.setBackupsDirectory(BackupsDirectory);
 
     settings.setServerEnabled(ServerEnabled);
@@ -92,6 +94,9 @@ void TestPreferences::readPreferences() {
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hideTrayCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto remindBirthdaysCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
@@ -128,6 +133,7 @@ void TestPreferences::readPreferences() {
     QCOMPARE(fontSizeLineEdit->text().toInt(), FontSize);
     QCOMPARE(minimizeCheckBox->isChecked(), MinimizeOnStartup);
     QCOMPARE(hideTrayCheckBox->isChecked(), HideTrayIcon);
+    QCOMPARE(remindBirthdaysCheckBox->isChecked(), RemindBirthdays);
     QCOMPARE(hotkeyGroupBox->isChecked(), HotKeyEnabled);
     QCOMPARE(hotkeyLineEdit->text(), HotKeyValue);
     QCOMPARE(backupsLineEdit->text(), BackupsDirectory);
@@ -169,6 +175,10 @@ void TestPreferences::setPreferences() {
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hideTrayCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
     hideTrayCheckBox->setChecked(HideTrayIcon);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto remindBirthdaysCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+    remindBirthdaysCheckBox->setChecked(RemindBirthdays);
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
@@ -214,6 +224,7 @@ void TestPreferences::setPreferences() {
     QCOMPARE(settings.applicationLanguage(), Language);
     QCOMPARE(settings.applicationMinimizeOnStartup(), MinimizeOnStartup);
     QCOMPARE(settings.applicationHideTrayIcon(), HideTrayIcon);
+    QCOMPARE(settings.birthdaysRemind(), RemindBirthdays);
     QCOMPARE(settings.editorFontFamily(), FontFamily);
     QCOMPARE(settings.editorFontSize(), FontSize);
     QCOMPARE(settings.globalHotkeyEnabled(), HotKeyEnabled);
