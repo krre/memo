@@ -1,6 +1,7 @@
 #pragma once
 #include "core/Id.h"
 #include <QWidget>
+#include <QStyledItemDelegate>
 
 constexpr auto BirthdayDateFormat = "dd.MM.yyyy";
 
@@ -12,6 +13,16 @@ class QCheckBox;
 
 class Database;
 class Settings;
+
+class DateDelegate : public QStyledItemDelegate {
+public:
+    DateDelegate(QObject* parent = nullptr);
+
+    QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+    void setEditorData(QWidget* editor, const QModelIndex& index) const override;
+    void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
+    void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+};
 
 class Birthdays : public QWidget {
     Q_OBJECT

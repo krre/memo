@@ -9,6 +9,37 @@
 #include <QMessageBox>
 #include <QHBoxLayout>
 #include <QCloseEvent>
+#include <QDateEdit>
+
+DateDelegate::DateDelegate(QObject* parent) : QStyledItemDelegate(parent) {
+
+}
+
+QWidget *DateDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    auto editor = new QDateEdit(parent);
+    editor->setCalendarPopup(true);
+    editor->setDisplayFormat("dd.MM.yyyy");
+    return editor;
+}
+
+void DateDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const {
+    QDate value = QDate::fromString(index.model()->data(index, Qt::EditRole).toString(), "dd.MM.yyyy");
+
+    if (!value.isValid()) {
+        value = QDate::currentDate();
+    }
+
+    static_cast<QDateEdit*>(editor)->setDate(value);
+}
+
+void DateDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
+    auto dateEdit = static_cast<QDateEdit*>(editor);
+    model->setData(index, dateEdit->date().toString("dd.MM.yyyy"), Qt::EditRole);
+}
+
+void DateDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+    editor->setGeometry(option.rect);
+}
 
 Birthdays::Birthdays(Database* database, Settings* settings) : m_database(database), m_settings(settings) {
     setWindowTitle(tr("Birthdays"));
@@ -143,6 +174,9 @@ QTableWidget* Birthdays::createTable() {
     m_table->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed);
     m_table->horizontalHeader()->setStretchLastSection(true);
     m_table->setColumnHidden(int(Column::Id), true);
+
+    auto dateDelegate = new DateDelegate(m_table);
+    m_table->setItemDelegateForColumn(int(Column::Date), dateDelegate);
 
     connect(m_table, &QTableWidget::currentCellChanged, this, &Birthdays::updateButtonsState);
     connect(m_table, &QTableWidget::cellChanged, this, &Birthdays::onCellChanged);
