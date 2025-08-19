@@ -225,13 +225,20 @@ void MainWindow::createActions() {
     auto editMenu = menuBar()->addMenu(tr("Edit"));
     auto undoAction = editMenu->addAction(tr("Undo"), QKeySequence::Undo, m_editor, &Editor::undo);
     auto redoAction = editMenu->addAction(tr("Redo"), QKeySequence::Redo, m_editor, &Editor::redo);
+
     editMenu->addSeparator();
+
     auto cutAction = editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
     auto copyAction = editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
     auto pasteAction = editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
+    auto pasteDateAction = editMenu->addAction(tr("Paste Date"), this, &MainWindow::pasteDate);
+
     editMenu->addSeparator();
+
     auto selectAllAction = editMenu->addAction(tr("Select All"), QKeySequence::SelectAll, m_editor, &Editor::selectAll);
+
     editMenu->addSeparator();
+
     auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
     auto findAllAction = editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
     m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
@@ -245,6 +252,7 @@ void MainWindow::createActions() {
     cutAction->setEnabled(false);
     copyAction->setEnabled(false);
     pasteAction->setEnabled(false);
+    pasteDateAction->setEnabled(false);
     selectAllAction->setEnabled(false);
     findAction->setEnabled(false);
     findAllAction->setEnabled(false);
@@ -260,6 +268,7 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::noteOpenChanged, findAllAction, &QAction::setEnabled);
 
     connect(this, &MainWindow::noteEditChanged, pasteAction, &QAction::setEnabled);
+    connect(this, &MainWindow::noteEditChanged, pasteDateAction, &QAction::setEnabled);
     connect(this, &MainWindow::noteEditChanged, findAction, &QAction::setEnabled);
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
@@ -413,6 +422,10 @@ void MainWindow::close() {
     closeNote();
     m_notetaking->clear();
     setCurrentFile();
+}
+
+void MainWindow::pasteDate() {
+    m_editor->insertPlainText(QDate::currentDate().toString("dd.MM.yyyy"));
 }
 
 void MainWindow::find() {

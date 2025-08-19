@@ -35,6 +35,7 @@ private slots:
     void exportAll();
     void backup();
     void close();
+    void pasteDate();
     void find();
     void findInAllNotes();
     void findNext();
