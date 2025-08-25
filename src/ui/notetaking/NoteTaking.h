@@ -13,7 +13,9 @@ public:
     NoteTaking(Database* database);
 
     int exportNote(Id parentId, const QString& path) const;
+
     void setCurrentId(Id id);
+    void deselect();
 
 public slots:
     void build();

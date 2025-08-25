@@ -81,7 +81,7 @@ void NoteTaking::onCustomContextMenu(const QPoint& point) {
     contextMenu->addSeparator();
 
     auto expandAction = contextMenu->addAction(tr("Expand"), this, &NoteTaking::expandTree);
-    contextMenu->addAction(tr("Collapse All"), this, &NoteTaking::collapseAll);
+    contextMenu->addAction(tr("Collapse All"), this, [this] { collapseAll(); deselect(); });
     contextMenu->addAction(tr("Expand All"), this, &NoteTaking::expandAll);
 
     contextMenu->addSeparator();
@@ -273,10 +273,14 @@ void NoteTaking::setCurrentId(Id id) {
     }
 }
 
+void NoteTaking::deselect() {
+    selectionModel()->clearSelection();
+    setCurrentIndex(QModelIndex());
+}
+
 void NoteTaking::mousePressEvent(QMouseEvent* event) {
     if (event->button() == Qt::LeftButton && !indexAt(event->position().toPoint()).isValid()) {
-        selectionModel()->clearSelection();
-        setCurrentIndex(QModelIndex());
+        deselect();
     } else {
         QTreeView::mousePressEvent(event);
     }
