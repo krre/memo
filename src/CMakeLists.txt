@@ -14,7 +14,7 @@ if(APPLE)
     set(PLATFORM_SRC ui/hotkey/NativeEventFilterMac.cpp)
 endif()
 
-add_library(common STATIC
+qt_add_library(common STATIC
     ${PLATFORM_SRC}
     core/Application.h core/Application.cpp
     core/Exception.h core/Exception.cpp
