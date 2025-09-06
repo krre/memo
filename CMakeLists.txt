@@ -21,6 +21,7 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 qt_add_translations(${PROJECT_NAME}
+    MERGE_QT_TRANSLATIONS
     NO_GENERATE_PLURALS_TS_FILE
     TS_OUTPUT_DIRECTORY i18n
     # LUPDATE_OPTIONS -no-obsolete
@@ -41,6 +42,7 @@ qt_generate_deploy_app_script(
     TARGET ${PROJECT_NAME}
     OUTPUT_SCRIPT deploy_script
     NO_UNSUPPORTED_PLATFORM_ERROR
+    NO_TRANSLATIONS
 )
 
 install(SCRIPT ${deploy_script})
