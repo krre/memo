@@ -1,3 +1,4 @@
+#include "TestSettings.h"
 #include <ui/dialog/Preferences.h>
 #include <settings/Settings.h>
 #include <QTest>
@@ -21,29 +22,6 @@ constexpr auto Port = 80;
 constexpr auto SslEnabled = true;
 constexpr auto Certificate = "certificate";
 constexpr auto PrivateKey = "privateKey";
-
-class TestSettings : public Settings {
-
-protected:
-    void setValue(const QString& key, const QVariant& value) override {
-        settings[key] = value;
-    }
-
-    QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const override {
-        return settings.contains(key) ? settings[key] : defaultValue;
-    }
-
-    void setList(const QString& key, const QVariantList& list) override {
-        settings[key] = list;
-    }
-
-    QVariantList list(const QString& key) const override {
-        return settings[key].toList();
-    }
-
-private:
-    QHash<QString, QVariant> settings;
-};
 
 class TestPreferences : public QObject {
     Q_OBJECT
