@@ -53,7 +53,7 @@ private:
     void writeSettings();
 
     void addRow(Id id, const QDate& date, const QString& name);
-    int age(const QDate& date);
+    int age(const QDate& birthday);
 
     QTableWidget* createTable();
     QVBoxLayout* createButtons();

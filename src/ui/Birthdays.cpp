@@ -155,10 +155,19 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
 }
 
-int Birthdays::age(const QDate& date) {
-    int result = QDate::currentDate().year() - date.year();
+int Birthdays::age(const QDate& birthday) {
+    QDate today = QDate::currentDate();
+    QDate birthdayThisYear(today.year(), birthday.month(), birthday.day());
 
-    if (QDate::currentDate().dayOfYear() < date.dayOfYear()) {
+    // Maybe birthday is February 29
+    if (!birthdayThisYear.isValid()) {
+        birthdayThisYear = QDate(today.year(), 3, 1); // Set to March 1
+    }
+
+    int result = QDate::currentDate().year() - birthday.year();
+
+    // if your birthday hasn't passed yet
+    if (today.dayOfYear() < birthdayThisYear.dayOfYear()) {
         result -= 1;
     }
 
