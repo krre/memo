@@ -16,12 +16,22 @@ void HttpServerManager::start(quint16 port, const SafeString& token, const SafeS
     stop();
 
     QFile certFile(certificatePath);
-    certFile.open(QIODevice::ReadOnly);
+
+    if (!certFile.open(QIODevice::ReadOnly)) {
+        qCritical().noquote() << "Failed to open certificate:" << certificatePath;
+        return;
+    }
+
     QSslCertificate certificate(&certFile, QSsl::Pem);
     certFile.close();
 
     QFile keyFile(privateKeyPath);
-    keyFile.open(QIODevice::ReadOnly);
+
+    if (!keyFile.open(QIODevice::ReadOnly)) {
+        qCritical().noquote() << "Failed to open private key:" << privateKeyPath;
+        return;
+    }
+
     QSslKey privateKey(&keyFile, QSsl::Rsa, QSsl::Pem);
     keyFile.close();
 
