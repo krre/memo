@@ -11,6 +11,7 @@ find_package(Qt6 ${REQUIRED_QT_VERSION} REQUIRED COMPONENTS
     Sql
     HttpServer
     LinguistTools
+    CorePrivate
 )
 
 qt_standard_project_setup(
