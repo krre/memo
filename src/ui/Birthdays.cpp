@@ -15,7 +15,7 @@ DateDelegate::DateDelegate(QObject* parent) : QStyledItemDelegate(parent) {
 
 }
 
-QWidget *DateDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
+QWidget* DateDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     auto editor = new QDateEdit(parent);
     editor->setCalendarPopup(true);
     editor->setDisplayFormat("dd.MM.yyyy");
