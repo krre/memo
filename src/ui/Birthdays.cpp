@@ -166,7 +166,7 @@ int Birthdays::age(const QDate& birthday) {
 
     int result = QDate::currentDate().year() - birthday.year();
 
-    // if your birthday hasn't passed yet
+    // If your birthday hasn't passed yet
     if (today.dayOfYear() < birthdayThisYear.dayOfYear()) {
         result -= 1;
     }
