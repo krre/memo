@@ -28,10 +28,6 @@ void Navigation::go(Id id) {
     }
 }
 
-void Navigation::remove(Id id) {
-    m_history.removeAll(id);
-}
-
 void Navigation::back() {
     if (m_position > 0) {
         navigation = true;

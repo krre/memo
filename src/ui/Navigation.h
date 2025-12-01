@@ -8,8 +8,6 @@ class Navigation : public QObject {
 public:
     Navigation(QObject* parent = nullptr);
 
-    void remove(Id id);
-
 signals:
     void navigate(Id id);
 
