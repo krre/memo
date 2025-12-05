@@ -394,97 +394,102 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="131"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="135"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="126"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="130"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="85"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="86"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="127"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="131"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="108"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="109"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="76"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="77"/>
         <source>Select Directory</source>
         <translation>Выберите директорию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="86"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="87"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="87"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="88"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="116"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="117"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="119"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="120"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="122"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="123"/>
         <source>Remind about birthdays</source>
         <translation>Напоминать о днях рождения</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="142"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="126"/>
+        <source>Show symbols count</source>
+        <translation>Показывать количество символов</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="147"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="159"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="164"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="192"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="197"/>
         <source>Certificate:</source>
         <translation>Сертификат:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="193"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="198"/>
         <source>Private key:</source>
         <translation>Закрытый ключ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="161"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="166"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="202"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="207"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="203"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="208"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="209"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="214"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
@@ -494,12 +499,12 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Вы должны перезапустить приложение</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="67"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="68"/>
         <source>Select Font</source>
         <translation>Выбрать шрифт</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="201"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="206"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
     </message>

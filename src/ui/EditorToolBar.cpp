@@ -19,10 +19,14 @@ EditorToolBar::EditorToolBar(Navigation* navigation) {
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     addWidget(spacer);
 
-    m_symbolsLabel = new QLabel;
-    addWidget(m_symbolsLabel);
+    m_symbolsCountLabel = new QLabel;
+    m_symbolsCountAction = addWidget(m_symbolsCountLabel);
 }
 
 void EditorToolBar::setSymbolsCount(int count) {
-    m_symbolsLabel->setText(tr("Symbols: %1").arg(count));
+    m_symbolsCountLabel->setText(tr("Symbols: %1").arg(count));
+}
+
+void EditorToolBar::setSymbolsCountVisible(bool visible) {
+    m_symbolsCountAction->setVisible(visible);
 }

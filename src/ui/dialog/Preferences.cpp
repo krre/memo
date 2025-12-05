@@ -44,6 +44,7 @@ void Preferences::accept() {
 
     m_settings->setEditorFontFamily(m_fontFamilyLineEdit->text());
     m_settings->setEditorFontSize(m_fontSizeLineEdit->text().toInt());
+    m_settings->setEditorShowSymbolsCount(m_showSymbolsCountCheckBox->isChecked());
 
     m_settings->setGlobalHotkeyEnabled(m_hotkeyGroupBox->isChecked());
     m_settings->setGlobalHotkeyValue(m_hotkeyLineEdit->text());
@@ -122,6 +123,9 @@ QGroupBox* Preferences::createUiGroupBox() {
     m_remindBirthdaysCheckBox = new QCheckBox(tr("Remind about birthdays"));
     m_remindBirthdaysCheckBox->setChecked(m_settings->birthdaysRemind());
 
+    m_showSymbolsCountCheckBox = new QCheckBox(tr("Show symbols count"));
+    m_showSymbolsCountCheckBox->setChecked(m_settings->editorShowSymbolsCount());
+
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Language:"), m_languageComboBox);
     formLayout->addRow(tr("Font:"), fontLayout);
@@ -134,6 +138,7 @@ QGroupBox* Preferences::createUiGroupBox() {
     verticalLayout->addWidget(m_minimizeCheckBox);
     verticalLayout->addWidget(m_hideTrayCheckBox);
     verticalLayout->addWidget(m_remindBirthdaysCheckBox);
+    verticalLayout->addWidget(m_showSymbolsCountCheckBox);
 
     return result;
 }

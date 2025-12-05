@@ -126,6 +126,7 @@ void MainWindow::applyHotSettings() {
         m_editor->setFont(font);
     }
 
+    m_editorToolBar->setSymbolsCountVisible(m_fileSettings->editorShowSymbolsCount());
     m_serverManager->stop();
 
     if (!m_fileSettings->serverEnabled()) {
@@ -165,16 +166,16 @@ void MainWindow::applyHotSettings() {
 void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
 
-    auto editorToolBar = new EditorToolBar(m_navigation);
+    m_editorToolBar = new EditorToolBar(m_navigation);
 
     m_editor = new Editor;
     connect(m_editor, &QTextEdit::textChanged, [=, this] {
-        editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
+        m_editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
     });
 
     auto editorLayout = new QVBoxLayout;
     editorLayout->setContentsMargins(QMargins());
-    editorLayout->addWidget(editorToolBar);
+    editorLayout->addWidget(m_editorToolBar);
     editorLayout->addWidget(m_editor);
 
     auto editorWidget = new QWidget;

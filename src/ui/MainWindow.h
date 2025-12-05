@@ -6,6 +6,7 @@ class FileSettings;
 class RecentFilesMenu;
 class NoteTaking;
 class TrayIcon;
+class EditorToolBar;
 class Editor;
 class Navigation;
 class Database;
@@ -74,6 +75,7 @@ private:
     QSplitter* m_splitter = nullptr;
 
     NoteTaking* m_notetaking = nullptr;
+    EditorToolBar* m_editorToolBar = nullptr;
     Editor* m_editor = nullptr;
     Navigation* m_navigation = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;

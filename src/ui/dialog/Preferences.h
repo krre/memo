@@ -35,6 +35,7 @@ private:
     QCheckBox* m_remindBirthdaysCheckBox = nullptr;
     QCheckBox* m_minimizeCheckBox = nullptr;
     QCheckBox* m_hideTrayCheckBox = nullptr;
+    QCheckBox* m_showSymbolsCountCheckBox = nullptr;
 
     QGroupBox* m_hotkeyGroupBox = nullptr;
     QLineEdit* m_hotkeyLineEdit = nullptr;

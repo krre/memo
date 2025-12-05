@@ -39,6 +39,9 @@ public:
     void setEditorFontSize(int fontSize);
     int editorFontSize() const;
 
+    void setEditorShowSymbolsCount(bool show);
+    int editorShowSymbolsCount() const;
+
     void setGlobalHotkeyEnabled(bool enabled);
     bool globalHotkeyEnabled() const;
 

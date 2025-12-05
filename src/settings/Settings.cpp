@@ -25,6 +25,7 @@ namespace Backups {
 namespace Editor {
     constexpr auto FontFamily = "Editor/fontFamily";
     constexpr auto FontSize = "Editor/fontSize";
+    constexpr auto ShowSymbolsCount = "Editor/showSymbolsCount";
 }
 
 namespace GlobalHotkey {
@@ -139,6 +140,14 @@ void Settings::setEditorFontSize(int fontSize) {
 
 int Settings::editorFontSize() const {
     return value(Editor::FontSize).toInt();
+}
+
+void Settings::setEditorShowSymbolsCount(bool show) {
+    setValue(Editor::ShowSymbolsCount, show);
+}
+
+int Settings::editorShowSymbolsCount() const {
+    return value(Editor::ShowSymbolsCount).toBool();
 }
 
 void Settings::setGlobalHotkeyEnabled(bool enabled) {
