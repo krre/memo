@@ -166,7 +166,11 @@ void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
 
     auto editorToolBar = new EditorToolBar(m_navigation);
+
     m_editor = new Editor;
+    connect(m_editor, &QTextEdit::textChanged, [=, this] {
+        editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
+    });
 
     auto editorLayout = new QVBoxLayout;
     editorLayout->setContentsMargins(QMargins());

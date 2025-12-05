@@ -1,5 +1,6 @@
 #include "EditorToolBar.h"
 #include "Navigation.h"
+#include <QLabel>
 
 EditorToolBar::EditorToolBar(Navigation* navigation) {
     auto backAction = addAction(QIcon(":/assets/icons/arrow-left.svg"), QString(), navigation, &Navigation::back);
@@ -13,4 +14,15 @@ EditorToolBar::EditorToolBar(Navigation* navigation) {
     auto clearAction = addAction(QIcon(":/assets/icons/trash.svg"), QString(), navigation, &Navigation::clear);
     clearAction->setEnabled(false);
     connect(navigation, &Navigation::clearAvailable, clearAction, &QAction::setEnabled);
+
+    auto spacer = new QWidget();
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    addWidget(spacer);
+
+    m_symbolsLabel = new QLabel;
+    addWidget(m_symbolsLabel);
+}
+
+void EditorToolBar::setSymbolsCount(int count) {
+    m_symbolsLabel->setText(tr("Symbols: %1").arg(count));
 }
