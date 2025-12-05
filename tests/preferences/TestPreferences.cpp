@@ -13,6 +13,7 @@ constexpr auto FontSize = 10;
 constexpr auto MinimizeOnStartup = true;
 constexpr auto HideTrayIcon = true;
 constexpr auto RemindBirthdays = true;
+constexpr auto ShowSymbolsCount = true;
 constexpr auto HotKeyEnabled = true;
 constexpr auto HotKeyValue = "Ctrl+Alt+M";
 constexpr auto BackupsDirectory = "/home/user/backups";
@@ -39,6 +40,7 @@ void TestPreferences::readPreferences() {
 
     settings.setEditorFontFamily(FontFamily);
     settings.setEditorFontSize(FontSize);
+    settings.setEditorShowSymbolsCount(ShowSymbolsCount);
 
     settings.setGlobalHotkeyEnabled(HotKeyEnabled);
     settings.setGlobalHotkeyValue(HotKeyValue);
@@ -77,6 +79,9 @@ void TestPreferences::readPreferences() {
     auto remindBirthdaysCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto showSymbolsCountCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
@@ -112,6 +117,7 @@ void TestPreferences::readPreferences() {
     QCOMPARE(minimizeCheckBox->isChecked(), MinimizeOnStartup);
     QCOMPARE(hideTrayCheckBox->isChecked(), HideTrayIcon);
     QCOMPARE(remindBirthdaysCheckBox->isChecked(), RemindBirthdays);
+    QCOMPARE(showSymbolsCountCheckBox->isChecked(), ShowSymbolsCount);
     QCOMPARE(hotkeyGroupBox->isChecked(), HotKeyEnabled);
     QCOMPARE(hotkeyLineEdit->text(), HotKeyValue);
     QCOMPARE(backupsLineEdit->text(), BackupsDirectory);
@@ -157,6 +163,10 @@ void TestPreferences::setPreferences() {
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto remindBirthdaysCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
     remindBirthdaysCheckBox->setChecked(RemindBirthdays);
+
+    QTest::keyClick(&preferences, Qt::Key_Tab);
+    auto showSymbolsCountCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+    showSymbolsCountCheckBox->setChecked(ShowSymbolsCount);
 
     QTest::keyClick(&preferences, Qt::Key_Tab);
     auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
@@ -205,6 +215,7 @@ void TestPreferences::setPreferences() {
     QCOMPARE(settings.birthdaysRemind(), RemindBirthdays);
     QCOMPARE(settings.editorFontFamily(), FontFamily);
     QCOMPARE(settings.editorFontSize(), FontSize);
+    QCOMPARE(settings.editorShowSymbolsCount(), ShowSymbolsCount);
     QCOMPARE(settings.globalHotkeyEnabled(), HotKeyEnabled);
     QCOMPARE(settings.globalHotkeyValue(), HotKeyValue);
     QCOMPARE(settings.backupsDirectory(), BackupsDirectory);
