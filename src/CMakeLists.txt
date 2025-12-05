@@ -49,6 +49,7 @@ qt_add_library(common STATIC
     ui/notetaking/NoteTaking.h ui/notetaking/NoteTaking.cpp
     ui/notetaking/TreeItem.h ui/notetaking/TreeItem.cpp
     ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
+    ui/EditorToolBar.h ui/EditorToolBar.cpp
 )
 
 # For visibility in IDE (e.g., Qt Creator)

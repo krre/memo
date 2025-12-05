@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include "RecentFilesMenu.h"
 #include "Editor.h"
+#include "EditorToolBar.h"
 #include "Navigation.h"
 #include "TrayIcon.h"
 #include "Birthdays.h"
@@ -164,20 +165,7 @@ void MainWindow::applyHotSettings() {
 void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
 
-    auto editorToolBar = new QToolBar;
-
-    auto backAction = editorToolBar->addAction(QIcon(":/assets/icons/arrow-left.svg"), QString(), m_navigation, &Navigation::back);
-    backAction->setEnabled(false);
-    connect(m_navigation, &Navigation::backAvailable, backAction, &QAction::setEnabled);
-
-    auto forwardAction = editorToolBar->addAction(QIcon(":/assets/icons/arrow-right.svg"), QString(), m_navigation, &Navigation::forward);
-    forwardAction->setEnabled(false);
-    connect(m_navigation, &Navigation::forwardAvailable, forwardAction, &QAction::setEnabled);
-
-    auto clearAction = editorToolBar->addAction(QIcon(":/assets/icons/trash.svg"), QString(), m_navigation, &Navigation::clear);
-    clearAction->setEnabled(false);
-    connect(m_navigation, &Navigation::clearAvailable, clearAction, &QAction::setEnabled);
-
+    auto editorToolBar = new EditorToolBar(m_navigation);
     m_editor = new Editor;
 
     auto editorLayout = new QVBoxLayout;
