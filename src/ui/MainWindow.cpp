@@ -224,7 +224,7 @@ void MainWindow::createActions() {
     auto cutAction = editMenu->addAction(tr("Cut"), QKeySequence::Cut, m_editor, &Editor::cut);
     auto copyAction = editMenu->addAction(tr("Copy"), QKeySequence::Copy, m_editor, &Editor::copy);
     auto pasteAction = editMenu->addAction(tr("Paste"), QKeySequence::Paste, m_editor, &Editor::paste);
-    auto pasteDateAction = editMenu->addAction(tr("Paste Date"), this, &MainWindow::pasteDate);
+    auto pasteDateAction = editMenu->addAction(tr("Paste Date"), Qt::CTRL | Qt::Key_D, this, &MainWindow::pasteDate);
 
     editMenu->addSeparator();
 
