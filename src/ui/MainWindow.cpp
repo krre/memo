@@ -165,12 +165,16 @@ void MainWindow::applyHotSettings() {
 
 void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
-
-    m_editorToolBar = new EditorToolBar(m_navigation);
-
     m_editor = new Editor;
+    m_editorToolBar = new EditorToolBar(m_navigation, m_editor);
+
     connect(m_editor, &QTextEdit::textChanged, [=, this] {
         m_editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
+    });
+
+    connect(m_editorToolBar, &EditorToolBar::saveClicked, [this] {
+        saveNote(m_editor->id());
+        m_editor->document()->setModified(false);
     });
 
     auto editorLayout = new QVBoxLayout;
@@ -343,6 +347,15 @@ void MainWindow::closeNote() {
     emit noteEditChanged(false);
 }
 
+void MainWindow::saveNote(Id id) {
+    if (m_editor->document()->isModified()) {
+        m_database->updateNoteValue(id, "note", m_editor->note());
+    }
+
+    m_database->updateNoteValue(id, "line", m_editor->textCursor().blockNumber());
+    m_database->updateNoteValue(id, "markdown", m_editor->mode() == Editor::Mode::Markdown ? 1 : 0);
+}
+
 void MainWindow::showErrorDialog(const QString& message) {
     QMessageBox::critical(this, Application::Name, message, QMessageBox::Ok);
 }
@@ -493,12 +506,7 @@ void MainWindow::onEditorFocusLost() {
     if (!lastId.isValid()) return;
     if (!m_database->isOpen()) return;
 
-    if (m_editor->document()->isModified()) {
-        m_database->updateNoteValue(lastId, "note", m_editor->note());
-    }
-
-    m_database->updateNoteValue(lastId, "line", m_editor->textCursor().blockNumber());
-    m_database->updateNoteValue(lastId, "markdown", m_editor->mode() == Editor::Mode::Markdown ? 1 : 0);
+    saveNote(lastId);
 }
 
 void MainWindow::onGlobalActivated() {

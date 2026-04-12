@@ -4,5 +4,6 @@
         <file>assets/icons/arrow-left.svg</file>
         <file>assets/icons/arrow-right.svg</file>
         <file>assets/icons/trash.svg</file>
+        <file>assets/icons/device-floppy.svg</file>
     </qresource>
 </RCC>

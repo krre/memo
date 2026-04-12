@@ -53,6 +53,7 @@ private slots:
 
     void openNote(Id id);
     void closeNote();
+    void saveNote(Id id);
 
 private:
     void readSettings();
