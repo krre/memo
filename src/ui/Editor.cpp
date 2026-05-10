@@ -48,6 +48,11 @@ QString Editor::note() const {
 
 void Editor::clearNote() {
     clear();
+
+    // Hack to emit signal QTextDocument::modificationChanged()
+    document()->setModified(true);
+    document()->setModified(false);
+
     setEnabled(false);
 }
 
