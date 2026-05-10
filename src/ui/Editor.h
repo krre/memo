@@ -33,6 +33,8 @@ protected:
     void insertFromMimeData(const QMimeData* source) override;
 
 private:
+    void disableModified();
+
     Id m_id = 0;
     Mode m_mode = Mode::Plain;
 };

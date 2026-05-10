@@ -38,6 +38,7 @@ void Editor::setNote(Id id, const QString& note) {
         setMarkdown(note);
     }
 
+    disableModified();
     setFocus();
     setEnabled(true);
 }
@@ -48,11 +49,7 @@ QString Editor::note() const {
 
 void Editor::clearNote() {
     clear();
-
-    // Hack to emit signal QTextDocument::modificationChanged()
-    document()->setModified(true);
-    document()->setModified(false);
-
+    disableModified();
     setEnabled(false);
 }
 
@@ -89,4 +86,10 @@ void Editor::insertFromMimeData(const QMimeData* source) {
     if (source->hasText()) {
         insertPlainText(source->text());
     }
+}
+
+void Editor::disableModified() {
+    // Hack to emit signal QTextDocument::modificationChanged()
+    document()->setModified(true);
+    document()->setModified(false);
 }
