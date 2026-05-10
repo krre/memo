@@ -33,6 +33,7 @@ protected:
 private slots:
     void create();
     void open();
+    void save();
     void exportAll();
     void backup();
     void close();

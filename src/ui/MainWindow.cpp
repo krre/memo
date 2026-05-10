@@ -172,10 +172,7 @@ void MainWindow::setupSplitter() {
         m_editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
     });
 
-    connect(m_editorToolBar, &EditorToolBar::saveClicked, [this] {
-        saveNote(m_editor->id());
-        m_editor->document()->setModified(false);
-    });
+    connect(m_editorToolBar, &EditorToolBar::saveClicked, this, &MainWindow::save);
 
     auto editorLayout = new QVBoxLayout;
     editorLayout->setContentsMargins(QMargins());
@@ -202,14 +199,18 @@ void MainWindow::createActions() {
     connect(m_recentFilesMenu, &RecentFilesMenu::activated, this, &MainWindow::load);
     fileMenu->addAction(m_recentFilesMenu->menuAction());
 
+    auto saveAction = fileMenu->addAction(tr("Save"), Qt::CTRL | Qt::Key_S, this, &MainWindow::save);
+
     auto exportAction = fileMenu->addAction(tr("Export All..."), Qt::CTRL | Qt::Key_E, this, &MainWindow::exportAll);
     auto createBackupAction = fileMenu->addAction(tr("Create Backup..."), this, &MainWindow::backup);
     auto closeAction = fileMenu->addAction(tr("Close"), Qt::CTRL | Qt::Key_W, this, &MainWindow::close);
 
+    saveAction->setEnabled(false);
     exportAction->setEnabled(false);
     createBackupAction->setEnabled(false);
     closeAction->setEnabled(false);
 
+    connect(m_editor->document(), &QTextDocument::modificationChanged, saveAction, &QAction::setEnabled);
     connect(this, &MainWindow::noteOpenChanged, exportAction, &QAction::setEnabled);
     connect(this, &MainWindow::noteOpenChanged, createBackupAction, &QAction::setEnabled);
     connect(this, &MainWindow::noteOpenChanged, closeAction, &QAction::setEnabled);
@@ -400,6 +401,11 @@ void MainWindow::open() {
         close();
         load(fileName);
     }
+}
+
+void MainWindow::save() {
+    saveNote(m_editor->id());
+    m_editor->document()->setModified(false);
 }
 
 void MainWindow::exportAll() {
