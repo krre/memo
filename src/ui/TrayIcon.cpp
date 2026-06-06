@@ -19,5 +19,6 @@ TrayIcon::TrayIcon(MainWindow* mainWindow)
 void TrayIcon::onActivated(ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
         m_mainWindow->setVisible(!m_mainWindow->isVisible());
+        m_mainWindow->activateWindow();
     }
 }
