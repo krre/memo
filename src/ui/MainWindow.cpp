@@ -69,21 +69,15 @@ void MainWindow::quit() {
 void MainWindow::readSettings() {
     applyHotSettings();
 
-    QByteArray geometry = m_fileSettings->mainWindowGeometry();
-
-    if (!geometry.isEmpty()) {
-        restoreGeometry(geometry);
-    } else {
-        QSize screenSize = screen()->size();
+    if (!restoreGeometry(m_fileSettings->mainWindowGeometry())) {
+        const QSize screenSize = screen()->size();
         constexpr auto scale = 0.75;
         resize(screenSize.width() * scale, screenSize.height() * scale);
         move((screenSize.width() - width()) / 2, (screenSize.height() - height()) / 2);
     }
 
     restoreState(m_fileSettings->mainWindowState());
-
     m_splitter->restoreState(m_fileSettings->mainWindowSplitter());
-
     load(m_fileSettings->applicationFilePath());
 
     if (!m_fileSettings->applicationMinimizeOnStartup()) {
