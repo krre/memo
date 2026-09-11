@@ -36,7 +36,7 @@ void HttpServerManager::start(quint16 port, const SafeString& token, const SafeS
     keyFile.close();
 
     m_httpServer = new QHttpServer(this);
-    m_tcpServer = new QSslServer;
+    m_tcpServer = new QSslServer(this);
 
     QSslConfiguration sslConfiguration;
     sslConfiguration.setLocalCertificate(certificate);
