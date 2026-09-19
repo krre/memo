@@ -1,7 +1,6 @@
 #pragma once
 #include "src/config.h"
 #include <QApplication>
-#include <QString>
 
 class Application : public QApplication {
 public:
