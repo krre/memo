@@ -6,6 +6,9 @@ public:
     Exception() = default;
     virtual QString error() const = 0;
     const char* what() const noexcept override;
+
+private:
+    mutable std::string m_errorString;
 };
 
 class RuntimeError : public Exception {

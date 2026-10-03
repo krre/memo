@@ -1,7 +1,8 @@
 #include "Exception.h"
 
 const char* Exception::what() const noexcept {
-    return error().toStdString().c_str();
+    m_errorString = error().toStdString();
+    return m_errorString.c_str();
 }
 
 RuntimeError::RuntimeError(const QString& error) : m_error(error) {
