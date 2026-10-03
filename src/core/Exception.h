@@ -1,7 +1,7 @@
 #pragma once
 #include <QString>
 
-class Exception : std::exception {
+class Exception : public std::exception {
 public:
     Exception() = default;
     virtual QString error() const = 0;
