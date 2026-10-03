@@ -12,7 +12,6 @@ private:
 };
 
 class RuntimeError : public Exception {
-
 public:
     RuntimeError(const QString& error);
     QString error() const override;
