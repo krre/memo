@@ -1,4 +1,5 @@
 #include "TestSettings.h"
+#include "TestHelper.h"
 #include <ui/dialog/Preferences.h>
 #include <settings/Settings.h>
 #include <QTest>
@@ -8,18 +9,22 @@
 #include <QGroupBox>
 
 constexpr auto Language = "ru";
-constexpr auto FontFamily = "Ubuntu";
-constexpr auto FontSize = 10;
 constexpr auto MinimizeOnStartup = true;
 constexpr auto HideTrayIcon = true;
-constexpr auto RemindBirthdays = true;
+
+constexpr auto FontFamily = "Ubuntu";
+constexpr auto FontSize = 10;
 constexpr auto ShowSymbolsCount = true;
+
 constexpr auto HotKeyEnabled = true;
 constexpr auto HotKeyValue = "Ctrl+Alt+M";
+
+constexpr auto RemindBirthdays = true;
 constexpr auto BackupsDirectory = "/home/user/backups";
+
 constexpr auto ServerEnabled = true;
-constexpr auto Token = "123456";
 constexpr auto Port = 80;
+constexpr auto Token = "123456";
 constexpr auto SslEnabled = true;
 constexpr auto Certificate = "certificate";
 constexpr auto PrivateKey = "privateKey";
@@ -49,84 +54,35 @@ void TestPreferences::readPreferences() {
     settings.setBackupsDirectory(BackupsDirectory);
 
     settings.setServerEnabled(ServerEnabled);
-    settings.setServerToken(Token);
     settings.setServerPort(Port);
+    settings.setServerToken(Token);
     settings.setServerSslEnabled(SslEnabled);
     settings.setServerCertificate(Certificate);
     settings.setServerPrivateKey(PrivateKey);
 
     Preferences preferences(&settings);
+    using Names = Preferences::Names;
 
-    QTest::keyClick(&preferences, Qt::Key_Tab); // OK button
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto languageComboBox = static_cast<QComboBox*>(preferences.focusWidget());
+    QCOMPARE(child<QComboBox>(&preferences, Names::LanguageComboBox)->currentData(), Language);
+    QCOMPARE(child<QCheckBox>(&preferences, Names::MinimizeCheckBox)->isChecked(), MinimizeOnStartup);
+    QCOMPARE(child<QCheckBox>(&preferences, Names::HideTrayCheckBox)->isChecked(), HideTrayIcon);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto fontFamilyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    QCOMPARE(child<QLineEdit>(&preferences, Names::FontFamilyLineEdit)->text(), FontFamily);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::FontSizeLineEdit)->text().toInt(), FontSize);
+    QCOMPARE(child<QCheckBox>(&preferences, Names::ShowSymbolsCountCheckBox)->isChecked(), ShowSymbolsCount);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto fontSizeLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
+    QCOMPARE(child<QGroupBox>(&preferences, Names::HotkeyGroupBox)->isChecked(), HotKeyEnabled);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::HotkeyLineEdit)->text(), HotKeyValue);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Open button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto minimizeCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
+    QCOMPARE(child<QCheckBox>(&preferences, Names::RemindBirthdaysCheckBox)->isChecked(), RemindBirthdays);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::BackupsLineEdit)->text(), BackupsDirectory);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto hideTrayCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto remindBirthdaysCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto showSymbolsCountCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto hotkeyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto backupsLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto serverGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab); // IP Address text
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto portLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto tokenLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto sslGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto certificateLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto privateKeyEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-
-    QCOMPARE(languageComboBox->currentData(), Language);
-    QCOMPARE(fontFamilyLineEdit->text(), FontFamily);
-    QCOMPARE(fontSizeLineEdit->text().toInt(), FontSize);
-    QCOMPARE(minimizeCheckBox->isChecked(), MinimizeOnStartup);
-    QCOMPARE(hideTrayCheckBox->isChecked(), HideTrayIcon);
-    QCOMPARE(remindBirthdaysCheckBox->isChecked(), RemindBirthdays);
-    QCOMPARE(showSymbolsCountCheckBox->isChecked(), ShowSymbolsCount);
-    QCOMPARE(hotkeyGroupBox->isChecked(), HotKeyEnabled);
-    QCOMPARE(hotkeyLineEdit->text(), HotKeyValue);
-    QCOMPARE(backupsLineEdit->text(), BackupsDirectory);
-    QCOMPARE(serverGroupBox->isChecked(), ServerEnabled);
-    QCOMPARE(portLineEdit->text().toInt(), Port);
-    QCOMPARE(tokenLineEdit->text(), Token);
-    QCOMPARE(sslGroupBox->isChecked(), SslEnabled);
-    QCOMPARE(certificateLineEdit->text(), Certificate);
-    QCOMPARE(privateKeyEdit->text(), PrivateKey);
+    QCOMPARE(child<QGroupBox>(&preferences, Names::ServerGroupBox)->isChecked(), ServerEnabled);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::PortLineEdit)->text().toInt(), Port);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::TokenLineEdit)->text(), Token);
+    QCOMPARE(child<QGroupBox>(&preferences, Names::SslGroupBox)->isChecked(), SslEnabled);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::CertificateLineEdit)->text(), Certificate);
+    QCOMPARE(child<QLineEdit>(&preferences, Names::PrivateKeyEdit)->text(), PrivateKey);
 }
 
 void TestPreferences::setPreferences() {
@@ -136,89 +92,46 @@ void TestPreferences::setPreferences() {
     settings.setApplicationLanguage(Language);
 
     Preferences preferences(&settings);
+    using Names = Preferences::Names;
 
-    QTest::keyClick(&preferences, Qt::Key_Tab); // OK button
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Cancel button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto languageComboBox = static_cast<QComboBox*>(preferences.focusWidget());
+    auto languageComboBox = child<QComboBox>(&preferences, Names::LanguageComboBox);
     languageComboBox->setCurrentIndex(languageComboBox->findData(Language));
+    child<QCheckBox>(&preferences, Names::MinimizeCheckBox)->setChecked(MinimizeOnStartup);
+    child<QCheckBox>(&preferences, Names::HideTrayCheckBox)->setChecked(HideTrayIcon);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto fontFamilyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    fontFamilyLineEdit->setText(FontFamily);
+    child<QLineEdit>(&preferences, Names::FontFamilyLineEdit)->setText(FontFamily);
+    child<QLineEdit>(&preferences, Names::FontSizeLineEdit)->setText(QString::number(FontSize));
+    child<QCheckBox>(&preferences, Names::ShowSymbolsCountCheckBox)->setChecked(ShowSymbolsCount);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto fontSizeLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    fontSizeLineEdit->setText(QString::number(FontSize));
+    child<QGroupBox>(&preferences, Names::HotkeyGroupBox)->setChecked(HotKeyEnabled);
+    child<QLineEdit>(&preferences, Names::HotkeyLineEdit)->setText(HotKeyValue);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Open button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto minimizeCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-    minimizeCheckBox->setChecked(MinimizeOnStartup);
+    child<QCheckBox>(&preferences, Names::RemindBirthdaysCheckBox)->setChecked(RemindBirthdays);
+    child<QLineEdit>(&preferences, Names::BackupsLineEdit)->setText(BackupsDirectory);
 
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto hideTrayCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-    hideTrayCheckBox->setChecked(HideTrayIcon);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto remindBirthdaysCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-    remindBirthdaysCheckBox->setChecked(RemindBirthdays);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto showSymbolsCountCheckBox = static_cast<QCheckBox*>(preferences.focusWidget());
-    showSymbolsCountCheckBox->setChecked(ShowSymbolsCount);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto hotkeyGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
-    hotkeyGroupBox->setChecked(HotKeyEnabled);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto hotkeyLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    hotkeyLineEdit->setText(HotKeyValue);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto backupsLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    backupsLineEdit->setText(BackupsDirectory);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto serverGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
-    serverGroupBox->setChecked(ServerEnabled);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab); // IP Address text
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto portLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    portLineEdit->setText(QString::number(Port));
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto tokenLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    tokenLineEdit->setText(Token);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto sslGroupBox = static_cast<QGroupBox*>(preferences.focusWidget());
-    sslGroupBox->setChecked(SslEnabled);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto certificateLineEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    certificateLineEdit->setText(Certificate);
-
-    QTest::keyClick(&preferences, Qt::Key_Tab); // Browse... button
-    QTest::keyClick(&preferences, Qt::Key_Tab);
-    auto privateKeyEdit = static_cast<QLineEdit*>(preferences.focusWidget());
-    privateKeyEdit->setText(PrivateKey);
+    child<QGroupBox>(&preferences, Names::ServerGroupBox)->setChecked(ServerEnabled);
+    child<QLineEdit>(&preferences, Names::PortLineEdit)->setText(QString::number(Port));
+    child<QLineEdit>(&preferences, Names::TokenLineEdit)->setText(Token);
+    child<QGroupBox>(&preferences, Names::SslGroupBox)->setChecked(SslEnabled);
+    child<QLineEdit>(&preferences, Names::CertificateLineEdit)->setText(Certificate);
+    child<QLineEdit>(&preferences, Names::PrivateKeyEdit)->setText(PrivateKey);
 
     preferences.accept();
 
     QCOMPARE(settings.applicationLanguage(), Language);
     QCOMPARE(settings.applicationMinimizeOnStartup(), MinimizeOnStartup);
     QCOMPARE(settings.applicationHideTrayIcon(), HideTrayIcon);
-    QCOMPARE(settings.birthdaysRemind(), RemindBirthdays);
+
     QCOMPARE(settings.editorFontFamily(), FontFamily);
     QCOMPARE(settings.editorFontSize(), FontSize);
     QCOMPARE(settings.editorShowSymbolsCount(), ShowSymbolsCount);
+
     QCOMPARE(settings.globalHotkeyEnabled(), HotKeyEnabled);
     QCOMPARE(settings.globalHotkeyValue(), HotKeyValue);
+
+    QCOMPARE(settings.birthdaysRemind(), RemindBirthdays);
     QCOMPARE(settings.backupsDirectory(), BackupsDirectory);
+
     QCOMPARE(settings.serverEnabled(), ServerEnabled);
     QCOMPARE(settings.serverPort(), Port);
     QCOMPARE(settings.serverToken(), Token);

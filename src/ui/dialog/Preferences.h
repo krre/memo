@@ -47,4 +47,24 @@ private:
     QGroupBox* m_sslGroupBox = nullptr;
     BrowseLayout* m_certificateBrowseLayout = nullptr;
     BrowseLayout* m_privateKeyBrowseLayout = nullptr;
+
+public:
+    struct Names {
+        static constexpr auto LanguageComboBox = "languageComboBox";
+        static constexpr auto FontFamilyLineEdit = "fontFamilyLineEdit";
+        static constexpr auto FontSizeLineEdit = "fontSizeLineEdit";
+        static constexpr auto MinimizeCheckBox = "minimizeCheckBox";
+        static constexpr auto HideTrayCheckBox = "hideTrayCheckBox";
+        static constexpr auto RemindBirthdaysCheckBox = "remindBirthdaysCheckBox";
+        static constexpr auto ShowSymbolsCountCheckBox = "showSymbolsCountCheckBox";
+        static constexpr auto HotkeyGroupBox = "hotkeyGroupBox";
+        static constexpr auto HotkeyLineEdit = "hotkeyLineEdit";
+        static constexpr auto BackupsLineEdit = "backupsLineEdit";
+        static constexpr auto ServerGroupBox = "serverGroupBox";
+        static constexpr auto PortLineEdit = "portLineEdit";
+        static constexpr auto TokenLineEdit = "tokenLineEdit";
+        static constexpr auto SslGroupBox = "sslGroupBox";
+        static constexpr auto CertificateLineEdit = "certificateLineEdit";
+        static constexpr auto PrivateKeyEdit = "privateKeyEdit";
+    };
 };

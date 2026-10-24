@@ -75,6 +75,7 @@ void Preferences::onFontButtonClicked() {
 
 QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox = new QComboBox;
+    m_languageComboBox->setObjectName(Names::LanguageComboBox);
     m_languageComboBox->addItem(tr("<System>"));
     m_languageComboBox->addItem(tr("English"), "en");
     m_languageComboBox->addItem(tr("Russian"), "ru");
@@ -90,10 +91,12 @@ QGroupBox* Preferences::createUiGroupBox() {
     }
 
     m_fontFamilyLineEdit = new QLineEdit;
+    m_fontFamilyLineEdit->setObjectName(Names::FontFamilyLineEdit);
     m_fontFamilyLineEdit->setReadOnly(true);
     m_fontFamilyLineEdit->setText(m_settings->editorFontFamily());
 
     m_fontSizeLineEdit = new QLineEdit;
+    m_fontSizeLineEdit->setObjectName(Names::FontSizeLineEdit);
     m_fontSizeLineEdit->setMaximumWidth(50);
     m_fontSizeLineEdit->setReadOnly(true);
     m_fontSizeLineEdit->setText(QString::number(m_settings->editorFontSize()));
@@ -107,15 +110,19 @@ QGroupBox* Preferences::createUiGroupBox() {
     fontLayout->addWidget(fontButton);
 
     m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
+    m_minimizeCheckBox->setObjectName(Names::MinimizeCheckBox);
     m_minimizeCheckBox->setChecked(m_settings->applicationMinimizeOnStartup());
 
     m_hideTrayCheckBox = new QCheckBox(tr("Hide tray icon"));
+    m_hideTrayCheckBox->setObjectName(Names::HideTrayCheckBox);
     m_hideTrayCheckBox->setChecked(m_settings->applicationHideTrayIcon());
 
     m_remindBirthdaysCheckBox = new QCheckBox(tr("Remind about birthdays"));
+    m_remindBirthdaysCheckBox->setObjectName(Names::RemindBirthdaysCheckBox);
     m_remindBirthdaysCheckBox->setChecked(m_settings->birthdaysRemind());
 
     m_showSymbolsCountCheckBox = new QCheckBox(tr("Show symbols count"));
+    m_showSymbolsCountCheckBox->setObjectName(Names::ShowSymbolsCountCheckBox);
     m_showSymbolsCountCheckBox->setChecked(m_settings->editorShowSymbolsCount());
 
     auto formLayout = new QFormLayout;
@@ -137,10 +144,12 @@ QGroupBox* Preferences::createUiGroupBox() {
 
 QGroupBox* Preferences::createHotkeyGroupBox() {
     m_hotkeyGroupBox = new QGroupBox(tr("Global Hotkey"));
+    m_hotkeyGroupBox->setObjectName(Names::HotkeyGroupBox);
     m_hotkeyGroupBox->setCheckable(true);
     m_hotkeyGroupBox->setChecked(m_settings->globalHotkeyEnabled());
 
     m_hotkeyLineEdit = new QLineEdit;
+    m_hotkeyLineEdit->setObjectName(Names::HotkeyLineEdit);
     m_hotkeyLineEdit->setText(m_settings->globalHotkeyValue());
 
     auto hotkeyLayout = new QVBoxLayout(m_hotkeyGroupBox);
@@ -151,6 +160,7 @@ QGroupBox* Preferences::createHotkeyGroupBox() {
 
 QGroupBox* Preferences::createBackupsGroupBox() {
     m_backupsBrowseLayout = new BrowseLayout(BrowseLayout::Mode::Directory, m_settings->backupsDirectory());
+    m_backupsBrowseLayout->setLineEditObjectName(Names::BackupsLineEdit);
 
     auto formLayout = new QFormLayout;
     formLayout->addRow(tr("Directory:"), m_backupsBrowseLayout);
@@ -177,19 +187,25 @@ QGroupBox* Preferences::createServerGroupBox() {
     addressLineEdit->setReadOnly(true);
 
     m_portLineEdit = new QLineEdit;
+    m_portLineEdit->setObjectName(Names::PortLineEdit);
     m_portLineEdit->setText(QString::number(m_settings->serverPort()));
 
     m_tokenLineEdit = new QLineEdit;
+    m_tokenLineEdit->setObjectName(Names::TokenLineEdit);
     m_tokenLineEdit->setText(m_settings->serverToken());
 
     m_certificateBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, m_settings->serverCertificate());
+    m_certificateBrowseLayout->setLineEditObjectName(Names::CertificateLineEdit);
+
     m_privateKeyBrowseLayout = new BrowseLayout(BrowseLayout::Mode::File, m_settings->serverPrivateKey());
+    m_privateKeyBrowseLayout->setLineEditObjectName(Names::PrivateKeyEdit);
 
     auto sslFormLayout = new QFormLayout;
     sslFormLayout->addRow(tr("Certificate:"), m_certificateBrowseLayout);
     sslFormLayout->addRow(tr("Private key:"), m_privateKeyBrowseLayout);
 
     m_sslGroupBox = new QGroupBox("SSL");
+    m_sslGroupBox->setObjectName(Names::SslGroupBox);
     m_sslGroupBox->setCheckable(true);
     m_sslGroupBox->setChecked(m_settings->serverSslEnabled());
     m_sslGroupBox->setLayout(sslFormLayout);
@@ -204,6 +220,7 @@ QGroupBox* Preferences::createServerGroupBox() {
     verticalLayout->addWidget(m_sslGroupBox);
 
     m_serverGroupBox = new QGroupBox(tr("Server"));
+    m_serverGroupBox->setObjectName(Names::ServerGroupBox);
     m_serverGroupBox->setCheckable(true);
     m_serverGroupBox->setChecked(m_settings->serverEnabled());
     m_serverGroupBox->setLayout(verticalLayout);
