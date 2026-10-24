@@ -33,7 +33,7 @@ void Preferences::accept() {
     QString language = m_languageComboBox->currentData().toString();
 
     if (m_settings->applicationLanguage() != language) {
-        m_settings->setApplicationLanguage(m_languageComboBox->currentData().toString());
+        m_settings->setApplicationLanguage(language);
         QMessageBox::information(this, Application::Name, tr("You must restart application"));
     }
 
