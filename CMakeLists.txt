@@ -23,6 +23,8 @@ qt_standard_project_setup(
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
+enable_testing()
+
 add_subdirectory(app)
 add_subdirectory(src)
 add_subdirectory(tests)

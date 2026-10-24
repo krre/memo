@@ -5,3 +5,5 @@ target_link_libraries(test_preferences PRIVATE
     common
     test_common
 )
+
+add_test(NAME TestPreferences COMMAND test_preferences)
