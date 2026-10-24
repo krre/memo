@@ -21,6 +21,10 @@ void BrowseLayout::setText(const QString& text) {
     m_lineEdit->setText(text);
 }
 
+void BrowseLayout::setLineEditObjectName(const QString &name) {
+    m_lineEdit->setObjectName(name);
+}
+
 void BrowseLayout::onClicked() {
     QString path;
     QString dir = QDir(m_lineEdit->text()).absolutePath();

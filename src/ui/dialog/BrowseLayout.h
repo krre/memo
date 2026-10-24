@@ -16,6 +16,8 @@ public:
     QString text() const;
     void setText(const QString& text);
 
+    void setLineEditObjectName(const QString& name);
+
 private slots:
     void onClicked();
 
