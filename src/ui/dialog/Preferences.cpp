@@ -73,14 +73,6 @@ void Preferences::onFontButtonClicked() {
     }
 }
 
-void Preferences::onBackupsBrowseButtonClicked() {
-    QString dirPath = QFileDialog::getExistingDirectory(nullptr, tr("Select Directory"), m_backupsBrowseLayout->text());
-
-    if (!dirPath.isEmpty()) {
-        m_backupsBrowseLayout->setText(dirPath);
-    }
-}
-
 QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox = new QComboBox;
     m_languageComboBox->addItem(tr("<System>"));

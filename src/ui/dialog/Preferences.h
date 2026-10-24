@@ -19,7 +19,6 @@ public slots:
 
 private slots:
     void onFontButtonClicked();
-    void onBackupsBrowseButtonClicked();
 
 private:
     QGroupBox* createUiGroupBox();
