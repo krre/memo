@@ -1,5 +1,6 @@
 add_library(test_common STATIC
     TestSettings.h TestSettings.cpp
+    TestHelper.h
 )
 
 target_link_libraries(test_common PRIVATE common)
