@@ -20,7 +20,7 @@ void Migrater::run() const {
 
     // Backward compatibility
     if (dbVersion == 4) {
-        m_db->updateMetaValue("version", latestVersion);
+        setVersion(latestVersion);
         return;
     }
 
@@ -29,8 +29,12 @@ void Migrater::run() const {
 
         qInfo() << "Run database migration:" << migration.version;
         migration.fn();
-        m_db->updateMetaValue("version", migration.version);
+        setVersion(migration.version);
     }
+}
+
+void Migrater::setVersion(int version) const {
+    m_db->updateMetaValue("version", version);
 }
 
 void Migrater::migration20190216() const {
