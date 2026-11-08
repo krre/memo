@@ -5,10 +5,10 @@
 constexpr auto CurrentVersion = 4;
 
 Migrater::Migrater(Database* db) : m_db(db) {
-    migrations[1] = [this] { migration1(); };
-    migrations[2] = [this] { migration2(); };
-    migrations[3] = [this] { migration3(); };
-    migrations[4] = [this] { migration4(); };
+    m_migrations[1] = [this] { migration1(); };
+    m_migrations[2] = [this] { migration2(); };
+    m_migrations[3] = [this] { migration3(); };
+    m_migrations[4] = [this] { migration4(); };
 }
 
 void Migrater::run() const {
@@ -17,7 +17,7 @@ void Migrater::run() const {
     if (version == CurrentVersion) return;
 
     for (int i = version + 1; i <= CurrentVersion; ++i) {
-        migrations[i]();
+        m_migrations[i]();
         qInfo() << "Run database migration:" << i;
     }
 

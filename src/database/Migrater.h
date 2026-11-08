@@ -15,5 +15,5 @@ private:
     void migration4() const; // 24.10.2024
 
     Database* m_db = nullptr;
-    QHash<int, std::function<void()>> migrations;
+    QHash<int, std::function<void()>> m_migrations;
 };
