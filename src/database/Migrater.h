@@ -1,5 +1,5 @@
 #pragma once
-#include <QHash>
+#include <QVector>
 
 class Database;
 
@@ -9,11 +9,16 @@ public:
     void run() const;
 
 private:
-    void migration1() const; // 16.02.2019
-    void migration2() const; // 14.12.2019
-    void migration3() const; // 09.12.2023
-    void migration4() const; // 24.10.2024
+    struct Migration {
+        int version;
+        std::function<void()> fn;
+    };
+
+    void migration20190216() const;
+    void migration20191214() const;
+    void migration20231209() const;
+    void migration20241024() const;
 
     Database* m_db = nullptr;
-    QHash<int, std::function<void()>> m_migrations;
+    QVector<Migration> m_migrations;
 };
