@@ -8,7 +8,6 @@
 #include "Birthdays.h"
 #include "core/Application.h"
 #include "core/Exception.h"
-#include "core/SafeString.h"
 #include "core/Exporter.h"
 #include "settings/FileSettings.h"
 #include "dialog/Preferences.h"
