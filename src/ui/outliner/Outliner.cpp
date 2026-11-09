@@ -286,7 +286,9 @@ void Outliner::mousePressEvent(QMouseEvent* event) {
     }
 }
 
-void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous [[maybe_unused]]) {
+void Outliner::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
+    Q_UNUSED(previous)
+
     if (!m_isInited) return;
 
     try {

@@ -35,7 +35,8 @@ int TreeModel::rowCount(const QModelIndex& parent) const {
     return item(parent)->childCount();
 }
 
-int TreeModel::columnCount(const QModelIndex& parent [[maybe_unused]]) const {
+int TreeModel::columnCount(const QModelIndex& parent) const {
+    Q_UNUSED(parent)
     return 1;
 }
 
@@ -92,7 +93,11 @@ QMimeData* TreeModel::mimeData(const QModelIndexList& indexes) const {
     return result;
 }
 
-bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row [[maybe_unused]], int column [[maybe_unused]], const QModelIndex& parent [[maybe_unused]]) const {
+bool TreeModel::canDropMimeData(const QMimeData* mimeData, Qt::DropAction action, int row, int column, const QModelIndex& parent) const {
+    Q_UNUSED(row)
+    Q_UNUSED(column)
+    Q_UNUSED(parent)
+
     if (action != Qt::MoveAction) return false;
     if (!mimeData->hasFormat(TreeItemMimeType)) return false;
 

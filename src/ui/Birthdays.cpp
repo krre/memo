@@ -112,7 +112,9 @@ void Birthdays::writeSettings() {
     m_settings->setBirthdaysGeometry(saveGeometry());
 }
 
-void Birthdays::onCellChanged(int row, int column [[maybe_unused]]) {
+void Birthdays::onCellChanged(int row, int column) {
+    Q_UNUSED(column)
+
     Birthday birthday;
     birthday.id = m_table->item(row, int(Column::Id))->text().toInt();
     birthday.date = QDate::fromString(m_table->item(row, int(Column::Date))->text(), BirthdayDateFormat);
