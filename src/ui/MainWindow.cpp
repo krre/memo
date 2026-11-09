@@ -117,40 +117,7 @@ void MainWindow::applyHotSettings() {
     }
 
     m_editorToolBar->setSymbolsCountVisible(m_fileSettings->editorShowSymbolsCount());
-    m_serverManager->stop();
-
-    if (!m_fileSettings->serverEnabled()) {
-        return;
-    }
-
-    QString token = m_fileSettings->serverToken();
-
-    if (token.isEmpty()) {
-        qCritical().noquote() << "Server token is empty";
-        return;
-    }
-
-    int port = m_fileSettings->serverPort();
-
-    if (m_fileSettings->serverSslEnabled()) {
-        QString certificate = m_fileSettings->serverCertificate();
-
-        if (certificate.isEmpty()) {
-            qCritical().noquote() << "Server SSL certificate path is empty";
-            return;
-        }
-
-        QString privateKey = m_fileSettings->serverPrivateKey();
-
-        if (privateKey.isEmpty()) {
-            qCritical().noquote() << "Server SSL private key is empty";
-            return;
-        }
-
-        m_serverManager->start(port, SafeString(token), SafeString(certificate), SafeString(privateKey));
-    } else {
-        m_serverManager->start(port, SafeString(token));
-    }
+    m_serverManager->applySettings(m_fileSettings);
 }
 
 void MainWindow::setupSplitter() {

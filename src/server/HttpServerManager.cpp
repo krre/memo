@@ -1,6 +1,7 @@
 #include "HttpServerManager.h"
 #include "database/Database.h"
 #include "core/SafeString.h"
+#include "settings/Settings.h"
 #include "handler/NameHandler.h"
 #include "handler/NotesHandler.h"
 #include <QHttpServer>
@@ -66,6 +67,43 @@ void HttpServerManager::stop() {
     m_httpServer = nullptr;
 
     qInfo().noquote() << "Server stopped";
+}
+
+void HttpServerManager::applySettings(Settings* settings) {
+    stop();
+
+    if (!settings->serverEnabled()) {
+        return;
+    }
+
+    QString token = settings->serverToken();
+
+    if (token.isEmpty()) {
+        qCritical().noquote() << "Server token is empty";
+        return;
+    }
+
+    int port = settings->serverPort();
+
+    if (settings->serverSslEnabled()) {
+        QString certificate = settings->serverCertificate();
+
+        if (certificate.isEmpty()) {
+            qCritical().noquote() << "Server SSL certificate path is empty";
+            return;
+        }
+
+        QString privateKey = settings->serverPrivateKey();
+
+        if (privateKey.isEmpty()) {
+            qCritical().noquote() << "Server SSL private key is empty";
+            return;
+        }
+
+        start(port, SafeString(token), SafeString(certificate), SafeString(privateKey));
+    } else {
+        start(port, SafeString(token));
+    }
 }
 
 void HttpServerManager::startImpl(quint16 port, const SafeString& token) {
