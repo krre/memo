@@ -2,6 +2,8 @@
 #include "core/Id.h"
 #include <QTextEdit>
 
+class Settings;
+
 class Editor : public QTextEdit {
     Q_OBJECT
 public:
@@ -21,6 +23,8 @@ public:
     QString note() const;
 
     void clearNote();
+
+    void applySettings(Settings* settings);
 
 signals:
     void focusLost();

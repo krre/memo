@@ -101,22 +101,8 @@ void MainWindow::applyHotSettings() {
         m_globalHotkey->unsetShortcut();
     }
 
-    QString fontFamily = m_fileSettings->editorFontFamily();
-
-    if (!fontFamily.isEmpty()) {
-        QFont font;
-        font.setFamily(fontFamily);
-
-        int fontSize = m_fileSettings->editorFontSize();
-
-        if (fontSize) {
-            font.setPointSize(fontSize);
-        }
-
-        m_editor->setFont(font);
-    }
-
     m_editorToolBar->setSymbolsCountVisible(m_fileSettings->editorShowSymbolsCount());
+    m_editor->applySettings(m_fileSettings);
     m_serverManager->applySettings(m_fileSettings);
 }
 

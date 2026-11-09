@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "settings/Settings.h"
 #include <QMenu>
 #include <QKeyEvent>
 #include <QMimeData>
@@ -51,6 +52,23 @@ void Editor::clearNote() {
     clear();
     disableModified();
     setEnabled(false);
+}
+
+void Editor::applySettings(Settings* settings) {
+    QString fontFamily = settings->editorFontFamily();
+
+    if (fontFamily.isEmpty()) return;
+
+    QFont font;
+    font.setFamily(fontFamily);
+
+    int fontSize = settings->editorFontSize();
+
+    if (fontSize) {
+        font.setPointSize(fontSize);
+    }
+
+    setFont(font);
 }
 
 void Editor::focusOutEvent(QFocusEvent* event) {
