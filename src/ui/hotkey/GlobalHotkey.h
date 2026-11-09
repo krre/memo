@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 
+class Settings;
 class NativeEventFilter;
 
 class GlobalHotkey : public QObject {
@@ -10,6 +11,8 @@ public:
 
     void setShortcut(const QString& shortcut);
     void unsetShortcut();
+
+    void applySettings(Settings* settings);
 
 signals:
     void activated();

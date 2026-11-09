@@ -1,5 +1,6 @@
 #include "GlobalHotkey.h"
 #include "NativeEventFilter.h"
+#include "settings/Settings.h"
 #include <QCoreApplication>
 #include <QKeySequence>
 
@@ -23,4 +24,14 @@ void GlobalHotkey::setShortcut(const QString& shortcut) {
 
 void GlobalHotkey::unsetShortcut() {
     m_nativeEventFilter->unsetShortcut();
+}
+
+void GlobalHotkey::applySettings(Settings* settings) {
+    bool globalHotkeyEnabled = settings->globalHotkeyEnabled();
+
+    if (globalHotkeyEnabled) {
+        setShortcut(settings->globalHotkeyValue());
+    } else {
+        unsetShortcut();
+    }
 }

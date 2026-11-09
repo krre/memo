@@ -92,17 +92,9 @@ void MainWindow::writeSettings() {
 
 void MainWindow::applyHotSettings() {
     m_trayIcon->setVisible(!m_fileSettings->applicationHideTrayIcon());
-
-    bool globalHotkeyEnabled = m_fileSettings->globalHotkeyEnabled();
-
-    if (globalHotkeyEnabled) {
-        m_globalHotkey->setShortcut(m_fileSettings->globalHotkeyValue());
-    } else {
-        m_globalHotkey->unsetShortcut();
-    }
-
     m_editorToolBar->setSymbolsCountVisible(m_fileSettings->editorShowSymbolsCount());
     m_editor->applySettings(m_fileSettings);
+    m_globalHotkey->applySettings(m_fileSettings);
     m_serverManager->applySettings(m_fileSettings);
 }
 
