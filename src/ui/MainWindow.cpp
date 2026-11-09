@@ -74,7 +74,6 @@ void MainWindow::readSettings() {
         move(screen()->availableGeometry().center() - rect().center());
     }
 
-    restoreState(m_fileSettings->mainWindowState());
     m_splitter->restoreState(m_fileSettings->mainWindowSplitter());
     load(m_fileSettings->applicationFilePath());
 
@@ -85,7 +84,6 @@ void MainWindow::readSettings() {
 
 void MainWindow::writeSettings() {
     m_fileSettings->setMainWindowGeometry(saveGeometry());
-    m_fileSettings->setMainWindowState(m_splitter->saveState());
     m_fileSettings->setMainWindowSplitter(m_splitter->saveState());
 
     m_fileSettings->setApplicationFilePath(m_currentFile);

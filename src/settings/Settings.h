@@ -18,9 +18,6 @@ public:
     void setMainWindowGeometry(const  QByteArray& geometry);
     QByteArray mainWindowGeometry() const;
 
-    void setMainWindowState(const  QByteArray& state);
-    QByteArray mainWindowState() const;
-
     void setMainWindowSplitter(const  QByteArray& splitter);
     QByteArray mainWindowSplitter() const;
 
