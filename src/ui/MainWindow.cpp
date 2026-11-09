@@ -52,8 +52,6 @@ MainWindow::MainWindow() {
     setupSplitter();
     createActions();
 
-    connect(m_notetaking, &NoteTaking::noteChanged, m_navigation, &Navigation::go);
-    connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::openNote);
     connect(m_navigation, &Navigation::navigate, this, &MainWindow::openNote);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
     connect(m_editor, &Editor::leave, m_notetaking, qOverload<>(&NoteTaking::setFocus));
@@ -101,6 +99,9 @@ void MainWindow::applyHotSettings() {
 
 void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
+    connect(m_notetaking, &NoteTaking::noteChanged, m_navigation, &Navigation::go);
+    connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::openNote);
+
     m_editor = new Editor;
     m_editorToolBar = new EditorToolBar(m_navigation, m_editor);
     m_findText = new FindText(m_editor, this);
