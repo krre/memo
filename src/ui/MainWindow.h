@@ -4,7 +4,7 @@
 
 class FileSettings;
 class RecentFilesMenu;
-class NoteTaking;
+class Outliner;
 class TrayIcon;
 class EditorToolBar;
 class Editor;
@@ -74,7 +74,7 @@ private:
     RecentFilesMenu* m_recentFilesMenu = nullptr;
     QSplitter* m_splitter = nullptr;
 
-    NoteTaking* m_notetaking = nullptr;
+    Outliner* m_outliner = nullptr;
     EditorToolBar* m_editorToolBar = nullptr;
     Editor* m_editor = nullptr;
     FindText* m_findText = nullptr;

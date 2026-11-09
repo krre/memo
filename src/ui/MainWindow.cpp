@@ -13,7 +13,7 @@
 #include "settings/FileSettings.h"
 #include "dialog/Preferences.h"
 #include "dialog/FindAllNotesDialog.h"
-#include "notetaking/NoteTaking.h"
+#include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
 #include "server/HttpServerManager.h"
@@ -54,7 +54,7 @@ MainWindow::MainWindow() {
 
     connect(m_navigation, &Navigation::navigate, this, &MainWindow::openNote);
     connect(m_editor, &Editor::focusLost, this, &MainWindow::onEditorFocusLost);
-    connect(m_editor, &Editor::leave, m_notetaking, qOverload<>(&NoteTaking::setFocus));
+    connect(m_editor, &Editor::leave, m_outliner, qOverload<>(&Outliner::setFocus));
 
     setCurrentFile("");
     readSettings();
@@ -98,9 +98,9 @@ void MainWindow::applyHotSettings() {
 }
 
 void MainWindow::setupSplitter() {
-    m_notetaking = new NoteTaking(m_database);
-    connect(m_notetaking, &NoteTaking::noteChanged, m_navigation, &Navigation::go);
-    connect(m_notetaking, &NoteTaking::noteChanged, this, &MainWindow::openNote);
+    m_outliner = new Outliner(m_database);
+    connect(m_outliner, &Outliner::noteChanged, m_navigation, &Navigation::go);
+    connect(m_outliner, &Outliner::noteChanged, this, &MainWindow::openNote);
 
     m_editor = new Editor;
     m_editorToolBar = new EditorToolBar(m_navigation, m_editor);
@@ -120,7 +120,7 @@ void MainWindow::setupSplitter() {
     auto editorWidget = new QWidget;
     editorWidget->setLayout(editorLayout);
 
-    m_splitter->addWidget(m_notetaking);
+    m_splitter->addWidget(m_outliner);
     m_splitter->addWidget(editorWidget);
 
     m_splitter->setHandleWidth(1);
@@ -226,7 +226,7 @@ void MainWindow::load(const QString& filePath) {
 
     try {
         m_database->open(filePath);
-        m_notetaking->build();
+        m_outliner->build();
         setCurrentFile(filePath);
         m_recentFilesMenu->addPath(filePath);
         m_navigation->clear();
@@ -260,7 +260,7 @@ void MainWindow::openNote(Id id) {
         return;
     }
 
-    m_notetaking->setCurrentId(id);
+    m_outliner->setCurrentId(id);
     m_findText->reset();
 
     QString note = m_database->noteValue(id, "note").toString();
@@ -351,7 +351,7 @@ void MainWindow::exportAll() {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Export notes to ZIP archive"), name);
 
     if (!filePath.isEmpty()) {
-        Exporter::exportAll(filePath, m_notetaking, m_database, this);
+        Exporter::exportAll(filePath, m_outliner, m_database, this);
     }
 }
 
@@ -369,7 +369,7 @@ void MainWindow::backup() {
 void MainWindow::close() {
     m_database->close();
     closeNote();
-    m_notetaking->clear();
+    m_outliner->clear();
     setCurrentFile();
 }
 
@@ -381,7 +381,7 @@ void MainWindow::findInAllNotes() {
     FindAllNotesDialog findAllNotesDialog(m_database);
 
     if (findAllNotesDialog.exec() == QDialog::Accepted) {
-        m_notetaking->setCurrentId(findAllNotesDialog.noteId());
+        m_outliner->setCurrentId(findAllNotesDialog.noteId());
     }
 }
 

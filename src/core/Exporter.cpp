@@ -1,7 +1,7 @@
 #include "Exporter.h"
 #include "Exception.h"
 #include "database/Database.h"
-#include "ui/notetaking/NoteTaking.h"
+#include "ui/outliner/Outliner.h"
 #include "ui/Birthdays.h"
 #include "core/Application.h"
 #include <QtCore/private/qzipwriter_p.h>
@@ -10,7 +10,7 @@
 #include <QDir>
 #include <QDirIterator>
 
-void Exporter::exportAll(const QString& filePath, NoteTaking* noteTaking, Database* database, QWidget* parent) {
+void Exporter::exportAll(const QString& filePath, Outliner* outliner, Database* database, QWidget* parent) {
     QFileInfo fi(filePath);
     QString dirPath = fi.absolutePath() + "/" + fi.baseName();
 
@@ -19,7 +19,7 @@ void Exporter::exportAll(const QString& filePath, NoteTaking* noteTaking, Databa
         dir.removeRecursively();
     });
 
-    int count = noteTaking->exportNote(0, dirPath + "/notes");
+    int count = outliner->exportNote(0, dirPath + "/notes");
     exportBirthdays(dirPath, database);
     compressDir(dirPath);
 

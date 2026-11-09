@@ -45,10 +45,10 @@ qt_add_library(common STATIC
     ui/dialog/StandardDialog.h ui/dialog/StandardDialog.cpp
     ui/hotkey/GlobalHotkey.h ui/hotkey/GlobalHotkey.cpp
     ui/hotkey/NativeEventFilter.h
-    ui/notetaking/NoteProperties.h ui/notetaking/NoteProperties.cpp
-    ui/notetaking/NoteTaking.h ui/notetaking/NoteTaking.cpp
-    ui/notetaking/TreeItem.h ui/notetaking/TreeItem.cpp
-    ui/notetaking/TreeModel.h ui/notetaking/TreeModel.cpp
+    ui/outliner/NoteProperties.h ui/outliner/NoteProperties.cpp
+    ui/outliner/Outliner.h ui/outliner/Outliner.cpp
+    ui/outliner/TreeItem.h ui/outliner/TreeItem.cpp
+    ui/outliner/TreeModel.h ui/outliner/TreeModel.cpp
     ui/EditorToolBar.h ui/EditorToolBar.cpp
     ui/FindText.h ui/FindText.cpp
 )
