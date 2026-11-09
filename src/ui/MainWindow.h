@@ -8,6 +8,7 @@ class NoteTaking;
 class TrayIcon;
 class EditorToolBar;
 class Editor;
+class FindText;
 class Navigation;
 class Database;
 class GlobalHotkey;
@@ -38,10 +39,7 @@ private slots:
     void backup();
     void close();
     void pasteDate();
-    void find();
     void findInAllNotes();
-    void findNext();
-    void findPrevious();
 
     void showPreferences();
     void showBirthdays();
@@ -79,12 +77,9 @@ private:
     NoteTaking* m_notetaking = nullptr;
     EditorToolBar* m_editorToolBar = nullptr;
     Editor* m_editor = nullptr;
+    FindText* m_findText = nullptr;
     Navigation* m_navigation = nullptr;
     GlobalHotkey* m_globalHotkey = nullptr;
     Database* m_database = nullptr;
     HttpServerManager* m_serverManager = nullptr;
-    QString m_findText;
-
-    QAction* m_findNextAction = nullptr;
-    QAction* m_findPreviousAction = nullptr;
 };

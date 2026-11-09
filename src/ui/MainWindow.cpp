@@ -2,6 +2,7 @@
 #include "RecentFilesMenu.h"
 #include "Editor.h"
 #include "EditorToolBar.h"
+#include "FindText.h"
 #include "Navigation.h"
 #include "TrayIcon.h"
 #include "Birthdays.h"
@@ -102,6 +103,7 @@ void MainWindow::setupSplitter() {
     m_notetaking = new NoteTaking(m_database);
     m_editor = new Editor;
     m_editorToolBar = new EditorToolBar(m_navigation, m_editor);
+    m_findText = new FindText(m_editor, this);
 
     connect(m_editor, &QTextEdit::textChanged, [=, this] {
         m_editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
@@ -172,10 +174,10 @@ void MainWindow::createActions() {
 
     editMenu->addSeparator();
 
-    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, this, &MainWindow::find);
+    auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, m_findText, &FindText::find);
     auto findAllAction = editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
-    m_findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, this, &MainWindow::findNext);
-    m_findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, this, &MainWindow::findPrevious);
+    auto findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, m_findText, &FindText::findNext);
+    auto findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, m_findText, &FindText::findPrevious);
 
     editMenu->addSeparator();
     editMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
@@ -189,14 +191,17 @@ void MainWindow::createActions() {
     selectAllAction->setEnabled(false);
     findAction->setEnabled(false);
     findAllAction->setEnabled(false);
-    m_findNextAction->setEnabled(false);
-    m_findPreviousAction->setEnabled(false);
+    findNextAction->setEnabled(false);
+    findPreviousAction->setEnabled(false);
 
     connect(m_editor, &QTextEdit::undoAvailable, undoAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::redoAvailable, redoAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::copyAvailable, cutAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::copyAvailable, copyAction, &QAction::setEnabled);
     connect(m_editor, &QTextEdit::textChanged, this, [=, this] { selectAllAction->setEnabled(!m_editor->document()->isEmpty()); });
+
+    connect(m_findText, &FindText::navigationAvailableChanged, findNextAction, &QAction::setEnabled);
+    connect(m_findText, &FindText::navigationAvailableChanged, findPreviousAction, &QAction::setEnabled);
 
     connect(this, &MainWindow::noteOpenChanged, findAllAction, &QAction::setEnabled);
 
@@ -255,9 +260,7 @@ void MainWindow::openNote(Id id) {
     }
 
     m_notetaking->setCurrentId(id);
-
-    m_findNextAction->setEnabled(false);
-    m_findPreviousAction->setEnabled(false);
+    m_findText->reset();
 
     QString note = m_database->noteValue(id, "note").toString();
     m_editor->setNote(id, note);
@@ -276,10 +279,7 @@ void MainWindow::openNote(Id id) {
 void MainWindow::closeNote() {
     m_editor->clearNote();
     m_navigation->clear();
-    m_findText.clear();
-
-    m_findNextAction->setEnabled(false);
-    m_findPreviousAction->setEnabled(false);
+    m_findText->reset();
 
     emit noteEditChanged(false);
 }
@@ -376,44 +376,12 @@ void MainWindow::pasteDate() {
     m_editor->insertPlainText(QDate::currentDate().toString("dd.MM.yyyy"));
 }
 
-void MainWindow::find() {
-    bool ok;
-    m_findText = QInputDialog::getText(this, tr("Find"), tr("Text:"), QLineEdit::Normal, "", &ok);
-
-    if (!ok || m_findText.isEmpty()) {
-        return;
-    }
-
-    QTextCursor cursor = m_editor->textCursor();
-    QTextCursor savedCursor = cursor;
-
-    cursor.movePosition(QTextCursor::Start);\
-    m_editor->setTextCursor(cursor);
-
-    if (!m_editor->find(m_findText)) {
-        QMessageBox::warning(this, Application::Name, tr("Text not found"));
-        m_editor->setTextCursor(savedCursor);
-        return;
-    }
-
-    m_findNextAction->setEnabled(true);
-    m_findPreviousAction->setEnabled(true);
-}
-
 void MainWindow::findInAllNotes() {
     FindAllNotesDialog findAllNotesDialog(m_database);
 
     if (findAllNotesDialog.exec() == QDialog::Accepted) {
         m_notetaking->setCurrentId(findAllNotesDialog.noteId());
     }
-}
-
-void MainWindow::findNext() {
-    m_editor->find(m_findText);
-}
-
-void MainWindow::findPrevious() {
-    m_editor->find(m_findText, QTextDocument::FindBackward);
 }
 
 void MainWindow::showPreferences() {
