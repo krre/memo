@@ -147,19 +147,20 @@ void Birthdays::load() {
 
 void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     m_table->insertRow(m_table->rowCount());
+    const int lastRowIndex = m_table->rowCount() - 1;
 
     auto idItem = new QTableWidgetItem(id.toString());
-    m_table->setItem(m_table->rowCount() - 1, int(Column::Id), idItem);
+    m_table->setItem(lastRowIndex, int(Column::Id), idItem);
 
     auto dateItem = new QTableWidgetItem(date.toString(BirthdayDateFormat));
-    m_table->setItem(m_table->rowCount() - 1, int(Column::Date), dateItem);
+    m_table->setItem(lastRowIndex, int(Column::Date), dateItem);
 
     auto nameItem = new QTableWidgetItem(name);
-    m_table->setItem(m_table->rowCount() - 1, int(Column::Name), nameItem);
+    m_table->setItem(lastRowIndex, int(Column::Name), nameItem);
 
     auto ageItem = new QTableWidgetItem(QString::number(age(date)));
     ageItem->setFlags(ageItem->flags() ^ Qt::ItemIsEditable);
-    m_table->setItem(m_table->rowCount() - 1, int(Column::Age), ageItem);
+    m_table->setItem(lastRowIndex, int(Column::Age), ageItem);
 }
 
 int Birthdays::age(const QDate& birthday) {
