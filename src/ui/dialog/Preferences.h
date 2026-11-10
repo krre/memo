@@ -19,7 +19,7 @@ public slots:
     void accept() override;
 
 private slots:
-    void onFontButtonClicked();
+    void onOpenFontButtonClicked();
 
 private:
     QGroupBox* createUiGroupBox();

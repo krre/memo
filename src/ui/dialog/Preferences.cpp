@@ -59,7 +59,7 @@ void Preferences::accept() {
     QDialog::accept();
 }
 
-void Preferences::onFontButtonClicked() {
+void Preferences::onOpenFontButtonClicked() {
     QFont currentFont = font();
     currentFont.setFamily(m_fontFamilyLineEdit->text());
     currentFont.setPointSize(m_fontSizeLineEdit->text().toInt());
@@ -98,13 +98,13 @@ QGroupBox* Preferences::createUiGroupBox() {
     m_fontSizeLineEdit->setReadOnly(true);
     m_fontSizeLineEdit->setText(QString::number(m_settings->editorFontSize()));
 
-    auto fontButton = new QPushButton(tr("Open..."));
-    connect(fontButton, &QPushButton::clicked, this, &Preferences::onFontButtonClicked);
+    auto openFontButton = new QPushButton(tr("Open..."));
+    connect(openFontButton, &QPushButton::clicked, this, &Preferences::onOpenFontButtonClicked);
 
     auto fontLayout = new QHBoxLayout;
     fontLayout->addWidget(m_fontFamilyLineEdit);
     fontLayout->addWidget(m_fontSizeLineEdit);
-    fontLayout->addWidget(fontButton);
+    fontLayout->addWidget(openFontButton);
 
     m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
     m_minimizeCheckBox->setChecked(m_settings->applicationMinimizeOnStartup());
