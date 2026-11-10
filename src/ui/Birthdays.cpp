@@ -11,6 +11,8 @@
 #include <QCloseEvent>
 #include <QDateEdit>
 
+constexpr auto DateFormat = "dd.MM.yyyy";
+
 DateDelegate::DateDelegate(QObject* parent) : QStyledItemDelegate(parent) {
 
 }
@@ -18,12 +20,12 @@ DateDelegate::DateDelegate(QObject* parent) : QStyledItemDelegate(parent) {
 QWidget* DateDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const {
     auto editor = new QDateEdit(parent);
     editor->setCalendarPopup(true);
-    editor->setDisplayFormat("dd.MM.yyyy");
+    editor->setDisplayFormat(DateFormat);
     return editor;
 }
 
 void DateDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const {
-    QDate value = QDate::fromString(index.model()->data(index, Qt::EditRole).toString(), "dd.MM.yyyy");
+    QDate value = QDate::fromString(index.model()->data(index, Qt::EditRole).toString(), DateFormat);
 
     if (!value.isValid()) {
         value = QDate::currentDate();
@@ -34,7 +36,7 @@ void DateDelegate::setEditorData(QWidget* editor, const QModelIndex& index) cons
 
 void DateDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const {
     auto dateEdit = static_cast<QDateEdit*>(editor);
-    model->setData(index, dateEdit->date().toString("dd.MM.yyyy"), Qt::EditRole);
+    model->setData(index, dateEdit->date().toString(DateFormat), Qt::EditRole);
 }
 
 void DateDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const {
