@@ -82,15 +82,17 @@ void Birthdays::edit() {
 }
 
 void Birthdays::deleteBirthday() {
-    if (QMessageBox::question(this, Application::Name, tr("Are you want to delete your birthday?")) == QMessageBox::Yes) {
-        int row = m_table->currentRow();
-        Id id = m_table->item(row, int(Column::Id))->text().toInt();
-
-        m_database->removeBirthday(id);
-        m_table->removeRow(row);
-
-        m_table->setCurrentCell(-1, 0);
+    if (QMessageBox::question(this, Application::Name, tr("Are you want to delete your birthday?")) != QMessageBox::Yes) {
+        return;
     }
+
+    int row = m_table->currentRow();
+    Id id = m_table->item(row, int(Column::Id))->text().toInt();
+
+    m_database->removeBirthday(id);
+    m_table->removeRow(row);
+
+    m_table->setCurrentCell(-1, 0);
 }
 
 void Birthdays::updateButtonsState() {
