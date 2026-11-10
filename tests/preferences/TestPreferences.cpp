@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QGroupBox>
+#include <QPushButton>
 
 constexpr auto Language = "ru";
 constexpr auto MinimizeOnStartup = true;
@@ -34,6 +35,7 @@ class TestPreferences : public QObject {
 private slots:
     void readPreferences();
     void setPreferences();
+    void applyActions();
 };
 
 void TestPreferences::readPreferences() {
@@ -134,6 +136,20 @@ void TestPreferences::setPreferences() {
     QCOMPARE(settings.serverSslEnabled(), SslEnabled);
     QCOMPARE(settings.serverCertificate(), Certificate);
     QCOMPARE(settings.serverPrivateKey(), PrivateKey);
+}
+
+void TestPreferences::applyActions() {
+    TestSettings settings;
+    Preferences preferences(&settings);
+
+    preferences.m_fontFamilyLineEdit->setText("Font family");
+    preferences.m_fontSizeLineEdit->setText("10");
+
+    auto resetFontButton = preferences.findChild<QPushButton*>("resetFontButton");
+    resetFontButton->click();
+
+    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), QString());
+    QCOMPARE(preferences.m_fontSizeLineEdit->text(), QString());
 }
 
 QTEST_MAIN(TestPreferences)

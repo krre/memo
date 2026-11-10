@@ -110,6 +110,7 @@ QGroupBox* Preferences::createUiGroupBox() {
     connect(openFontButton, &QPushButton::clicked, this, &Preferences::onOpenFontButtonClicked);
 
     auto resetFontButton = new QPushButton(tr("Reset"));
+    resetFontButton->setObjectName("resetFontButton");
     connect(resetFontButton, &QPushButton::clicked, this, &Preferences::onResetFontButtonClicked);
 
     auto fontLayout = new QHBoxLayout;
