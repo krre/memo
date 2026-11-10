@@ -98,8 +98,9 @@ void Birthdays::deleteBirthday() {
 }
 
 void Birthdays::updateButtonsState() {
-    m_editButton->setEnabled(m_table->currentRow() >= 0);
-    m_deleteButton->setEnabled(m_table->currentRow() >= 0);
+    const bool isRowSelected = m_table->currentRow() >= 0;
+    m_editButton->setEnabled(isRowSelected);
+    m_deleteButton->setEnabled(isRowSelected);
 }
 
 void Birthdays::readSettings() {
