@@ -465,27 +465,27 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="134"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="139"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="129"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="134"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="79"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="83"/>
         <source>&lt;System&gt;</source>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="130"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="135"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="104"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="109"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
     </message>
@@ -494,72 +494,77 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation type="vanished">Выберите директорию</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="80"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="84"/>
         <source>English</source>
         <translation>Английский</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="81"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="85"/>
         <source>Russian</source>
         <translation>Русский</translation>
     </message>
     <message>
         <location filename="../src/ui/dialog/Preferences.cpp" line="112"/>
+        <source>Reset</source>
+        <translation>Сбросить</translation>
+    </message>
+    <message>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="121"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="116"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="124"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="120"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="127"/>
         <source>Remind about birthdays</source>
         <translation>Напоминать о днях рождения</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="124"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="130"/>
         <source>Show symbols count</source>
         <translation>Показывать количество символов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="146"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="151"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="166"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="168"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="204"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="201"/>
         <source>Certificate:</source>
         <translation>Сертификат:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="205"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="202"/>
         <source>Private key:</source>
         <translation>Закрытый ключ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="168"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="170"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="215"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="211"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="216"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="212"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="222"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="218"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
@@ -574,7 +579,7 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Выбрать шрифт</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="214"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="210"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
     </message>

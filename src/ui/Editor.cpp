@@ -57,7 +57,10 @@ void Editor::clearNote() {
 void Editor::applySettings(Settings* settings) {
     QString fontFamily = settings->editorFontFamily();
 
-    if (fontFamily.isEmpty()) return;
+    if (fontFamily.isEmpty()) {
+        setFont(QFont());
+        return;
+    }
 
     QFont font;
     font.setFamily(fontFamily);

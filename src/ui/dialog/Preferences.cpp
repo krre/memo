@@ -73,6 +73,11 @@ void Preferences::onOpenFontButtonClicked() {
     }
 }
 
+void Preferences::onResetFontButtonClicked() {
+    m_fontFamilyLineEdit->clear();
+    m_fontSizeLineEdit->clear();
+}
+
 QGroupBox* Preferences::createUiGroupBox() {
     m_languageComboBox = new QComboBox;
     m_languageComboBox->addItem(tr("<System>"));
@@ -96,15 +101,22 @@ QGroupBox* Preferences::createUiGroupBox() {
     m_fontSizeLineEdit = new QLineEdit;
     m_fontSizeLineEdit->setMaximumWidth(50);
     m_fontSizeLineEdit->setReadOnly(true);
-    m_fontSizeLineEdit->setText(QString::number(m_settings->editorFontSize()));
+
+    if (m_settings->editorFontSize()) {
+        m_fontSizeLineEdit->setText(QString::number(m_settings->editorFontSize()));
+    }
 
     auto openFontButton = new QPushButton(tr("Open..."));
     connect(openFontButton, &QPushButton::clicked, this, &Preferences::onOpenFontButtonClicked);
+
+    auto resetFontButton = new QPushButton(tr("Reset"));
+    connect(resetFontButton, &QPushButton::clicked, this, &Preferences::onResetFontButtonClicked);
 
     auto fontLayout = new QHBoxLayout;
     fontLayout->addWidget(m_fontFamilyLineEdit);
     fontLayout->addWidget(m_fontSizeLineEdit);
     fontLayout->addWidget(openFontButton);
+    fontLayout->addWidget(resetFontButton);
 
     m_minimizeCheckBox = new QCheckBox(tr("Minimize to tray on startup"));
     m_minimizeCheckBox->setChecked(m_settings->applicationMinimizeOnStartup());

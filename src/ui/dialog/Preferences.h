@@ -20,6 +20,7 @@ public slots:
 
 private slots:
     void onOpenFontButtonClicked();
+    void onResetFontButtonClicked();
 
 private:
     QGroupBox* createUiGroupBox();
