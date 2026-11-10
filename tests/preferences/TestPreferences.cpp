@@ -1,6 +1,6 @@
 #include "TestSettings.h"
-#include "TestHelper.h"
 #include <ui/dialog/Preferences.h>
+#include <ui/dialog/BrowseLayout.h>
 #include <settings/Settings.h>
 #include <QTest>
 #include <QComboBox>
@@ -61,28 +61,26 @@ void TestPreferences::readPreferences() {
     settings.setServerPrivateKey(PrivateKey);
 
     Preferences preferences(&settings);
-    using Names = Preferences::Names;
+    QCOMPARE(preferences.m_languageComboBox->currentData(), Language);
+    QCOMPARE(preferences.m_minimizeCheckBox->isChecked(), MinimizeOnStartup);
+    QCOMPARE(preferences.m_hideTrayCheckBox->isChecked(), HideTrayIcon);
 
-    QCOMPARE(child<QComboBox>(&preferences, Names::LanguageComboBox)->currentData(), Language);
-    QCOMPARE(child<QCheckBox>(&preferences, Names::MinimizeCheckBox)->isChecked(), MinimizeOnStartup);
-    QCOMPARE(child<QCheckBox>(&preferences, Names::HideTrayCheckBox)->isChecked(), HideTrayIcon);
+    QCOMPARE(preferences.m_fontFamilyLineEdit->text(), FontFamily);
+    QCOMPARE(preferences.m_fontSizeLineEdit->text().toInt(), FontSize);
+    QCOMPARE(preferences.m_showSymbolsCountCheckBox->isChecked(), ShowSymbolsCount);
 
-    QCOMPARE(child<QLineEdit>(&preferences, Names::FontFamilyLineEdit)->text(), FontFamily);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::FontSizeLineEdit)->text().toInt(), FontSize);
-    QCOMPARE(child<QCheckBox>(&preferences, Names::ShowSymbolsCountCheckBox)->isChecked(), ShowSymbolsCount);
+    QCOMPARE(preferences.m_hotkeyGroupBox->isChecked(), HotKeyEnabled);
+    QCOMPARE(preferences.m_hotkeyLineEdit->text(), HotKeyValue);
 
-    QCOMPARE(child<QGroupBox>(&preferences, Names::HotkeyGroupBox)->isChecked(), HotKeyEnabled);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::HotkeyLineEdit)->text(), HotKeyValue);
+    QCOMPARE(preferences.m_remindBirthdaysCheckBox->isChecked(), RemindBirthdays);
+    QCOMPARE(preferences.m_backupsBrowseLayout->text(), BackupsDirectory);
 
-    QCOMPARE(child<QCheckBox>(&preferences, Names::RemindBirthdaysCheckBox)->isChecked(), RemindBirthdays);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::BackupsLineEdit)->text(), BackupsDirectory);
-
-    QCOMPARE(child<QGroupBox>(&preferences, Names::ServerGroupBox)->isChecked(), ServerEnabled);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::PortLineEdit)->text().toInt(), Port);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::TokenLineEdit)->text(), Token);
-    QCOMPARE(child<QGroupBox>(&preferences, Names::SslGroupBox)->isChecked(), SslEnabled);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::CertificateLineEdit)->text(), Certificate);
-    QCOMPARE(child<QLineEdit>(&preferences, Names::PrivateKeyEdit)->text(), PrivateKey);
+    QCOMPARE(preferences.m_serverGroupBox->isChecked(), ServerEnabled);
+    QCOMPARE(preferences.m_portLineEdit->text().toInt(), Port);
+    QCOMPARE(preferences.m_tokenLineEdit->text(), Token);
+    QCOMPARE(preferences.m_sslGroupBox->isChecked(), SslEnabled);
+    QCOMPARE(preferences.m_certificateBrowseLayout->text(), Certificate);
+    QCOMPARE(preferences.m_privateKeyBrowseLayout->text(), PrivateKey);
 }
 
 void TestPreferences::setPreferences() {
@@ -92,29 +90,27 @@ void TestPreferences::setPreferences() {
     settings.setApplicationLanguage(Language);
 
     Preferences preferences(&settings);
-    using Names = Preferences::Names;
 
-    auto languageComboBox = child<QComboBox>(&preferences, Names::LanguageComboBox);
-    languageComboBox->setCurrentIndex(languageComboBox->findData(Language));
-    child<QCheckBox>(&preferences, Names::MinimizeCheckBox)->setChecked(MinimizeOnStartup);
-    child<QCheckBox>(&preferences, Names::HideTrayCheckBox)->setChecked(HideTrayIcon);
+    preferences.m_languageComboBox->setCurrentIndex(preferences.m_languageComboBox->findData(Language));
+    preferences.m_minimizeCheckBox->setChecked(MinimizeOnStartup);
+    preferences.m_hideTrayCheckBox->setChecked(HideTrayIcon);
 
-    child<QLineEdit>(&preferences, Names::FontFamilyLineEdit)->setText(FontFamily);
-    child<QLineEdit>(&preferences, Names::FontSizeLineEdit)->setText(QString::number(FontSize));
-    child<QCheckBox>(&preferences, Names::ShowSymbolsCountCheckBox)->setChecked(ShowSymbolsCount);
+    preferences.m_fontFamilyLineEdit->setText(FontFamily);
+    preferences.m_fontSizeLineEdit->setText(QString::number(FontSize));
+    preferences.m_showSymbolsCountCheckBox->setChecked(ShowSymbolsCount);
 
-    child<QGroupBox>(&preferences, Names::HotkeyGroupBox)->setChecked(HotKeyEnabled);
-    child<QLineEdit>(&preferences, Names::HotkeyLineEdit)->setText(HotKeyValue);
+    preferences.m_hotkeyGroupBox->setChecked(HotKeyEnabled);
+    preferences.m_hotkeyLineEdit->setText(HotKeyValue);
 
-    child<QCheckBox>(&preferences, Names::RemindBirthdaysCheckBox)->setChecked(RemindBirthdays);
-    child<QLineEdit>(&preferences, Names::BackupsLineEdit)->setText(BackupsDirectory);
+    preferences.m_remindBirthdaysCheckBox->setChecked(RemindBirthdays);
+    preferences.m_backupsBrowseLayout->setText(BackupsDirectory);
 
-    child<QGroupBox>(&preferences, Names::ServerGroupBox)->setChecked(ServerEnabled);
-    child<QLineEdit>(&preferences, Names::PortLineEdit)->setText(QString::number(Port));
-    child<QLineEdit>(&preferences, Names::TokenLineEdit)->setText(Token);
-    child<QGroupBox>(&preferences, Names::SslGroupBox)->setChecked(SslEnabled);
-    child<QLineEdit>(&preferences, Names::CertificateLineEdit)->setText(Certificate);
-    child<QLineEdit>(&preferences, Names::PrivateKeyEdit)->setText(PrivateKey);
+    preferences.m_serverGroupBox->setChecked(ServerEnabled);
+    preferences.m_portLineEdit->setText(QString::number(Port));
+    preferences.m_tokenLineEdit->setText(Token);
+    preferences.m_sslGroupBox->setChecked(SslEnabled);
+    preferences.m_certificateBrowseLayout->setText(Certificate);
+    preferences.m_privateKeyBrowseLayout->setText(PrivateKey);
 
     preferences.accept();
 
