@@ -4,47 +4,47 @@
 <context>
     <name>Birthdays</name>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="45"/>
+        <location filename="../src/ui/Birthdays.cpp" line="47"/>
         <source>Birthdays</source>
         <translation>Дни рождения</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="85"/>
+        <location filename="../src/ui/Birthdays.cpp" line="87"/>
         <source>Are you want to delete your birthday?</source>
         <translation>Вы желаете удалить день рождения?</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="180"/>
+        <location filename="../src/ui/Birthdays.cpp" line="186"/>
         <source>Date</source>
         <translation>Дата</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="180"/>
+        <location filename="../src/ui/Birthdays.cpp" line="186"/>
         <source>Name</source>
         <translation>Имя</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="180"/>
+        <location filename="../src/ui/Birthdays.cpp" line="186"/>
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="199"/>
+        <location filename="../src/ui/Birthdays.cpp" line="205"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="202"/>
+        <location filename="../src/ui/Birthdays.cpp" line="208"/>
         <source>Edit</source>
         <translation>Изменить</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="206"/>
+        <location filename="../src/ui/Birthdays.cpp" line="212"/>
         <source>Delete...</source>
         <translation>Удалить...</translation>
     </message>
     <message>
-        <location filename="../src/ui/Birthdays.cpp" line="210"/>
+        <location filename="../src/ui/Birthdays.cpp" line="216"/>
         <source>Today</source>
         <translation>Сегодня</translation>
     </message>
@@ -288,18 +288,6 @@
         <translation>Дни рождения...</translation>
     </message>
     <message>
-        <source>Find</source>
-        <translation type="vanished">Найти</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="vanished">Текст:</translation>
-    </message>
-    <message>
-        <source>Text not found</source>
-        <translation type="vanished">Текст не найден</translation>
-    </message>
-    <message>
         <location filename="../src/ui/MainWindow.cpp" line="403"/>
         <source>&lt;h3&gt;%1 %2&lt;/h3&gt;
 Note-taking for quick notes&lt;br&gt;&lt;br&gt;
@@ -341,57 +329,6 @@ Copyright © %7, Владимир Зарыпов</translation>
         <location filename="../src/ui/outliner/NoteProperties.cpp" line="13"/>
         <source>Updated at:</source>
         <translation>Обновлено:</translation>
-    </message>
-</context>
-<context>
-    <name>NoteTaking</name>
-    <message>
-        <source>Add Note</source>
-        <translation type="vanished">Добавить заметку</translation>
-    </message>
-    <message>
-        <source>Name:</source>
-        <translation type="vanished">Название:</translation>
-    </message>
-    <message>
-        <source>Remove %1?</source>
-        <translation type="vanished">Удалить %1?</translation>
-    </message>
-    <message>
-        <source>Add...</source>
-        <translation type="vanished">Добавить...</translation>
-    </message>
-    <message>
-        <source>Remove...</source>
-        <translation type="vanished">Удалить...</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation type="vanished">Переименовать</translation>
-    </message>
-    <message>
-        <source>Move Up</source>
-        <translation type="vanished">Переместить вверх</translation>
-    </message>
-    <message>
-        <source>Move Down</source>
-        <translation type="vanished">Переместить вниз</translation>
-    </message>
-    <message>
-        <source>Expand</source>
-        <translation type="vanished">Развернуть</translation>
-    </message>
-    <message>
-        <source>Collapse All</source>
-        <translation type="vanished">Свернуть всё</translation>
-    </message>
-    <message>
-        <source>Expand All</source>
-        <translation type="vanished">Развернуть всё</translation>
-    </message>
-    <message>
-        <source>Properties...</source>
-        <translation type="vanished">Свойства...</translation>
     </message>
 </context>
 <context>
@@ -465,12 +402,12 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="139"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="140"/>
         <source>User Interface</source>
         <translation>Интерфейс пользователя</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="134"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="135"/>
         <source>Language:</source>
         <translation>Язык:</translation>
     </message>
@@ -480,7 +417,7 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>&lt;Системный&gt;</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="135"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="136"/>
         <source>Font:</source>
         <translation>Шрифт:</translation>
     </message>
@@ -488,10 +425,6 @@ Copyright © %7, Владимир Зарыпов</translation>
         <location filename="../src/ui/dialog/Preferences.cpp" line="109"/>
         <source>Open...</source>
         <translation>Открыть...</translation>
-    </message>
-    <message>
-        <source>Select Directory</source>
-        <translation type="vanished">Выберите директорию</translation>
     </message>
     <message>
         <location filename="../src/ui/dialog/Preferences.cpp" line="84"/>
@@ -509,62 +442,62 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Сбросить</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="121"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="122"/>
         <source>Minimize to tray on startup</source>
         <translation>Минимизировать в трей при запуске</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="124"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="125"/>
         <source>Hide tray icon</source>
         <translation>Спрятать иконку трея</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="127"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="128"/>
         <source>Remind about birthdays</source>
         <translation>Напоминать о днях рождения</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="130"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="131"/>
         <source>Show symbols count</source>
         <translation>Показывать количество символов</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="151"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="152"/>
         <source>Global Hotkey</source>
         <translation>Глобальная горячая клавиша</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="168"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="169"/>
         <source>Directory:</source>
         <translation>Директория:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="201"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="202"/>
         <source>Certificate:</source>
         <translation>Сертификат:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="202"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="203"/>
         <source>Private key:</source>
         <translation>Закрытый ключ:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="170"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="171"/>
         <source>Backups</source>
         <translation>Резервные копии</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="211"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="212"/>
         <source>Port:</source>
         <translation>Порт:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="212"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="213"/>
         <source>Token:</source>
         <translation>Токен:</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="218"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="219"/>
         <source>Server</source>
         <translation>Сервер</translation>
     </message>
@@ -579,7 +512,7 @@ Copyright © %7, Владимир Зарыпов</translation>
         <translation>Выбрать шрифт</translation>
     </message>
     <message>
-        <location filename="../src/ui/dialog/Preferences.cpp" line="210"/>
+        <location filename="../src/ui/dialog/Preferences.cpp" line="211"/>
         <source>IP address:</source>
         <translation>IP адрес:</translation>
     </message>
