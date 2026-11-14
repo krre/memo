@@ -29,11 +29,19 @@ add_subdirectory(app)
 add_subdirectory(src)
 add_subdirectory(tests)
 
+option(MEMO_LUPDATE_NO_OBSOLETE "Remove obsolete translations on lupdate" OFF)
+
+set(_lupdate_opts "")
+
+if(MEMO_LUPDATE_NO_OBSOLETE)
+    list(APPEND _lupdate_opts -no-obsolete)
+endif()
+
 qt_add_translations(${PROJECT_NAME}
     MERGE_QT_TRANSLATIONS
     NO_GENERATE_PLURALS_TS_FILE
     TS_OUTPUT_DIRECTORY i18n
-    # LUPDATE_OPTIONS -no-obsolete
+    LUPDATE_OPTIONS ${_lupdate_opts}
 )
 
 # For visibility in IDE (e.g., Qt Creator)
