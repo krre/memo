@@ -1,7 +1,6 @@
 #include "TestSettings.h"
 #include <ui/dialog/Preferences.h>
 #include <ui/dialog/BrowseLayout.h>
-#include <settings/Settings.h>
 #include <QTest>
 #include <QComboBox>
 #include <QLineEdit>
