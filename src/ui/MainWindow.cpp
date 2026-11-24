@@ -401,7 +401,7 @@ void MainWindow::showBirthdays() {
 void MainWindow::showAbout() {
     QMessageBox::about(this, tr("About %1").arg(Application::Name),
 tr(R"(<h3>%1 %2</h3>
-Note-taking for quick notes<br><br>
+Outliner<br><br>
 Based on Qt %3<br>
 Build on %4 %5<br><br>
 <a href=%6>%6</a><br><br>

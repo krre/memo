@@ -290,13 +290,13 @@
     <message>
         <location filename="../src/ui/MainWindow.cpp" line="403"/>
         <source>&lt;h3&gt;%1 %2&lt;/h3&gt;
-Note-taking for quick notes&lt;br&gt;&lt;br&gt;
+Outliner&lt;br&gt;&lt;br&gt;
 Based on Qt %3&lt;br&gt;
 Build on %4 %5&lt;br&gt;&lt;br&gt;
 &lt;a href=%6&gt;%6&lt;/a&gt;&lt;br&gt;&lt;br&gt;
 Copyright © %7, Vladimir Zarypov</source>
         <translation>&lt;h3&gt;%1 %2&lt;/h3&gt;
-Менеджер быстрых заметок&lt;br&gt;&lt;br&gt;
+Менеджер заметок&lt;br&gt;&lt;br&gt;
 Основано на Qt %3&lt;br&gt;
 Собрано %4 %5&lt;br&gt;&lt;br&gt;
 &lt;a href=%6&gt;%6&lt;/a&gt;&lt;br&gt;&lt;br&gt;

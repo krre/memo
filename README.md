@@ -1,5 +1,5 @@
 # Memo
-Note-taking for my personal usage (desktop version).
+Outliner for my personal usage (desktop version).
 
 ## Dependencies
 - Qt 6.12.0
