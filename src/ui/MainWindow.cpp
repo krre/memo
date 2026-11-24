@@ -13,6 +13,7 @@
 #include "dialog/Preferences.h"
 #include "dialog/FindAllNotesDialog.h"
 #include "outliner/Outliner.h"
+#include "tasks/Tasks.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
 #include "server/HttpServerManager.h"
@@ -211,6 +212,7 @@ void MainWindow::createActions() {
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
     eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
+    eventsMenu->addAction(tr("Tasks..."), Qt::CTRL | Qt::Key_T, this, &MainWindow::showTasks);
     eventsMenu->menuAction()->setVisible(false);
     connect(this, &MainWindow::noteOpenChanged, eventsMenu->menuAction(), &QAction::setVisible);
 
@@ -396,6 +398,11 @@ void MainWindow::showBirthdays() {
     auto birthdays = new Birthdays(m_database, m_fileSettings);
     birthdays->show();
     birthdays->activateWindow();
+}
+
+void MainWindow::showTasks() {
+    auto tasks = new Tasks(m_database, m_fileSettings);
+    tasks->show();
 }
 
 void MainWindow::showAbout() {

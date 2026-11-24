@@ -51,6 +51,7 @@ qt_add_library(common STATIC
     ui/outliner/TreeModel.h ui/outliner/TreeModel.cpp
     ui/EditorToolBar.h ui/EditorToolBar.cpp
     ui/FindText.h ui/FindText.cpp
+    ui/tasks/Tasks.h ui/tasks/Tasks.cpp
 )
 
 # For visibility in IDE (e.g., Qt Creator)

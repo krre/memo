@@ -43,6 +43,7 @@ private slots:
 
     void showPreferences();
     void showBirthdays();
+    void showTasks();
     void showAbout();
 
     void onEditorFocusLost();
