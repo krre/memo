@@ -6,7 +6,12 @@
 #include <QSettings>
 
 Application::Application(int& argc, char* argv[]) : QApplication(argc, argv) {
+#ifdef QT_DEBUG
+    setOrganizationName(QString(Application::Organization) + ".dev");
+#else
     setOrganizationName(Application::Organization);
+#endif
+
     setApplicationName(Application::Name);
     setQuitOnLastWindowClosed(false);
 
