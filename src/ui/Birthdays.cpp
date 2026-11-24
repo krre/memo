@@ -140,8 +140,6 @@ void Birthdays::load() {
         addRow(birthday.id.value(), birthday.date, birthday.name);
     }
 
-    m_table->resizeColumnsToContents();
-
     m_table->blockSignals(isBlocked);
 }
 
