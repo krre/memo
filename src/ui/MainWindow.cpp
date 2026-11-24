@@ -211,7 +211,7 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::noteEditChanged, findAction, &QAction::setEnabled);
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
-    eventsMenu->addAction(tr("Birthdays..."), this, &MainWindow::showBirthdays);
+    eventsMenu->addAction(tr("Birthdays..."), Qt::CTRL | Qt::Key_B, this, &MainWindow::showBirthdays);
     eventsMenu->addAction(tr("Tasks..."), Qt::CTRL | Qt::Key_T, this, &MainWindow::showTasks);
     eventsMenu->menuAction()->setVisible(false);
     connect(this, &MainWindow::noteOpenChanged, eventsMenu->menuAction(), &QAction::setVisible);
