@@ -176,7 +176,7 @@ void MainWindow::createActions() {
     editMenu->addSeparator();
 
     auto findAction = editMenu->addAction(tr("Find..."), QKeySequence::Find, m_findText, &FindText::find);
-    auto findAllAction = editMenu->addAction(tr("Find in All Notes..."), QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_F), this, &MainWindow::findInAllNotes);
+    auto findAllAction = editMenu->addAction(tr("Find in All Notes..."), Qt::CTRL | Qt::SHIFT | Qt::Key_F, this, &MainWindow::findInAllNotes);
     auto findNextAction = editMenu->addAction(tr("Find Next"), QKeySequence::FindNext, m_findText, &FindText::findNext);
     auto findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, m_findText, &FindText::findPrevious);
 
