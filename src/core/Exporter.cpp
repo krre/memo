@@ -36,7 +36,7 @@ void Exporter::exportBirthdays(const QString& dirPath, Database* database) {
     const auto birthdays = database->birthdays();
 
     for (const auto& birthday : birthdays) {
-        stream << birthday.date.toString(BirthdayDateFormat) << " " << birthday.name << "\n";
+        stream << birthday.date.toString(DateDelegate::DateFormat) << " " << birthday.name << "\n";
     }
 }
 

@@ -3,8 +3,6 @@
 #include <QWidget>
 #include <QStyledItemDelegate>
 
-constexpr auto BirthdayDateFormat = "dd.MM.yyyy";
-
 class QTableWidget;
 class QTableWidgetItem;
 class QPushButton;
@@ -16,6 +14,8 @@ class Settings;
 
 class DateDelegate : public QStyledItemDelegate {
 public:
+    static constexpr auto DateFormat = "dd.MM.yyyy";
+
     DateDelegate(QObject* parent = nullptr);
 
     QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;

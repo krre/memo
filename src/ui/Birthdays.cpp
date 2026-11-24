@@ -11,8 +11,6 @@
 #include <QCloseEvent>
 #include <QDateEdit>
 
-constexpr auto DateFormat = "dd.MM.yyyy";
-
 DateDelegate::DateDelegate(QObject* parent) : QStyledItemDelegate(parent) {
 
 }
@@ -122,7 +120,7 @@ void Birthdays::onCellChanged(int row, int column) {
 
     Birthday birthday;
     birthday.id = m_table->item(row, int(Column::Id))->text().toInt();
-    birthday.date = QDate::fromString(m_table->item(row, int(Column::Date))->text(), BirthdayDateFormat);
+    birthday.date = QDate::fromString(m_table->item(row, int(Column::Date))->text(), DateDelegate::DateFormat);
     birthday.name = m_table->item(row, int(Column::Name))->text();
 
     m_database->updateBirthday(birthday);
@@ -150,7 +148,7 @@ void Birthdays::addRow(Id id, const QDate& date, const QString& name) {
     auto idItem = new QTableWidgetItem(id.toString());
     m_table->setItem(lastRowIndex, int(Column::Id), idItem);
 
-    auto dateItem = new QTableWidgetItem(date.toString(BirthdayDateFormat));
+    auto dateItem = new QTableWidgetItem(date.toString(DateDelegate::DateFormat));
     m_table->setItem(lastRowIndex, int(Column::Date), dateItem);
 
     auto nameItem = new QTableWidgetItem(name);
