@@ -1,4 +1,5 @@
 #include "StandardWindow.h"
+#include "settings/Settings.h"
 #include <QCloseEvent>
 
 StandardWindow::StandardWindow(Settings* settings) : m_settings(settings) {
@@ -15,6 +16,20 @@ void StandardWindow::showEvent(QShowEvent* event) {
 void StandardWindow::closeEvent(QCloseEvent* event) {
     writeSettings(m_settings);
     event->accept();
+}
+
+void StandardWindow::readSettings(Settings* settings) {
+    QByteArray geometry = settings->windowGeometry(settingsGroup());
+
+    if (!geometry.isEmpty()) {
+        restoreGeometry(geometry);
+    } else {
+        resize(800, 400);
+    }
+}
+
+void StandardWindow::writeSettings(Settings* settings) {
+    settings->setWindowGeometry(settingsGroup(), saveGeometry());
 }
 
 Settings* StandardWindow::settings() const {

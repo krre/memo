@@ -11,8 +11,10 @@ protected:
     void showEvent(QShowEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
 
-    virtual void readSettings(Settings* settings) {}
-    virtual void writeSettings(Settings* settings) {}
+    virtual QString settingsGroup() const = 0;
+
+    virtual void readSettings(Settings* settings);
+    virtual void writeSettings(Settings* settings);
 
     Settings* settings() const;
 

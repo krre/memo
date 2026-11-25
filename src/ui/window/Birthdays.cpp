@@ -1,7 +1,6 @@
 #include "Birthdays.h"
 #include "database/Database.h"
 #include "core/Application.h"
-#include "settings/Settings.h"
 #include <QCheckBox>
 #include <QPushButton>
 #include <QTableWidget>
@@ -56,6 +55,10 @@ Birthdays::Birthdays(Database* database, Settings* settings) : StandardWindow(se
     load();
 }
 
+QString Birthdays::settingsGroup() const {
+    return "Birthdays";
+}
+
 void Birthdays::add() {
     Birthday birthday;
     birthday.date = QDate::currentDate();
@@ -89,20 +92,6 @@ void Birthdays::updateButtonsState() {
     const bool isRowSelected = m_table->currentRow() >= 0;
     m_editButton->setEnabled(isRowSelected);
     m_deleteButton->setEnabled(isRowSelected);
-}
-
-void Birthdays::readSettings(Settings* settings) {
-    QByteArray geometry = settings->birthdaysGeometry();
-
-    if (!geometry.isEmpty()) {
-        restoreGeometry(geometry);
-    } else {
-        resize(800, 400);
-    }
-}
-
-void Birthdays::writeSettings(Settings* settings) {
-    settings->setBirthdaysGeometry(saveGeometry());
 }
 
 void Birthdays::onCellChanged(int row, int column) {

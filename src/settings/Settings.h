@@ -21,14 +21,8 @@ public:
     void setMainWindowSplitter(const  QByteArray& splitter);
     QByteArray mainWindowSplitter() const;
 
-    void setBirthdaysGeometry(const  QByteArray& geometry);
-    QByteArray birthdaysGeometry() const;
-
     void setBirthdaysRemind(bool remind);
     bool birthdaysRemind() const;
-
-    void setTasksGeometry(const  QByteArray& geometry);
-    QByteArray tasksGeometry() const;
 
     void setBackupsDirectory(const QString& directory);
     QString backupsDirectory() const;
@@ -69,7 +63,9 @@ public:
     void setServerPrivateKey(const QString& privateKey);
     QString serverPrivateKey() const;
 
-protected:
+    void setWindowGeometry(const QString& group, const QByteArray& geomerty);
+    QByteArray windowGeometry(const QString& group) const;
+
     virtual void setValue(const QString& key, const QVariant& value) = 0;
     virtual QVariant value(const QString& key, const QVariant& defaultValue = QVariant()) const = 0;
 

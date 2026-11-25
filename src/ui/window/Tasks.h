@@ -9,8 +9,8 @@ public:
     Tasks(Database* database, Settings* settings);
 
 protected:
-    void readSettings(Settings* settings) override;
-    void writeSettings(Settings* settings) override;
+    QString settingsGroup() const override;
 
+private:
     Database* m_database = nullptr;
 };

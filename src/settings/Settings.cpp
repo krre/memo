@@ -13,12 +13,7 @@ namespace MainWindow {
 }
 
 namespace Birthdays {
-    constexpr auto Geometry = "Birthdays/geometry";
     constexpr auto Remind = "Birthdays/remind";
-}
-
-namespace Tasks {
-    constexpr auto Geometry = "Tasks/geometry";
 }
 
 namespace Backups {
@@ -97,28 +92,12 @@ QByteArray Settings::mainWindowSplitter() const {
     return value(MainWindow::Splitter).toByteArray();
 }
 
-void Settings::setBirthdaysGeometry(const QByteArray& geometry) {
-    setValue(Birthdays::Geometry, geometry);
-}
-
-QByteArray Settings::birthdaysGeometry() const {
-    return value(Birthdays::Geometry).toByteArray();
-}
-
 void Settings::setBirthdaysRemind(bool remind) {
     setValue(Birthdays::Remind, remind);
 }
 
 bool Settings::birthdaysRemind() const {
     return value(Birthdays::Remind, true).toBool();
-}
-
-void Settings::setTasksGeometry(const QByteArray& geometry) {
-    setValue(Tasks::Geometry, geometry);
-}
-
-QByteArray Settings::tasksGeometry() const {
-    return value(Tasks::Geometry).toByteArray();
 }
 
 void Settings::setBackupsDirectory(const QString& directory) {
@@ -236,4 +215,12 @@ void Settings::setServerPrivateKey(const QString& privateKey) {
 
 QString Settings::serverPrivateKey() const {
     return value(Server::PrivateKey).toString();
+}
+
+void Settings::setWindowGeometry(const QString& group, const QByteArray& geomerty) {
+    setValue(group + "/geometry", geomerty);
+}
+
+QByteArray Settings::windowGeometry(const QString& group) const {
+    return value(group + "/geometry").toByteArray();
 }

@@ -29,8 +29,7 @@ public:
     Birthdays(Database* database, Settings* settings);
 
 protected:
-    void readSettings(Settings* settings) override;
-    void writeSettings(Settings* settings) override;
+    QString settingsGroup() const override;
 
 private slots:
     void add();
