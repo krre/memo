@@ -51,7 +51,7 @@ qt_add_library(common STATIC
     ui/outliner/TreeModel.h ui/outliner/TreeModel.cpp
     ui/EditorToolBar.h ui/EditorToolBar.cpp
     ui/FindText.h ui/FindText.cpp
-    ui/tasks/Tasks.h ui/tasks/Tasks.cpp
+    ui/window/Tasks.h ui/window/Tasks.cpp
     ui/window/StandardWindow.h ui/window/StandardWindow.cpp
 )
 
