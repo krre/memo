@@ -52,6 +52,7 @@ qt_add_library(common STATIC
     ui/EditorToolBar.h ui/EditorToolBar.cpp
     ui/FindText.h ui/FindText.cpp
     ui/tasks/Tasks.h ui/tasks/Tasks.cpp
+    ui/window/StandardWindow.h ui/window/StandardWindow.cpp
 )
 
 # For visibility in IDE (e.g., Qt Creator)
