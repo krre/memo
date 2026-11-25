@@ -33,7 +33,7 @@ qt_add_library(common STATIC
     settings/FileSettings.h settings/FileSettings.cpp
     settings/Settings.cpp
     settings/Settings.h
-    ui/Birthdays.h ui/Birthdays.cpp
+    ui/window/Birthdays.h ui/window/Birthdays.cpp
     ui/Editor.h ui/Editor.cpp
     ui/MainWindow.h ui/MainWindow.cpp
     ui/Navigation.h ui/Navigation.cpp

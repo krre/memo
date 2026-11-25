@@ -1,6 +1,6 @@
 #pragma once
+#include "StandardWindow.h"
 #include "core/Id.h"
-#include <QWidget>
 #include <QStyledItemDelegate>
 
 class QTableWidget;
@@ -10,7 +10,6 @@ class QVBoxLayout;
 class QCheckBox;
 
 class Database;
-class Settings;
 
 class DateDelegate : public QStyledItemDelegate {
 public:
@@ -24,13 +23,14 @@ public:
     void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
 };
 
-class Birthdays : public QWidget {
+class Birthdays : public StandardWindow {
     Q_OBJECT
 public:
     Birthdays(Database* database, Settings* settings);
 
 protected:
-    void closeEvent(QCloseEvent* event) override;
+    void readSettings(Settings* settings) override;
+    void writeSettings(Settings* settings) override;
 
 private slots:
     void add();
@@ -49,21 +49,17 @@ private:
         Age,
     };
 
-    void readSettings();
-    void writeSettings();
-
     void addRow(Id id, const QDate& date, const QString& name);
     int age(const QDate& birthday);
 
     QTableWidget* createTable();
     QVBoxLayout* createButtons();
 
+    Database* m_database = nullptr;
+
     QTableWidget* m_table = nullptr;
     QPushButton* m_editButton = nullptr;
     QPushButton* m_deleteButton = nullptr;
 
     QCheckBox* m_todayCheckBox = nullptr;
-
-    Database* m_database = nullptr;
-    Settings* m_settings = nullptr;
 };

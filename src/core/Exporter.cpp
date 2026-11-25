@@ -2,7 +2,7 @@
 #include "Exception.h"
 #include "database/Database.h"
 #include "ui/outliner/Outliner.h"
-#include "ui/Birthdays.h"
+#include "ui/window/Birthdays.h"
 #include "core/Application.h"
 #include <QtCore/private/qzipwriter_p.h>
 #include <QFileInfo>

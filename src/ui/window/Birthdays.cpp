@@ -8,7 +8,6 @@
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QHBoxLayout>
-#include <QCloseEvent>
 #include <QDateEdit>
 
 DateDelegate::DateDelegate(QObject* parent) : QStyledItemDelegate(parent) {
@@ -41,7 +40,7 @@ void DateDelegate::updateEditorGeometry(QWidget* editor, const QStyleOptionViewI
     editor->setGeometry(option.rect);
 }
 
-Birthdays::Birthdays(Database* database, Settings* settings) : m_database(database), m_settings(settings) {
+Birthdays::Birthdays(Database* database, Settings* settings) : StandardWindow(settings), m_database(database) {
     setWindowTitle(tr("Birthdays"));
 
     auto horizontalLayout = new QHBoxLayout;
@@ -50,20 +49,11 @@ Birthdays::Birthdays(Database* database, Settings* settings) : m_database(databa
 
     setLayout(horizontalLayout);
 
-    setAttribute(Qt::WA_DeleteOnClose, true);
-
     if (database->isBirthdayToday()) {
         m_todayCheckBox->setChecked(true);
     }
 
     load();
-
-    readSettings();
-}
-
-void Birthdays::closeEvent(QCloseEvent* event) {
-    writeSettings();
-    event->accept();
 }
 
 void Birthdays::add() {
@@ -101,8 +91,8 @@ void Birthdays::updateButtonsState() {
     m_deleteButton->setEnabled(isRowSelected);
 }
 
-void Birthdays::readSettings() {
-    QByteArray geometry = m_settings->birthdaysGeometry();
+void Birthdays::readSettings(Settings* settings) {
+    QByteArray geometry = settings->birthdaysGeometry();
 
     if (!geometry.isEmpty()) {
         restoreGeometry(geometry);
@@ -111,8 +101,8 @@ void Birthdays::readSettings() {
     }
 }
 
-void Birthdays::writeSettings() {
-    m_settings->setBirthdaysGeometry(saveGeometry());
+void Birthdays::writeSettings(Settings* settings) {
+    settings->setBirthdaysGeometry(saveGeometry());
 }
 
 void Birthdays::onCellChanged(int row, int column) {
