@@ -12,7 +12,7 @@
 #include "dialog/Preferences.h"
 #include "dialog/FindAllNotesDialog.h"
 #include "window/Birthdays.h"
-#include "window/Tasks.h"
+#include "window/tasks/Tasks.h"
 #include "outliner/Outliner.h"
 #include "database/Database.h"
 #include "hotkey/GlobalHotkey.h"
