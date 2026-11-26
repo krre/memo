@@ -11,6 +11,13 @@ public:
 protected:
     QString settingsGroup() const override;
 
+private slots:
+    void add();
+    void edit();
+    void remove();
+
+    void openTags();
+
 private:
     Database* m_database = nullptr;
 };
