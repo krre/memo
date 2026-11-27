@@ -163,7 +163,7 @@ QTableWidget* Birthdays::createTable() {
     m_table = new QTableWidget(0, labels.count());
     m_table->setHorizontalHeaderLabels(labels);
     m_table->setSelectionBehavior(QAbstractItemView::SelectItems);
-    m_table->setEditTriggers(QAbstractItemView::DoubleClicked|QAbstractItemView::EditKeyPressed);
+    m_table->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
     m_table->horizontalHeader()->setSectionResizeMode(int(Column::Name), QHeaderView::ResizeMode::Stretch);
     m_table->setColumnHidden(int(Column::Id), true);
 
