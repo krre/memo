@@ -212,7 +212,11 @@ void MainWindow::createActions() {
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
     eventsMenu->addAction(tr("Birthdays..."), Qt::CTRL | Qt::Key_B, this, &MainWindow::showBirthdays);
+
+#ifdef QT_DEBUG
     eventsMenu->addAction(tr("Tasks..."), Qt::CTRL | Qt::Key_T, this, &MainWindow::showTasks);
+#endif
+
     eventsMenu->menuAction()->setVisible(false);
     connect(this, &MainWindow::noteOpenChanged, eventsMenu->menuAction(), &QAction::setVisible);
 
