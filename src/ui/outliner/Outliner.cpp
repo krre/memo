@@ -86,7 +86,7 @@ void Outliner::onCustomContextMenu(const QPoint& point) {
 
     contextMenu->addSeparator();
 
-    auto propertiesAction = contextMenu->addAction(tr("Properties..."), this, &Outliner::showProperties);
+    auto propertiesAction = contextMenu->addAction(tr("Properties..."), this, &Outliner::openProperties);
 
     bool enabled = currentIndex().isValid();
     removeAction->setEnabled(enabled);
@@ -200,7 +200,7 @@ void Outliner::expandTree() {
     expandRecursively(currentIndex());
 }
 
-void Outliner::showProperties() const {
+void Outliner::openProperties() const {
     Id id = m_model->item(currentIndex())->id();
     Note note = m_database->note(id);
 

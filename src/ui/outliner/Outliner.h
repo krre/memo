@@ -39,7 +39,7 @@ private slots:
     void moveDown();
     void moveTree(const QModelIndex& index);
     void expandTree();
-    void showProperties() const;
+    void openProperties() const;
 
 private:
     void insertChild(const QString& title);

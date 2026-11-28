@@ -181,7 +181,7 @@ void MainWindow::createActions() {
     auto findPreviousAction = editMenu->addAction(tr("Find Previous"), QKeySequence::FindPrevious, m_findText, &FindText::findPrevious);
 
     editMenu->addSeparator();
-    editMenu->addAction(tr("Preferences..."), this, &MainWindow::showPreferences);
+    editMenu->addAction(tr("Preferences..."), this, &MainWindow::openPreferences);
 
     undoAction->setEnabled(false);
     redoAction->setEnabled(false);
@@ -211,10 +211,10 @@ void MainWindow::createActions() {
     connect(this, &MainWindow::noteEditChanged, findAction, &QAction::setEnabled);
 
     auto eventsMenu = menuBar()->addMenu(tr("Events"));
-    eventsMenu->addAction(tr("Birthdays..."), Qt::CTRL | Qt::Key_B, this, &MainWindow::showBirthdays);
+    eventsMenu->addAction(tr("Birthdays..."), Qt::CTRL | Qt::Key_B, this, &MainWindow::openBirthdays);
 
 #ifdef QT_DEBUG
-    eventsMenu->addAction(tr("Tasks..."), Qt::CTRL | Qt::Key_T, this, &MainWindow::showTasks);
+    eventsMenu->addAction(tr("Tasks..."), Qt::CTRL | Qt::Key_T, this, &MainWindow::openTasks);
 #endif
 
     eventsMenu->menuAction()->setVisible(false);
@@ -223,7 +223,7 @@ void MainWindow::createActions() {
     auto helpMenu = menuBar()->addMenu(tr("Help"));
     helpMenu->addAction(tr("Open download page"), this, [] { QDesktopServices::openUrl(QUrl(Application::ReleasesUrl)); });
     helpMenu->addSeparator();
-    helpMenu->addAction(tr("About %1...").arg(Application::Name), this, &MainWindow::showAbout);
+    helpMenu->addAction(tr("About %1...").arg(Application::Name), this, &MainWindow::openAbout);
 }
 
 void MainWindow::load(const QString& filePath) {
@@ -237,10 +237,10 @@ void MainWindow::load(const QString& filePath) {
         m_navigation->clear();
 
         if (m_fileSettings->birthdaysRemind() && m_database->isBirthdayToday()) {
-            showBirthdays();
+            openBirthdays();
         }
     } catch (const Exception& e) {
-        showErrorDialog(e.error());
+        openErrorDialog(e.error());
     }
 }
 
@@ -299,7 +299,7 @@ void MainWindow::saveNote(Id id) {
     m_database->updateNoteValue(id, "markdown", m_editor->mode() == Editor::Mode::Markdown ? 1 : 0);
 }
 
-void MainWindow::showErrorDialog(const QString& message) {
+void MainWindow::openErrorDialog(const QString& message) {
     QMessageBox::critical(this, Application::Name, message, QMessageBox::Ok);
 }
 
@@ -324,7 +324,7 @@ void MainWindow::create() {
 
     if (QFile::exists(fileName)) {
         if (!QFile::remove(fileName)) {
-            showErrorDialog(tr("Error rewriting old file"));
+            openErrorDialog(tr("Error rewriting old file"));
         }
     }
 
@@ -332,7 +332,7 @@ void MainWindow::create() {
         m_database->create(fileName);
         load(fileName);
     } catch (const Exception& e) {
-        showErrorDialog(e.error());
+        openErrorDialog(e.error());
     }
 }
 
@@ -390,7 +390,7 @@ void MainWindow::findInAllNotes() {
     }
 }
 
-void MainWindow::showPreferences() {
+void MainWindow::openPreferences() {
     Preferences preferences(m_fileSettings);
 
     if (preferences.exec() == QDialog::Accepted) {
@@ -398,18 +398,18 @@ void MainWindow::showPreferences() {
     }
 }
 
-void MainWindow::showBirthdays() {
+void MainWindow::openBirthdays() {
     auto birthdays = new Birthdays(m_database, m_fileSettings);
     birthdays->show();
     birthdays->activateWindow();
 }
 
-void MainWindow::showTasks() {
+void MainWindow::openTasks() {
     auto tasks = new Tasks(m_database, m_fileSettings);
     tasks->show();
 }
 
-void MainWindow::showAbout() {
+void MainWindow::openAbout() {
     QMessageBox::about(this, tr("About %1").arg(Application::Name),
 tr(R"(<h3>%1 %2</h3>
 Outliner<br><br>

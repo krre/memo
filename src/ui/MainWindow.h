@@ -41,10 +41,10 @@ private slots:
     void pasteDate();
     void findInAllNotes();
 
-    void showPreferences();
-    void showBirthdays();
-    void showTasks();
-    void showAbout();
+    void openPreferences();
+    void openBirthdays();
+    void openTasks();
+    void openAbout();
 
     void onEditorFocusLost();
     void onGlobalActivated();
@@ -65,7 +65,7 @@ private:
 
     void setCurrentFile(const QString& filePath = QString());
 
-    void showErrorDialog(const QString& message);
+    void openErrorDialog(const QString& message);
     QString dateFileName(const QString& name);
 
     FileSettings* m_fileSettings = nullptr;
