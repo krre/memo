@@ -106,7 +106,7 @@ void MainWindow::setupSplitter() {
     m_editorToolBar = new EditorToolBar(m_navigation, m_editor);
     m_findText = new FindText(m_editor, this);
 
-    connect(m_editor, &QTextEdit::textChanged, [=, this] {
+    connect(m_editor, &QTextEdit::textChanged, this, [this] {
         m_editorToolBar->setSymbolsCount(m_editor->document()->characterCount() - 1);
     });
 
