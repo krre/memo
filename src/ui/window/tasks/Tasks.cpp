@@ -23,10 +23,13 @@ Tasks::Tasks(Database* database, Settings* settings) : StandardWindow(settings),
     auto table = new QTableWidget;
 
     auto verticalLayout = new QVBoxLayout;
+    setLayout(verticalLayout);
+
+    auto margins = verticalLayout->contentsMargins();
+    verticalLayout->setContentsMargins(margins.left(), 0, margins.right(), margins.bottom());
+
     verticalLayout->addWidget(toolBar);
     verticalLayout->addWidget(table);
-
-    setLayout(verticalLayout);
 }
 
 QString Tasks::settingsGroup() const {
