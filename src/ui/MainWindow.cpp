@@ -113,7 +113,7 @@ void MainWindow::setupSplitter() {
     connect(m_editorToolBar, &EditorToolBar::saveClicked, this, &MainWindow::save);
 
     auto editorLayout = new QVBoxLayout;
-    editorLayout->setContentsMargins(QMargins());
+    editorLayout->setContentsMargins({});
     editorLayout->addWidget(m_editorToolBar);
     editorLayout->addWidget(m_editor);
 
